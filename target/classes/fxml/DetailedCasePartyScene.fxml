@@ -69,57 +69,57 @@
                         <Insets right="5.0" />
                     </padding>
                 </Label>
-                <TextField promptText="First" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                <TextField fx:id="FirstNameTextField" promptText="First" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3">
                     <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField promptText="MI" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                <TextField fx:id="MiddleInitialTextField" promptText="MI" GridPane.columnIndex="4" GridPane.rowIndex="3">
                     <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField promptText="Last" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+                <TextField fx:id="lastNameTextField" promptText="Last" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
                     <GridPane.margin>
                         <Insets left="5.0" right="15.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField promptText="Address Line 1" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+                <TextField fx:id="AddressOneTextField" promptText="Address Line 1" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
                     <GridPane.margin>
                         <Insets left="5.0" right="15.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField promptText="Address Line 2" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+                <TextField fx:id="AddressTwoTextField" promptText="Address Line 2" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
                     <GridPane.margin>
                         <Insets left="5.0" right="15.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField promptText="Address Line 3" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
+                <TextField fx:id="AddressThreeTextField" promptText="Address Line 3" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
                     <GridPane.margin>
                         <Insets left="5.0" right="15.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField promptText="City" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7">
+                <TextField fx:id="CityTextField" promptText="City" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7">
                     <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField promptText="Zipcode" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
+                <TextField fx:id="ZipCodeTextField" promptText="Zipcode" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
                     <GridPane.margin>
                         <Insets left="5.0" right="15.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField promptText="Phone Number 1" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8">
+                <TextField fx:id="PhoneNumberOneTextField" promptText="Phone Number 1" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8">
                     <GridPane.margin>
                         <Insets left="5.0" right="15.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField promptText="Phone Number 2" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9">
+                <TextField fx:id="PhoneNumberTwoTextField" promptText="Phone Number 2" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9">
                     <GridPane.margin>
                         <Insets left="5.0" right="15.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField promptText="Email Address" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10">
+                <TextField fx:id="EmailAddressTextField" promptText="Email Address" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10">
                     <GridPane.margin>
                         <Insets left="5.0" right="15.0" />
                     </GridPane.margin>
@@ -129,17 +129,17 @@
                         <Insets right="5.0" />
                     </padding>
                 </Label>
-                <ComboBox prefHeight="25.0" prefWidth="620.0" promptText="Case Relation" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+                <ComboBox fx:id="CaseRelationCombobox" prefHeight="25.0" prefWidth="620.0" promptText="Case Relation" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets left="5.0" right="15.0" />
                     </GridPane.margin>
                 </ComboBox>
-                <ComboBox prefWidth="150.0" promptText="Prefix" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <ComboBox fx:id="PrefixCombobox" prefWidth="150.0" promptText="Prefix" GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                     </GridPane.margin>
                 </ComboBox>
-                <ComboBox prefWidth="150.0" promptText="State" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
+                <ComboBox fx:id="StateComboBox" prefWidth="150.0" promptText="State" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
                     <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                     </GridPane.margin>
@@ -150,8 +150,8 @@
     <bottom>
         <ButtonBar prefHeight="49.0" prefWidth="504.0" BorderPane.alignment="CENTER">
             <buttons>
-                <Button fx:id="closeButton" mnemonicParsing="false" text="Close" ButtonBar.buttonData="LEFT" />
-                <Button fx:id="editButton" mnemonicParsing="false" text="Save" ButtonBar.buttonData="RIGHT" />
+                <Button fx:id="CloseButton" mnemonicParsing="false" text="Close" ButtonBar.buttonData="LEFT" />
+                <Button fx:id="SaveButton" mnemonicParsing="false" text="Save" ButtonBar.buttonData="RIGHT" />
             </buttons>
             <BorderPane.margin>
                 <Insets top="10.0" />

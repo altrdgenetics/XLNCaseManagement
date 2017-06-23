@@ -107,6 +107,8 @@ public class PartySceneController implements Initializable {
         party.setRelation(1);
         party.setPrefix("Mr.");
         party.setFirstName("John");
+        party.setMiddleInitial("A.");
+        party.setLastName("Smith");
         party.setAddressOne("123 High St");
         party.setAddressTwo("");
         party.setAddressThree("");
@@ -123,7 +125,7 @@ public class PartySceneController implements Initializable {
                         new PartyTableModel(
                                 party, 
                                 "Client", 
-                                "John Smith", 
+                                "John A. Smith", 
                                 "123 High St, Columbus, OH 43215", 
                                 "(555) 555-5555 x123"
                         ));
