@@ -6,6 +6,7 @@ package com.xln.xlncasemanagement.sceneController;
  * and open the template in the editor.
  */
 
+import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.table.PartyTableModel;
 import java.net.URL;
@@ -16,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -56,6 +58,49 @@ public class PartySceneController implements Initializable {
         System.out.println("Set Party Tab Active");
         loadMOCKTable();
     }
+    
+    @FXML
+    private void tableListener(MouseEvent event) {
+        PartyTableModel row = partyTable.getSelectionModel().getSelectedItem();
+
+        if (row != null) {
+            if (event.getClickCount() == 1) {
+                System.out.println("Party Table Single Click");
+                
+            } else if (event.getClickCount() >= 2) {
+                System.out.println("Party Table Double Click");
+                Global.getStageLauncher().detailedCallAddEditStage(Global.getMainStage(), (PartyModel) row.getObject().getValue());
+                //TODO: RELOAD TABLE
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // DELETE AFTER CODE IS DEMOED
+    
     
     private void loadMOCKTable() {
         PartyModel party = new PartyModel();

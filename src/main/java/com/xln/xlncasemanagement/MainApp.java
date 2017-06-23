@@ -9,8 +9,8 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        StageLauncher window = new StageLauncher();
-        window.mainStage(stage);
+        Global.setStageLauncher(new StageLauncher());
+        Global.getStageLauncher().mainStage(stage);
     }
 
     /**

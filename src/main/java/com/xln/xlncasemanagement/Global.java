@@ -16,7 +16,8 @@ public class Global {
     
     private static Parent root;    
     private static Stage mainStage;
-
+    private static StageLauncher stageLauncher;
+    
     public static Parent getRoot() {
         return root;
     }
@@ -32,5 +33,13 @@ public class Global {
     public static void setMainStage(Stage mainStage) {
         Global.mainStage = mainStage;
     }
-    
+
+    public static StageLauncher getStageLauncher() {
+        return stageLauncher;
+    }
+
+    public static void setStageLauncher(StageLauncher stageLauncher) {
+        Global.stageLauncher = stageLauncher;
+    }
+        
 }

@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
+import com.xln.xlncasemanagement.model.sql.PartyModel;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -25,5 +26,9 @@ public class DetailedCasePartySceneController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
+    public void setActive(PartyModel CasePartyPassed) {
+        System.out.println("Set Stage Active");
+    }
     
 }
