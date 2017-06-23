@@ -89,4 +89,10 @@ public class DetailedCasePartySceneController implements Initializable {
         PhoneNumberTwoTextField.setText(caseParty.getPhoneTwo());
         EmailAddressTextField.setText(caseParty.getEmail());
     }
+    
+    @FXML
+    private void saveInformation() {
+        
+    }
+    
 }

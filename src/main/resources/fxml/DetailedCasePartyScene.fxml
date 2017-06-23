@@ -151,7 +151,7 @@
         <ButtonBar prefHeight="49.0" prefWidth="504.0" BorderPane.alignment="CENTER">
             <buttons>
                 <Button fx:id="CloseButton" mnemonicParsing="false" text="Close" ButtonBar.buttonData="LEFT" />
-                <Button fx:id="SaveButton" mnemonicParsing="false" text="Save" ButtonBar.buttonData="RIGHT" />
+                <Button fx:id="SaveButton" mnemonicParsing="false" onAction="#saveInformation" text="Save" ButtonBar.buttonData="RIGHT" />
             </buttons>
             <BorderPane.margin>
                 <Insets top="10.0" />
