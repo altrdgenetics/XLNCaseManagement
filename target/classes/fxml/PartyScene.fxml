@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -8,15 +12,15 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xln.xlncasemanagement.sceneController.PartySceneController">
+<BorderPane fx:id="partyTabScene" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xln.xlncasemanagement.sceneController.PartySceneController">
     <center>
         <TableView fx:id="partyTable" prefHeight="355.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <columns>
-                <TableColumn prefWidth="0.0" text="Object" visible="false" />
-                <TableColumn prefWidth="175.0" text="Relation" />
-                <TableColumn prefWidth="175.0" text="Name" />
-                <TableColumn prefWidth="175.0" text="Address" />
-                <TableColumn prefWidth="175.0" text="Phone Number" />
+                <TableColumn fx:id="objectColumn" prefWidth="0.0" text="Object" visible="false" />
+                <TableColumn fx:id="relationColumn" prefWidth="175.0" text="Relation" />
+                <TableColumn fx:id="nameColumn" prefWidth="175.0" text="Name" />
+                <TableColumn fx:id="addressColumn" prefWidth="175.0" text="Address" />
+                <TableColumn fx:id="phoneNumberColumn" prefWidth="175.0" text="Phone Number" />
             </columns>
             <BorderPane.margin>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />

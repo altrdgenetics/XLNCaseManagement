@@ -1,5 +1,14 @@
 * {
     -BASE-backgroundColor: #d3e2e8;
+    
+    -COLOR-Primary: #90caf9;
+    -COLOR-Primary-Light: #c3fdff;
+    -COLOR-Primary-Dark: #5d99c6;
+    
+    -COLOR-Secondary: #90caf9;
+    -COLOR-Secondary-Light: #c3fdff;
+    -COLOR-Secondary-Dark: #5d99c6;
+    
 }
 
 .root {

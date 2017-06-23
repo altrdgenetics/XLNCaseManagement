@@ -19,10 +19,16 @@ public class InformationSceneController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
+    public void setActive() {
+        System.out.println("Set Information Tab Active");
+    }
     
 }

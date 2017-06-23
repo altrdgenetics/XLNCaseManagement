@@ -33,4 +33,8 @@ public class ExpensesSceneController implements Initializable {
         
     }    
     
+    public void setActive() {
+        System.out.println("Set Expense Tab Active");
+    }
+    
 }

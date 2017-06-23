@@ -1,28 +1,21 @@
-package com.xln.xlncasemanagement.sceneController;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package com.xln.xlncasemanagement.sceneController;
 
-import com.xln.xlncasemanagement.model.table.ActivityTableModel;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableView;
 
 /**
  * FXML Controller class
  *
- * @author User
+ * @author Andrew
  */
-public class ActivitySceneController implements Initializable {
+public class DetailedCasePartySceneController implements Initializable {
 
-    @FXML
-    private TableView<ActivityTableModel> activityTable;
-    
     /**
      * Initializes the controller class.
      * @param url
@@ -30,13 +23,7 @@ public class ActivitySceneController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        // TODO
     }    
-    
-    public void setActive() {
-        System.out.println("Set Activity Tab Active");
-    }
-    
-    
     
 }

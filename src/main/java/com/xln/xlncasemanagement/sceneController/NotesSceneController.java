@@ -26,4 +26,8 @@ public class NotesSceneController implements Initializable {
         // TODO
     }    
     
+    public void setActive() {
+        System.out.println("Set Notes Tab Active");
+    }
+    
 }
