@@ -12,8 +12,11 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -27,6 +30,34 @@ import javafx.stage.WindowEvent;
 public class MainStageController implements Initializable {
 
     Stage stage;
+    
+    //Header Information--------------------------------------------
+    @FXML private Label clientLabel;
+    @FXML private ComboBox clientField;
+    @FXML private Label headerLabel1;
+    @FXML private ComboBox headerField1;
+    @FXML private Label phoneLabel;
+    @FXML private TextField phoneField;
+    @FXML private Label emailLabel;
+    @FXML private TextField emailField;
+    @FXML private Label headerLabel2;
+    @FXML private TextField headerField2;
+    @FXML private Label headerLabel3;
+    @FXML private TextField headerField3;
+    @FXML private Label headerLabel4;
+    @FXML private TextField headerField4;
+    @FXML private Label headerLabel5;
+    @FXML private TextField headerField5;
+    
+    //Left Hand Side Buttons----------------------------------------
+    @FXML private Button buttonOne;
+    @FXML private Button buttonTwo;
+    @FXML private Button buttonThree;
+    @FXML private Button buttonFour;
+    @FXML private Button buttonFive;
+    @FXML private Button buttonSix;
+    @FXML private Button buttonSeven;
+    @FXML private Button buttonDelete;
     
     //Inject Sub-FXML------------------------------------------------
     @FXML private AnchorPane informationScene; // Inject tab content
@@ -48,16 +79,6 @@ public class MainStageController implements Initializable {
     @FXML private Tab expenseTab;
     @FXML private Tab noteTab;
     
-    //Left Hand Side Buttons----------------------------------------
-    @FXML private Button buttonOne;
-    @FXML private Button buttonTwo;
-    @FXML private Button buttonThree;
-    @FXML private Button buttonFour;
-    @FXML private Button buttonFive;
-    @FXML private Button buttonSix;
-    @FXML private Button buttonSeven;
-    @FXML private Button buttonDelete;
-    
     /**
      * Initializes the controller class.
      * @param url
@@ -73,13 +94,42 @@ public class MainStageController implements Initializable {
     public void setActive(Stage stagePassed) {
         Global.setMainStage(stage);
         stage = stagePassed;
+        setVersionInformation();
         stage.setTitle("Case Management");
         stage.setOnCloseRequest((WindowEvent t) -> {
             Platform.exit();
             System.exit(0);
         });
+        onTabSelection();
     }
 
+    private void setVersionInformation() {
+        setHeaderLabels();
+        hideHeaderControls();
+        hideButtons();
+    }
+    
+    private void setHeaderLabels(){
+        headerLabel1.setText(Global.getHeaderLabel1());
+        headerLabel2.setText(Global.getHeaderLabel2());
+        headerLabel3.setText(Global.getHeaderLabel3());
+        headerLabel4.setText(Global.getHeaderLabel4());
+        headerLabel5.setText(Global.getHeaderLabel5());
+    }
+    
+    private void hideHeaderControls() {
+        headerField1.setVisible(!Global.getHeaderLabel1().equals(""));
+        headerField2.setVisible(!Global.getHeaderLabel2().equals(""));
+        headerField3.setVisible(!Global.getHeaderLabel3().equals(""));
+        headerField4.setVisible(!Global.getHeaderLabel4().equals(""));
+        headerField5.setVisible(!Global.getHeaderLabel5().equals(""));
+    }
+    
+    private void hideButtons(){
+        buttonSix.setVisible(false);
+        buttonSeven.setVisible(false);
+    }
+    
     private void onTabSelection(){
         Tab tabTitle = mainTabPane.getSelectionModel().getSelectedItem();
         
@@ -107,55 +157,55 @@ public class MainStageController implements Initializable {
     }
 
     private void setInformationTabButtons(){
-        buttonOne.setText("");
-        buttonTwo.setText("");
-        buttonThree.setText("");
-        buttonFour.setText("");
-        buttonFive.setText("");
+        buttonOne.setText("New " + Global.getNewTypeLabel());
+        buttonTwo.setText("Incoming");
+        buttonThree.setText("Outgoing");
+        buttonFour.setText("Update Info");
+        buttonFive.setText("Letters");
         buttonSix.setText("");
         buttonSeven.setText("");
         buttonDelete.setText("Delete");
     }
 
     private void setPartyTabButtons(){
-        buttonOne.setText("");
-        buttonTwo.setText("");
-        buttonThree.setText("");
-        buttonFour.setText("");
-        buttonFive.setText("");
+        buttonOne.setText("New " + Global.getNewTypeLabel());
+        buttonTwo.setText("Incoming");
+        buttonThree.setText("Outgoing");
+        buttonFour.setText("Add Party");
+        buttonFive.setText("Letters");
         buttonSix.setText("");
         buttonSeven.setText("");
         buttonDelete.setText("Delete");
     }
 
     private void setActivityTabButtons(){
-        buttonOne.setText("");
-        buttonTwo.setText("");
-        buttonThree.setText("");
-        buttonFour.setText("");
-        buttonFive.setText("");
+        buttonOne.setText("New " + Global.getNewTypeLabel());
+        buttonTwo.setText("Incoming");
+        buttonThree.setText("Outgoing");
+        buttonFour.setText("Add Activty");
+        buttonFive.setText("Letters");
         buttonSix.setText("");
         buttonSeven.setText("");
         buttonDelete.setText("Delete");
     }
 
     private void setExpenseTabButtons(){
-        buttonOne.setText("");
-        buttonTwo.setText("");
-        buttonThree.setText("");
-        buttonFour.setText("");
-        buttonFive.setText("");
+        buttonOne.setText("New " + Global.getNewTypeLabel());
+        buttonTwo.setText("Incoming");
+        buttonThree.setText("Outgoing");
+        buttonFour.setText("Add Expense");
+        buttonFive.setText("Letters");
         buttonSix.setText("");
         buttonSeven.setText("");
         buttonDelete.setText("Delete");
     }
 
     private void setNoteTabButtons(){
-        buttonOne.setText("");
-        buttonTwo.setText("");
-        buttonThree.setText("");
-        buttonFour.setText("");
-        buttonFive.setText("");
+        buttonOne.setText("New " + Global.getNewTypeLabel());
+        buttonTwo.setText("Incoming");
+        buttonThree.setText("Outgoing");
+        buttonFour.setText("Update Note");
+        buttonFive.setText("Letters");
         buttonSix.setText("");
         buttonSeven.setText("");
         buttonDelete.setText("Delete");

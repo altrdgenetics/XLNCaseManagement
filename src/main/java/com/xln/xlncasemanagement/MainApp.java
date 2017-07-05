@@ -1,5 +1,6 @@
 package com.xln.xlncasemanagement;
 
+import com.xln.xlncasemanagement.util.LabelHashTables;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.stage.Stage;
@@ -9,6 +10,9 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        //Remove Later
+        LabelHashTables.setGlobalLabels("1");
+        
         Global.setStageLauncher(new StageLauncher());
         Global.getStageLauncher().mainStage(stage);
     }

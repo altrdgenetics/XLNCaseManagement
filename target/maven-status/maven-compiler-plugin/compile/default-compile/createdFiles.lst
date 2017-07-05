@@ -12,3 +12,4 @@ com\xln\xlncasemanagement\StageLauncher.class
 com\xln\xlncasemanagement\model\table\ExpensesTableModel.class
 com\xln\xlncasemanagement\model\table\ActivityTableModel.class
 com\xln\xlncasemanagement\sceneController\ActivitySceneController.class
+com\xln\xlncasemanagement\util\LabelHashTables.class

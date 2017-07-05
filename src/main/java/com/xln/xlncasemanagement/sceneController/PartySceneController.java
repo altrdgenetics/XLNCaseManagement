@@ -56,7 +56,6 @@ public class PartySceneController implements Initializable {
     
     public void setActive() {
         System.out.println("Set Party Tab Active");
-        loadMOCKTable();
     }
     
     @FXML
@@ -73,68 +72,6 @@ public class PartySceneController implements Initializable {
                 //TODO: RELOAD TABLE
             }
         }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // DELETE AFTER CODE IS DEMOED
-    
-    
-    private void loadMOCKTable() {
-        PartyModel party = new PartyModel();
-        party.setRelation(1);
-        party.setPrefix("Mr.");
-        party.setFirstName("John");
-        party.setMiddleInitial("A.");
-        party.setLastName("Smith");
-        party.setAddressOne("123 High St");
-        party.setAddressTwo("");
-        party.setAddressThree("");
-        party.setCity("Columbus");
-        party.setState("OH");
-        party.setZip("43215");
-        party.setPhoneOne("(555) 555-5555 x123");
-        party.setPhoneTwo("");
-        party.setEmail("noReply@gmail.com");
-        
-        
-        ObservableList<PartyTableModel> list = FXCollections.observableArrayList();
-        list.add(
-                        new PartyTableModel(
-                                party, 
-                                "Client", 
-                                "John A. Smith", 
-                                "123 High St, Columbus, OH 43215", 
-                                "(555) 555-5555 x123"
-                        ));
-        
-        partyTable.getItems().removeAll();
-        if (list != null) {
-            partyTable.setItems(list);
-        }
-        partyTable.getSelectionModel().clearSelection();
     }
     
 }
