@@ -19,6 +19,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -50,6 +51,7 @@ public class MainStageController implements Initializable {
     @FXML private TextField headerField5;
     
     //Left Hand Side Buttons----------------------------------------
+    @FXML private VBox buttonBar;
     @FXML private Button buttonOne;
     @FXML private Button buttonTwo;
     @FXML private Button buttonThree;
@@ -106,6 +108,7 @@ public class MainStageController implements Initializable {
     private void setVersionInformation() {
         setHeaderLabels();
         hideHeaderControls();
+        setButtonLabels();
         hideButtons();
     }
     
@@ -125,9 +128,22 @@ public class MainStageController implements Initializable {
         headerField5.setVisible(!Global.getHeaderLabel5().equals(""));
     }
     
+    private void setButtonLabels() {
+        buttonOne.setText(Global.getButtonLabel1());
+        buttonTwo.setText(Global.getButtonLabel2());
+        buttonThree.setText(Global.getButtonLabel3());
+    }
+    
     private void hideButtons(){
-        buttonSix.setVisible(false);
-        buttonSeven.setVisible(false);
+        if (Global.getButtonLabel2().equals("")){
+            buttonBar.getChildren().remove(buttonTwo);
+        }
+        if (Global.getButtonLabel3().equals("")){
+            buttonBar.getChildren().remove(buttonThree);
+        }
+        
+        buttonBar.getChildren().remove(buttonSix);
+        buttonBar.getChildren().remove(buttonSeven);
     }
     
     private void onTabSelection(){
@@ -157,9 +173,6 @@ public class MainStageController implements Initializable {
     }
 
     private void setInformationTabButtons(){
-        buttonOne.setText("New " + Global.getNewTypeLabel());
-        buttonTwo.setText("Incoming");
-        buttonThree.setText("Outgoing");
         buttonFour.setText("Update Info");
         buttonFive.setText("Letters");
         buttonSix.setText("");
@@ -168,9 +181,6 @@ public class MainStageController implements Initializable {
     }
 
     private void setPartyTabButtons(){
-        buttonOne.setText("New " + Global.getNewTypeLabel());
-        buttonTwo.setText("Incoming");
-        buttonThree.setText("Outgoing");
         buttonFour.setText("Add Party");
         buttonFive.setText("Letters");
         buttonSix.setText("");
@@ -179,9 +189,6 @@ public class MainStageController implements Initializable {
     }
 
     private void setActivityTabButtons(){
-        buttonOne.setText("New " + Global.getNewTypeLabel());
-        buttonTwo.setText("Incoming");
-        buttonThree.setText("Outgoing");
         buttonFour.setText("Add Activty");
         buttonFive.setText("Letters");
         buttonSix.setText("");
@@ -190,9 +197,6 @@ public class MainStageController implements Initializable {
     }
 
     private void setExpenseTabButtons(){
-        buttonOne.setText("New " + Global.getNewTypeLabel());
-        buttonTwo.setText("Incoming");
-        buttonThree.setText("Outgoing");
         buttonFour.setText("Add Expense");
         buttonFive.setText("Letters");
         buttonSix.setText("");
@@ -201,9 +205,6 @@ public class MainStageController implements Initializable {
     }
 
     private void setNoteTabButtons(){
-        buttonOne.setText("New " + Global.getNewTypeLabel());
-        buttonTwo.setText("Incoming");
-        buttonThree.setText("Outgoing");
         buttonFour.setText("Update Note");
         buttonFive.setText("Letters");
         buttonSix.setText("");
@@ -411,8 +412,4 @@ public class MainStageController implements Initializable {
         this.buttonDelete = buttonDelete;
     }
 
-    
-
-    
-    
 }

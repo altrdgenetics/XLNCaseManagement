@@ -27,7 +27,9 @@ public class Global {
         "VI", "WA", "WV", "WI", "WY"};
     
     //List of Label Changes
-    private static String newTypeLabel = "";
+    private static String buttonLabel1 = "";
+    private static String buttonLabel2 = "";
+    private static String buttonLabel3 = "";
     
     private static String headerLabel1 = "";
     private static String headerLabel2 = "";
@@ -69,12 +71,28 @@ public class Global {
         return STATES;
     }
 
-    public static String getNewTypeLabel() {
-        return newTypeLabel;
+    public static String getButtonLabel1() {
+        return buttonLabel1;
     }
 
-    public static void setNewTypeLabel(String newTypeLabel) {
-        Global.newTypeLabel = newTypeLabel;
+    public static void setButtonLabel1(String buttonLabel1) {
+        Global.buttonLabel1 = buttonLabel1;
+    }
+
+    public static String getButtonLabel2() {
+        return buttonLabel2;
+    }
+
+    public static void setButtonLabel2(String buttonLabel2) {
+        Global.buttonLabel2 = buttonLabel2;
+    }
+
+    public static String getButtonLabel3() {
+        return buttonLabel3;
+    }
+
+    public static void setButtonLabel3(String buttonLabel3) {
+        Global.buttonLabel3 = buttonLabel3;
     }
     
     public static String getHeaderLabel1() {

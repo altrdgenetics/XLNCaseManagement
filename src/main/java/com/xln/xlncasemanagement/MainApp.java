@@ -11,7 +11,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         //Remove Later
-        LabelHashTables.setGlobalLabels("1");
+        LabelHashTables.setGlobalLabels("2");
         
         Global.setStageLauncher(new StageLauncher());
         Global.getStageLauncher().mainStage(stage);

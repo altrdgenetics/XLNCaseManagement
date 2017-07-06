@@ -31,7 +31,9 @@ public class LabelHashTables {
      */   
     private static void Legal(){
         //Type for the New Button
-        Global.setNewTypeLabel("Matter");
+        Global.setButtonLabel1("New Matter");
+        Global.setButtonLabel2("Incoming");
+        Global.setButtonLabel3("Outgoing");
         
         //Header Labels
         Global.setHeaderLabel1("Matter:");
@@ -51,7 +53,23 @@ public class LabelHashTables {
      * Labels for Computer Repair
      */
     private static void ComputerRepair(){
+        //Type for the New Button
+        Global.setButtonLabel1("New Service");
+        Global.setButtonLabel2("");
+        Global.setButtonLabel3("");
         
+        //Header Labels
+        Global.setHeaderLabel1("Service:");
+        Global.setHeaderLabel2("Make:");
+        Global.setHeaderLabel3("Model:");
+        Global.setHeaderLabel4("Serial:");
+        Global.setHeaderLabel5("");
+        
+        //Information Labels
+        Global.setInformationLabel1("Warranty:");
+        Global.setInformationLabel2("");
+        Global.setInformationLabel3("");
+        Global.setInformationLabel4("");
     }
     
     

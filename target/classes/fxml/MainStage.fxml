@@ -92,12 +92,12 @@
                      </padding>
                         </Label>
                         <ComboBox fx:id="clientField" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
-                        <TextField fx:id="phoneField" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
-                        <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
-                        <TextField fx:id="headerField2" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
-                        <TextField fx:id="headerField3" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
-                        <TextField fx:id="headerField4" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
-                        <TextField fx:id="headerField5" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+                        <TextField fx:id="phoneField" editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+                        <TextField fx:id="emailField" editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+                        <TextField fx:id="headerField2" editable="false" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
+                        <TextField fx:id="headerField3" editable="false" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                        <TextField fx:id="headerField4" editable="false" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+                        <TextField fx:id="headerField5" editable="false" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
                         <Label fx:id="headerLabel2" alignment="CENTER_RIGHT" prefHeight="132.0" prefWidth="196.0" text="&lt;&lt;Label 2&gt;&gt;" GridPane.columnIndex="2">
                             <GridPane.margin>
                                 <Insets left="10.0" />
@@ -174,7 +174,7 @@
                 </TabPane>
             </center>
             <left>
-                <VBox prefHeight="440.0" prefWidth="140.0" BorderPane.alignment="CENTER">
+                <VBox fx:id="buttonBar" prefHeight="440.0" prefWidth="140.0" BorderPane.alignment="CENTER">
                     <children>
                         <Button fx:id="buttonOne" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" styleClass="primary" text="Button 1" wrapText="true">
                             <VBox.margin>
