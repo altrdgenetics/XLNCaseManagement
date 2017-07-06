@@ -24,16 +24,26 @@ import javafx.stage.StageStyle;
  * @author User
  */
 public class StageLauncher {
-    
-    public void loginScene(Stage stage){
+
+    public void loginScene(Stage stage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoginStage.fxml"));
             Global.setRoot((Parent) loader.load());
-                        
-            stage.initStyle(StageStyle.UNDECORATED);
+
+            stage.initStyle(StageStyle.TRANSPARENT);
             stage.getIcons().add(Global.getApplicationLogo());
             Scene scene = new Scene(Global.getRoot());
             stage.setScene(scene);
+            scene.setFill(Color.TRANSPARENT);
+            Global.getRoot().setStyle(
+                      "-fx-border-insets: 10;"
+                    + "-fx-background-insets: 10;"
+                    + "-fx-border-color: gray;"
+                    + "-fx-border-style: solid;"
+                    + "-fx-border-width: 0.25;"
+                    + "-fx-effect: dropshadow(gaussian, rgba(100, 100, 100, 0.5), 20, 0.25, 0, 0);"
+            );
+
 
             LoginStageController controller = loader.getController();
             controller.setActive(stage);
