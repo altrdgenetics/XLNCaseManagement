@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -44,7 +43,6 @@ public class StageLauncher {
                     + "-fx-effect: dropshadow(gaussian, rgba(100, 100, 100, 0.5), 20, 0.25, 0, 0);"
             );
 
-
             LoginStageController controller = loader.getController();
             controller.setActive(stage);
             stage.show();
@@ -74,7 +72,43 @@ public class StageLauncher {
         }
     }
  
-    public void detailedCallAddEditStage(Stage stagePassed, PartyModel casePartyPassed) {
+    public void docketingIncomingScene(Stage stagePassed) {
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/DocketingIncomingScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            DocketingIncomingSceneController controller = loader.getController();
+            controller.setActive();
+
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void docketingOutgoingScene(Stage stagePassed) {
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/DocketingOutgoingScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            DocketingOutgoingSceneController controller = loader.getController();
+            controller.setActive();
+
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void detailedCasePartyAddEditScene(Stage stagePassed, PartyModel casePartyPassed) {
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();

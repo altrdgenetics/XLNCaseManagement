@@ -176,44 +176,44 @@
             <left>
                 <VBox fx:id="buttonBar" prefHeight="440.0" prefWidth="140.0" BorderPane.alignment="CENTER">
                     <children>
-                        <Button fx:id="buttonOne" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" styleClass="primary" text="Button 1" wrapText="true">
+                        <Button fx:id="buttonOne" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonOneAction" styleClass="primary" text="Button 1" wrapText="true">
                             <VBox.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="buttonTwo" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" styleClass="primary" text="Button 2" wrapText="true">
+                        <Button fx:id="buttonTwo" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonTwoAction" styleClass="primary" text="Button 2" wrapText="true">
                             <VBox.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="buttonThree" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" styleClass="primary" text="Button 3" wrapText="true">
+                        <Button fx:id="buttonThree" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonThreeAction" styleClass="primary" text="Button 3" wrapText="true">
                             <VBox.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" />
                             </VBox.margin>
                         </Button>
                   <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="200.0" />
-                        <Button fx:id="buttonFour" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" styleClass="info" text="Button 4" wrapText="true">
+                        <Button fx:id="buttonFour" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonFourAction" styleClass="info" text="Button 4" wrapText="true">
                             <VBox.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="buttonFive" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" styleClass="info" text="Button 5" wrapText="true">
+                        <Button fx:id="buttonFive" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonFiveAction" styleClass="info" text="Button 5" wrapText="true">
                             <VBox.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="buttonSix" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" styleClass="info" text="Button 6" wrapText="true">
+                        <Button fx:id="buttonSix" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonSixAction" styleClass="info" text="Button 6" wrapText="true">
                             <VBox.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="buttonSeven" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" styleClass="info" text="Button 7" wrapText="true">
+                        <Button fx:id="buttonSeven" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonSevenAction" styleClass="info" text="Button 7" wrapText="true">
                             <VBox.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" />
                             </VBox.margin>
                         </Button>
                   <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="188.0" prefWidth="125.0" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="buttonDelete" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" styleClass="danger" text="Delete" wrapText="true">
+                  <Button fx:id="buttonDelete" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonDeleteAction" styleClass="danger" text="Delete" wrapText="true">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" />
                      </VBox.margin>

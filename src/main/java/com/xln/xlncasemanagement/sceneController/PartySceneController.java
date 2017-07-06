@@ -66,7 +66,7 @@ public class PartySceneController implements Initializable {
                 
             } else if (event.getClickCount() >= 2) {
                 System.out.println("Party Table Double Click");
-                Global.getStageLauncher().detailedCallAddEditStage(Global.getMainStage(), (PartyModel) row.getObject().getValue());
+                Global.getStageLauncher().detailedCasePartyAddEditScene(Global.getMainStage(), (PartyModel) row.getObject().getValue());
                 //TODO: RELOAD TABLE
             }
         }

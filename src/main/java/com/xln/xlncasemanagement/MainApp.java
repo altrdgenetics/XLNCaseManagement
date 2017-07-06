@@ -18,7 +18,7 @@ public class MainApp extends Application {
 
     private void setApplicationDefaults(){
         //Remove Later
-        LabelHashTables.setGlobalLabels("2");
+        LabelHashTables.setGlobalLabels("1");
         
         Global.setApplicationLogo(new Image(getClass().getResource("/image/xlnlogo.png").toString()));
     }

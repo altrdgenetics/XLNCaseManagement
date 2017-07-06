@@ -146,6 +146,42 @@ public class MainStageController implements Initializable {
         buttonBar.getChildren().remove(buttonSeven);
     }
     
+    @FXML private void buttonOneAction(){
+        
+    }
+    
+    @FXML private void buttonTwoAction(){
+        Global.getStageLauncher().docketingIncomingScene(Global.getMainStage());
+    }
+    
+    @FXML private void buttonThreeAction(){
+        Global.getStageLauncher().docketingOutgoingScene(Global.getMainStage());
+    }
+    
+    @FXML private void buttonFourAction(){
+        
+    }
+    
+    @FXML private void buttonFiveAction(){
+        
+    }
+    
+    @FXML private void buttonSixAction(){
+        
+    }
+    
+    @FXML private void buttonSevenAction(){
+        
+    }
+    
+    @FXML private void buttonDeleteAction(){
+        
+    }
+    
+    
+    
+    
+    
     private void onTabSelection(){
         Tab tabTitle = mainTabPane.getSelectionModel().getSelectedItem();
         

@@ -26,4 +26,8 @@ public class DocketingOutgoingSceneController implements Initializable {
         // TODO
     }    
     
+    public void setActive() {
+        
+    }
+    
 }
