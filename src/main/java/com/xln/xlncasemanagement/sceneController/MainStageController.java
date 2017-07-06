@@ -181,7 +181,7 @@ public class MainStageController implements Initializable {
             informationSceneController.mainPanelButtonFourAction();
             disableTabsInUpdateMode(informationSceneController.isUpdateMode());
         } else if (selectedTabTitle.equals(partyTab)) {
-            Global.getStageLauncher().detailedCasePartyAddEditScene(Global.getMainStage(), null);
+            Global.getStageLauncher().partySearchScene(stage);
         } else if (selectedTabTitle.equals(activityTab)) {
             Global.getStageLauncher().detailedActivityAddEditScene(Global.getMainStage(), null);
         } else if (selectedTabTitle.equals(expenseTab)) {

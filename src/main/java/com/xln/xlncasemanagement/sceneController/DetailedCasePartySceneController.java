@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 
 /**
  * FXML Controller class
@@ -23,23 +24,26 @@ import javafx.scene.control.TextField;
  */
 public class DetailedCasePartySceneController implements Initializable {
 
-    @FXML Label HeaderLabel;
-    @FXML ComboBox CaseRelationCombobox;
-    @FXML ComboBox PrefixCombobox;
-    @FXML TextField FirstNameTextField;
-    @FXML TextField MiddleInitialTextField;
-    @FXML TextField lastNameTextField;
-    @FXML TextField AddressOneTextField;
-    @FXML TextField AddressTwoTextField;
-    @FXML TextField AddressThreeTextField;
-    @FXML TextField CityTextField;
-    @FXML ComboBox StateComboBox;
-    @FXML TextField ZipCodeTextField;
-    @FXML TextField PhoneNumberOneTextField;
-    @FXML TextField PhoneNumberTwoTextField;
-    @FXML TextField EmailAddressTextField;
-    @FXML Button CloseButton;
-    @FXML Button SaveButton;    
+    
+    @FXML private GridPane gridPane;
+    @FXML private Label HeaderLabel;
+    @FXML private Label CaseRelationLabel;
+    @FXML private ComboBox CaseRelationCombobox;
+    @FXML private ComboBox PrefixCombobox;
+    @FXML private TextField FirstNameTextField;
+    @FXML private TextField MiddleInitialTextField;
+    @FXML private TextField lastNameTextField;
+    @FXML private TextField AddressOneTextField;
+    @FXML private TextField AddressTwoTextField;
+    @FXML private TextField AddressThreeTextField;
+    @FXML private TextField CityTextField;
+    @FXML private ComboBox StateComboBox;
+    @FXML private TextField ZipCodeTextField;
+    @FXML private TextField PhoneNumberOneTextField;
+    @FXML private TextField PhoneNumberTwoTextField;
+    @FXML private TextField EmailAddressTextField;
+    @FXML private Button CloseButton;
+    @FXML private Button SaveButton;    
     
     PartyModel caseParty;
     
@@ -60,10 +64,15 @@ public class DetailedCasePartySceneController implements Initializable {
         loadStateComboBox();
         if (caseParty == null){
             HeaderLabel.setText("Add Case Party Information");
+            gridPane.getChildren().remove(CaseRelationLabel);
+            gridPane.getChildren().remove(CaseRelationCombobox);
+            gridPane.getRowConstraints().get(1).setMaxHeight(0);
         } else {
             HeaderLabel.setText("Edit Case Party Information");
             loadInformation();
         }
+        
+        
     }
     
     private void loadCaseRelationComboBox() {

@@ -44,6 +44,10 @@ public class DocketingOutgoingSceneController implements Initializable {
         });
     }
         
+    @FXML private void addNewButtonAction() {
+        Global.getStageLauncher().detailedCasePartyAddEditScene(stage, null);
+    }
+    
     @FXML private void closeButtonAction() {
         stage.hide();
     }

@@ -5,18 +5,25 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
-import com.xln.xlncasemanagement.model.sql.ActivityModel;
+import com.xln.xlncasemanagement.Global;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
  *
  * @author User
  */
-public class DetailedActivitySceneController implements Initializable {
+public class PartySearchSceneController implements Initializable {
 
+    Stage stage;
+    
+    @FXML Button CancelButton;
+    
     /**
      * Initializes the controller class.
      * @param url
@@ -27,8 +34,16 @@ public class DetailedActivitySceneController implements Initializable {
         // TODO
     }    
     
-    
-    public void setActive(ActivityModel activityPassed) {
+    public void setActive() {
         
     }
+    
+    @FXML private void addNewPartyButtonAction() {
+        Global.getStageLauncher().detailedCasePartyAddEditScene(stage, null);
+    }
+    
+    @FXML private void closeButtonAction() {
+        stage.close();
+    }
+    
 }
