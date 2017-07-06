@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
@@ -22,6 +23,7 @@ import javafx.scene.control.TextField;
  */
 public class DetailedCasePartySceneController implements Initializable {
 
+    @FXML Label HeaderLabel;
     @FXML ComboBox CaseRelationCombobox;
     @FXML ComboBox PrefixCombobox;
     @FXML TextField FirstNameTextField;
@@ -51,12 +53,17 @@ public class DetailedCasePartySceneController implements Initializable {
         // TODO
     }    
     
-    public void setActive(PartyModel CasePartyPassed) {
-        caseParty = CasePartyPassed;
+    public void setActive(PartyModel itemPassed) {
+        caseParty = itemPassed;
         loadCaseRelationComboBox();
         loadPrefixComboBox();
         loadStateComboBox();
-        loadInformation();
+        if (caseParty == null){
+            HeaderLabel.setText("Add Case Party Information");
+        } else {
+            HeaderLabel.setText("Edit Case Party Information");
+            loadInformation();
+        }
     }
     
     private void loadCaseRelationComboBox() {

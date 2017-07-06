@@ -30,7 +30,8 @@ import javafx.stage.WindowEvent;
  */
 public class MainStageController implements Initializable {
 
-    Stage stage;
+    private Stage stage;
+    private Tab selectedTabTitle;
     
     //Header Information--------------------------------------------
     @FXML private Label clientLabel;
@@ -142,6 +143,7 @@ public class MainStageController implements Initializable {
             buttonBar.getChildren().remove(buttonThree);
         }
         
+        //currently not used
         buttonBar.getChildren().remove(buttonSix);
         buttonBar.getChildren().remove(buttonSeven);
     }
@@ -163,64 +165,103 @@ public class MainStageController implements Initializable {
     }
 
     @FXML private void buttonThreeAction(){
-        if (Global.getOutgoingDocketingStage()== null) {
+        if (Global.getOutgoingDocketingStage() == null) {
             Global.getStageLauncher().docketingOutgoingScene(Global.getMainStage());
         } else {
             if (!Global.getOutgoingDocketingStage().isShowing()) {
                 Global.getOutgoingDocketingStage().show();
             } else {
-                Global.getIncomingDocketingStage().toFront();
+                Global.getOutgoingDocketingStage().toFront();
             }
         }
     }
     
-    @FXML private void buttonFourAction(){
-        
+    @FXML private void buttonFourAction(){        
+        if (selectedTabTitle.equals(informationTab)){
+            informationSceneController.mainPanelButtonFourAction();
+            disableTabsInUpdateMode(informationSceneController.isUpdateMode());
+        } else if (selectedTabTitle.equals(partyTab)) {
+            Global.getStageLauncher().detailedCasePartyAddEditScene(Global.getMainStage(), null);
+        } else if (selectedTabTitle.equals(activityTab)) {
+            Global.getStageLauncher().detailedActivityAddEditScene(Global.getMainStage(), null);
+        } else if (selectedTabTitle.equals(expenseTab)) {
+            Global.getStageLauncher().detailedExpenseAddEditScene(Global.getMainStage(), null);
+        } else if (selectedTabTitle.equals(noteTab)){
+            notesSceneController.mainPanelButtonFourAction();
+            disableTabsInUpdateMode(notesSceneController.isUpdateMode());
+        }
     }
     
     @FXML private void buttonFiveAction(){
-        
+        //Letters Button Action
     }
     
     @FXML private void buttonSixAction(){
-        
+        //Currently Hidden
     }
     
     @FXML private void buttonSevenAction(){
-        
+        //Currently Hidden
     }
     
     @FXML private void buttonDeleteAction(){
-        
+        if (selectedTabTitle.equals(informationTab)){
+            informationSceneController.mainPanelButtonDeleteAction();
+            disableTabsInUpdateMode(informationSceneController.isUpdateMode());
+        } else if (selectedTabTitle.equals(partyTab)) {
+            //TODO
+        } else if (selectedTabTitle.equals(activityTab)) {
+            //TODO
+        } else if (selectedTabTitle.equals(expenseTab)) {
+            //TODO
+        } else if (selectedTabTitle.equals(noteTab)){
+            notesSceneController.mainPanelButtonDeleteAction();
+            disableTabsInUpdateMode(notesSceneController.isUpdateMode());
+        }
     }
     
     
-    
+    private void disableTabsInUpdateMode(boolean disable){   
+        for(Tab tab : mainTabPane.getTabs()){
+            if (!tab.equals(selectedTabTitle)){
+                tab.setDisable(disable);
+            }
+        }
+        clientField.setDisable(disable);
+        headerField1.setDisable(disable);
+        buttonOne.setDisable(disable);
+        buttonTwo.setDisable(disable);
+        buttonThree.setDisable(disable);
+        buttonFive.setDisable(disable);
+        buttonSix.setDisable(disable);
+        buttonSeven.setDisable(disable);
+        updateButtonFourLabel(disable);
+    }
     
     
     private void onTabSelection(){
-        Tab tabTitle = mainTabPane.getSelectionModel().getSelectedItem();
+        selectedTabTitle = mainTabPane.getSelectionModel().getSelectedItem();
         
-        if (tabTitle.equals(informationTab)){
+        if (selectedTabTitle.equals(informationTab)){
             System.out.println("Selected Information Tab");
-            setInformationTabButtons();
             informationSceneController.setActive();
-        } else if (tabTitle.equals(partyTab)) {
+            setInformationTabButtons();
+        } else if (selectedTabTitle.equals(partyTab)) {
             System.out.println("Selected Party Tab");
-            setPartyTabButtons();
             partySceneController.setActive();
-        } else if (tabTitle.equals(activityTab)) {
+            setPartyTabButtons();
+        } else if (selectedTabTitle.equals(activityTab)) {
             System.out.println("Selected Activity Tab");
-            setActivityTabButtons();
             activitySceneController.setActive();
-        } else if (tabTitle.equals(expenseTab)) {
+            setActivityTabButtons();
+        } else if (selectedTabTitle.equals(expenseTab)) {
             System.out.println("Selected Expense Tab");
-            setExpenseTabButtons();
             expensesSceneController.setActive();
-        } else if (tabTitle.equals(noteTab)){
+            setExpenseTabButtons();
+        } else if (selectedTabTitle.equals(noteTab)){
             System.out.println("Selected Note Tab");
-            setNoteTabButtons();
             notesSceneController.setActive();
+            setNoteTabButtons();
         }
     }
 
@@ -229,7 +270,12 @@ public class MainStageController implements Initializable {
         buttonFive.setText("Letters");
         buttonSix.setText("");
         buttonSeven.setText("");
-        buttonDelete.setText("Delete");
+        buttonDelete.setText("Cancel");
+        
+        buttonDelete.setDisable(true);
+        buttonDelete.getStyleClass().remove("danger");
+        buttonDelete.getStyleClass().remove("warning");
+        buttonDelete.getStyleClass().add("warning");
     }
 
     private void setPartyTabButtons(){
@@ -238,6 +284,11 @@ public class MainStageController implements Initializable {
         buttonSix.setText("");
         buttonSeven.setText("");
         buttonDelete.setText("Delete");
+        
+        buttonDelete.setDisable(true);
+        buttonDelete.getStyleClass().remove("danger");
+        buttonDelete.getStyleClass().remove("warning");
+        buttonDelete.getStyleClass().add("danger");
     }
 
     private void setActivityTabButtons(){
@@ -246,6 +297,11 @@ public class MainStageController implements Initializable {
         buttonSix.setText("");
         buttonSeven.setText("");
         buttonDelete.setText("Delete");
+        
+        buttonDelete.setDisable(true);
+        buttonDelete.getStyleClass().remove("danger");
+        buttonDelete.getStyleClass().remove("warning");
+        buttonDelete.getStyleClass().add("danger");
     }
 
     private void setExpenseTabButtons(){
@@ -254,6 +310,11 @@ public class MainStageController implements Initializable {
         buttonSix.setText("");
         buttonSeven.setText("");
         buttonDelete.setText("Delete");
+        
+        buttonDelete.setDisable(true);
+        buttonDelete.getStyleClass().remove("danger");
+        buttonDelete.getStyleClass().remove("warning");
+        buttonDelete.getStyleClass().add("danger");
     }
 
     private void setNoteTabButtons(){
@@ -261,9 +322,46 @@ public class MainStageController implements Initializable {
         buttonFive.setText("Letters");
         buttonSix.setText("");
         buttonSeven.setText("");
-        buttonDelete.setText("Delete");
+        buttonDelete.setText("Cancel");
+        
+        buttonDelete.setDisable(true);
+        buttonDelete.getStyleClass().remove("danger");
+        buttonDelete.getStyleClass().remove("warning");
+        buttonDelete.getStyleClass().add("warning");
     }
-
+    
+    private void updateButtonFourLabel(boolean disable){
+        String buttonFourLabel = "Update ";
+        
+        if (disable){
+            buttonFourLabel = "Save ";
+            buttonFour.getStyleClass().remove("info");
+            buttonFour.getStyleClass().add("success");
+            buttonDelete.setDisable(false);
+        } else {
+            buttonFour.getStyleClass().remove("success");
+            buttonFour.getStyleClass().add("info");
+            buttonDelete.setDisable(true);
+        }
+        
+        if (selectedTabTitle.equals(informationTab)){
+            buttonFourLabel += "Info";
+        } else if (selectedTabTitle.equals(partyTab)) {
+            buttonFourLabel += "Party";
+        } else if (selectedTabTitle.equals(activityTab)) {
+            buttonFourLabel += "Activity";
+        } else if (selectedTabTitle.equals(expenseTab)) {
+            buttonFourLabel += "Expense";
+        } else if (selectedTabTitle.equals(noteTab)){
+            buttonFourLabel += "Note";
+        }
+        
+        buttonFour.setText(buttonFourLabel);
+    }
+    
+    // GETTERS AND SETTERS------------------------------------------------
+    
+    
     public Stage getStage() {
         return stage;
     }

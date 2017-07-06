@@ -125,62 +125,62 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <DatePicker maxHeight="25.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="334.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+            <DatePicker fx:id="OpenDateDatePicker" editable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="334.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </DatePicker>
-            <DatePicker maxHeight="25.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+            <DatePicker fx:id="ClosedDateDatePicker" editable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </DatePicker>
-            <DatePicker maxHeight="25.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="333.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+            <DatePicker editable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="333.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </DatePicker>
-            <TextField maxHeight="25.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS">
+            <TextField editable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField maxHeight="25.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+            <TextField editable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField maxHeight="25.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+            <TextField editable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField maxHeight="25.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+            <TextField editable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField maxHeight="25.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+            <TextField editable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField maxHeight="25.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+            <TextField editable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+            <TextField editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+            <TextField editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+            <TextField editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>

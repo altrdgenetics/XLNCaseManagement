@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
+import com.xln.xlncasemanagement.model.sql.ActivityModel;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -26,4 +27,8 @@ public class DetailedActivitySceneController implements Initializable {
         // TODO
     }    
     
+    
+    public void setActive(ActivityModel expensePassed) {
+        
+    }
 }
