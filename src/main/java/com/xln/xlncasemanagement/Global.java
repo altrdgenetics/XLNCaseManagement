@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement;
 
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -17,6 +18,7 @@ public class Global {
     private static Parent root;    
     private static Stage mainStage;
     private static StageLauncher stageLauncher;
+    private static Image applicationLogo;
     
     //list of all states
     private static final String STATES[] = { "AL", "AK", "AS", "AZ", "AR", "CA", "CO",
@@ -65,6 +67,14 @@ public class Global {
 
     public static void setStageLauncher(StageLauncher stageLauncher) {
         Global.stageLauncher = stageLauncher;
+    }
+
+    public static Image getApplicationLogo() {
+        return applicationLogo;
+    }
+
+    public static void setApplicationLogo(Image applicationLogo) {
+        Global.applicationLogo = applicationLogo;
     }
 
     public static String[] getSTATES() {
