@@ -17,6 +17,8 @@ public class Global {
     
     private static Parent root;    
     private static Stage mainStage;
+    private static Stage incomingDocketingStage;
+    private static Stage outgoingDocketingStage;
     private static StageLauncher stageLauncher;
     private static Image applicationLogo;
     
@@ -69,6 +71,22 @@ public class Global {
         Global.stageLauncher = stageLauncher;
     }
 
+    public static Stage getIncomingDocketingStage() {
+        return incomingDocketingStage;
+    }
+
+    public static void setIncomingDocketingStage(Stage incomingDocketingStage) {
+        Global.incomingDocketingStage = incomingDocketingStage;
+    }
+
+    public static Stage getOutgoingDocketingStage() {
+        return outgoingDocketingStage;
+    }
+
+    public static void setOutgoingDocketingStage(Stage outgoingDocketingStage) {
+        Global.outgoingDocketingStage = outgoingDocketingStage;
+    }
+    
     public static Image getApplicationLogo() {
         return applicationLogo;
     }

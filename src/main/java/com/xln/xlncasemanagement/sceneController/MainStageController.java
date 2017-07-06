@@ -150,12 +150,28 @@ public class MainStageController implements Initializable {
         
     }
     
-    @FXML private void buttonTwoAction(){
-        Global.getStageLauncher().docketingIncomingScene(Global.getMainStage());
+    @FXML private void buttonTwoAction() {
+        if (Global.getIncomingDocketingStage() == null) {
+            Global.getStageLauncher().docketingIncomingScene(Global.getMainStage());
+        } else {
+            if (!Global.getIncomingDocketingStage().isShowing()) {
+                Global.getIncomingDocketingStage().show();
+            } else {
+                Global.getIncomingDocketingStage().toFront();
+            }
+        }
     }
-    
+
     @FXML private void buttonThreeAction(){
-        Global.getStageLauncher().docketingOutgoingScene(Global.getMainStage());
+        if (Global.getOutgoingDocketingStage()== null) {
+            Global.getStageLauncher().docketingOutgoingScene(Global.getMainStage());
+        } else {
+            if (!Global.getOutgoingDocketingStage().isShowing()) {
+                Global.getOutgoingDocketingStage().show();
+            } else {
+                Global.getIncomingDocketingStage().toFront();
+            }
+        }
     }
     
     @FXML private void buttonFourAction(){

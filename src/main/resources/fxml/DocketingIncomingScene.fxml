@@ -33,7 +33,7 @@
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-          <Button cancelButton="true" mnemonicParsing="false" text="Close" ButtonBar.buttonData="LEFT" />
+          <Button fx:id="CloseButton" cancelButton="true" mnemonicParsing="false" onAction="#closeButtonAction" text="Close" ButtonBar.buttonData="LEFT" />
           <Button defaultButton="true" mnemonicParsing="false" styleClass="primary" text="File" ButtonBar.buttonData="RIGHT" />
         </buttons>
          <BorderPane.margin>

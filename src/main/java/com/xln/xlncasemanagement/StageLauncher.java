@@ -78,11 +78,12 @@ public class StageLauncher {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/DocketingIncomingScene.fxml"));
             Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
             stage.initOwner(stagePassed);
             stage.setScene(scene);
 
             DocketingIncomingSceneController controller = loader.getController();
-            controller.setActive();
+            controller.setActive(stage);
 
             stage.showAndWait();
         } catch (IOException ex) {
@@ -96,11 +97,12 @@ public class StageLauncher {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/DocketingOutgoingScene.fxml"));
             Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
             stage.initOwner(stagePassed);
             stage.setScene(scene);
 
             DocketingOutgoingSceneController controller = loader.getController();
-            controller.setActive();
+            controller.setActive(stage);
 
             stage.showAndWait();
         } catch (IOException ex) {
@@ -114,6 +116,7 @@ public class StageLauncher {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/DetailedCasePartyScene.fxml"));
             Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(stagePassed);
             stage.setScene(scene);
