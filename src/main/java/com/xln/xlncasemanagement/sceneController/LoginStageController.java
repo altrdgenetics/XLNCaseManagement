@@ -13,8 +13,10 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -32,6 +34,8 @@ public class LoginStageController implements Initializable {
     private final int wrongPassword = 1;
     private final int goodLogin = 2;
         
+    @FXML private Label HeaderLabel;
+    @FXML private ImageView logoImage;
     @FXML private TextField UsernameTextField;
     @FXML private PasswordField PasswordTextField;
     @FXML private Button LoginButton;
@@ -64,6 +68,10 @@ public class LoginStageController implements Initializable {
             Platform.exit();
             System.exit(0);
         });
+        if (Global.getCompanyInformation() != null){
+            HeaderLabel.setText(Global.getCompanyInformation().getName() + " Login");
+            logoImage.setImage(Global.getApplicationLogo());
+        }
         UsernameTextField.requestFocus();
     }
     

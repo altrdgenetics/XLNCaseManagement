@@ -19,6 +19,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -63,6 +64,7 @@ public class MainStageController implements Initializable {
     @FXML private TextField headerField4;
     @FXML private Label headerLabel5;
     @FXML private TextField headerField5;
+    @FXML private ImageView headerLogo;
     
     //Left Hand Side Buttons----------------------------------------
     @FXML private VBox buttonBar;
@@ -116,6 +118,7 @@ public class MainStageController implements Initializable {
             Platform.exit();
             System.exit(0);
         });
+        headerLogo.setImage(Global.getApplicationLogo());
         onTabSelection();
     }
 

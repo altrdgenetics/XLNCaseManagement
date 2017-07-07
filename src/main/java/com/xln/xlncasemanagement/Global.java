@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement;
 
+import com.xln.xlncasemanagement.model.sql.CompanyModel;
 import java.text.SimpleDateFormat;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
@@ -21,6 +22,7 @@ public class Global {
     private static Stage incomingDocketingStage;
     private static Stage outgoingDocketingStage;
     private static StageLauncher stageLauncher;
+    private static CompanyModel companyInformation;
     private static Image applicationLogo;
     
     //list of all states
@@ -92,6 +94,14 @@ public class Global {
 
     public static void setOutgoingDocketingStage(Stage outgoingDocketingStage) {
         Global.outgoingDocketingStage = outgoingDocketingStage;
+    }
+
+    public static CompanyModel getCompanyInformation() {
+        return companyInformation;
+    }
+
+    public static void setCompanyInformation(CompanyModel companyInformation) {
+        Global.companyInformation = companyInformation;
     }
     
     public static Image getApplicationLogo() {

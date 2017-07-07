@@ -137,7 +137,7 @@
                      </padding>
                         </Label>
                   <ComboBox fx:id="headerField1" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
-                  <ImageView disable="true" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
+                  <ImageView fx:id="headerLogo" disable="true" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../image/xlnlogo.png" />
                      </image>

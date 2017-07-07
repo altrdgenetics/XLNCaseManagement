@@ -1,5 +1,6 @@
 package com.xln.xlncasemanagement;
 
+import com.xln.xlncasemanagement.sql.SQLCompany;
 import com.xln.xlncasemanagement.util.LabelHashTables;
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -19,8 +20,16 @@ public class MainApp extends Application {
     private void setApplicationDefaults(){
         //Remove Later
         LabelHashTables.setGlobalLabels("1");
+
+        //Set company Information
+        Global.setCompanyInformation(SQLCompany.getCompanyInformation());
         
-        Global.setApplicationLogo(new Image(getClass().getResource("/image/xlnlogo.png").toString()));
+        if (Global.getCompanyInformation().getLogo() == null){
+            Global.setApplicationLogo(new Image(getClass().getResource("/image/xlnlogo.png").toString()));
+        } else {
+            Global.setApplicationLogo(Global.getCompanyInformation().getLogo());
+        }
+
     }
     
 }
