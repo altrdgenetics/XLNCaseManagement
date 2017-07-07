@@ -14,3 +14,4 @@ DBConnectionInfo.java
 *.jar
 target/*
 target/
+/src/main/java/com/xln/xlncasemanagement/sql/DBCInfo.java

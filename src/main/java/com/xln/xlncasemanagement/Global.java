@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement;
 
+import java.text.SimpleDateFormat;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -29,6 +30,12 @@ public class Global {
         "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "MP", "OH", "OK", "OR",
         "PW", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UM", "UT", "VT", "VA",
         "VI", "WA", "WV", "WI", "WY"};
+    
+    //Date Formatters
+    private static final SimpleDateFormat mmddyyyyhhmmssa = new SimpleDateFormat("EEE, MM/dd/yyyy hh:mm:ss a");
+    private static final SimpleDateFormat iCalendarDateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmm'00'");
+    private static final SimpleDateFormat mmddyyyy = new SimpleDateFormat("MM/dd/yyyy");
+    private static final SimpleDateFormat hhmmssa = new SimpleDateFormat("hh:mm:ss a");
     
     //List of Label Changes
     private static String buttonLabel1 = "";
@@ -193,6 +200,22 @@ public class Global {
 
     public static void setInformationLabel4(String informationLabel4) {
         Global.informationLabel4 = informationLabel4;
+    }
+
+    public static SimpleDateFormat getMmddyyyyhhmmssa() {
+        return mmddyyyyhhmmssa;
+    }
+
+    public static SimpleDateFormat getiCalendarDateFormat() {
+        return iCalendarDateFormat;
+    }
+
+    public static SimpleDateFormat getMmddyyyy() {
+        return mmddyyyy;
+    }
+
+    public static SimpleDateFormat getHhmmssa() {
+        return hhmmssa;
     }
     
     

@@ -14,6 +14,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -32,6 +34,17 @@ public class MainStageController implements Initializable {
 
     private Stage stage;
     private Tab selectedTabTitle;
+    
+    //Menu Items----------------------------------------------------
+    @FXML private Menu fileMenu;
+    @FXML private MenuItem preferencesMenuItem;
+    @FXML private MenuItem closeMenuItem;
+    @FXML private Menu reportMenu;
+    @FXML private MenuItem runReportMenuItem;
+    @FXML private Menu adminMenu;
+    @FXML private MenuItem databaseMaintenanceMenuItem;
+    @FXML private Menu helpMenu;
+    @FXML private MenuItem aboutMenuItem;
     
     //Header Information--------------------------------------------
     @FXML private Label clientLabel;
@@ -113,6 +126,33 @@ public class MainStageController implements Initializable {
         hideButtons();
     }
     
+    @FXML private void handlePreferencesMenuItem() {
+        //TODO
+    }
+    
+    @FXML private void handleCloseMenuItem() { 
+        stage.setOnCloseRequest((WindowEvent t) -> {
+            Platform.exit();
+            System.exit(0);
+        });
+    }
+    
+    @FXML private void handleRunReportMenuItem() {
+        //TODO
+    }
+    
+    @FXML private void handleMenuItem() {
+        //TODO
+    }
+    
+    @FXML private void handleDatabaseMaintenanceMenuItem() {
+        Global.getStageLauncher().databaseMaintenanceScene(stage);
+    }
+    
+    @FXML private void handleAboutMenuItem() {
+        //TODO
+    }
+        
     private void setHeaderLabels(){
         headerLabel1.setText(Global.getHeaderLabel1());
         headerLabel2.setText(Global.getHeaderLabel2());
@@ -149,7 +189,7 @@ public class MainStageController implements Initializable {
     }
     
     @FXML private void buttonOneAction(){
-        
+        //TODO
     }
     
     @FXML private void buttonTwoAction() {
