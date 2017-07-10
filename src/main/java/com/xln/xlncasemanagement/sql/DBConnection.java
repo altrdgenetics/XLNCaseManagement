@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.sql;
 
+import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.StringUtilities;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -32,11 +33,11 @@ public class DBConnection {
             } catch (ClassNotFoundException | SQLException e) {
                 nbAttempts++;
                 if (nbAttempts > 0) {
-                    System.out.println(StringUtilities.currentTime()
+                    DebugTools.Printout(StringUtilities.currentTime()
                             + " - Unable to connect to server. Trying again shortly.");
                 }
                 try {
-                    System.out.println("Sleeping for: " + 3000 * nbAttempts + "ms");
+                    DebugTools.Printout("Sleeping for: " + 3000 * nbAttempts + "ms");
                     Thread.sleep(3000 * nbAttempts);
                 } catch (InterruptedException exi) {
                     System.err.println(exi.getMessage());
@@ -62,11 +63,11 @@ public class DBConnection {
             } catch (ClassNotFoundException | SQLException e) {
                 nbAttempts++;
                 if (nbAttempts > 0) {
-                    System.out.println(StringUtilities.currentTime()
+                    DebugTools.Printout(StringUtilities.currentTime()
                             + " - Unable to connect to server. Trying again shortly.");
                 }
                 try {
-                    System.out.println("Sleeping for: " + 3000 * nbAttempts + "ms");
+                    DebugTools.Printout("Sleeping for: " + 3000 * nbAttempts + "ms");
                     Thread.sleep(3000 * nbAttempts);
                 } catch (InterruptedException exi) {
                     System.err.println(exi.getMessage());

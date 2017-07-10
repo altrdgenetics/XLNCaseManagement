@@ -9,6 +9,7 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.table.PartyTableModel;
+import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -53,7 +54,7 @@ public class PartySceneController implements Initializable {
     }    
     
     public void setActive() {
-        System.out.println("Set Party Tab Active");
+        DebugTools.Printout("Set Party Tab Active");
     }
     
     @FXML
@@ -62,10 +63,10 @@ public class PartySceneController implements Initializable {
 
         if (row != null) {
             if (event.getClickCount() == 1) {
-                System.out.println("Party Table Single Click");
+                DebugTools.Printout("Party Table Single Click");
                 
             } else if (event.getClickCount() >= 2) {
-                System.out.println("Party Table Double Click");
+                DebugTools.Printout("Party Table Double Click");
                 Global.getStageLauncher().detailedCasePartyAddEditScene(Global.getMainStage(), (PartyModel) row.getObject().getValue());
                 //TODO: RELOAD TABLE
             }

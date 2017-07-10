@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
+import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -35,7 +36,7 @@ public class NotesSceneController implements Initializable {
     }
 
     public void setActive() {
-        System.out.println("Set Notes Tab Active");
+        DebugTools.Printout("Set Notes Tab Active");
     }
 
     public void mainPanelButtonFourAction() {
@@ -45,13 +46,13 @@ public class NotesSceneController implements Initializable {
         if (updateMode) {
             notesArea.requestFocus();
         } else {
-            System.out.println("Saved Information");
+            DebugTools.Printout("Saved Information");
         }
     }
 
     public void mainPanelButtonDeleteAction() {
         updateMode = !updateMode;
-        System.out.println("Reverted Information (Cancel Button Action)");
+        DebugTools.Printout("Reverted Information (Cancel Button Action)");
         notesArea.setEditable(false);
     }
     

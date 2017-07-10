@@ -3,7 +3,6 @@ package com.xln.xlncasemanagement;
 import com.xln.xlncasemanagement.sql.SQLCompany;
 import com.xln.xlncasemanagement.util.LabelHashTables;
 import javafx.application.Application;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -24,9 +23,7 @@ public class MainApp extends Application {
         //Set company Information
         Global.setCompanyInformation(SQLCompany.getCompanyInformation());
         
-        if (Global.getCompanyInformation().getLogo() == null){
-            Global.setApplicationLogo(new Image(getClass().getResource("/image/xlnlogo.png").toString()));
-        } else {
+        if (Global.getCompanyInformation().getLogo() != null){
             Global.setApplicationLogo(Global.getCompanyInformation().getLogo());
         }
 

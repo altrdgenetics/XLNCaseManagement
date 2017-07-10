@@ -15,9 +15,9 @@ public class CompanyModel {
     
     private int id;
     private String name;
-    private String address1;
-    private String address2;
-    private String address3;
+    private String addressOne;
+    private String addressTwo;
+    private String addressThree;
     private String city;
     private String state;
     private String zip;
@@ -26,6 +26,7 @@ public class CompanyModel {
     private String fax;
     private String email;
     private Image logo;
+    private String logoSH1;
 
     public int getId() {
         return id;
@@ -43,28 +44,28 @@ public class CompanyModel {
         this.name = name;
     }
 
-    public String getAddress1() {
-        return address1;
+    public String getAddressOne() {
+        return addressOne;
     }
 
-    public void setAddress1(String address1) {
-        this.address1 = address1;
+    public void setAddressOne(String addressOne) {
+        this.addressOne = addressOne;
     }
 
-    public String getAddress2() {
-        return address2;
+    public String getAddressTwo() {
+        return addressTwo;
     }
 
-    public void setAddress2(String address2) {
-        this.address2 = address2;
+    public void setAddressTwo(String addressTwo) {
+        this.addressTwo = addressTwo;
     }
 
-    public String getAddress3() {
-        return address3;
+    public String getAddressThree() {
+        return addressThree;
     }
 
-    public void setAddress3(String address3) {
-        this.address3 = address3;
+    public void setAddressThree(String addressThree) {
+        this.addressThree = addressThree;
     }
 
     public String getCity() {
@@ -130,10 +131,13 @@ public class CompanyModel {
     public void setLogo(Image logo) {
         this.logo = logo;
     }
-    
-    
-    
-    
-    
-    
+
+    public String getLogoSH1() {
+        return logoSH1;
+    }
+
+    public void setLogoSH1(String logoSH1) {
+        this.logoSH1 = logoSH1;
+    }
+        
 }

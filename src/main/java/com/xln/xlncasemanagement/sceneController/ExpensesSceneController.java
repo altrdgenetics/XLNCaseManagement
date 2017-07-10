@@ -6,7 +6,9 @@ package com.xln.xlncasemanagement.sceneController;
  * and open the template in the editor.
  */
 
+import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.table.ExpensesTableModel;
+import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -34,7 +36,7 @@ public class ExpensesSceneController implements Initializable {
     }    
     
     public void setActive() {
-        System.out.println("Set Expense Tab Active");
+        DebugTools.Printout("Set Expense Tab Active");
     }
     
 }

@@ -17,6 +17,8 @@ import javafx.stage.Stage;
  */
 public class Global {
     
+    private static final boolean debug = true;
+    
     private static Parent root;    
     private static Stage mainStage;
     private static Stage incomingDocketingStage;
@@ -54,7 +56,10 @@ public class Global {
     private static String informationLabel2 = "";
     private static String informationLabel3 = "";
     private static String informationLabel4 = "";
-        
+
+    public static boolean isDebug() {
+        return debug;
+    }
     
     public static Parent getRoot() {
         return root;

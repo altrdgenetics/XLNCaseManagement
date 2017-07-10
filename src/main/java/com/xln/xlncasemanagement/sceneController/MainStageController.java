@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -149,7 +150,7 @@ public class MainStageController implements Initializable {
     }
     
     @FXML private void handleDatabaseMaintenanceMenuItem() {
-        Global.getStageLauncher().databaseMaintenanceScene(stage);
+        Global.getStageLauncher().MaintenanceScene(stage);
     }
     
     @FXML private void handleAboutMenuItem() {
@@ -281,28 +282,27 @@ public class MainStageController implements Initializable {
         updateButtonFourLabel(disable);
     }
     
-    
-    private void onTabSelection(){
+    private void onTabSelection() {
         selectedTabTitle = mainTabPane.getSelectionModel().getSelectedItem();
-        
-        if (selectedTabTitle.equals(informationTab)){
-            System.out.println("Selected Information Tab");
+
+        if (selectedTabTitle.equals(informationTab)) {
+            DebugTools.Printout("Selected Information Tab");
             informationSceneController.setActive();
             setInformationTabButtons();
         } else if (selectedTabTitle.equals(partyTab)) {
-            System.out.println("Selected Party Tab");
+            DebugTools.Printout("Selected Party Tab");
             partySceneController.setActive();
             setPartyTabButtons();
         } else if (selectedTabTitle.equals(activityTab)) {
-            System.out.println("Selected Activity Tab");
+            DebugTools.Printout("Selected Activity Tab");
             activitySceneController.setActive();
             setActivityTabButtons();
         } else if (selectedTabTitle.equals(expenseTab)) {
-            System.out.println("Selected Expense Tab");
+            DebugTools.Printout("Selected Expense Tab");
             expensesSceneController.setActive();
             setExpenseTabButtons();
-        } else if (selectedTabTitle.equals(noteTab)){
-            System.out.println("Selected Note Tab");
+        } else if (selectedTabTitle.equals(noteTab)) {
+            DebugTools.Printout("Selected Note Tab");
             notesSceneController.setActive();
             setNoteTabButtons();
         }

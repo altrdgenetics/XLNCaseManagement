@@ -6,6 +6,7 @@ package com.xln.xlncasemanagement.sceneController;
  * and open the template in the editor.
  */
 
+import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -35,7 +36,7 @@ public class InformationSceneController implements Initializable {
     }    
     
     public void setActive() {
-        System.out.println("Set Information Tab Active");
+        DebugTools.Printout("Set Information Tab Active");
     }
         
     public void mainPanelButtonFourAction() {
@@ -45,13 +46,13 @@ public class InformationSceneController implements Initializable {
         if (updateMode) {
             OpenDateDatePicker.requestFocus();
         } else {
-            System.out.println("Saved Information");
+            DebugTools.Printout("Saved Information");
         }
     }
         
     public void mainPanelButtonDeleteAction() {
         updateMode = !updateMode;
-        System.out.println("Reverted Information (Cancel Button Action)");
+        DebugTools.Printout("Reverted Information (Cancel Button Action)");
         setEditableStatus(false);
     }
     
