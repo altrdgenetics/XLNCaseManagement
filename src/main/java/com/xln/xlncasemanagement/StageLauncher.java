@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement;
 
 import com.xln.xlncasemanagement.model.sql.ActivityModel;
+import com.xln.xlncasemanagement.model.sql.ActivityTypeModel;
 import com.xln.xlncasemanagement.model.sql.ExpenseModel;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.sceneController.*;
@@ -227,6 +228,46 @@ public class StageLauncher {
 
             MaintenanceCompanySceneController controller = loader.getController();
             controller.setActive(stage);
+
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void MaintenanceActivityTypeScene(Stage stagePassed) {
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/MaintenanceActivityTypeScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            MaintenanceActivityTypeSceneController controller = loader.getController();
+            controller.setActive(stage);
+
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void MaintenanceActivityTypeAddEditScene(Stage stagePassed, ActivityTypeModel objectPassed) {
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/MaintenanceActivityTypeAddEditScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            MaintenanceActivityTypeAddEditSceneController controller = loader.getController();
+            controller.setActive(stage, objectPassed);
 
             stage.showAndWait();
         } catch (IOException ex) {

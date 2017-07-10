@@ -54,7 +54,7 @@ public class MaintenanceSceneController implements Initializable {
     }
     
     @FXML private void activityTypeButtonAction() {
-        
+        Global.getStageLauncher().MaintenanceActivityTypeScene(stage);
     }
     
     @FXML private void companyButtonAction() {
