@@ -9,6 +9,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.CompanyModel;
 import com.xln.xlncasemanagement.sql.SQLCompany;
 import com.xln.xlncasemanagement.util.AlertDialog;
+import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -58,6 +59,7 @@ public class MaintenanceCompanySceneController implements Initializable {
     
     public void setActive(Stage stagePassed) {
         stage = stagePassed;
+        addListeners();
         loadStateComboBox();
         loadCompanyInformation();
     }
@@ -67,7 +69,24 @@ public class MaintenanceCompanySceneController implements Initializable {
     }
     
     @FXML private void saveButtonAction() {
-        
+        CompanyModel item = new CompanyModel();
+        item.setName(CompanyNameTextField.getText().trim().isEmpty() ? null : CompanyNameTextField.getText().trim());
+        item.setAddressOne(AddressOneTextField.getText().trim().isEmpty() ? null : AddressOneTextField.getText().trim());
+        item.setAddressTwo(AddressTwoTextField.getText().trim().isEmpty() ? null : AddressTwoTextField.getText().trim());
+        item.setAddressThree(AddressThreeTextField.getText().trim().isEmpty() ? null : AddressThreeTextField.getText().trim());
+        item.setCity(CityTextField.getText().trim().isEmpty() ? null : CityTextField.getText().trim());
+        item.setState(StateComboBox.getValue().toString().trim().isEmpty() ? null : StateComboBox.getValue().toString().trim());
+        item.setZip(ZipCodeTextField.getText().trim().isEmpty() ? null : ZipCodeTextField.getText().trim());
+        item.setPhone(PhoneNumberTextField.getText().trim().isEmpty() ? null : NumberFormatService.convertPhoneNumberToString(PhoneNumberTextField.getText().trim()));
+        item.setFax(FaxNumberTextField.getText().trim().isEmpty() ? null : NumberFormatService.convertPhoneNumberToString(FaxNumberTextField.getText().trim()));
+        item.setEmail(EmailAddressTextField.getText().trim().isEmpty() ? null : EmailAddressTextField.getText().trim());
+        item.setWebsite(WebAddressTextField.getText().trim().isEmpty() ? null : WebAddressTextField.getText().trim());
+        item.setId(Global.getCompanyInformation().getId());
+        if (SQLCompany.updateCompanyInformation(item)){
+            stage.close();
+        } else {
+            AlertDialog.StaticAlert(4, "Database Save Error", "Unable To Save Information", "Unable to save company information to the database, please try again.");
+        }
     }
     
     @FXML private void updateLogoButtonAction() {
@@ -76,6 +95,12 @@ public class MaintenanceCompanySceneController implements Initializable {
         if (image != null){
             updateLogo(image);
         }
+    }
+    
+    private void addListeners(){
+        SaveButton.disableProperty().bind(
+                CompanyNameTextField.textProperty().isEmpty()
+        );
     }
     
     private void loadStateComboBox() {
@@ -87,17 +112,17 @@ public class MaintenanceCompanySceneController implements Initializable {
     private void loadCompanyInformation() {
         CompanyModel item = SQLCompany.getCompanyInformation();
         
-        CompanyNameTextField.setText(item.getName());
-        AddressOneTextField.setText(item.getAddressOne());
-        AddressTwoTextField.setText(item.getAddressTwo());
-        AddressThreeTextField.setText(item.getAddressThree());
-        CityTextField.setText(item.getCity());
-        StateComboBox.setValue(item.getState());
-        ZipCodeTextField.setText(item.getZip());
-        PhoneNumberTextField.setText(item.getPhone());
-        FaxNumberTextField.setText(item.getFax());
-        EmailAddressTextField.setText(item.getEmail());
-        WebAddressTextField.setText(item.getWebsite());
+        CompanyNameTextField.setText(item.getName() == null ? "" : item.getName().trim());
+        AddressOneTextField.setText(item.getAddressOne() == null ? "" : item.getAddressOne().trim());
+        AddressTwoTextField.setText(item.getAddressTwo() == null ? "" : item.getAddressTwo().trim());
+        AddressThreeTextField.setText(item.getAddressThree() == null ? "" : item.getAddressThree().trim());
+        CityTextField.setText(item.getCity() == null ? "" : item.getCity().trim());
+        StateComboBox.setValue(item.getState() == null ? "" : item.getState().trim());
+        ZipCodeTextField.setText(item.getZip() == null ? "" : item.getZip().trim());
+        PhoneNumberTextField.setText(item.getPhone() == null ? "" : NumberFormatService.convertStringToPhoneNumber(item.getPhone().trim()));
+        FaxNumberTextField.setText(item.getFax() == null ? "" : NumberFormatService.convertStringToPhoneNumber(item.getFax().trim()));
+        EmailAddressTextField.setText(item.getEmail() == null ? "" : item.getEmail().trim());
+        WebAddressTextField.setText(item.getWebsite() == null ? "" : item.getWebsite().trim());
         
         if (item.getLogo() != null){
             logoImage.setImage(item.getLogo());

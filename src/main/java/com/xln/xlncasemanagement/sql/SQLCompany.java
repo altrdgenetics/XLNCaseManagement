@@ -70,7 +70,50 @@ public class SQLCompany {
         }
         return item;
     }
-    
+        
+    public static boolean updateCompanyInformation(CompanyModel item) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBConnection.connectToDB();
+
+            String sql = "UPDATE table09 SET "
+                    + "col02 = ?, " //Name
+                    + "col03 = ?, " //Address1
+                    + "col04 = ?, " //Address2
+                    + "col05 = ?, " //Address3
+                    + "col06 = ?, " //City
+                    + "col07 = ?, " //State
+                    + "col08 = ?, " //Zip
+                    + "col09 = ?, " //Website
+                    + "col10 = ?, " //Phone
+                    + "col11 = ?, " //Fax
+                    + "col12 = ? "  //Email
+                    + "WHERE col01 = ?"; //ID
+
+            ps = conn.prepareStatement(sql);            
+            ps.setString(1, item.getName());
+            ps.setString(2, item.getAddressOne());
+            ps.setString(3, item.getAddressTwo());
+            ps.setString(4, item.getAddressThree());
+            ps.setString(5, item.getCity());
+            ps.setString(6, item.getState());
+            ps.setString(7, item.getZip());
+            ps.setString(8, item.getWebsite());
+            ps.setString(9, item.getPhone());
+            ps.setString(10, item.getFax());
+            ps.setString(11, item.getEmail());
+            ps.setInt(12, item.getId());
+            ps.executeUpdate();       
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLCompany.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+        }
+        return true;
+    }
     
     public static boolean updateCompanyLogo(File image) {
         Connection conn = null;
@@ -96,11 +139,12 @@ public class SQLCompany {
             
         } catch (SQLException ex) {
             Logger.getLogger(SQLCompany.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
         }
-        return false;
+        return true;
     }
     
     public static boolean verifyImageChecksum(){
