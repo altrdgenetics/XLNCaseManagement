@@ -9,7 +9,6 @@ import com.xln.xlncasemanagement.model.sql.ActivityTypeModel;
 import com.xln.xlncasemanagement.model.table.MaintenanceActivityTypeTableModel;
 import com.xln.xlncasemanagement.util.DebugTools;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

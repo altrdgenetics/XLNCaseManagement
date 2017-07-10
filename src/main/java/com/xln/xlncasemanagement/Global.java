@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement;
 
 import com.xln.xlncasemanagement.model.sql.CompanyModel;
+import com.xln.xlncasemanagement.model.sql.UserModel;
 import java.text.SimpleDateFormat;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
@@ -26,6 +27,7 @@ public class Global {
     private static StageLauncher stageLauncher;
     private static CompanyModel companyInformation;
     private static Image applicationLogo;
+    private static UserModel currentUser;
     
     //list of all states
     private static final String STATES[] = { "AL", "AK", "AS", "AZ", "AR", "CA", "CO",
@@ -115,6 +117,14 @@ public class Global {
 
     public static void setApplicationLogo(Image applicationLogo) {
         Global.applicationLogo = applicationLogo;
+    }
+
+    public static UserModel getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(UserModel currentUser) {
+        Global.currentUser = currentUser;
     }
 
     public static String[] getSTATES() {
