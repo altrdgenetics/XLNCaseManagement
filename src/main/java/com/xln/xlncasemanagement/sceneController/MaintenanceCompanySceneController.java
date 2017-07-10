@@ -82,9 +82,14 @@ public class MaintenanceCompanySceneController implements Initializable {
         item.setEmail(EmailAddressTextField.getText().trim().isEmpty() ? null : EmailAddressTextField.getText().trim());
         item.setWebsite(WebAddressTextField.getText().trim().isEmpty() ? null : WebAddressTextField.getText().trim());
         item.setId(Global.getCompanyInformation().getId());
+        
+        //Insert Data
         if (SQLCompany.updateCompanyInformation(item)){
+            //Update Global Data if Successfully inserted.
+            Global.setCompanyInformation(SQLCompany.getCompanyInformation());
             stage.close();
         } else {
+            //Show Dialog if Save to Database Fails
             AlertDialog.StaticAlert(4, "Database Save Error", "Unable To Save Information", "Unable to save company information to the database, please try again.");
         }
     }
