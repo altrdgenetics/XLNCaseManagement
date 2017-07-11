@@ -44,6 +44,8 @@ public class Global {
     private static final SimpleDateFormat hhmmssa = new SimpleDateFormat("hh:mm:ss a");
     
     //List of Label Changes
+    private static String newCaseType = "";
+    
     private static String buttonLabel1 = "";
     private static String buttonLabel2 = "";
     private static String buttonLabel3 = "";
@@ -129,6 +131,14 @@ public class Global {
 
     public static String[] getSTATES() {
         return STATES;
+    }
+
+    public static String getNewCaseType() {
+        return newCaseType;
+    }
+
+    public static void setNewCaseType(String newCaseType) {
+        Global.newCaseType = newCaseType;
     }
 
     public static String getButtonLabel1() {

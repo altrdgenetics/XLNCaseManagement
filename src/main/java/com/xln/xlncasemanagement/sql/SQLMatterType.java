@@ -5,8 +5,8 @@
  */
 package com.xln.xlncasemanagement.sql;
 
-import com.xln.xlncasemanagement.model.sql.ExpenseTypeModel;
-import com.xln.xlncasemanagement.model.table.MaintenanceExpenseTypeTableModel;
+import com.xln.xlncasemanagement.model.sql.MatterTypeModel;
+import com.xln.xlncasemanagement.model.table.MaintenanceMatterTypeTableModel;
 import com.xln.xlncasemanagement.util.DebugTools;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,15 +23,15 @@ import org.apache.commons.dbutils.DbUtils;
  *
  * @author User
  */
-public class SQLExpenseType {
+public class SQLMatterType {
     
-    public static ObservableList<MaintenanceExpenseTypeTableModel> searchExpenseTypes(String[] param) {
-        ObservableList<MaintenanceExpenseTypeTableModel> list = FXCollections.observableArrayList();
+    public static ObservableList<MaintenanceMatterTypeTableModel> searchMatterTypes(String[] param) {
+        ObservableList<MaintenanceMatterTypeTableModel> list = FXCollections.observableArrayList();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String sql = "SELECT * FROM table14 WHERE ";
+        String sql = "SELECT * FROM table23 WHERE ";
         if (param.length > 0) {
 
             for (int i = 0; i < param.length; i++) {
@@ -51,13 +51,13 @@ public class SQLExpenseType {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                ExpenseTypeModel item = new ExpenseTypeModel();
+                MatterTypeModel item = new MatterTypeModel();
                 item.setId(rs.getInt("col01"));
                 item.setActive(rs.getBoolean("col02"));
-                item.setExpenseType(rs.getString("col03"));
+                item.setMatterType(rs.getString("col03"));
 
                 list.add(
-                        new MaintenanceExpenseTypeTableModel(
+                        new MaintenanceMatterTypeTableModel(
                                 item,
                                 rs.getBoolean("col02"),
                                 rs.getString("col03")
@@ -73,11 +73,11 @@ public class SQLExpenseType {
         return list;
     }
     
-    public static int insertExpenseType(ExpenseTypeModel item) {
+    public static int insertMatterType(MatterTypeModel item) {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String sql = "INSERT INTO table14 ("
+        String sql = "INSERT INTO table23 ("
                 + "col02, "
                 + "col03"
                 + ") VALUES ("
@@ -87,7 +87,7 @@ public class SQLExpenseType {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setBoolean(1, item.isActive());
-            ps.setString(2, item.getExpenseType());
+            ps.setString(2, item.getMatterType());
             ps.executeUpdate();
 
             ResultSet newRow = ps.getGeneratedKeys();
@@ -103,11 +103,11 @@ public class SQLExpenseType {
         return 0;
     }
 
-    public static void updateExpenseTypeByID(ExpenseTypeModel item) {
+    public static void updateMatterTypeByID(MatterTypeModel item) {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String sql = "UPDATE table14 SET "
+        String sql = "UPDATE table23 SET "
                 + "col02 = ?, "
                 + "col03 = ? "
                 + "WHERE col01 = ?";
@@ -115,7 +115,7 @@ public class SQLExpenseType {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql);
             ps.setBoolean(1, item.isActive());
-            ps.setString (2, item.getExpenseType());
+            ps.setString (2, item.getMatterType());
             ps.setInt    (3, item.getId());
             ps.executeUpdate();
         } catch (SQLException ex) {
@@ -126,22 +126,22 @@ public class SQLExpenseType {
         }
     }
 
-    public static List<ExpenseTypeModel> getActiveExpenseType() {
-        List<ExpenseTypeModel> list = new ArrayList();
+    public static List<MatterTypeModel> getActiveMatterType() {
+        List<MatterTypeModel> list = new ArrayList();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "SELECT * FROM table14 WHERE col02 = 1";
+        String sql = "SELECT * FROM table23 WHERE col02 = 1";
 
         try {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                ExpenseTypeModel item = new ExpenseTypeModel();
+                MatterTypeModel item = new MatterTypeModel();
                 item.setId(rs.getInt("col01"));
                 item.setActive(rs.getBoolean("col02"));
-                item.setExpenseType(rs.getString("col03"));
+                item.setMatterType(rs.getString("col03"));
                 list.add(item);
             }
         } catch (SQLException ex) {

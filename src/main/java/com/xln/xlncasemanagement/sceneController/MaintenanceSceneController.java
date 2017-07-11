@@ -46,6 +46,7 @@ public class MaintenanceSceneController implements Initializable {
     
     public void setActive(Stage stagePassed) {
         stage = stagePassed;
+        MatterTypeButton.setText(Global.getNewCaseType() + " Type");
     }
     
     @FXML private void closeButtonAction() {
@@ -73,7 +74,7 @@ public class MaintenanceSceneController implements Initializable {
     }
     
     @FXML private void matterTypeButtonAction() {
-        
+        Global.getStageLauncher().MaintenanceMatterTypeScene(stage);
     }
     
     @FXML private void partyButtonAction() {
