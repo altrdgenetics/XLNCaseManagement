@@ -110,19 +110,19 @@ public class StageLauncher {
         }
     }
     
-    public void detailedCasePartyAddEditScene(Stage stagePassed, PartyModel itemPassed) {
+    public void detailedPartyAddEditScene(Stage stagePassed, boolean maintenanceMode, PartyModel itemPassed) {
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/DetailedCasePartyScene.fxml"));
+            loader.setLocation(getClass().getResource("/fxml/DetailedPartyScene.fxml"));
             Scene scene = new Scene(loader.load());
             stage.getIcons().add(Global.getApplicationLogo());
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(stagePassed);
             stage.setScene(scene);
 
-            DetailedCasePartySceneController controller = loader.getController();
-            controller.setActive(itemPassed);
+            DetailedPartySceneController controller = loader.getController();
+            controller.setActive(maintenanceMode, itemPassed);
 
             stage.setResizable(false);
             stage.sizeToScene();
@@ -172,7 +172,7 @@ public class StageLauncher {
         }
     }
     
-    public void partySearchScene(Stage stagePassed) {
+    public void partySearchScene(Stage stagePassed, boolean maintenanceMode) {
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -184,7 +184,7 @@ public class StageLauncher {
             stage.setScene(scene);
 
             PartySearchSceneController controller = loader.getController();
-            controller.setActive();
+            controller.setActive(maintenanceMode);
 
             stage.showAndWait();
         } catch (IOException ex) {

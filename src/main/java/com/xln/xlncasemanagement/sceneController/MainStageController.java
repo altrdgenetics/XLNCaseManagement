@@ -17,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -41,9 +42,12 @@ public class MainStageController implements Initializable {
     @FXML private Menu fileMenu;
     @FXML private MenuItem preferencesMenuItem;
     @FXML private MenuItem closeMenuItem;
+    @FXML private Menu editMenu;
+    @FXML private MenuItem partyRolodexMenuItem;
+    @FXML private SeparatorMenuItem adminSeperatorMenuItem;
+    @FXML private Menu adminMenu;
     @FXML private Menu reportMenu;
     @FXML private MenuItem runReportMenuItem;
-    @FXML private Menu adminMenu;
     @FXML private MenuItem databaseMaintenanceMenuItem;
     @FXML private Menu helpMenu;
     @FXML private MenuItem aboutMenuItem;
@@ -81,8 +85,8 @@ public class MainStageController implements Initializable {
     //Inject Sub-FXML------------------------------------------------
     @FXML private AnchorPane informationScene; // Inject tab content
     @FXML private InformationSceneController informationSceneController; // Inject controller
-    @FXML private BorderPane partyScene; // Inject tab content
-    @FXML private PartySceneController partySceneController; // Inject controller
+    @FXML private BorderPane casePartyScene; // Inject tab content
+    @FXML private CasePartySceneController casePartySceneController; // Inject controller
     @FXML private BorderPane activityScene; // Inject tab content
     @FXML private ActivitySceneController activitySceneController; // Inject controller
     @FXML private BorderPane expensesScene; // Inject tab content
@@ -119,6 +123,12 @@ public class MainStageController implements Initializable {
             Platform.exit();
             System.exit(0);
         });
+        
+        if (!Global.getCurrentUser().isAdminRights()){
+            editMenu.getItems().remove(adminSeperatorMenuItem);
+            editMenu.getItems().remove(adminMenu);
+        }
+        
         headerLogo.setImage(Global.getApplicationLogo());
         onTabSelection();
     }
@@ -141,18 +151,18 @@ public class MainStageController implements Initializable {
         });
     }
     
-    @FXML private void handleRunReportMenuItem() {
-        //TODO
-    }
-    
-    @FXML private void handleMenuItem() {
-        //TODO
+    @FXML private void handlePartyRolodexMenuItem(){
+        Global.getStageLauncher().partySearchScene(stage, true);
     }
     
     @FXML private void handleDatabaseMaintenanceMenuItem() {
         Global.getStageLauncher().MaintenanceScene(stage);
     }
     
+    @FXML private void handleRunReportMenuItem() {
+        //TODO
+    }
+        
     @FXML private void handleAboutMenuItem() {
         //TODO
     }
@@ -225,7 +235,7 @@ public class MainStageController implements Initializable {
             informationSceneController.mainPanelButtonFourAction();
             disableTabsInUpdateMode(informationSceneController.isUpdateMode());
         } else if (selectedTabTitle.equals(partyTab)) {
-            Global.getStageLauncher().partySearchScene(stage);
+            Global.getStageLauncher().partySearchScene(stage, false);
         } else if (selectedTabTitle.equals(activityTab)) {
             Global.getStageLauncher().detailedActivityAddEditScene(Global.getMainStage(), null);
         } else if (selectedTabTitle.equals(expenseTab)) {
@@ -291,7 +301,7 @@ public class MainStageController implements Initializable {
             setInformationTabButtons();
         } else if (selectedTabTitle.equals(partyTab)) {
             DebugTools.Printout("Selected Party Tab");
-            partySceneController.setActive();
+            casePartySceneController.setActive();
             setPartyTabButtons();
         } else if (selectedTabTitle.equals(activityTab)) {
             DebugTools.Printout("Selected Activity Tab");
@@ -429,20 +439,20 @@ public class MainStageController implements Initializable {
         this.informationSceneController = informationSceneController;
     }
 
-    public BorderPane getPartyScene() {
-        return partyScene;
+    public BorderPane getCasePartyScene() {
+        return casePartyScene;
     }
 
-    public void setPartyScene(BorderPane partyScene) {
-        this.partyScene = partyScene;
+    public void setCasePartyScene(BorderPane casePartyScene) {
+        this.casePartyScene = casePartyScene;
     }
 
-    public PartySceneController getPartySceneController() {
-        return partySceneController;
+    public CasePartySceneController getCasePartySceneController() {
+        return casePartySceneController;
     }
 
-    public void setPartySceneController(PartySceneController partySceneController) {
-        this.partySceneController = partySceneController;
+    public void setCasePartySceneController(CasePartySceneController casePartySceneController) {
+        this.casePartySceneController = casePartySceneController;
     }
 
     public BorderPane getActivityScene() {

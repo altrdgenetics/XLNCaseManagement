@@ -1,5 +1,6 @@
 package com.xln.xlncasemanagement;
 
+import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.sql.SQLCompany;
 import com.xln.xlncasemanagement.util.LabelHashTables;
 import javafx.application.Application;
@@ -18,7 +19,7 @@ public class MainApp extends Application {
 
     private void setApplicationDefaults(){
         //Remove Later
-        LabelHashTables.setGlobalLabels("1");
+        setSpoofData();
 
         //Set company Information
         Global.setCompanyInformation(SQLCompany.getCompanyInformation());
@@ -26,7 +27,18 @@ public class MainApp extends Application {
         if (Global.getCompanyInformation().getLogo() != null){
             Global.setApplicationLogo(Global.getCompanyInformation().getLogo());
         }
-
     }
     
+    
+    /**
+     * Set pre-configured options for testing
+     */
+    private void setSpoofData() {
+        LabelHashTables.setGlobalLabels("1");
+        
+        UserModel user = new UserModel();
+        user.setAdminRights(true);
+        Global.setCurrentUser(user);
+                
+    }
 }

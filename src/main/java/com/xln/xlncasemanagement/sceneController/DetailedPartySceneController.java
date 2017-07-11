@@ -22,7 +22,7 @@ import javafx.scene.layout.GridPane;
  *
  * @author Andrew
  */
-public class DetailedCasePartySceneController implements Initializable {
+public class DetailedPartySceneController implements Initializable {
 
     
     @FXML private GridPane gridPane;
@@ -45,8 +45,9 @@ public class DetailedCasePartySceneController implements Initializable {
     @FXML private Button CloseButton;
     @FXML private Button SaveButton;    
     
-    PartyModel caseParty;
-    
+    boolean maintenanceMode;
+    PartyModel partyItem;
+        
     /**
      * Initializes the controller class.
      * @param url
@@ -57,18 +58,24 @@ public class DetailedCasePartySceneController implements Initializable {
         // TODO
     }    
     
-    public void setActive(PartyModel itemPassed) {
-        caseParty = itemPassed;
+    public void setActive(boolean maintenanceModePassed, PartyModel itemPassed) {
+        maintenanceMode = maintenanceModePassed;
+        partyItem = itemPassed;
+        String partyLabel = "";
         loadCaseRelationComboBox();
         loadPrefixComboBox();
         loadStateComboBox();
-        if (caseParty == null){
-            HeaderLabel.setText("Add Case Party Information");
+        if (!maintenanceMode){
+            partyLabel = "Case ";
+        }
+        
+        if (partyItem == null){
+            HeaderLabel.setText("Add " + partyLabel + "Party Information");
             gridPane.getChildren().remove(CaseRelationLabel);
             gridPane.getChildren().remove(CaseRelationCombobox);
             gridPane.getRowConstraints().get(1).setMaxHeight(0);
         } else {
-            HeaderLabel.setText("Edit Case Party Information");
+            HeaderLabel.setText("Edit " + partyLabel + "Party Information");
             loadInformation();
         }
         
@@ -90,20 +97,20 @@ public class DetailedCasePartySceneController implements Initializable {
     }
 
     private void loadInformation() {
-        CaseRelationCombobox.setValue(caseParty.getRelationName());
-        PrefixCombobox.setValue(caseParty.getPrefix());
-        FirstNameTextField.setText(caseParty.getFirstName());
-        MiddleInitialTextField.setText(caseParty.getMiddleInitial());
-        lastNameTextField.setText(caseParty.getLastName());
-        AddressOneTextField.setText(caseParty.getAddressOne());
-        AddressTwoTextField.setText(caseParty.getAddressTwo());
-        AddressThreeTextField.setText(caseParty.getAddressThree());
-        CityTextField.setText(caseParty.getCity());
-        StateComboBox.setValue(caseParty.getState());
-        ZipCodeTextField.setText(caseParty.getZip());
-        PhoneNumberOneTextField.setText(caseParty.getPhoneOne());
-        PhoneNumberTwoTextField.setText(caseParty.getPhoneTwo());
-        EmailAddressTextField.setText(caseParty.getEmail());
+        CaseRelationCombobox.setValue(partyItem.getRelationName());
+        PrefixCombobox.setValue(partyItem.getPrefix());
+        FirstNameTextField.setText(partyItem.getFirstName());
+        MiddleInitialTextField.setText(partyItem.getMiddleInitial());
+        lastNameTextField.setText(partyItem.getLastName());
+        AddressOneTextField.setText(partyItem.getAddressOne());
+        AddressTwoTextField.setText(partyItem.getAddressTwo());
+        AddressThreeTextField.setText(partyItem.getAddressThree());
+        CityTextField.setText(partyItem.getCity());
+        StateComboBox.setValue(partyItem.getState());
+        ZipCodeTextField.setText(partyItem.getZip());
+        PhoneNumberOneTextField.setText(partyItem.getPhoneOne());
+        PhoneNumberTwoTextField.setText(partyItem.getPhoneTwo());
+        EmailAddressTextField.setText(partyItem.getEmail());
     }
     
     @FXML

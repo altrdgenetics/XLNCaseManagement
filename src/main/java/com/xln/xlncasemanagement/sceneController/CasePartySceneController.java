@@ -8,7 +8,7 @@ package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
-import com.xln.xlncasemanagement.model.table.PartyTableModel;
+import com.xln.xlncasemanagement.model.table.CasePartyTableModel;
 import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,20 +23,20 @@ import javafx.scene.input.MouseEvent;
  *
  * @author User
  */
-public class PartySceneController implements Initializable {
+public class CasePartySceneController implements Initializable {
 
     @FXML
-    private TableView<PartyTableModel> partyTable;
+    private TableView<CasePartyTableModel> partyTable;
     @FXML
-    private TableColumn<PartyTableModel, Object> objectColumn;
+    private TableColumn<CasePartyTableModel, Object> objectColumn;
     @FXML
-    private TableColumn<PartyTableModel, String> relationColumn;
+    private TableColumn<CasePartyTableModel, String> relationColumn;
     @FXML
-    private TableColumn<PartyTableModel, String> nameColumn;
+    private TableColumn<CasePartyTableModel, String> nameColumn;
     @FXML
-    private TableColumn<PartyTableModel, String> addressColumn;
+    private TableColumn<CasePartyTableModel, String> addressColumn;
     @FXML
-    private TableColumn<PartyTableModel, String> phoneNumberColumn;
+    private TableColumn<CasePartyTableModel, String> phoneNumberColumn;
     
     /**
      * Initializes the controller class.
@@ -59,7 +59,7 @@ public class PartySceneController implements Initializable {
     
     @FXML
     private void tableListener(MouseEvent event) {
-        PartyTableModel row = partyTable.getSelectionModel().getSelectedItem();
+        CasePartyTableModel row = partyTable.getSelectionModel().getSelectedItem();
 
         if (row != null) {
             if (event.getClickCount() == 1) {
@@ -67,7 +67,7 @@ public class PartySceneController implements Initializable {
                 
             } else if (event.getClickCount() >= 2) {
                 DebugTools.Printout("Party Table Double Click");
-                Global.getStageLauncher().detailedCasePartyAddEditScene(Global.getMainStage(), (PartyModel) row.getObject().getValue());
+                Global.getStageLauncher().detailedPartyAddEditScene(Global.getMainStage(), false, (PartyModel) row.getObject().getValue());
                 //TODO: RELOAD TABLE
             }
         }

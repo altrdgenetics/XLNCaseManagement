@@ -5,9 +5,7 @@
  */
 package com.xln.xlncasemanagement.model.table;
 
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -16,34 +14,21 @@ import javafx.beans.property.StringProperty;
  *
  * @author User
  */
-public class PartyTableModel {
+public class CasePartyTableModel {
     
     
     public ObjectProperty object = new SimpleObjectProperty(null);
-    public BooleanProperty active = new SimpleBooleanProperty(false);
+    public StringProperty relation = new SimpleStringProperty(null);
     public StringProperty name = new SimpleStringProperty(null);
     public StringProperty address = new SimpleStringProperty(null);
     public StringProperty phoneNumber = new SimpleStringProperty(null);
 
-    public PartyTableModel(Object object, boolean active, String name, String address, String phoneNumber) {
+    public CasePartyTableModel(Object object, String relation, String name, String address, String phoneNumber) {
         this.object = new SimpleObjectProperty(object);
-        this.active = new SimpleBooleanProperty(active);
+        this.relation = new SimpleStringProperty(relation);
         this.name = new SimpleStringProperty(name);
         this.address = new SimpleStringProperty(address);
         this.phoneNumber = new SimpleStringProperty(phoneNumber);
-    }
-    
-    //Checkmark Properties
-    public BooleanProperty checkedProperty() {
-        return this.active;
-    }
-
-    public java.lang.Boolean getChecked() {
-        return this.checkedProperty().get();
-    }
-
-    public void setChecked(final java.lang.Boolean active) {
-        this.checkedProperty().set(active);
     }
 
     public ObjectProperty getObject() {
@@ -54,12 +39,12 @@ public class PartyTableModel {
         this.object = object;
     }
 
-    public BooleanProperty getActive() {
-        return active;
+    public StringProperty getRelation() {
+        return relation;
     }
 
-    public void setActive(BooleanProperty active) {
-        this.active = active;
+    public void setRelation(StringProperty relation) {
+        this.relation = relation;
     }
 
     public StringProperty getName() {

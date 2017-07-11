@@ -78,7 +78,7 @@ public class MaintenanceSceneController implements Initializable {
     }
     
     @FXML private void partyButtonAction() {
-        
+        Global.getStageLauncher().partySearchScene(stage, true);
     }
     
     @FXML private void partyNamePreFixButtonAction() {
