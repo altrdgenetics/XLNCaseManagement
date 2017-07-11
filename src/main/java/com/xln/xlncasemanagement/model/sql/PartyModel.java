@@ -10,8 +10,12 @@ package com.xln.xlncasemanagement.model.sql;
  * @author Andrew
  */
 public class PartyModel {
+    
     private int id;
-    private int relation;
+    private boolean active;
+    private int relationID;
+    private String relationName;
+    private int partyID;
     private String prefix;
     private String firstName;
     private String middleInitial;
@@ -34,12 +38,36 @@ public class PartyModel {
         this.id = id;
     }
 
-    public int getRelation() {
-        return relation;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setRelation(int relation) {
-        this.relation = relation;
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public int getRelationID() {
+        return relationID;
+    }
+
+    public void setRelationID(int relation) {
+        this.relationID = relation;
+    }
+
+    public String getRelationName() {
+        return relationName;
+    }
+
+    public void setRelationName(String relationName) {
+        this.relationName = relationName;
+    }
+
+    public int getPartyID() {
+        return partyID;
+    }
+
+    public void setPartyID(int partyID) {
+        this.partyID = partyID;
     }
     
     public String getPrefix() {

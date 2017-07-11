@@ -90,7 +90,7 @@ public class DetailedCasePartySceneController implements Initializable {
     }
 
     private void loadInformation() {
-        CaseRelationCombobox.setValue(caseParty.getRelation());
+        CaseRelationCombobox.setValue(caseParty.getRelationName());
         PrefixCombobox.setValue(caseParty.getPrefix());
         FirstNameTextField.setText(caseParty.getFirstName());
         MiddleInitialTextField.setText(caseParty.getMiddleInitial());

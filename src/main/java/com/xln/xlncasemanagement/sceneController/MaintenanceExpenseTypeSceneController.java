@@ -7,10 +7,10 @@ package com.xln.xlncasemanagement.sceneController;
 
 
 import com.xln.xlncasemanagement.Global;
-import com.xln.xlncasemanagement.model.sql.ActivityTypeModel;
-import com.xln.xlncasemanagement.model.table.MaintenanceActivityTypeTableModel;
+import com.xln.xlncasemanagement.model.sql.ExpenseTypeModel;
+import com.xln.xlncasemanagement.model.table.MaintenanceExpenseTypeTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
-import com.xln.xlncasemanagement.sql.SQLActivityType;
+import com.xln.xlncasemanagement.sql.SQLExpenseType;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -30,7 +30,7 @@ import javafx.stage.Stage;
  *
  * @author User
  */
-public class MaintenanceActivityTypeSceneController implements Initializable {
+public class MaintenanceExpenseTypeSceneController implements Initializable {
 
     Stage stage;
 
@@ -41,13 +41,13 @@ public class MaintenanceActivityTypeSceneController implements Initializable {
     @FXML
     private Button closeButton;
     @FXML
-    private TableView<MaintenanceActivityTypeTableModel> searchTable;
+    private TableView<MaintenanceExpenseTypeTableModel> searchTable;
     @FXML
-    private TableColumn<MaintenanceActivityTypeTableModel, Object> iDColumn;
+    private TableColumn<MaintenanceExpenseTypeTableModel, Object> iDColumn;
     @FXML
-    private TableColumn<MaintenanceActivityTypeTableModel, Boolean> activeColumn;
+    private TableColumn<MaintenanceExpenseTypeTableModel, Boolean> activeColumn;
     @FXML
-    private TableColumn<MaintenanceActivityTypeTableModel, String> activityTypeColumn;
+    private TableColumn<MaintenanceExpenseTypeTableModel, String> nameColumn;
 
     /**
      * Initializes the controller class.
@@ -61,7 +61,7 @@ public class MaintenanceActivityTypeSceneController implements Initializable {
         searchTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         iDColumn.setCellValueFactory(cellData -> cellData.getValue().getObject());        
         activeColumn.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
-        activeColumn.setCellFactory((TableColumn<MaintenanceActivityTypeTableModel, Boolean> param) -> {
+        activeColumn.setCellFactory((TableColumn<MaintenanceExpenseTypeTableModel, Boolean> param) -> {
             CheckBoxTableCell cell = new CheckBoxTableCell<>();
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
                 if (cell.getIndex() > -1) {
@@ -70,7 +70,7 @@ public class MaintenanceActivityTypeSceneController implements Initializable {
             });
             return cell;
         });
-        activityTypeColumn.setCellValueFactory(cellData -> cellData.getValue().getActivityType());
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue().getExpenseType());
         
         //Edit Button Listener
         editButton.disableProperty().bind(Bindings.isEmpty(searchTable.getSelectionModel().getSelectedItems()));
@@ -78,15 +78,15 @@ public class MaintenanceActivityTypeSceneController implements Initializable {
 
     public void setActive(Stage stagePassed) {
         stage = stagePassed;
-        stage.setTitle("Activity Type Maintenance");
+        stage.setTitle("Expense Type Maintenance");
         search();
     }
 
     private void checkboxlistener(int cellIndex) {
-        MaintenanceActivityTypeTableModel row = searchTable.getItems().get(cellIndex);
+        MaintenanceExpenseTypeTableModel row = searchTable.getItems().get(cellIndex);
         if (row != null) {
-            ActivityTypeModel item = (ActivityTypeModel) row.getObject().getValue();
-            SQLActiveStatus.setActive("table02", item.getId(), row.getChecked());
+            ExpenseTypeModel item = (ExpenseTypeModel) row.getObject().getValue();
+            SQLActiveStatus.setActive("table14", item.getId(), row.getChecked());
             searchTable.getSelectionModel().clearSelection();
         }
     }
@@ -94,11 +94,11 @@ public class MaintenanceActivityTypeSceneController implements Initializable {
     @FXML
     private void search(){
         String[] searchParam = searchTextField.getText().trim().split(" ");
-        ObservableList<MaintenanceActivityTypeTableModel> list = SQLActivityType.searchActivityTypes(searchParam);
+        ObservableList<MaintenanceExpenseTypeTableModel> list = SQLExpenseType.searchExpenseTypes(searchParam);
         loadTable(list);
     }
     
-    private void loadTable(ObservableList<MaintenanceActivityTypeTableModel> list) {
+    private void loadTable(ObservableList<MaintenanceExpenseTypeTableModel> list) {
         searchTable.getItems().removeAll();
         if (list != null) {
             searchTable.setItems(list);
@@ -113,7 +113,7 @@ public class MaintenanceActivityTypeSceneController implements Initializable {
     
     @FXML
     private void tableListener(MouseEvent event) {
-        MaintenanceActivityTypeTableModel row = searchTable.getSelectionModel().getSelectedItem();
+        MaintenanceExpenseTypeTableModel row = searchTable.getSelectionModel().getSelectedItem();
 
         if (row != null) {
             if (event.getClickCount() >= 2) {
@@ -124,14 +124,14 @@ public class MaintenanceActivityTypeSceneController implements Initializable {
 
     @FXML
     private void addNewCompanyButtonAction() {
-        Global.getStageLauncher().MaintenanceActivityTypeAddEditScene(stage, null);
+        Global.getStageLauncher().MaintenanceExpenseTypeAddEditScene(stage, null);
         search();
     }
     
     @FXML
     private void editCompanyButtonAction() {
-        MaintenanceActivityTypeTableModel row = searchTable.getSelectionModel().getSelectedItem();
-        Global.getStageLauncher().MaintenanceActivityTypeAddEditScene(stage, (ActivityTypeModel) row.getObject().getValue());
+        MaintenanceExpenseTypeTableModel row = searchTable.getSelectionModel().getSelectedItem();
+        Global.getStageLauncher().MaintenanceExpenseTypeAddEditScene(stage, (ExpenseTypeModel) row.getObject().getValue());
         search();
     }
     

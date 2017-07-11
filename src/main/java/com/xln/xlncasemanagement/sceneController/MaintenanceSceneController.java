@@ -6,7 +6,6 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
-import com.xln.xlncasemanagement.StageLauncher;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -62,7 +61,7 @@ public class MaintenanceSceneController implements Initializable {
     }
     
     @FXML private void expenseTypeButtonAction() {
-        
+        Global.getStageLauncher().MaintenanceExpenseTypeScene(stage);
     }
     
     @FXML private void judgeButtonAction() {

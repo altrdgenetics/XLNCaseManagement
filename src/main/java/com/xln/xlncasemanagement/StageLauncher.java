@@ -8,6 +8,7 @@ package com.xln.xlncasemanagement;
 import com.xln.xlncasemanagement.model.sql.ActivityModel;
 import com.xln.xlncasemanagement.model.sql.ActivityTypeModel;
 import com.xln.xlncasemanagement.model.sql.ExpenseModel;
+import com.xln.xlncasemanagement.model.sql.ExpenseTypeModel;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.sceneController.*;
 import java.io.IOException;
@@ -267,6 +268,46 @@ public class StageLauncher {
             stage.setScene(scene);
 
             MaintenanceActivityTypeAddEditSceneController controller = loader.getController();
+            controller.setActive(stage, objectPassed);
+
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void MaintenanceExpenseTypeScene(Stage stagePassed) {
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/MaintenanceExpenseTypeScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            MaintenanceExpenseTypeSceneController controller = loader.getController();
+            controller.setActive(stage);
+
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void MaintenanceExpenseTypeAddEditScene(Stage stagePassed, ExpenseTypeModel objectPassed) {
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/MaintenanceExpenseTypeAddEditScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            MaintenanceExpenseTypeAddEditSceneController controller = loader.getController();
             controller.setActive(stage, objectPassed);
 
             stage.showAndWait();
