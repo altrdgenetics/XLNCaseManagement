@@ -82,7 +82,7 @@ public class MaintenanceSceneController implements Initializable {
     }
     
     @FXML private void partyNamePreFixButtonAction() {
-        
+        Global.getStageLauncher().MaintenancePartyNamePrefixScene(stage);
     }
     
     @FXML private void partyRelationTypeButtonAction() {

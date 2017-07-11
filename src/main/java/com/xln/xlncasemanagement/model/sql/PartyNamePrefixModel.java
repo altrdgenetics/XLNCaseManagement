@@ -9,7 +9,7 @@ package com.xln.xlncasemanagement.model.sql;
  *
  * @author User
  */
-public class PartyNamePreFixModel {
+public class PartyNamePrefixModel {
     
     private int id;
     private boolean active;
