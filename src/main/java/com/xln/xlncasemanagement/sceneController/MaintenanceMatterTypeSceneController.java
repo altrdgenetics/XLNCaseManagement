@@ -117,19 +117,19 @@ public class MaintenanceMatterTypeSceneController implements Initializable {
 
         if (row != null) {
             if (event.getClickCount() >= 2) {
-                editCompanyButtonAction();                
+                editButtonAction();                
             }
         }
     }
 
     @FXML
-    private void addNewCompanyButtonAction() {
+    private void addNewButtonAction() {
         Global.getStageLauncher().MaintenanceMatterTypeAddEditScene(stage, null);
         search();
     }
     
     @FXML
-    private void editCompanyButtonAction() {
+    private void editButtonAction() {
         MaintenanceMatterTypeTableModel row = searchTable.getSelectionModel().getSelectedItem();
         Global.getStageLauncher().MaintenanceMatterTypeAddEditScene(stage, (MatterTypeModel) row.getObject().getValue());
         search();

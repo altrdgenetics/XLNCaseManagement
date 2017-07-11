@@ -117,19 +117,19 @@ public class MaintenanceExpenseTypeSceneController implements Initializable {
 
         if (row != null) {
             if (event.getClickCount() >= 2) {
-                editCompanyButtonAction();                
+                editButtonAction();                
             }
         }
     }
 
     @FXML
-    private void addNewCompanyButtonAction() {
+    private void addNewButtonAction() {
         Global.getStageLauncher().MaintenanceExpenseTypeAddEditScene(stage, null);
         search();
     }
     
     @FXML
-    private void editCompanyButtonAction() {
+    private void editButtonAction() {
         MaintenanceExpenseTypeTableModel row = searchTable.getSelectionModel().getSelectedItem();
         Global.getStageLauncher().MaintenanceExpenseTypeAddEditScene(stage, (ExpenseTypeModel) row.getObject().getValue());
         search();

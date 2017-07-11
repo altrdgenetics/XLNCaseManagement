@@ -117,19 +117,19 @@ public class MaintenanceActivityTypeSceneController implements Initializable {
 
         if (row != null) {
             if (event.getClickCount() >= 2) {
-                editCompanyButtonAction();                
+                editButtonAction();                
             }
         }
     }
 
     @FXML
-    private void addNewCompanyButtonAction() {
+    private void addNewButtonAction() {
         Global.getStageLauncher().MaintenanceActivityTypeAddEditScene(stage, null);
         search();
     }
     
     @FXML
-    private void editCompanyButtonAction() {
+    private void editButtonAction() {
         MaintenanceActivityTypeTableModel row = searchTable.getSelectionModel().getSelectedItem();
         Global.getStageLauncher().MaintenanceActivityTypeAddEditScene(stage, (ActivityTypeModel) row.getObject().getValue());
         search();

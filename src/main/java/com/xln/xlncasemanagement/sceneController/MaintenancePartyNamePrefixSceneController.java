@@ -78,7 +78,7 @@ public class MaintenancePartyNamePrefixSceneController implements Initializable 
 
     public void setActive(Stage stagePassed) {
         stage = stagePassed;
-        stage.setTitle("Matter Type Maintenance");
+        stage.setTitle("Party Name Prefix Maintenance");
         search();
     }
 

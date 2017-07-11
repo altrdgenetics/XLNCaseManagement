@@ -64,7 +64,7 @@
                             </padding>
                         </Label>
                         <TextField fx:id="searchTextField" onAction="#search" onInputMethodTextChanged="#search" onKeyTyped="#search" promptText="Enter Search Criteria..." GridPane.columnIndex="1" GridPane.columnSpan="7" GridPane.rowIndex="1" />
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addNewCompanyButtonAction" prefHeight="25.0" prefWidth="100.0" styleClass="primary" text="New" GridPane.columnIndex="8" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addNewButtonAction" prefHeight="25.0" prefWidth="100.0" styleClass="primary" text="New" GridPane.columnIndex="8" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                     </children>
                 </GridPane>
             </children>
@@ -74,7 +74,7 @@
         <ButtonBar buttonMinWidth="100.0" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <buttons>
                 <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleClose" text="Close" ButtonBar.buttonData="LEFT" />
-                <Button fx:id="editButton" mnemonicParsing="false" onAction="#editCompanyButtonAction" styleClass="primary" text="Edit" ButtonBar.buttonData="RIGHT" />
+                <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonAction" styleClass="primary" text="Edit" ButtonBar.buttonData="RIGHT" />
             </buttons>
             <BorderPane.margin>
                 <Insets />
