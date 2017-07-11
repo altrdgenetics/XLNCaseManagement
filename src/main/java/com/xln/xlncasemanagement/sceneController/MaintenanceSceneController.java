@@ -86,7 +86,7 @@ public class MaintenanceSceneController implements Initializable {
     }
     
     @FXML private void partyRelationTypeButtonAction() {
-        
+         Global.getStageLauncher().MaintenancePartyRelationTypeScene(stage);
     }
     
     @FXML private void userButtonAction() {
