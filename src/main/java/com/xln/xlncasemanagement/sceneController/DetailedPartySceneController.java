@@ -166,8 +166,8 @@ public class DetailedPartySceneController implements Initializable {
         item.setState(StateComboBox.getValue() == null ?  null : 
                 (StateComboBox.getValue().toString().trim().equals("") ? null : StateComboBox.getValue().toString().trim()));
         item.setZip(ZipCodeTextField.getText().trim().equals("") ? null : ZipCodeTextField.getText().trim());
-        item.setPhoneOne(PhoneNumberOneTextField.getText().trim().equals("") ? null : PhoneNumberOneTextField.getText().trim());
-        item.setPhoneTwo(PhoneNumberTwoTextField.getText().trim().equals("") ? null : PhoneNumberTwoTextField.getText().trim());
+        item.setPhoneOne(PhoneNumberOneTextField.getText().trim().equals("") ? null : NumberFormatService.convertPhoneNumberToString(PhoneNumberOneTextField.getText().trim()));
+        item.setPhoneTwo(PhoneNumberTwoTextField.getText().trim().equals("") ? null : NumberFormatService.convertPhoneNumberToString(PhoneNumberTwoTextField.getText().trim()));
         item.setEmail(EmailAddressTextField.getText().trim().equals("") ? null : EmailAddressTextField.getText().trim());
 
         //For If In Update Mode - Existing Party

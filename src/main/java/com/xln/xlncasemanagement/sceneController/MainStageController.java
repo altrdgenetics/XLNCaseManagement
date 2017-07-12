@@ -11,6 +11,7 @@ import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.sql.SQLParty;
 import com.xln.xlncasemanagement.util.DebugTools;
+import com.xln.xlncasemanagement.util.NumberFormatService;
 import com.xln.xlncasemanagement.util.StringUtilities;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -204,6 +205,16 @@ public class MainStageController implements Initializable {
         
     @FXML private void handleClientSelection(){
         Global.setCurrentClient((PartyModel) clientField.getValue());
+        
+        String phone = NumberFormatService.convertStringToPhoneNumber(Global.getCurrentClient().getPhoneOne());
+        if (Global.getCurrentClient().getPhoneTwo() != null && !phone.trim().equals("")){
+            phone += ", ";
+        }
+        phone += NumberFormatService.convertStringToPhoneNumber(Global.getCurrentClient().getPhoneTwo());
+                
+        phoneField.setText(phone);
+        emailField.setText(Global.getCurrentClient().getEmail());
+                
         loadMatterComboBox();
     }
     
