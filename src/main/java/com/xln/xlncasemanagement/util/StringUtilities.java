@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement.util;
 
 import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.model.sql.PartyModel;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -92,4 +93,46 @@ public class StringUtilities {
         return duration.trim();
     }
 
+    
+    public static String buildPartyName(PartyModel item) {
+        String fullName = "";
+        if (item.getPrefix() != null) {
+            fullName = fullName.trim() + (item.getPrefix().equals("") ? "" : item.getPrefix().trim());
+        }        
+        if (item.getFirstName() != null) {
+            fullName = fullName.trim() + (item.getFirstName().equals("") ? "" : " " + item.getFirstName().trim());
+        }
+        if (item.getMiddleInitial() != null) {
+            fullName = fullName.trim() + (item.getMiddleInitial().equals("") ? "" : " " + (item.getMiddleInitial().trim().length() == 1 ? item.getMiddleInitial().trim() + "." : item.getMiddleInitial().trim()));
+        }
+        if (item.getLastName() != null) {
+            fullName = fullName.trim() + (item.getLastName().equals("") ? "" : " " + item.getLastName().trim());
+        }
+        return fullName.trim();
+    }
+    
+    public static String buildTableAddressBlock(PartyModel item) {
+        String addressLine = "";
+
+        if (item.getAddressOne() != null) {
+            addressLine += item.getAddressOne().equals("") ? "" : (item.getAddressOne());
+        }
+        if (item.getAddressTwo() != null) {
+            addressLine += item.getAddressTwo().equals("") ? "" : (", " + item.getAddressTwo());
+        }
+        if (item.getAddressThree() != null) {
+            addressLine += item.getAddressThree().equals("") ? "" : (", " + item.getAddressThree());
+        }
+        if (item.getCity() != null) {
+            addressLine += item.getCity().equals("") ? "" : (", " + item.getCity());
+        }
+        if (item.getState() != null) {
+            addressLine += item.getState().equals("") ? "" : (", " + item.getState());
+        }
+        if (item.getZip() != null) {
+            addressLine += item.getZip().equals("") ? "" : (" " + item.getZip());
+        }
+
+        return addressLine.trim();
+    }
 }

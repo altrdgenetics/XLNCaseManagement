@@ -122,7 +122,7 @@ public class StageLauncher {
             stage.setScene(scene);
 
             DetailedPartySceneController controller = loader.getController();
-            controller.setActive(maintenanceMode, itemPassed);
+            controller.setActive(stage, maintenanceMode, itemPassed);
 
             stage.setResizable(false);
             stage.sizeToScene();

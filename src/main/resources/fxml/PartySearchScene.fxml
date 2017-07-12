@@ -14,7 +14,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="938.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xln.xlncasemanagement.sceneController.PartySearchSceneController">
    <center>
-      <TableView fx:id="searchTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="searchTable" editable="true" onMouseClicked="#tableListener" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="objectColumn" prefWidth="75.0" text="Object" visible="false" />
           <TableColumn fx:id="activeColumn" maxWidth="35.0" minWidth="35.0" prefWidth="35.0" resizable="false" visible="false" />
@@ -34,7 +34,7 @@
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
           <Button fx:id="CancelButton" cancelButton="true" mnemonicParsing="false" onAction="#closeButtonAction" text="Cancel" ButtonBar.buttonData="LEFT" />
-          <Button fx:id="AddEditButton" defaultButton="true" mnemonicParsing="false" styleClass="primary" text="Add" ButtonBar.buttonData="RIGHT" />
+          <Button fx:id="AddEditButton" defaultButton="true" mnemonicParsing="false" onAction="#addEditButtonAction" styleClass="primary" text="Add" ButtonBar.buttonData="RIGHT" />
         </buttons>
          <BorderPane.margin>
             <Insets />
@@ -65,7 +65,7 @@
                         <Insets right="10.0" />
                      </padding>
                   </Label>
-                  <TextField HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="searchTextField" onAction="#search" onInputMethodTextChanged="#search" onKeyTyped="#search" promptText="Enter Search Criteria..." HBox.hgrow="ALWAYS" />
                   <Button mnemonicParsing="false" onAction="#addNewPartyButtonAction" styleClass="primary" text="Add New" HBox.hgrow="NEVER">
                      <HBox.margin>
                         <Insets left="30.0" />

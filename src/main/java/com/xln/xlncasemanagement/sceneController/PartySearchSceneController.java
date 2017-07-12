@@ -7,19 +7,20 @@ package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
-import com.xln.xlncasemanagement.model.sql.PartyNamePrefixModel;
 import com.xln.xlncasemanagement.model.table.PartyTableModel;
-import com.xln.xlncasemanagement.model.table.MaintenancePartyNamePrefixTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
+import com.xln.xlncasemanagement.sql.SQLParty;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -34,9 +35,10 @@ public class PartySearchSceneController implements Initializable {
     Stage stage;
     boolean maintenanceMode;
     
-    @FXML Button CancelButton;
-    @FXML Button AddEditButton;
-    @FXML Label headerLabel;
+    @FXML private TextField searchTextField;
+    @FXML private Button CancelButton;
+    @FXML private Button AddEditButton;
+    @FXML private Label headerLabel;
     @FXML private TableView<PartyTableModel> searchTable;
     @FXML private TableColumn<PartyTableModel, Object> objectColumn;
     @FXML private TableColumn<PartyTableModel, Boolean> activeColumn;
@@ -80,11 +82,12 @@ public class PartySearchSceneController implements Initializable {
         if (maintenanceMode && Global.getCurrentUser().isAdminRights()){
             activeColumn.setVisible(true);
         }
-        
+        search();
     }
     
     @FXML private void addNewPartyButtonAction() {
         Global.getStageLauncher().detailedPartyAddEditScene(stage, maintenanceMode, null);
+        search();
     }
     
     @FXML private void closeButtonAction() {
@@ -100,6 +103,48 @@ public class PartySearchSceneController implements Initializable {
             SQLActiveStatus.setActive(table, item.getId(), row.getChecked());
             searchTable.getSelectionModel().clearSelection();
         }
+    }
+    
+    @FXML
+    private void tableListener(MouseEvent event) {
+        PartyTableModel row = searchTable.getSelectionModel().getSelectedItem();
+
+        if (row != null) {
+            if (event.getClickCount() >= 2) {
+                editParty((PartyModel) row.getObject().getValue());                
+            }
+        }
+    }
+    
+    @FXML private void addEditButtonAction(){
+        PartyTableModel row = searchTable.getSelectionModel().getSelectedItem();
+
+        if (row != null) {
+            if (maintenanceMode){
+                editParty((PartyModel) row.getObject().getValue());
+            } else {
+                //TODO: Add to Case
+            }
+        }
+    }
+    
+    @FXML private void search(){
+        String[] searchParam = searchTextField.getText().trim().split(" ");
+        ObservableList<PartyTableModel> list = SQLParty.searchParty(searchParam, maintenanceMode);
+        loadTable(list);
+    }
+    
+    private void loadTable(ObservableList<PartyTableModel> list) {
+        searchTable.getItems().removeAll();
+        if (list != null) {
+            searchTable.setItems(list);
+        }
+        searchTable.getSelectionModel().clearSelection();
+    }
+    
+    private void editParty(PartyModel party){
+        Global.getStageLauncher().detailedPartyAddEditScene(stage, maintenanceMode, party);
+        search();
     }
     
 }

@@ -148,7 +148,7 @@
     <bottom>
         <ButtonBar prefHeight="49.0" prefWidth="504.0" BorderPane.alignment="CENTER">
             <buttons>
-                <Button fx:id="CloseButton" cancelButton="true" mnemonicParsing="false" text="Close" ButtonBar.buttonData="LEFT" />
+                <Button fx:id="CloseButton" cancelButton="true" mnemonicParsing="false" onAction="#closeButtonAction" text="Close" ButtonBar.buttonData="LEFT" />
                 <Button fx:id="SaveButton" defaultButton="true" mnemonicParsing="false" onAction="#saveInformation" styleClass="primary" text="Save" ButtonBar.buttonData="RIGHT" />
             </buttons>
             <BorderPane.margin>

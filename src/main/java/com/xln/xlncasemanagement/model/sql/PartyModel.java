@@ -29,6 +29,7 @@ public class PartyModel {
     private String phoneOne;
     private String phoneTwo;
     private String email;
+    private int matterID;
 
     public int getId() {
         return id;
@@ -173,9 +174,12 @@ public class PartyModel {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
-    
-    
-    
+
+    public int getMatterID() {
+        return matterID;
+    }
+
+    public void setMatterID(int matterID) {
+        this.matterID = matterID;
+    }
 }

@@ -45,7 +45,11 @@ public class PartyTableModel {
     public void setChecked(final java.lang.Boolean active) {
         this.checkedProperty().set(active);
     }
-
+    
+    
+    //Getters and Setters
+    
+    
     public ObjectProperty getObject() {
         return object;
     }
