@@ -158,27 +158,27 @@
             <center>
                 <TabPane fx:id="mainTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="100.0" BorderPane.alignment="CENTER">
                     <tabs>
-                        <Tab fx:id="informationTab" text="Information">
+                        <Tab fx:id="informationTab" closable="false" disable="true" text="Information">
                             <content>
                                 <fx:include fx:id="informationScene" source="InformationScene.fxml" />
                             </content>
                         </Tab>
-                        <Tab fx:id="partyTab" text="Parties">
+                        <Tab fx:id="partyTab" closable="false" disable="true" text="Parties">
                             <content>
                                 <fx:include fx:id="casePartyScene" source="CasePartyScene.fxml" />
                             </content>
                         </Tab>
-                        <Tab fx:id="activityTab" text="Activities">
+                        <Tab fx:id="activityTab" closable="false" disable="true" text="Activities">
                             <content>
                                 <fx:include fx:id="activityScene" source="ActivityScene.fxml" />
                             </content>
                         </Tab>
-                        <Tab fx:id="expenseTab" text="Expenses">
+                        <Tab fx:id="expenseTab" closable="false" disable="true" text="Expenses">
                             <content>
                                 <fx:include fx:id="expensesScene" source="ExpensesScene.fxml" />
                             </content>
                         </Tab>
-                        <Tab fx:id="noteTab" text="Notes">
+                        <Tab fx:id="noteTab" closable="false" disable="true" text="Notes">
                             <content>
                                 <fx:include fx:id="notesScene" source="NotesScene.fxml" />
                             </content>
@@ -205,22 +205,22 @@
                             </VBox.margin>
                         </Button>
                   <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="200.0" />
-                        <Button fx:id="buttonFour" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonFourAction" styleClass="info" text="Button 4" wrapText="true">
+                        <Button fx:id="buttonFour" disable="true" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonFourAction" styleClass="info" text="Button 4" wrapText="true">
                             <VBox.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="buttonFive" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonFiveAction" styleClass="info" text="Button 5" wrapText="true">
+                        <Button fx:id="buttonFive" disable="true" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonFiveAction" styleClass="info" text="Button 5" wrapText="true">
                             <VBox.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="buttonSix" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonSixAction" styleClass="info" text="Button 6" wrapText="true">
+                        <Button fx:id="buttonSix" disable="true" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonSixAction" styleClass="info" text="Button 6" wrapText="true">
                             <VBox.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="buttonSeven" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonSevenAction" styleClass="info" text="Button 7" wrapText="true">
+                        <Button fx:id="buttonSeven" disable="true" maxWidth="1.7976931348623157E308" minWidth="100.0" mnemonicParsing="false" onAction="#buttonSevenAction" styleClass="info" text="Button 7" wrapText="true">
                             <VBox.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" />
                             </VBox.margin>

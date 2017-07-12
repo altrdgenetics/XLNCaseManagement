@@ -62,7 +62,7 @@ public class SQLMatter {
         return 0;
     }
     
-    public static List<MatterModel> getActiveMatters() {
+    public static List<MatterModel> getActiveMattersByClient(int client) {
         List<MatterModel> list = new ArrayList();
         Connection conn = null;
         PreparedStatement ps = null;
@@ -76,7 +76,7 @@ public class SQLMatter {
         try {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, Global.getCurrentClient().getId());
+            ps.setInt(1, client);
             
             rs = ps.executeQuery();
             while (rs.next()) {

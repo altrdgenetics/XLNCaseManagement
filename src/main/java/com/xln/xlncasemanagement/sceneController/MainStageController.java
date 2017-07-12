@@ -165,7 +165,6 @@ public class MainStageController implements Initializable {
         }
         
         headerLogo.setImage(Global.getApplicationLogo());
-        onTabSelection();
         loadClientComboBox();
     }
 
@@ -205,6 +204,7 @@ public class MainStageController implements Initializable {
         
     @FXML private void handleClientSelection(){
         Global.setCurrentClient((PartyModel) clientField.getValue());
+        Global.setCurrentMatter(null);
         
         String phone = NumberFormatService.convertStringToPhoneNumber(Global.getCurrentClient().getPhoneOne());
         if (Global.getCurrentClient().getPhoneTwo() != null && !phone.trim().equals("")){
@@ -220,7 +220,7 @@ public class MainStageController implements Initializable {
     
     @FXML private void handleHeaderField1Selection(){
         Global.setCurrentMatter((MatterModel) headerField1.getValue());
-         
+        disableTabsAndButtons(false);
     }
     
     private void setHeaderLabels(){
@@ -469,16 +469,35 @@ public class MainStageController implements Initializable {
     }
     
     public void loadClientComboBox(){
-        clientField.getItems().removeAll();
+        clientField.getItems().removeAll(clientField.getItems());
         for (PartyModel item : SQLParty.getActiveClients()){
             clientField.getItems().addAll(item);
         }
     }
     
     private void loadMatterComboBox(){
-        headerField1.getItems().removeAll();
-        for (MatterModel item : SQLMatter.getActiveMatters()){
+        headerField1.getItems().removeAll(headerField1.getItems());
+        for (MatterModel item : SQLMatter.getActiveMattersByClient(Global.getCurrentClient().getId())){
             headerField1.getItems().addAll(item);
+        }
+    }
+    
+    private void disableTabsAndButtons(boolean disabled){
+        //Buttons
+        buttonFour.setDisable(disabled);
+        buttonFive.setDisable(disabled);
+        buttonSix.setDisable(disabled);
+        buttonSeven.setDisable(disabled);
+        
+        //Tabs
+        informationTab.setDisable(disabled);
+        partyTab.setDisable(disabled);
+        activityTab.setDisable(disabled);
+        expenseTab.setDisable(disabled);
+        noteTab.setDisable(disabled);
+        
+        if (disabled){
+            mainTabPane.getSelectionModel().select(informationTab);
         }
     }
     
