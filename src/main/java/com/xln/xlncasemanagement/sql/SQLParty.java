@@ -212,7 +212,10 @@ public class SQLParty {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "SELECT * FROM table16 LEFT JOIN table15 ON table16.col01 = table15.col03 WHERE table15.col02 = 1";
+        String sql = "SELECT DISTINCT table15.col03 AS link, table16.* "
+                + "FROM table16 "
+                + "LEFT JOIN table15 ON table16.col01 = table15.col03 "
+                + "WHERE table15.col02 = 1";
 
         try {
             conn = DBConnection.connectToDB();

@@ -18,7 +18,7 @@
     <bottom>
         <ButtonBar buttonMinWidth="100.0" prefHeight="40.0" prefWidth="448.0" BorderPane.alignment="CENTER">
             <buttons>
-                <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleCancelButton" text="Close" ButtonBar.buttonData="LEFT" />
+                <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleCancelButton" text="Cancel" ButtonBar.buttonData="LEFT" />
                 <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleCreateCaseButton" styleClass="primary" text="Create" ButtonBar.buttonData="RIGHT" />
             </buttons>
             <padding>

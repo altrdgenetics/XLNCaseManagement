@@ -204,6 +204,9 @@ public class MainStageController implements Initializable {
         
     @FXML private void handleClientSelection(){
         Global.setCurrentClient((PartyModel) clientField.getValue());
+        
+        disableTabsAndButtons(true);
+        
         Global.setCurrentMatter(null);
         
         String phone = NumberFormatService.convertStringToPhoneNumber(Global.getCurrentClient().getPhoneOne());
@@ -464,7 +467,6 @@ public class MainStageController implements Initializable {
         } else if (selectedTabTitle.equals(noteTab)){
             buttonFourLabel += "Note";
         }
-        
         buttonFour.setText(buttonFourLabel);
     }
     
