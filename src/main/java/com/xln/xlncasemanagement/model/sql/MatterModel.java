@@ -16,6 +16,8 @@ public class MatterModel {
     private int id;
     private boolean active;
     private int partyID;
+    private int matterTypeID;
+    private String matterTypeName;
     private Date openDate;
     private Date closeDate;
 
@@ -41,6 +43,22 @@ public class MatterModel {
 
     public void setPartyID(int partyID) {
         this.partyID = partyID;
+    }
+
+    public int getMatterTypeID() {
+        return matterTypeID;
+    }
+
+    public void setMatterTypeID(int matterTypeID) {
+        this.matterTypeID = matterTypeID;
+    }
+
+    public String getMatterTypeName() {
+        return matterTypeName;
+    }
+
+    public void setMatterTypeName(String matterTypeName) {
+        this.matterTypeName = matterTypeName;
     }
 
     public Date getOpenDate() {

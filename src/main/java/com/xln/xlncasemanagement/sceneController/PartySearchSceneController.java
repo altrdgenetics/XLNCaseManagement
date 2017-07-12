@@ -16,7 +16,6 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -160,6 +159,7 @@ public class PartySearchSceneController implements Initializable {
     }
     
     private void newCaseCreation(PartyModel party){
+
         Global.getStageLauncher().NewMatterCaseTypeSelectionScene(stage, party);
         stage.close();
     }

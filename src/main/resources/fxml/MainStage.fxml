@@ -104,7 +104,7 @@
                         <Insets right="10.0" />
                      </padding>
                         </Label>
-                        <ComboBox fx:id="clientField" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+                        <ComboBox fx:id="clientField" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleClientSelection" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
                         <TextField fx:id="phoneField" editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
                         <TextField fx:id="emailField" editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
                         <TextField fx:id="headerField2" editable="false" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
@@ -143,7 +143,7 @@
                         <Insets right="10.0" />
                      </padding>
                         </Label>
-                  <ComboBox fx:id="headerField1" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="headerField1" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleHeaderField1Selection" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
                   <ImageView fx:id="headerLogo" disable="true" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../image/xlnlogo.png" />

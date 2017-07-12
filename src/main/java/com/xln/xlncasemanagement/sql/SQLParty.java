@@ -8,6 +8,7 @@ package com.xln.xlncasemanagement.sql;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.table.PartyTableModel;
+import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import com.xln.xlncasemanagement.util.StringUtilities;
 import java.sql.Connection;
@@ -15,6 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.dbutils.DbUtils;
@@ -204,4 +207,45 @@ public class SQLParty {
         }
     }
 
+    public static List<PartyModel> getActiveClients() {
+        List<PartyModel> list = new ArrayList();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM table16 LEFT JOIN table15 ON table16.col01 = table15.col03 WHERE table15.col02 = 1";
+
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                PartyModel item = new PartyModel();
+                item.setId(rs.getInt("col01"));
+                item.setActive(rs.getBoolean("col02"));
+                item.setPrefix(rs.getString("col03"));
+                item.setFirstName(rs.getString("col04"));
+                item.setMiddleInitial(rs.getString("col05"));
+                item.setLastName(rs.getString("col06"));
+                item.setAddressOne(rs.getString("col07"));
+                item.setAddressTwo(rs.getString("col08"));
+                item.setAddressThree(rs.getString("col09"));
+                item.setCity(rs.getString("col10"));
+                item.setState(rs.getString("col11"));
+                item.setZip(rs.getString("col12"));
+                item.setPhoneOne(rs.getString("col13"));
+                item.setPhoneTwo(rs.getString("col14"));
+                item.setEmail(rs.getString("col15"));
+                list.add(item);
+            }
+        } catch (SQLException ex) {
+            DebugTools.Printout(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return list;
+    }
+    
+    
 }

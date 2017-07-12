@@ -6,7 +6,10 @@
 package com.xln.xlncasemanagement;
 
 import com.xln.xlncasemanagement.model.sql.CompanyModel;
+import com.xln.xlncasemanagement.model.sql.MatterModel;
+import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.sql.UserModel;
+import com.xln.xlncasemanagement.sceneController.MainStageController;
 import java.text.SimpleDateFormat;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
@@ -22,12 +25,15 @@ public class Global {
     
     private static Parent root;    
     private static Stage mainStage;
+    private static MainStageController mainStageController;
     private static Stage incomingDocketingStage;
     private static Stage outgoingDocketingStage;
     private static StageLauncher stageLauncher;
     private static CompanyModel companyInformation;
     private static Image applicationLogo;
     private static UserModel currentUser;
+    private static PartyModel currentClient;
+    private static MatterModel currentMatter;
     
     //list of all states
     private static final String STATES[] = { "AL", "AK", "AS", "AZ", "AR", "CA", "CO",
@@ -81,6 +87,14 @@ public class Global {
         Global.mainStage = mainStage;
     }
 
+    public static MainStageController getMainStageController() {
+        return mainStageController;
+    }
+
+    public static void setMainStageController(MainStageController mainStageController) {
+        Global.mainStageController = mainStageController;
+    }
+
     public static StageLauncher getStageLauncher() {
         return stageLauncher;
     }
@@ -127,6 +141,22 @@ public class Global {
 
     public static void setCurrentUser(UserModel currentUser) {
         Global.currentUser = currentUser;
+    }
+
+    public static PartyModel getCurrentClient() {
+        return currentClient;
+    }
+
+    public static void setCurrentClient(PartyModel currentClient) {
+        Global.currentClient = currentClient;
+    }
+
+    public static MatterModel getCurrentMatter() {
+        return currentMatter;
+    }
+
+    public static void setCurrentMatter(MatterModel currentMatter) {
+        Global.currentMatter = currentMatter;
     }
 
     public static String[] getSTATES() {

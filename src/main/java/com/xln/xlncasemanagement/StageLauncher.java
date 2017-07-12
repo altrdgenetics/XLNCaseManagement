@@ -64,7 +64,9 @@ public class StageLauncher {
             stage.setScene(scene);
                      
             MainStageController controller = loader.getController();
+            Global.setMainStageController(controller);
             controller.setActive(stage);
+            
             stage.show();
 
         } catch (IOException ex) {

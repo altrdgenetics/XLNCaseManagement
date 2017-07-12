@@ -6,7 +6,6 @@ package com.xln.xlncasemanagement.sceneController;
  * and open the template in the editor.
  */
 
-import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.table.ExpensesTableModel;
 import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;

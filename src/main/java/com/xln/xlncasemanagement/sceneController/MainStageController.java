@@ -6,7 +6,12 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.model.sql.MatterModel;
+import com.xln.xlncasemanagement.model.sql.PartyModel;
+import com.xln.xlncasemanagement.sql.SQLMatter;
+import com.xln.xlncasemanagement.sql.SQLParty;
 import com.xln.xlncasemanagement.util.DebugTools;
+import com.xln.xlncasemanagement.util.StringUtilities;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -27,6 +32,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.StringConverter;
 
 /**
  * FXML Controller class
@@ -112,6 +118,34 @@ public class MainStageController implements Initializable {
         mainTabPane.getSelectionModel().selectedItemProperty().addListener((obs,ov,nv)->{
             onTabSelection();
         });
+                
+        //Setup Client ComboBox
+        StringConverter<PartyModel> converter = new StringConverter<PartyModel>() {
+            @Override
+            public String toString(PartyModel object) {
+                return StringUtilities.buildPartyName(object);
+            }
+
+            @Override
+            public PartyModel fromString(String string) {
+                return null;
+            }
+        };
+        clientField.setConverter(converter);
+        
+        //Setup Client ComboBox
+        StringConverter<MatterModel> converter2 = new StringConverter<MatterModel>() {
+            @Override
+            public String toString(MatterModel object) {
+                return object.getMatterTypeName() + " - " + Global.getMmddyyyy().format(object.getOpenDate());
+            }
+
+            @Override
+            public MatterModel fromString(String string) {
+                return null;
+            }
+        };
+        headerField1.setConverter(converter2);
     }    
         
     public void setActive(Stage stagePassed) {
@@ -131,6 +165,7 @@ public class MainStageController implements Initializable {
         
         headerLogo.setImage(Global.getApplicationLogo());
         onTabSelection();
+        loadClientComboBox();
     }
 
     private void setVersionInformation() {
@@ -167,6 +202,16 @@ public class MainStageController implements Initializable {
         //TODO
     }
         
+    @FXML private void handleClientSelection(){
+        Global.setCurrentClient((PartyModel) clientField.getValue());
+        loadMatterComboBox();
+    }
+    
+    @FXML private void handleHeaderField1Selection(){
+        Global.setCurrentMatter((MatterModel) headerField1.getValue());
+         
+    }
+    
     private void setHeaderLabels(){
         headerLabel1.setText(Global.getHeaderLabel1());
         headerLabel2.setText(Global.getHeaderLabel2());
@@ -412,6 +457,20 @@ public class MainStageController implements Initializable {
         buttonFour.setText(buttonFourLabel);
     }
     
+    public void loadClientComboBox(){
+        clientField.getItems().removeAll();
+        for (PartyModel item : SQLParty.getActiveClients()){
+            clientField.getItems().addAll(item);
+        }
+    }
+    
+    private void loadMatterComboBox(){
+        headerField1.getItems().removeAll();
+        for (MatterModel item : SQLMatter.getActiveMatters()){
+            headerField1.getItems().addAll(item);
+        }
+    }
+    
     // GETTERS AND SETTERS------------------------------------------------
     
     
@@ -615,4 +674,21 @@ public class MainStageController implements Initializable {
         this.buttonDelete = buttonDelete;
     }
 
+    public ComboBox getClientField() {
+        return clientField;
+    }
+
+    public void setClientField(ComboBox clientField) {
+        this.clientField = clientField;
+    }
+
+    public ComboBox getHeaderField1() {
+        return headerField1;
+    }
+
+    public void setHeaderField1(ComboBox headerField1) {
+        this.headerField1 = headerField1;
+    }
+
+    
 }

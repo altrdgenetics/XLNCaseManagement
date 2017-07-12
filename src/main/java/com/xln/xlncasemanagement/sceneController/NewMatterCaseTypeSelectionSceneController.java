@@ -85,14 +85,17 @@ public class NewMatterCaseTypeSelectionSceneController implements Initializable 
         int newKeyID = insertMatter();
         insertPartyAsClient(newKeyID);
         
-        //TODO: Refresh Main Window
+        refreshMainWindow(newKeyID);
         stage.close();
     }    
     
     private int insertMatter(){
+        MatterTypeModel matter = (MatterTypeModel) matterTypeComboBox.getValue();  
+        
         MatterModel item = new MatterModel();
         item.setActive(true);
         item.setPartyID(party.getId());
+        item.setMatterTypeID(matter.getId());
         item.setOpenDate(new Date(System.currentTimeMillis()));
         item.setCloseDate(null);
         
@@ -101,6 +104,12 @@ public class NewMatterCaseTypeSelectionSceneController implements Initializable 
     
     private void insertPartyAsClient(int newKeyID){
         //TODO
+    }
+    
+    private void refreshMainWindow(int newKeyID){
+        Global.getMainStageController().loadClientComboBox();
+        Global.getMainStageController().getClientField().setValue(party);
+        Global.getMainStageController().getHeaderField1().setValue(SQLMatter.getMatterByID(newKeyID));
     }
     
 }
