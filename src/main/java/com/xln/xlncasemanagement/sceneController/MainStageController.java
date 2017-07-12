@@ -152,7 +152,7 @@ public class MainStageController implements Initializable {
     }
     
     @FXML private void handlePartyRolodexMenuItem(){
-        Global.getStageLauncher().partySearchScene(stage, true);
+        Global.getStageLauncher().partySearchScene(stage, true, false);
     }
     
     @FXML private void handleDatabaseMaintenanceMenuItem() {
@@ -203,7 +203,7 @@ public class MainStageController implements Initializable {
     }
     
     @FXML private void buttonOneAction(){
-        //TODO
+        Global.getStageLauncher().partySearchScene(stage, false, true);
     }
     
     @FXML private void buttonTwoAction() {
@@ -235,7 +235,7 @@ public class MainStageController implements Initializable {
             informationSceneController.mainPanelButtonFourAction();
             disableTabsInUpdateMode(informationSceneController.isUpdateMode());
         } else if (selectedTabTitle.equals(partyTab)) {
-            Global.getStageLauncher().partySearchScene(stage, false);
+            Global.getStageLauncher().partySearchScene(stage, false, false);
         } else if (selectedTabTitle.equals(activityTab)) {
             Global.getStageLauncher().detailedActivityAddEditScene(Global.getMainStage(), null);
         } else if (selectedTabTitle.equals(expenseTab)) {

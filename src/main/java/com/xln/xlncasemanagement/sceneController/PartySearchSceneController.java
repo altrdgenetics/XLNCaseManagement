@@ -16,6 +16,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -34,6 +35,7 @@ public class PartySearchSceneController implements Initializable {
 
     Stage stage;
     boolean maintenanceMode;
+    boolean newMatter;
     
     @FXML private TextField searchTextField;
     @FXML private Button CancelButton;
@@ -73,11 +75,17 @@ public class PartySearchSceneController implements Initializable {
         AddEditButton.disableProperty().bind(Bindings.isEmpty(searchTable.getSelectionModel().getSelectedItems()));
     }    
     
-    public void setActive(boolean maintenanceModePassed) {
+    public void setActive(Stage stagePassed, boolean maintenanceModePassed, boolean newMatterPassed) {
+        stage = stagePassed;
         maintenanceMode = maintenanceModePassed;
+        newMatter = newMatterPassed;
         
-        headerLabel.setText(maintenanceMode ? "Party List" : "Add Party To Case");
+        headerLabel.setText(maintenanceMode ? "Contact List" : "Add Party To Case");
         AddEditButton.setText(maintenanceMode ? "Edit" : "Add To Case");
+        
+        if (newMatter){
+            AddEditButton.setText("Select");
+        }
         
         if (maintenanceMode && Global.getCurrentUser().isAdminRights()){
             activeColumn.setVisible(true);
@@ -120,10 +128,14 @@ public class PartySearchSceneController implements Initializable {
         PartyTableModel row = searchTable.getSelectionModel().getSelectedItem();
 
         if (row != null) {
-            if (maintenanceMode){
-                editParty((PartyModel) row.getObject().getValue());
-            } else {
-                //TODO: Add to Case
+            if (newMatter){
+                newCaseCreation((PartyModel) row.getObject().getValue());
+            }else {
+                if (maintenanceMode){
+                    editParty((PartyModel) row.getObject().getValue());
+                } else {
+                    //TODO: Add to Case
+                }
             }
         }
     }
@@ -145,6 +157,11 @@ public class PartySearchSceneController implements Initializable {
     private void editParty(PartyModel party){
         Global.getStageLauncher().detailedPartyAddEditScene(stage, maintenanceMode, party);
         search();
+    }
+    
+    private void newCaseCreation(PartyModel party){
+        Global.getStageLauncher().NewMatterCaseTypeSelectionScene(stage, party);
+        stage.close();
     }
     
 }

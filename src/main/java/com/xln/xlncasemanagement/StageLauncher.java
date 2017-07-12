@@ -172,7 +172,7 @@ public class StageLauncher {
         }
     }
     
-    public void partySearchScene(Stage stagePassed, boolean maintenanceMode) {
+    public void partySearchScene(Stage stagePassed, boolean maintenanceMode, boolean newMatter) {
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -184,7 +184,7 @@ public class StageLauncher {
             stage.setScene(scene);
 
             PartySearchSceneController controller = loader.getController();
-            controller.setActive(maintenanceMode);
+            controller.setActive(stage, maintenanceMode, newMatter);
 
             stage.showAndWait();
         } catch (IOException ex) {
@@ -424,6 +424,26 @@ public class StageLauncher {
             stage.setScene(scene);
 
             MaintenancePartyRelationTypeAddEditSceneController controller = loader.getController();
+            controller.setActive(stage, objectPassed);
+
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void NewMatterCaseTypeSelectionScene(Stage stagePassed, PartyModel objectPassed) {
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/NewMatterCaseTypeSelectionScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            NewMatterCaseTypeSelectionSceneController controller = loader.getController();
             controller.setActive(stage, objectPassed);
 
             stage.showAndWait();
