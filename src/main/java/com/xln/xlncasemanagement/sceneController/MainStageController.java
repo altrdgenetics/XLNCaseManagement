@@ -205,8 +205,6 @@ public class MainStageController implements Initializable {
     @FXML private void handleClientSelection(){
         Global.setCurrentClient((PartyModel) clientField.getValue());
         
-        disableTabsAndButtons(true);
-        
         Global.setCurrentMatter(null);
         
         String phone = NumberFormatService.convertStringToPhoneNumber(Global.getCurrentClient().getPhoneOne());
@@ -482,6 +480,7 @@ public class MainStageController implements Initializable {
         for (MatterModel item : SQLMatter.getActiveMattersByClient(Global.getCurrentClient().getId())){
             headerField1.getItems().addAll(item);
         }
+        disableTabsAndButtons(true);
     }
     
     private void disableTabsAndButtons(boolean disabled){
