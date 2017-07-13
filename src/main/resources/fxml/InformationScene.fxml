@@ -135,7 +135,7 @@
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </DatePicker>
-            <DatePicker editable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="333.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+            <DatePicker fx:id="WarrantyDateDatePicker" editable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="333.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>

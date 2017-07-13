@@ -334,8 +334,7 @@ public class MainStageController implements Initializable {
             disableTabsInUpdateMode(notesSceneController.isUpdateMode());
         }
     }
-    
-    
+        
     private void disableTabsInUpdateMode(boolean disable){   
         for(Tab tab : mainTabPane.getTabs()){
             if (!tab.equals(selectedTabTitle)){
@@ -516,8 +515,7 @@ public class MainStageController implements Initializable {
     }
 
     // GETTERS AND SETTERS------------------------------------------------
-    
-    
+        
     public Stage getStage() {
         return stage;
     }
@@ -734,5 +732,4 @@ public class MainStageController implements Initializable {
         this.headerField1 = headerField1;
     }
 
-    
 }

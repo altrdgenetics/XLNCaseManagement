@@ -137,4 +137,27 @@ public class SQLMatter {
         return item;
     }
     
+    public static void updateMAtterByID(MatterModel item) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE table15 SET "
+                + "col05 = ?, " //Open Date
+                + "col06 = ? "  //Close Date
+                + "WHERE col01 = ?";
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setDate(1, item.getOpenDate());
+            ps.setDate(2, item.getCloseDate());
+            ps.setInt (3, item.getId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+    }
+    
 }

@@ -6,6 +6,8 @@ package com.xln.xlncasemanagement.sceneController;
  * and open the template in the editor.
  */
 
+import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,6 +26,7 @@ public class InformationSceneController implements Initializable {
     
     @FXML DatePicker OpenDateDatePicker;
     @FXML DatePicker ClosedDateDatePicker;
+    @FXML DatePicker WarrantyDateDatePicker;
     
     /**
      * Initializes the controller class.
@@ -32,11 +35,25 @@ public class InformationSceneController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+        OpenDateDatePicker.setOnMouseClicked(e -> {
+            if (!OpenDateDatePicker.isEditable() && OpenDateDatePicker.isShowing()) {
+                OpenDateDatePicker.hide();
+            }
+        });
+        ClosedDateDatePicker.setOnMouseClicked(e -> {
+            if (!ClosedDateDatePicker.isEditable() && ClosedDateDatePicker.isShowing()) {
+                ClosedDateDatePicker.hide();
+            }
+        });
+        WarrantyDateDatePicker.setOnMouseClicked(e -> {
+            if (!WarrantyDateDatePicker.isEditable() && WarrantyDateDatePicker.isShowing()) {
+                WarrantyDateDatePicker.hide();
+            }
+        });
+    }
+
     public void setActive() {
-        DebugTools.Printout("Set Information Tab Active");
+        loadInformation();
     }
         
     public void mainPanelButtonFourAction() {
@@ -44,8 +61,10 @@ public class InformationSceneController implements Initializable {
         setEditableStatus(updateMode);
         
         if (updateMode) {
+            loadInformation();
             OpenDateDatePicker.requestFocus();
         } else {
+            saveInformation();
             DebugTools.Printout("Saved Information");
         }
     }
@@ -65,6 +84,30 @@ public class InformationSceneController implements Initializable {
         return updateMode;
     }
 
-    
+    private void loadInformation(){
+        if (Global.getCurrentMatter() != null){
+            OpenDateDatePicker.setValue(Global.getCurrentMatter().getOpenDate() == null 
+                    ? null : Global.getCurrentMatter().getOpenDate().toLocalDate());
+            ClosedDateDatePicker.setValue(Global.getCurrentMatter().getCloseDate() == null 
+                    ? null : Global.getCurrentMatter().getCloseDate().toLocalDate());
+        } else {
+            clearWindow();
+        }
+    }
 
+    public void clearWindow(){
+        OpenDateDatePicker.setValue(null);
+        ClosedDateDatePicker.setValue(null);
+        WarrantyDateDatePicker.setValue(null);
+    }
+    
+    private void saveInformation(){
+        //Update Matter
+        Global.getCurrentMatter().setOpenDate(OpenDateDatePicker.getValue() == null ? null : java.sql.Date.valueOf( OpenDateDatePicker.getValue() ));
+        Global.getCurrentMatter().setCloseDate(ClosedDateDatePicker.getValue() == null ? null : java.sql.Date.valueOf( ClosedDateDatePicker.getValue() ));
+        
+        SQLMatter.updateMAtterByID(Global.getCurrentMatter());        
+    }
+    
+    
 }
