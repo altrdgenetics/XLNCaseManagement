@@ -195,7 +195,7 @@ public class MainStageController implements Initializable {
     }
     
     @FXML private void handleRunReportMenuItem() {
-        //TODO
+        Global.getStageLauncher().ReportScene(stage);
     }
         
     @FXML private void handleAboutMenuItem() {

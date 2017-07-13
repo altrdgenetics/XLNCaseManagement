@@ -24,6 +24,7 @@ public class MaintenanceSceneController implements Initializable {
     @FXML private Button CloseButton;
     @FXML private Button ActivityTypeButton;
     @FXML private Button CompanyButton;
+    @FXML private Button DocumentButton;
     @FXML private Button ExpenseTypeButton;
     @FXML private Button JudgeButton;
     @FXML private Button JurisdictionButton;
@@ -61,6 +62,10 @@ public class MaintenanceSceneController implements Initializable {
         Global.getStageLauncher().MaintenanceCompanyScene(stage);
     }
     
+    @FXML private void documentButtonAction() {
+        
+    }
+    
     @FXML private void expenseTypeButtonAction() {
         Global.getStageLauncher().MaintenanceExpenseTypeScene(stage);
     }
@@ -87,6 +92,10 @@ public class MaintenanceSceneController implements Initializable {
     
     @FXML private void partyRelationTypeButtonAction() {
          Global.getStageLauncher().MaintenancePartyRelationTypeScene(stage);
+    }
+    
+    @FXML private void reportButtonAction() {
+        
     }
     
     @FXML private void userButtonAction() {
