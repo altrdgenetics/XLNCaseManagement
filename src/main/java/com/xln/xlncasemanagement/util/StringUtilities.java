@@ -7,6 +7,7 @@ package com.xln.xlncasemanagement.util;
 
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
+import com.xln.xlncasemanagement.model.sql.UserModel;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -111,6 +112,25 @@ public class StringUtilities {
         return fullName.trim();
     }
     
+    public static String buildUserName(UserModel item) {
+        String fullName = "";
+
+        if (item.getFirstName() != null) {
+            fullName = fullName.trim() + (item.getFirstName().equals("") ? "" : " " + item.getFirstName().trim());
+        }
+        if (item.getMiddleInitial() != null) {
+            fullName = fullName.trim() + (item.getMiddleInitial().equals("") ? "" : " " + (item.getMiddleInitial().trim().length() == 1 ? item.getMiddleInitial().trim() + "." : item.getMiddleInitial().trim()));
+        }
+        if (item.getLastName() != null) {
+            fullName = fullName.trim() + (item.getLastName().equals("") ? "" : " " + item.getLastName().trim());
+        }
+        if (item.getUsername() != null) {
+            fullName = fullName.trim() + (item.getUsername().equals("") ? "" : " (" +item.getUsername().trim() + ")");
+        }
+
+        return fullName.trim();
+    }
+
     public static String buildTableAddressBlock(PartyModel item) {
         String addressLine = "";
 

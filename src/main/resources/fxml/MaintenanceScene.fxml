@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="395.0" prefWidth="423.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xln.xlncasemanagement.sceneController.MaintenanceSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="343.0" prefWidth="423.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xln.xlncasemanagement.sceneController.MaintenanceSceneController">
    <top>
       <AnchorPane prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -28,8 +28,8 @@
             <Button fx:id="ActivityTypeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activityTypeButtonAction" prefWidth="150.0" styleClass="primary" text="Activity Type" />
             <Button fx:id="CompanyButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#companyButtonAction" prefWidth="150.0" styleClass="primary" text="Company" />
             <Button fx:id="ExpenseTypeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#expenseTypeButtonAction" prefWidth="150.0" styleClass="primary" text="Expense Type" />
-            <Button fx:id="JudgeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#judgeButtonAction" prefWidth="150.0" styleClass="primary" text="Judge" />
-            <Button fx:id="JurisdictionButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#jurisdictionButtonAction" prefWidth="150.0" styleClass="primary" text="Jurisdiction" />
+            <Button fx:id="JudgeButton" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#judgeButtonAction" prefWidth="150.0" styleClass="primary" text="Judge" />
+            <Button fx:id="JurisdictionButton" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#jurisdictionButtonAction" prefWidth="150.0" styleClass="primary" text="Jurisdiction" />
             <Button fx:id="MatterTypeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#matterTypeButtonAction" prefWidth="150.0" styleClass="primary" text="Matter Type" />
             <Button fx:id="PartyButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#partyButtonAction" prefWidth="150.0" styleClass="primary" text="Party" />
             <Button fx:id="PartyNamePreFixButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#partyNamePreFixButtonAction" prefWidth="150.0" styleClass="primary" text="Party Name Prefix" />

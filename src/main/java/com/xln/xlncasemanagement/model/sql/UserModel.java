@@ -27,7 +27,7 @@ public class UserModel {
     private Timestamp lastLoginDateTime;
     private String lastLoginPCName;
     private String lastLoginIP;
-    private String lastMatterID;
+    private int lastMatterID;
     private boolean activeLogin;
     private boolean adminRights;
 
@@ -143,11 +143,11 @@ public class UserModel {
         this.lastLoginIP = lastLoginIP;
     }
 
-    public String getLastMatterID() {
+    public int getLastMatterID() {
         return lastMatterID;
     }
 
-    public void setLastMatterID(String lastMatterID) {
+    public void setLastMatterID(int lastMatterID) {
         this.lastMatterID = lastMatterID;
     }
 

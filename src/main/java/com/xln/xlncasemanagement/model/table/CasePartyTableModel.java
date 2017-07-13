@@ -15,8 +15,7 @@ import javafx.beans.property.StringProperty;
  * @author User
  */
 public class CasePartyTableModel {
-    
-    
+        
     public ObjectProperty object = new SimpleObjectProperty(null);
     public StringProperty relation = new SimpleStringProperty(null);
     public StringProperty name = new SimpleStringProperty(null);
