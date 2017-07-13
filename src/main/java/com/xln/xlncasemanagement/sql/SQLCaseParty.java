@@ -218,4 +218,52 @@ public class SQLCaseParty {
         }
     }
     
+    public static void updateCasePartyGroupByID(PartyModel item) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE table04 "
+                + "LEFT JOIN table15 ON "
+                + "table04.col18 = table15.col01 " //col18 (matterID) -> col01 (matterID)
+                + "SET "
+                + "table04.col05 = ?, " //01 - prefix
+                + "table04.col06 = ?, " //02 - firstname
+                + "table04.col07 = ?, " //03 - middleinitial
+                + "table04.col08 = ?, " //04 - lastname
+                + "table04.col09 = ?, " //05 - address1
+                + "table04.col10 = ?, " //06 - address2
+                + "table04.col11 = ?, " //07 - address3
+                + "table04.col12 = ?, " //08 - city
+                + "table04.col13 = ?, " //09 - state
+                + "table04.col14 = ?, " //10 - zip
+                + "table04.col15 = ?, " //11 - phone one
+                + "table04.col16 = ?, " //12 - phone two
+                + "table04.col17 = ? "  //13 - email    
+                + "WHERE table15.col06 IS NULL AND table04.col04 = ? "; //14 - PartyID
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setString ( 1, item.getPrefix());
+            ps.setString ( 2, item.getFirstName());
+            ps.setString ( 3, item.getMiddleInitial());
+            ps.setString ( 4, item.getLastName());
+            ps.setString ( 5, item.getAddressOne());
+            ps.setString ( 6, item.getAddressTwo());
+            ps.setString ( 7, item.getAddressThree());
+            ps.setString ( 8, item.getCity());
+            ps.setString ( 9, item.getState());
+            ps.setString (10, item.getZip());
+            ps.setString (11, item.getPhoneOne());
+            ps.setString (12, item.getPhoneTwo());
+            ps.setString (13, item.getEmail());
+            ps.setInt    (14, item.getPartyID());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+    }
+    
 }

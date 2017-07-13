@@ -189,16 +189,24 @@ public class DetailedPartySceneController implements Initializable {
                 SQLParty.insertParty(item);
             }
         } else {
-            //FOR CaseParty People
+            updateCasePartyGroupSet(item);
+        }
+        stage.close();
+    }
+    
+    private void updateCasePartyGroupSet(PartyModel item){
+        //FOR CaseParty People
             PartyRelationTypeModel relation = (PartyRelationTypeModel) CaseRelationCombobox.getValue();  
                         
             item.setRelationID(relation.getId());
             item.setPartyID(partyItem.getPartyID());
             item.setMatterID(partyItem.getMatterID());
-            //update party
+            //Update Case Party Group
             SQLCaseParty.updateCasePartyByID(item);
-        }
-        stage.close();
+            SQLCaseParty.updateCasePartyGroupByID(item);
+            
+            //Update Party
+            SQLParty.updatePartyByID(item);
     }
 
 }
