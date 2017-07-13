@@ -9,6 +9,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.model.sql.MatterTypeModel;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
+import com.xln.xlncasemanagement.sql.SQLCaseParty;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.sql.SQLMatterType;
 import java.net.URL;
@@ -103,7 +104,11 @@ public class NewMatterCaseTypeSelectionSceneController implements Initializable 
     }
     
     private void insertPartyAsClient(int newKeyID){
-        //TODO
+        party.setMatterID(newKeyID);
+        party.setRelationID(0);
+        party.setPartyID(party.getId());
+        
+        SQLCaseParty.insertCaseParty(party);
     }
     
     private void refreshMainWindow(int newKeyID){

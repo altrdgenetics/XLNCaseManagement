@@ -207,6 +207,7 @@ public class MainStageController implements Initializable {
         
         Global.setCurrentMatter(null);
         
+        if (Global.getCurrentClient() != null){
         String phone = NumberFormatService.convertStringToPhoneNumber(Global.getCurrentClient().getPhoneOne());
         if (Global.getCurrentClient().getPhoneTwo() != null && !phone.trim().equals("")){
             phone += ", ";
@@ -215,6 +216,10 @@ public class MainStageController implements Initializable {
                 
         phoneField.setText(phone);
         emailField.setText(Global.getCurrentClient().getEmail());
+        } else {
+            phoneField.setText("");
+            emailField.setText("");
+        }
                 
         loadMatterComboBox();
     }
@@ -222,6 +227,7 @@ public class MainStageController implements Initializable {
     @FXML private void handleHeaderField1Selection(){
         Global.setCurrentMatter((MatterModel) headerField1.getValue());
         disableTabsAndButtons(false);
+        onTabSelection();
     }
     
     private void setHeaderLabels(){
