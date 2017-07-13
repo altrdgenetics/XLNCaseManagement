@@ -453,4 +453,24 @@ public class StageLauncher {
             Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void CaseRelationSelectionScene(Stage stagePassed, PartyModel objectPassed) {
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/CaseRelationSelectionScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            CaseRelationSelectionSceneController controller = loader.getController();
+            controller.setActive(stage, objectPassed);
+
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

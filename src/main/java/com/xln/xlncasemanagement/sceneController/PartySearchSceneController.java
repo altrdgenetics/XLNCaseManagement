@@ -127,13 +127,16 @@ public class PartySearchSceneController implements Initializable {
         PartyTableModel row = searchTable.getSelectionModel().getSelectedItem();
 
         if (row != null) {
+            PartyModel party = (PartyModel) row.getObject().getValue();
+            
             if (newMatter){
-                newCaseCreation((PartyModel) row.getObject().getValue());
+                newCaseCreation(party);
             }else {
                 if (maintenanceMode){
-                    editParty((PartyModel) row.getObject().getValue());
+                    editParty(party);
                 } else {
-                    //TODO: Add to Case
+                    Global.getStageLauncher().CaseRelationSelectionScene(stage, party);
+                    stage.close();
                 }
             }
         }

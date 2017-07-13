@@ -137,6 +137,14 @@ public class SQLPartyRelationType {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
+            
+            //Add in Built In Client Option
+            PartyRelationTypeModel defaultItem = new PartyRelationTypeModel();
+            defaultItem.setId(0);
+            defaultItem.setActive(true);
+            defaultItem.setPartyRelationType("Client");
+            list.add(defaultItem);
+                        
             while (rs.next()) {
                 PartyRelationTypeModel item = new PartyRelationTypeModel();
                 item.setId(rs.getInt("col01"));

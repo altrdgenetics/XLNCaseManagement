@@ -206,6 +206,7 @@ public class MainStageController implements Initializable {
         Global.setCurrentClient((PartyModel) clientField.getValue());
         
         Global.setCurrentMatter(null);
+        clearHeaderLabels();
         
         if (Global.getCurrentClient() != null){
         String phone = NumberFormatService.convertStringToPhoneNumber(Global.getCurrentClient().getPhoneOne());
@@ -216,9 +217,6 @@ public class MainStageController implements Initializable {
                 
         phoneField.setText(phone);
         emailField.setText(Global.getCurrentClient().getEmail());
-        } else {
-            phoneField.setText("");
-            emailField.setText("");
         }
                 
         loadMatterComboBox();
@@ -508,6 +506,15 @@ public class MainStageController implements Initializable {
         }
     }
     
+    private void clearHeaderLabels() {
+        phoneField.setText("");
+        emailField.setText("");
+        headerField2.setText("");
+        headerField3.setText("");
+        headerField4.setText("");
+        headerField5.setText("");
+    }
+
     // GETTERS AND SETTERS------------------------------------------------
     
     
