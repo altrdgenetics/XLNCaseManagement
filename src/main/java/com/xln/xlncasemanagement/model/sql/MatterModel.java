@@ -20,6 +20,8 @@ public class MatterModel {
     private String matterTypeName;
     private Date openDate;
     private Date closeDate;
+    
+    private String note;
 
     public int getId() {
         return id;
@@ -75,6 +77,14 @@ public class MatterModel {
 
     public void setCloseDate(Date closeDate) {
         this.closeDate = closeDate;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
     
     

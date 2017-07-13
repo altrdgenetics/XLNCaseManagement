@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
+import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -44,8 +45,10 @@ public class NotesSceneController implements Initializable {
         setEditableStatus(updateMode);
         
         if (updateMode) {
+            loadInformation();
             notesArea.requestFocus();
         } else {
+            saveInformation();
             DebugTools.Printout("Saved Information");
         }
     }
@@ -62,5 +65,13 @@ public class NotesSceneController implements Initializable {
     
     public boolean isUpdateMode() {
         return updateMode;
+    }
+    
+    private void loadInformation(){
+        notesArea.setText(Global.getCurrentMatter().getNote() == null ? "" : Global.getCurrentMatter().getNote().trim());
+    }
+    
+    private void saveInformation(){
+        
     }
 }
