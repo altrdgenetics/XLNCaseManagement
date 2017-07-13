@@ -58,7 +58,7 @@ public class LoginStageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        setListeners();
+        //setListeners();
     }    
     
     public void setActive(Stage stagePassed) {

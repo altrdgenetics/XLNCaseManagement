@@ -79,7 +79,7 @@ public class PartySearchSceneController implements Initializable {
         maintenanceMode = maintenanceModePassed;
         newMatter = newMatterPassed;
         
-        headerLabel.setText(maintenanceMode ? "Contact List" : "Add Party To Case");
+        headerLabel.setText((maintenanceMode || newMatter) ? "Contact List" : "Add Party To Case");
         AddEditButton.setText(maintenanceMode ? "Edit" : "Add To Case");
         
         if (newMatter){
@@ -93,7 +93,7 @@ public class PartySearchSceneController implements Initializable {
     }
     
     @FXML private void addNewPartyButtonAction() {
-        Global.getStageLauncher().detailedPartyAddEditScene(stage, maintenanceMode, null);
+        Global.getStageLauncher().detailedPartyAddEditScene(stage, true, null);
         search();
     }
     
@@ -157,7 +157,7 @@ public class PartySearchSceneController implements Initializable {
     }
     
     private void editParty(PartyModel party){
-        Global.getStageLauncher().detailedPartyAddEditScene(stage, maintenanceMode, party);
+        Global.getStageLauncher().detailedPartyAddEditScene(stage, true, party);
         search();
     }
     
