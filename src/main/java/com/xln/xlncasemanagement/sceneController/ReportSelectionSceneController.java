@@ -5,10 +5,7 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
-import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ReportModel;
-import com.xln.xlncasemanagement.sql.SQLCaseParty;
-import com.xln.xlncasemanagement.sql.SQLPartyRelationType;
 import com.xln.xlncasemanagement.sql.SQLReport;
 import java.net.URL;
 import java.util.ResourceBundle;

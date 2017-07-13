@@ -7,7 +7,6 @@ package com.xln.xlncasemanagement.sceneController;
 
 
 import com.xln.xlncasemanagement.Global;
-import com.xln.xlncasemanagement.model.sql.PartyRelationTypeModel;
 import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.model.table.UserMaintanceTableModel;
 import com.xln.xlncasemanagement.sql.SQLUser;

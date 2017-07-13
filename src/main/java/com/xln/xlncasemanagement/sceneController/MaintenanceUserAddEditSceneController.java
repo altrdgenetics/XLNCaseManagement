@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.model.sql.UserModel;
+import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -28,7 +29,12 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
     @FXML private Label headerLabel;
     @FXML private Button saveButton;
     @FXML private Button closeButton;
-    
+    @FXML private TextField userNameTextfield;
+    @FXML private TextField firstNameTextfield;
+    @FXML private TextField middleInitialTextfield;
+    @FXML private TextField lastNameNameTextfield;
+    @FXML private TextField phoneNumberTextfield;
+        
     /**
      * Initializes the controller class.
      * @param url
@@ -56,11 +62,15 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
     }
     
     private void setListeners() {
-        //saveButton.disableProperty().bind(partyRelationTypetextField.textProperty().isEmpty());
+        saveButton.disableProperty().bind(userNameTextfield.textProperty().isEmpty());
     }
     
     private void loadInformation(){
-        //TO DO
+        userNameTextfield.setText(userObject.getUsername() == null ? "" : userObject.getUsername());
+        firstNameTextfield.setText(userObject.getFirstName() == null ? "" : userObject.getFirstName());
+        middleInitialTextfield.setText(userObject.getMiddleInitial() == null ? "" : userObject.getMiddleInitial());
+        lastNameNameTextfield.setText(userObject.getLastName() == null ? "" : userObject.getLastName());
+        phoneNumberTextfield.setText(userObject.getPhoneNumber() == null ? "" : NumberFormatService.convertStringToPhoneNumber(userObject.getPhoneNumber()));
     }
     
     @FXML
@@ -79,15 +89,10 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
     }
     
     private void insertUser() {
-//        userObject = new UserModel();
-//        userObject.setActive(true);
-//        userObject.setPartyRelationType(partyRelationTypetextField.getText().trim());
-//        int id = SQLPartyRelationType.insertPartyRelationType(userObject);
-//        System.out.println("New Party Relation Type ID: " + id);
+        //TODO
     }
     
     private void updateUser() {
-//        userObject.setPartyRelationType(partyRelationTypetextField.getText().trim());
-//        SQLPartyRelationType.updatePartyRelationTypeByID(userObject);
+        //TODO
     }
 }

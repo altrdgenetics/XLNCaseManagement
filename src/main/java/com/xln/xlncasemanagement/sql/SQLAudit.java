@@ -6,7 +6,6 @@
 package com.xln.xlncasemanagement.sql;
 
 import com.xln.xlncasemanagement.Global;
-import com.xln.xlncasemanagement.model.sql.ActivityTypeModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
