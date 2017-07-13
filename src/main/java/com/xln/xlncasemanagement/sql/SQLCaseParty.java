@@ -7,6 +7,8 @@ package com.xln.xlncasemanagement.sql;
 
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.table.CasePartyTableModel;
+import com.xln.xlncasemanagement.util.NumberFormatService;
+import com.xln.xlncasemanagement.util.StringUtilities;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,33 +30,45 @@ public class SQLCaseParty {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String sql = "SELECT * FROM table04 WHERE active = 1 AND col18 = ?";
+        String sql = "SELECT table04.*, table17.col03 AS relationName "
+                + "FROM table04 "
+                + "LEFT JOIN table17 ON table04.col03 = table17.col01 "
+                + "WHERE table04.col02 = 1 ";
         if (param.length > 0) {
             for (String param1 : param) {
-                sql += " AND col03 LIKE ?";
+                sql += " AND CONCAT("          
+                        + "IFNULL(table04.col06,''), "
+                        + "IFNULL(table04.col08,''), "
+                        + "IFNULL(table04.col09,''), "
+                        + "IFNULL(table04.col10,''), "
+                        + "IFNULL(table04.col11,''), "
+                        + "IFNULL(table04.col12,''), "
+                        + "IFNULL(table04.col14,''), "
+                        + "IFNULL(table04.col15,'') "
+                        + ") LIKE ? ";
             }
         }
-
+        sql += " AND table04.col18 = ?";
+        
         try {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql);
 
-            ps.setInt(1, matterID);
-
-            for (int i = 1; i < param.length + 1; i++) {
+            for (int i = 0; i < param.length; i++) {
                 ps.setString((i + 1), "%" + param[i].trim() + "%");
             }
+            
+            ps.setInt(param.length + 1, matterID);
+            
             rs = ps.executeQuery();
 
             while (rs.next()) {
                 PartyModel item = new PartyModel();
                 item.setId(rs.getInt("col01"));
                 item.setActive(rs.getBoolean("col02"));
-                
                 item.setRelationID(rs.getInt("col03"));
                 item.setPartyID(rs.getInt("col04"));
-                item.setRelationName("");
-                
+                item.setRelationName(rs.getInt("col03") == 0 ? "Client" : rs.getString("relationName").trim());
                 item.setPrefix(rs.getString("col05"));
                 item.setFirstName(rs.getString("col06"));
                 item.setMiddleInitial(rs.getString("col07"));
@@ -70,14 +84,14 @@ public class SQLCaseParty {
                 item.setEmail(rs.getString("col17"));
                 item.setMatterID(rs.getInt("col18"));
 
-//                list.add(
-//                        new CasePartyTableModel(
-//                                item,
-//                                rs.getBoolean("col02"),
-//                                StringUtilities.buildPartyName(item),
-//                                StringUtilities.buildTableAddressBlock(item),
-//                                NumberFormatService.convertStringToPhoneNumber(rs.getString("col13"))
-//                        ));
+                list.add(
+                        new CasePartyTableModel(
+                                item,
+                                rs.getInt("col03") == 0 ? "Client" : rs.getString("relationName").trim(),
+                                StringUtilities.buildPartyName(item),
+                                StringUtilities.buildTableAddressBlock(item),
+                                NumberFormatService.convertStringToPhoneNumber(rs.getString("col15"))
+                        ));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

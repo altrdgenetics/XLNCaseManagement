@@ -9,13 +9,16 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.table.CasePartyTableModel;
+import com.xln.xlncasemanagement.sql.SQLCaseParty;
 import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -25,18 +28,13 @@ import javafx.scene.input.MouseEvent;
  */
 public class CasePartySceneController implements Initializable {
 
-    @FXML
-    private TableView<CasePartyTableModel> partyTable;
-    @FXML
-    private TableColumn<CasePartyTableModel, Object> objectColumn;
-    @FXML
-    private TableColumn<CasePartyTableModel, String> relationColumn;
-    @FXML
-    private TableColumn<CasePartyTableModel, String> nameColumn;
-    @FXML
-    private TableColumn<CasePartyTableModel, String> addressColumn;
-    @FXML
-    private TableColumn<CasePartyTableModel, String> phoneNumberColumn;
+    @FXML TextField searchTextField;
+    @FXML private TableView<CasePartyTableModel> partyTable;
+    @FXML private TableColumn<CasePartyTableModel, Object> objectColumn;
+    @FXML private TableColumn<CasePartyTableModel, String> relationColumn;
+    @FXML private TableColumn<CasePartyTableModel, String> nameColumn;
+    @FXML private TableColumn<CasePartyTableModel, String> addressColumn;
+    @FXML private TableColumn<CasePartyTableModel, String> phoneNumberColumn;
     
     /**
      * Initializes the controller class.
@@ -52,10 +50,6 @@ public class CasePartySceneController implements Initializable {
         addressColumn.setCellValueFactory(cellData -> cellData.getValue().getAddress());
         phoneNumberColumn.setCellValueFactory(cellData -> cellData.getValue().getPhoneNumber());
     }    
-    
-    public void setActive() {
-        DebugTools.Printout("Set Party Tab Active");
-    }
     
     @FXML
     private void tableListener(MouseEvent event) {
@@ -73,4 +67,21 @@ public class CasePartySceneController implements Initializable {
         }
     }
     
+    public void setActive() {
+        search();
+    }
+        
+    @FXML private void search(){
+        String[] searchParam = searchTextField.getText().trim().split(" ");
+        ObservableList<CasePartyTableModel> list = SQLCaseParty.searchParty(searchParam, Global.getCurrentMatter().getId());
+        loadTable(list);
+    }
+    
+    private void loadTable(ObservableList<CasePartyTableModel> list) {
+        partyTable.getItems().removeAll();
+        if (list != null) {
+            partyTable.setItems(list);
+        }
+        partyTable.getSelectionModel().clearSelection();
+    }
 }
