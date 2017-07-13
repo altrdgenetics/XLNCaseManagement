@@ -324,7 +324,7 @@ public class MainStageController implements Initializable {
             informationSceneController.mainPanelButtonDeleteAction();
             disableTabsInUpdateMode(informationSceneController.isUpdateMode());
         } else if (selectedTabTitle.equals(partyTab)) {
-            //TODO
+            casePartySceneController.disableContact();
         } else if (selectedTabTitle.equals(activityTab)) {
             //TODO
         } else if (selectedTabTitle.equals(expenseTab)) {

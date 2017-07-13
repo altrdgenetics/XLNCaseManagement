@@ -9,6 +9,7 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.table.CasePartyTableModel;
+import com.xln.xlncasemanagement.sql.SQLActiveStatus;
 import com.xln.xlncasemanagement.sql.SQLCaseParty;
 import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
@@ -58,11 +59,13 @@ public class CasePartySceneController implements Initializable {
         if (row != null) {
             if (event.getClickCount() == 1) {
                 DebugTools.Printout("Party Table Single Click");
+                Global.getMainStageController().getButtonDelete().setDisable(false);
+                
                 
             } else if (event.getClickCount() >= 2) {
                 DebugTools.Printout("Party Table Double Click");
                 Global.getStageLauncher().detailedPartyAddEditScene(Global.getMainStage(), false, (PartyModel) row.getObject().getValue());
-                //TODO: RELOAD TABLE
+                search();
             }
         }
     }
@@ -83,5 +86,18 @@ public class CasePartySceneController implements Initializable {
             partyTable.setItems(list);
         }
         partyTable.getSelectionModel().clearSelection();
+        Global.getMainStageController().getButtonDelete().setDisable(true);
     }
+    
+    public void disableContact(){
+        CasePartyTableModel row = partyTable.getSelectionModel().getSelectedItem();
+
+        if (row != null) {
+            PartyModel party = (PartyModel) row.getObject().getValue();
+            
+            SQLActiveStatus.setActive("table04", party.getId(), false);
+            search();
+        }
+    }
+    
 }

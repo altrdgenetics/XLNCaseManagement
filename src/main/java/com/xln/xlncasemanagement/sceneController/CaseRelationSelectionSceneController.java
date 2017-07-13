@@ -83,8 +83,7 @@ public class CaseRelationSelectionSceneController implements Initializable {
         refreshMainWindow();
         stage.close();
     }    
-    
-    
+        
     private void insertParty(){
         PartyRelationTypeModel relation = (PartyRelationTypeModel) relationTypeComboBox.getValue(); 
         
@@ -96,10 +95,7 @@ public class CaseRelationSelectionSceneController implements Initializable {
     }
     
     private void refreshMainWindow(){
-        if (Global.getMainStageController().getMainTabPane().getSelectionModel().getSelectedItem()
-                .equals(Global.getMainStageController().getPartyTab())){
-            Global.getMainStageController().getCasePartySceneController().setActive();
-        }
+        Global.getMainStageController().getCasePartySceneController().setActive();
     }
     
     
