@@ -126,6 +126,7 @@ public class SQLMatter {
                 item.setMatterTypeName(rs.getString("matterName"));
                 item.setOpenDate(rs.getDate("col05"));
                 item.setCloseDate(rs.getDate("col06"));
+                item.setNote(rs.getString("col07"));
             }
         } catch (SQLException ex) {
             DebugTools.Printout(ex.getMessage());
@@ -137,7 +138,7 @@ public class SQLMatter {
         return item;
     }
     
-    public static void updateMAtterByID(MatterModel item) {
+    public static void updateMatterInformationByID(MatterModel item) {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -151,6 +152,25 @@ public class SQLMatter {
             ps.setDate(1, item.getOpenDate());
             ps.setDate(2, item.getCloseDate());
             ps.setInt (3, item.getId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+    }
+    
+    public static void updateMAtterNoteByID(MatterModel item) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE table15 SET col07 = ? WHERE col01 = ?";
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, item.getNote());
+            ps.setInt   (2, item.getId());
             ps.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

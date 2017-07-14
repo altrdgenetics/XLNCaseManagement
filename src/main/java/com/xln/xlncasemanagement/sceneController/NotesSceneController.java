@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,7 +38,7 @@ public class NotesSceneController implements Initializable {
     }
 
     public void setActive() {
-        DebugTools.Printout("Set Notes Tab Active");
+        loadInformation();
     }
 
     public void mainPanelButtonFourAction() {
@@ -45,7 +46,6 @@ public class NotesSceneController implements Initializable {
         setEditableStatus(updateMode);
         
         if (updateMode) {
-            loadInformation();
             notesArea.requestFocus();
         } else {
             saveInformation();
@@ -68,10 +68,15 @@ public class NotesSceneController implements Initializable {
     }
     
     private void loadInformation(){
-        notesArea.setText(Global.getCurrentMatter().getNote() == null ? "" : Global.getCurrentMatter().getNote().trim());
+        Global.setCurrentMatter(SQLMatter.getMatterByID(Global.getCurrentMatter().getId()));
+        notesArea.setText(Global.getCurrentMatter().getNote() == null 
+                ? "" : Global.getCurrentMatter().getNote().trim());
     }
     
     private void saveInformation(){
+        Global.getCurrentMatter().setNote(notesArea.getText().trim().equals("") 
+                ? null : notesArea.getText().trim());
         
+        SQLMatter.updateMAtterNoteByID(Global.getCurrentMatter());
     }
 }

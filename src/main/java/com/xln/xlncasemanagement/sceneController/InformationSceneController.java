@@ -85,7 +85,11 @@ public class InformationSceneController implements Initializable {
     }
 
     private void loadInformation(){
+        
+        
         if (Global.getCurrentMatter() != null){
+            Global.setCurrentMatter(SQLMatter.getMatterByID(Global.getCurrentMatter().getId()));
+            
             OpenDateDatePicker.setValue(Global.getCurrentMatter().getOpenDate() == null 
                     ? null : Global.getCurrentMatter().getOpenDate().toLocalDate());
             ClosedDateDatePicker.setValue(Global.getCurrentMatter().getCloseDate() == null 
@@ -106,7 +110,7 @@ public class InformationSceneController implements Initializable {
         Global.getCurrentMatter().setOpenDate(OpenDateDatePicker.getValue() == null ? null : java.sql.Date.valueOf( OpenDateDatePicker.getValue() ));
         Global.getCurrentMatter().setCloseDate(ClosedDateDatePicker.getValue() == null ? null : java.sql.Date.valueOf( ClosedDateDatePicker.getValue() ));
         
-        SQLMatter.updateMAtterByID(Global.getCurrentMatter());        
+        SQLMatter.updateMatterInformationByID(Global.getCurrentMatter());        
     }
     
     
