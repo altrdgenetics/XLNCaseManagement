@@ -23,14 +23,17 @@
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
                 <TableView fx:id="searchTable" editable="true" layoutX="382.0" layoutY="30.0" onMouseClicked="#tableListener" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-               <columns>
-                  <TableColumn fx:id="iDColumn" prefWidth="75.0" text="Object" visible="false" />
-                  <TableColumn fx:id="userNameColumn" prefWidth="75.0" text="User" />
-                  <TableColumn fx:id="lastSignIn" prefWidth="75.0" text="Last Sign In" />
-               </columns>
+                    <placeholder>
+                        <Label text="No Users"/>
+                    </placeholder>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                    <columns>
+                        <TableColumn fx:id="iDColumn" prefWidth="75.0" text="Object" visible="false" />
+                        <TableColumn fx:id="userNameColumn" prefWidth="75.0" text="User" />
+                        <TableColumn fx:id="lastSignIn" prefWidth="75.0" text="Last Sign In" />
+                    </columns>
                 </TableView>
             </children>
         </AnchorPane>
@@ -78,6 +81,7 @@
             <buttons>
                 <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleClose" text="Close" ButtonBar.buttonData="LEFT" />
                 <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonAction" styleClass="primary" text="Edit" ButtonBar.buttonData="RIGHT" />
+                <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonAction" styleClass="danger" text="Remove" />
             </buttons>
             <BorderPane.margin>
                 <Insets />

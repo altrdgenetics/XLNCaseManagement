@@ -6,14 +6,12 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.model.sql.ActivityModel;
-import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**

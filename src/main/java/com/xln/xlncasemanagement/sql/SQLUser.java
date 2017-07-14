@@ -23,20 +23,16 @@ import org.apache.commons.dbutils.DbUtils;
  */
 public class SQLUser {
     
-    public static ObservableList<UserMaintanceTableModel> searchPartyRelationTypes(String[] param) {
+    public static ObservableList<UserMaintanceTableModel> searchActiveUsers(String[] param) {
         ObservableList<UserMaintanceTableModel> list = FXCollections.observableArrayList();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String sql = "SELECT * FROM table22 WHERE ";
+        String sql = "SELECT * FROM table22 WHERE col02 = 1";
         if (param.length > 0) {
-
-            for (int i = 0; i < param.length; i++) {
-                if (i > 0) {
-                    sql += " AND";
-                }
-                sql += " CONCAT("          
+            for (String param1 : param) {
+                sql += " AND CONCAT("          
                         + "IFNULL(col03,''), "
                         + "IFNULL(col05,''), "
                         + "IFNULL(col08,'') "

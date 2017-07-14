@@ -326,9 +326,9 @@ public class MainStageController implements Initializable {
         } else if (selectedTabTitle.equals(partyTab)) {
             casePartySceneController.disableContact();
         } else if (selectedTabTitle.equals(activityTab)) {
-            //TODO
+            activitySceneController.disableActivity();
         } else if (selectedTabTitle.equals(expenseTab)) {
-            //TODO
+            expensesSceneController.disableExpense();
         } else if (selectedTabTitle.equals(noteTab)){
             notesSceneController.mainPanelButtonDeleteAction();
             disableTabsInUpdateMode(notesSceneController.isUpdateMode());
@@ -484,6 +484,7 @@ public class MainStageController implements Initializable {
             headerField1.getItems().addAll(item);
         }
         disableTabsAndButtons(true);
+        headerField1.getSelectionModel().selectFirst();
     }
     
     private void disableTabsAndButtons(boolean disabled){

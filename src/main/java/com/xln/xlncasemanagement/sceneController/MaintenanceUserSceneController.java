@@ -9,7 +9,9 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.model.table.UserMaintanceTableModel;
+import com.xln.xlncasemanagement.sql.SQLActiveStatus;
 import com.xln.xlncasemanagement.sql.SQLUser;
+import com.xln.xlncasemanagement.util.AlertDialog;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -34,6 +36,7 @@ public class MaintenanceUserSceneController implements Initializable {
 
     @FXML private TextField searchTextField;
     @FXML private Button editButton;
+    @FXML private Button deleteButton;
     @FXML private Button closeButton;
     @FXML private TableView<UserMaintanceTableModel> searchTable;
     @FXML private TableColumn<UserMaintanceTableModel, Object> iDColumn;
@@ -56,6 +59,9 @@ public class MaintenanceUserSceneController implements Initializable {
         
         //Edit Button Listener
         editButton.disableProperty().bind(Bindings.isEmpty(searchTable.getSelectionModel().getSelectedItems()));
+        
+        //Delete Button Listener
+        deleteButton.disableProperty().bind(Bindings.isEmpty(searchTable.getSelectionModel().getSelectedItems()));
     }
 
     public void setActive(Stage stagePassed) {
@@ -66,7 +72,7 @@ public class MaintenanceUserSceneController implements Initializable {
 
     @FXML private void search(){
         String[] searchParam = searchTextField.getText().trim().split(" ");
-        ObservableList<UserMaintanceTableModel> list = SQLUser.searchPartyRelationTypes(searchParam);
+        ObservableList<UserMaintanceTableModel> list = SQLUser.searchActiveUsers(searchParam);
         loadTable(list);
     }
     
@@ -101,6 +107,22 @@ public class MaintenanceUserSceneController implements Initializable {
         UserMaintanceTableModel row = searchTable.getSelectionModel().getSelectedItem();
         Global.getStageLauncher().MaintenanceUserAddEditScene(stage, (UserModel) row.getObject().getValue());
         search();
+    }    
+    
+    @FXML private void deleteButtonAction() {
+        boolean approved = AlertDialog.StaticAlert(
+                1, 
+                "Remove User", 
+                "Do You Wish To Remove This User?", 
+                "This is not reversable"
+        );
+        
+        if (approved){
+            UserMaintanceTableModel row = searchTable.getSelectionModel().getSelectedItem();
+            UserModel item = (UserModel) row.getObject().getValue();
+            SQLActiveStatus.setActive("table22", item.getId(), false);
+            search();
+        }
     }
     
 }

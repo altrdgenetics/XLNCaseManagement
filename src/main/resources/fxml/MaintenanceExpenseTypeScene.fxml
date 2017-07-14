@@ -23,6 +23,9 @@
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
                 <TableView fx:id="searchTable" editable="true" layoutX="382.0" layoutY="30.0" onMouseClicked="#tableListener" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+                    <placeholder>
+                        <Label text="No Expense Types"/>
+                    </placeholder>
                     <columns>
                         <TableColumn fx:id="iDColumn" editable="false" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="Object" visible="false" />
                         <TableColumn fx:id="activeColumn" minWidth="35.0" prefWidth="35.0" resizable="false" />

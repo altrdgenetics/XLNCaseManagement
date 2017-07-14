@@ -11,6 +11,9 @@
 <BorderPane fx:id="partyTabScene" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xln.xlncasemanagement.sceneController.CasePartySceneController">
     <center>
         <TableView fx:id="partyTable" onMouseClicked="#tableListener" prefHeight="355.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <placeholder>
+                <Label text="No Perties For This Matter"/>
+            </placeholder>
             <columns>
                 <TableColumn fx:id="objectColumn" prefWidth="0.0" text="Object" visible="false" />
                 <TableColumn fx:id="relationColumn" prefWidth="175.0" text="Relation" />
