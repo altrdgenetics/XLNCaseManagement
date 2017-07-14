@@ -146,7 +146,7 @@ public class StageLauncher {
             stage.setScene(scene);
 
             DetailedExpenseSceneController controller = loader.getController();
-            controller.setActive(itemPassed);
+            controller.setActive(stage, itemPassed);
 
             stage.showAndWait();
         } catch (IOException ex) {
@@ -166,7 +166,7 @@ public class StageLauncher {
             stage.setScene(scene);
 
             DetailedActivitySceneController controller = loader.getController();
-            controller.setActive(itemPassed);
+            controller.setActive(stage, itemPassed);
 
             stage.showAndWait();
         } catch (IOException ex) {
