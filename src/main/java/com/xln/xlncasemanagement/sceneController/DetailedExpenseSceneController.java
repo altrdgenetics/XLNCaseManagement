@@ -41,11 +41,11 @@ public class DetailedExpenseSceneController implements Initializable {
     public void setActive(Stage stagePassed, ExpenseModel expenseObjectObjectPassed){
         stage = stagePassed;
         expenseObject = expenseObjectObjectPassed;
-        String title = "Add Activity";
+        String title = "Add Expense";
         String buttonText = "Add";
         
         if (expenseObject != null){
-            title = "Edit Activity";
+            title = "Edit Expense";
             buttonText = "Save";
             loadInformation();
         }
