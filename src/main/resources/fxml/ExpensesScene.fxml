@@ -17,6 +17,7 @@
             <columns>
                 <TableColumn fx:id="objectColumn" editable="false" prefWidth="0.0" text="Object" visible="false" />
                 <TableColumn fx:id="dateColumn" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Date" />
+                <TableColumn fx:id="userColumn" editable="false" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" text="User" />
                 <TableColumn fx:id="descriptionColumn" editable="false" prefWidth="175.0" text="Description" />
                 <TableColumn fx:id="costColumn" editable="false" maxWidth="80.0" minWidth="80.0" text="Cost" />
             <TableColumn fx:id="recieptColumn" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" text="Receipt" />

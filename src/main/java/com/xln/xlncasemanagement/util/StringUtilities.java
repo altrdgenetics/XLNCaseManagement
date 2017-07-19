@@ -93,7 +93,6 @@ public class StringUtilities {
         }
         return duration.trim();
     }
-
     
     public static String buildPartyName(PartyModel item) {
         String fullName = "";
@@ -131,6 +130,22 @@ public class StringUtilities {
         return fullName.trim();
     }
 
+    public static String buildName(String first, String middle, String last) {
+        String fullName = "";
+
+        if (first != null) {
+            fullName = fullName.trim() + (first.equals("") ? "" : " " + first.trim());
+        }
+        if (middle != null) {
+            fullName = fullName.trim() + (middle.equals("") ? "" : " " + (middle.trim().length() == 1 ? middle.trim() + "." : middle.trim()));
+        }
+        if (last != null) {
+            fullName = fullName.trim() + (last.equals("") ? "" : " " + last.trim());
+        }
+
+        return fullName.trim();
+    }
+    
     public static String buildTableAddressBlock(PartyModel item) {
         String addressLine = "";
 

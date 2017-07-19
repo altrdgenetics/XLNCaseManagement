@@ -9,6 +9,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ExpenseModel;
 import com.xln.xlncasemanagement.model.table.ExpensesTableModel;
 import com.xln.xlncasemanagement.util.NumberFormatService;
+import com.xln.xlncasemanagement.util.StringUtilities;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,9 +31,11 @@ public class SQLExpense {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String sql = "SELECT table13.*, table14.col03 AS expenseType "
+        String sql = "SELECT table13.*, table14.col03 AS expenseType, table22.col03 as firstName, "
+                + "table22.col04 as middleName, table22.col05 as lastName, table22.col08 as userName "
                 + "FROM table13 "
                 + "LEFT JOIN table14 ON table13.col04 = table14.col01 "
+                + "LEFT JOIN table22 ON table13.col03 = table22.col01 "
                 + "WHERE table13.col02 = 1 ";
         if (param.length > 0) {
             for (String param1 : param) {
@@ -74,6 +77,7 @@ public class SQLExpense {
                         new ExpensesTableModel(
                                 item,  //Object
                                 Global.getMmddyyyy().format(rs.getDate("col06")), //Date
+                                StringUtilities.buildName(rs.getString("firstName"), rs.getString("middleName"), rs.getString("lastName")), //user
                                 rs.getString("expenseType") + (rs.getString("col07") == null ? "" : " - " + rs.getString("col07")), //Description
                                 rs.getDouble("col08") == 0 ? "N/A" : NumberFormatService.formatMoney(rs.getDouble("col08")), //Cost
                                 rs.getString("col07") != null, //File

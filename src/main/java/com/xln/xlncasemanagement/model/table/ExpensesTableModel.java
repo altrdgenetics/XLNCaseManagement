@@ -20,14 +20,16 @@ public class ExpensesTableModel {
     
     public ObjectProperty object = new SimpleObjectProperty(null);
     public StringProperty date = new SimpleStringProperty(null);
+    public StringProperty user = new SimpleStringProperty(null);
     public StringProperty description = new SimpleStringProperty(null);
     public StringProperty cost = new SimpleStringProperty(null);
     public ObjectProperty receipt = new SimpleObjectProperty(null);
     public BooleanProperty invoiced = new SimpleBooleanProperty(false);
 
-    public ExpensesTableModel(Object object, String date, String description, String cost, Object receipt, boolean invoiced) {
+    public ExpensesTableModel(Object object, String date, String user, String description, String cost, Object receipt, boolean invoiced) {
         this.object = new SimpleObjectProperty(object);
         this.date = new SimpleStringProperty(date);
+        this.user = new SimpleStringProperty(user);
         this.description = new SimpleStringProperty(description);
         this.cost = new SimpleStringProperty(cost);
         this.receipt = new SimpleObjectProperty(receipt);
@@ -48,6 +50,14 @@ public class ExpensesTableModel {
 
     public void setDate(StringProperty date) {
         this.date = date;
+    }
+
+    public StringProperty getUser() {
+        return user;
+    }
+
+    public void setUser(StringProperty user) {
+        this.user = user;
     }
 
     public StringProperty getDescription() {

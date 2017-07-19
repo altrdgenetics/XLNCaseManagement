@@ -35,6 +35,7 @@ public class ExpensesSceneController implements Initializable {
     @FXML private TableView<ExpensesTableModel> expensesTable;
     @FXML private TableColumn<ExpensesTableModel, Object> objectColumn;
     @FXML private TableColumn<ExpensesTableModel, String> dateColumn;
+    @FXML private TableColumn<ExpensesTableModel, String> userColumn;
     @FXML private TableColumn<ExpensesTableModel, String> descriptionColumn;
     @FXML private TableColumn<ExpensesTableModel, String> costColumn;
     @FXML private TableColumn<ExpensesTableModel, Boolean> recieptColumn;
@@ -52,6 +53,8 @@ public class ExpensesSceneController implements Initializable {
         objectColumn.setCellValueFactory(cellData -> cellData.getValue().getObject()); 
         dateColumn.setCellValueFactory(cellData -> cellData.getValue().getDate());
         dateColumn.setStyle( "-fx-alignment: CENTER;");
+        userColumn.setCellValueFactory(cellData -> cellData.getValue().getUser());
+        
         
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescription());
         costColumn.setCellValueFactory(cellData -> cellData.getValue().getCost());

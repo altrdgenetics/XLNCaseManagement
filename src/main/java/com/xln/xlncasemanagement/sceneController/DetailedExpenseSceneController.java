@@ -119,7 +119,6 @@ public class DetailedExpenseSceneController implements Initializable {
         costTextField.setTextFormatter(new TextFormatter<>(filter));
     }
 
-
     public void setActive(Stage stagePassed, ExpenseModel expenseObjectObjectPassed){
         stage = stagePassed;
         expenseObject = expenseObjectObjectPassed;
@@ -168,7 +167,18 @@ public class DetailedExpenseSceneController implements Initializable {
     }
     
     private void loadExpenseInformation() {
+        expenseDateDatePicker.setValue(expenseObject.getDateOccurred().toLocalDate());
+//        userComboBox.setValue();
+//        expenseTypeComboBox.setValue();
+        costTextField.setText(String.valueOf(expenseObject.getCost()));
+        descriptionTextArea.setText(expenseObject.getDescription() == null ? "" : expenseObject.getDescription().trim());
         
+        if (expenseObject.isInvoiced()){
+            saveButton.setVisible(false);
+        }
+        if (expenseObject.getFileName() != null){
+            receiptButton.setText("Change Receipt");
+        }
     }
     
     @FXML
