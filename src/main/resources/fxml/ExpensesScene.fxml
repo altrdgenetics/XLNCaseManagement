@@ -10,17 +10,17 @@
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xln.xlncasemanagement.sceneController.ExpensesSceneController">
     <center>
-        <TableView fx:id="expensesTable" prefHeight="355.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <TableView fx:id="expensesTable" onMouseClicked="#tableListener" prefHeight="355.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <placeholder>
                 <Label text="No Expenses For This Matter" />
             </placeholder>
             <columns>
-                <TableColumn fx:id="objectColumn" prefWidth="0.0" text="Object" visible="false" />
-                <TableColumn fx:id="dateColumn" prefWidth="175.0" text="Date" />
-                <TableColumn fx:id="descriptionColumn" prefWidth="175.0" text="Description" />
-                <TableColumn fx:id="costColumn" prefWidth="175.0" text="Cost" />
-            <TableColumn fx:id="recieptColumn" prefWidth="175.0" text="Receipt" />
-                <TableColumn fx:id="invoicedColumn" prefWidth="175.0" text="Invoiced" />
+                <TableColumn fx:id="objectColumn" editable="false" prefWidth="0.0" text="Object" visible="false" />
+                <TableColumn fx:id="dateColumn" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Date" />
+                <TableColumn fx:id="descriptionColumn" editable="false" prefWidth="175.0" text="Description" />
+                <TableColumn fx:id="costColumn" editable="false" maxWidth="80.0" minWidth="80.0" text="Cost" />
+            <TableColumn fx:id="recieptColumn" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" text="Receipt" />
+                <TableColumn fx:id="invoicedColumn" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" text="Invoiced" />
             </columns>
             <BorderPane.margin>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />

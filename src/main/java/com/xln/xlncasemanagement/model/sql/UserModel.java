@@ -30,6 +30,7 @@ public class UserModel {
     private int lastMatterID;
     private boolean activeLogin;
     private boolean adminRights;
+    private double defaultRate;
 
     public int getId() {
         return id;
@@ -166,6 +167,13 @@ public class UserModel {
     public void setAdminRights(boolean adminRights) {
         this.adminRights = adminRights;
     }
-    
+
+    public double getDefaultRate() {
+        return defaultRate;
+    }
+
+    public void setDefaultRate(double defaultRate) {
+        this.defaultRate = defaultRate;
+    }
     
 }

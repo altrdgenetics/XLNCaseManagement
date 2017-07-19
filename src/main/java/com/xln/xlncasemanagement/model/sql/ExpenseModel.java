@@ -18,6 +18,7 @@ public class ExpenseModel {
     private int UserID;
     private int expenseType;
     private String expenseTypeName;
+    private int matterID;
     private Date dateOccurred;
     private String description;
     private double cost;
@@ -63,9 +64,15 @@ public class ExpenseModel {
     public void setExpenseTypeName(String expenseTypeName) {
         this.expenseTypeName = expenseTypeName;
     }
-    
-    
-    
+
+    public int getMatterID() {
+        return matterID;
+    }
+
+    public void setMatterID(int matterID) {
+        this.matterID = matterID;
+    }
+        
     public Date getDateOccurred() {
         return dateOccurred;
     }

@@ -297,10 +297,13 @@ public class MainStageController implements Initializable {
             disableTabsInUpdateMode(informationSceneController.isUpdateMode());
         } else if (selectedTabTitle.equals(partyTab)) {
             Global.getStageLauncher().partySearchScene(stage, false, false);
+            casePartySceneController.setActive();
         } else if (selectedTabTitle.equals(activityTab)) {
             Global.getStageLauncher().detailedActivityAddEditScene(Global.getMainStage(), null);
+            activitySceneController.setActive();
         } else if (selectedTabTitle.equals(expenseTab)) {
             Global.getStageLauncher().detailedExpenseAddEditScene(Global.getMainStage(), null);
+            expensesSceneController.setActive();
         } else if (selectedTabTitle.equals(noteTab)){
             notesSceneController.mainPanelButtonFourAction();
             disableTabsInUpdateMode(notesSceneController.isUpdateMode());

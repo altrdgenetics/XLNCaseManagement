@@ -5,6 +5,9 @@
  */
 package com.xln.xlncasemanagement.util;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  *
  * @author User
@@ -34,4 +37,10 @@ public class NumberFormatService {
         return number.replaceAll("[^0-9]", "");
     }
     
+    
+    public static String formatMoney(double amount){
+        Locale locale = new Locale("en", "US");      
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+        return currencyFormatter.format(amount);
+    }
 }
