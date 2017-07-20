@@ -80,7 +80,7 @@ public class SQLExpense {
                                 StringUtilities.buildName(rs.getString("firstName"), rs.getString("middleName"), rs.getString("lastName")), //user
                                 rs.getString("expenseType") + (rs.getString("col07") == null ? "" : " - " + rs.getString("col07")), //Description
                                 rs.getDouble("col08") == 0 ? "N/A" : NumberFormatService.formatMoney(rs.getDouble("col08")), //Cost
-                                rs.getString("col07") != null, //File
+                                rs.getString("col09"), //File
                                 rs.getBoolean("col10") //Invoiced
                         )
                 );

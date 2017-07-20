@@ -13,16 +13,31 @@ import com.xln.xlncasemanagement.model.table.MaintenanceMatterTypeTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
 import com.xln.xlncasemanagement.sql.SQLExpense;
 import com.xln.xlncasemanagement.util.DebugTools;
+import com.xln.xlncasemanagement.util.TableObjects;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Cell;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -38,7 +53,7 @@ public class ExpensesSceneController implements Initializable {
     @FXML private TableColumn<ExpensesTableModel, String> userColumn;
     @FXML private TableColumn<ExpensesTableModel, String> descriptionColumn;
     @FXML private TableColumn<ExpensesTableModel, String> costColumn;
-    @FXML private TableColumn<ExpensesTableModel, Boolean> recieptColumn;
+    @FXML private TableColumn<ExpensesTableModel, String> recieptColumn;
     @FXML private TableColumn<ExpensesTableModel, Boolean> invoicedColumn;
     
     
@@ -59,11 +74,32 @@ public class ExpensesSceneController implements Initializable {
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescription());
         costColumn.setCellValueFactory(cellData -> cellData.getValue().getCost());
         costColumn.setStyle( "-fx-alignment: CENTER-RIGHT;");
-        recieptColumn.setCellValueFactory(cellData -> cellData.getValue().getReceipt()); 
-        recieptColumn.setCellFactory((TableColumn<ExpensesTableModel, Boolean> param) -> {
-            CheckBoxTableCell cell = new CheckBoxTableCell<>();
+//        recieptColumn.setCellValueFactory(cellData -> cellData.getValue().getReceipt()); 
+//        recieptColumn.setCellFactory((TableColumn<ExpensesTableModel, Boolean> param) -> {
+//            CheckBoxTableCell cell = new CheckBoxTableCell<>();
+//            return cell;
+//        });
+        
+        
+        recieptColumn.setCellValueFactory(cellData -> cellData.getValue().getReceipt());
+        // SETTING THE CELL FACTORY FOR THE RATINGS COLUMN         
+        recieptColumn.setCellFactory((TableColumn<ExpensesTableModel, String> param) -> {   
+            TableCell<ExpensesTableModel, String> cell = new TableCell<ExpensesTableModel, String>() {                
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    if (item != null) {
+                        
+                        // Insert View Button To Table
+                        //setGraphic(TableObjects.viewButton());
+                        
+                        //Insert Icon for File
+                        setGraphic(TableObjects.fileIcon());
+                    }
+                }
+            };
             return cell;
         });
+        recieptColumn.setStyle( "-fx-alignment: CENTER;");      
         
         invoicedColumn.setCellValueFactory(cellData -> cellData.getValue().getInvoiced());
         invoicedColumn.setCellFactory((TableColumn<ExpensesTableModel, Boolean> param) -> {
@@ -82,7 +118,7 @@ public class ExpensesSceneController implements Initializable {
         if (row != null) {
             if (event.getClickCount() == 1) {
                 DebugTools.Printout("Expense Table Single Click");
-                Global.getMainStageController().getButtonDelete().setDisable(false);                
+                Global.getMainStageController().getButtonDelete().setDisable(false);
             } else if (event.getClickCount() >= 2) {
                 DebugTools.Printout("Expense Table Double Click");
                 Global.getStageLauncher().detailedExpenseAddEditScene(Global.getMainStage(), (ExpenseModel) row.getObject().getValue());
@@ -90,7 +126,7 @@ public class ExpensesSceneController implements Initializable {
             }
         }
     }
-    
+
     @FXML private void search(){
         if (Global.getCurrentMatter() != null){
             String[] searchParam = searchTextField.getText().trim().split(" ");
