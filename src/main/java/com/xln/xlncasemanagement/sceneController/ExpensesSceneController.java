@@ -65,65 +65,154 @@ public class ExpensesSceneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Setup Table
-        objectColumn.setCellValueFactory(cellData -> cellData.getValue().getObject()); 
+        initializeTable();
+    }
+
+    private void initializeTable() {
+        initializeObjectColumn();
+        initializeDateColumn();
+        initializeUserColumn();
+        initializeDescriptionColumn();
+        initializeCostColumn();
+        initializeReceiptColumn();
+        initializeInvoicedColumn();
+    }
+
+    private void initializeObjectColumn() {
+        objectColumn.setCellValueFactory(cellData -> cellData.getValue().getObject());
+    }
+
+    private void initializeDateColumn() {
         dateColumn.setCellValueFactory(cellData -> cellData.getValue().getDate());
-        dateColumn.setStyle( "-fx-alignment: CENTER;");
-        userColumn.setCellValueFactory(cellData -> cellData.getValue().getUser());
-        
-        
-        descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescription());
-        costColumn.setCellValueFactory(cellData -> cellData.getValue().getCost());
-        costColumn.setStyle( "-fx-alignment: CENTER-RIGHT;");
-//        recieptColumn.setCellValueFactory(cellData -> cellData.getValue().getReceipt()); 
-//        recieptColumn.setCellFactory((TableColumn<ExpensesTableModel, Boolean> param) -> {
-//            CheckBoxTableCell cell = new CheckBoxTableCell<>();
-//            return cell;
-//        });
-        
-        
-        recieptColumn.setCellValueFactory(cellData -> cellData.getValue().getReceipt());
-        // SETTING THE CELL FACTORY FOR THE RATINGS COLUMN         
-        recieptColumn.setCellFactory((TableColumn<ExpensesTableModel, String> param) -> {   
-            TableCell<ExpensesTableModel, String> cell = new TableCell<ExpensesTableModel, String>() {                
+        dateColumn.setCellFactory((TableColumn<ExpensesTableModel, String> param) -> {
+            TableCell<ExpensesTableModel, String> cell = new TableCell<ExpensesTableModel, String>() {
                 @Override
                 public void updateItem(String item, boolean empty) {
                     if (item != null) {
-                        
+                        setText(item);
+                    }
+                }
+            };
+
+            cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
+                    tableListener(cell.getIndex());
+                }
+            });
+            return cell;
+        });
+        dateColumn.setStyle("-fx-alignment: CENTER;");
+    }
+
+    private void initializeUserColumn() {
+        userColumn.setCellValueFactory(cellData -> cellData.getValue().getUser());
+        userColumn.setCellFactory((TableColumn<ExpensesTableModel, String> param) -> {
+            TableCell<ExpensesTableModel, String> cell = new TableCell<>();
+            cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
+                    tableListener(cell.getIndex());
+                }
+            });
+            return cell;
+        });
+    }
+
+    private void initializeDescriptionColumn() {
+        descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescription());
+        descriptionColumn.setCellFactory((TableColumn<ExpensesTableModel, String> param) -> {
+            TableCell<ExpensesTableModel, String> cell = new TableCell<ExpensesTableModel, String>() {
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    if (item != null) {
+                        setText(item);
+                    }
+                }
+            };
+
+            cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
+                    tableListener(cell.getIndex());
+                }
+            });
+            return cell;
+        });
+    }
+
+    private void initializeCostColumn() {
+        costColumn.setCellValueFactory(cellData -> cellData.getValue().getCost());
+        costColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+        costColumn.setCellFactory((TableColumn<ExpensesTableModel, String> param) -> {
+            TableCell<ExpensesTableModel, String> cell = new TableCell<ExpensesTableModel, String>() {
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    if (item != null) {
+                        setText(item);
+                    }
+                }
+            };
+
+            cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
+                    tableListener(cell.getIndex());
+                }
+            });
+            return cell;
+        });
+    }
+
+    private void initializeReceiptColumn() {
+        recieptColumn.setCellValueFactory(cellData -> cellData.getValue().getReceipt());
+        // SETTING THE CELL FACTORY FOR THE RATINGS COLUMN         
+        recieptColumn.setCellFactory((TableColumn<ExpensesTableModel, String> param) -> {
+            TableCell<ExpensesTableModel, String> cell = new TableCell<ExpensesTableModel, String>() {
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    if (item != null) {
+
                         // Insert View Button To Table
                         //setGraphic(TableObjects.viewButton());
-                        
+                        //
                         //Insert Icon for File
                         setGraphic(TableObjects.fileIcon());
                     }
                 }
             };
+
+            cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
+                    handleOpenFile(cell.getIndex());
+                }
+            });
+
             return cell;
         });
-        recieptColumn.setStyle( "-fx-alignment: CENTER;");      
-        
+        recieptColumn.setStyle("-fx-alignment: CENTER;");
+    }
+
+    private void initializeInvoicedColumn() {
         invoicedColumn.setCellValueFactory(cellData -> cellData.getValue().getInvoiced());
         invoicedColumn.setCellFactory((TableColumn<ExpensesTableModel, Boolean> param) -> {
             CheckBoxTableCell cell = new CheckBoxTableCell<>();
+            cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
+                    tableListener(cell.getIndex());
+                }
+            });
             return cell;
-        });        
-    }    
+        });
+    }
     
     public void setActive() {
             search();
     }    
     
-    @FXML private void tableListener(MouseEvent event) {
-        ExpensesTableModel row = expensesTable.getSelectionModel().getSelectedItem();
+    private void tableListener(int cellIndex) {
+        ExpensesTableModel row = expensesTable.getItems().get(cellIndex);
 
         if (row != null) {
-            if (event.getClickCount() == 1) {
-                DebugTools.Printout("Expense Table Single Click");
-                Global.getMainStageController().getButtonDelete().setDisable(false);
-            } else if (event.getClickCount() >= 2) {
-                DebugTools.Printout("Expense Table Double Click");
-                Global.getStageLauncher().detailedExpenseAddEditScene(Global.getMainStage(), (ExpenseModel) row.getObject().getValue());
-                search();
-            }
+            DebugTools.Printout("Expense Table Double Click");
+            Global.getStageLauncher().detailedExpenseAddEditScene(Global.getMainStage(), (ExpenseModel) row.getObject().getValue());
+            search();
         }
     }
 
@@ -152,6 +241,13 @@ public class ExpensesSceneController implements Initializable {
             
             SQLActiveStatus.setActive("table13", item.getId(), false);
             search();
+        }
+    }
+    
+    private void handleOpenFile(int cellIndex) {
+        ExpensesTableModel row = expensesTable.getItems().get(cellIndex);
+        if (row != null) {
+            DebugTools.Printout("Clicked Icon Twice");
         }
     }
 }

@@ -10,7 +10,7 @@
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xln.xlncasemanagement.sceneController.ExpensesSceneController">
     <center>
-        <TableView fx:id="expensesTable" onMouseClicked="#tableListener" prefHeight="355.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <TableView fx:id="expensesTable" prefHeight="355.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <placeholder>
                 <Label text="No Expenses For This Matter" />
             </placeholder>
