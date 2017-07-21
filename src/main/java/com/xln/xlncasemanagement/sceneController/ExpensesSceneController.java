@@ -92,7 +92,14 @@ public class ExpensesSceneController implements Initializable {
     private void initializeUserColumn() {
         userColumn.setCellValueFactory(cellData -> cellData.getValue().getUser());
         userColumn.setCellFactory((TableColumn<ExpensesTableModel, String> param) -> {
-            TableCell<ExpensesTableModel, String> cell = new TableCell<>();
+            TableCell<ExpensesTableModel, String> cell = new TableCell<ExpensesTableModel, String>() {
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    if (item != null) {
+                        setText(item);
+                    }
+                }
+            };
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
                 if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
                     tableListener(cell.getIndex());

@@ -12,6 +12,7 @@ import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.sql.SQLExpense;
 import com.xln.xlncasemanagement.sql.SQLExpenseType;
 import com.xln.xlncasemanagement.sql.SQLUser;
+import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.net.URL;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -167,10 +168,13 @@ public class DetailedExpenseSceneController implements Initializable {
     }
     
     private void loadExpenseInformation() {
+        UserModel user = SQLUser.getUserByID(expenseObject.getUserID());
+        ExpenseTypeModel expenseType = SQLExpenseType.getExpenseTypebyID(expenseObject.getExpenseType());
+        
         expenseDateDatePicker.setValue(expenseObject.getDateOccurred().toLocalDate());
-//        userComboBox.setValue();
-//        expenseTypeComboBox.setValue();
-        costTextField.setText(String.valueOf(expenseObject.getCost()));
+        userComboBox.setValue(user);
+        expenseTypeComboBox.setValue(expenseType);
+        costTextField.setText(NumberFormatService.formatMoney(expenseObject.getCost()).replace("$", ""));
         descriptionTextArea.setText(expenseObject.getDescription() == null ? "" : expenseObject.getDescription().trim());
         
         if (expenseObject.isInvoiced()){
