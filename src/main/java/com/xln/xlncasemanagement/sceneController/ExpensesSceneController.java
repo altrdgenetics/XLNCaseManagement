@@ -9,7 +9,6 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ExpenseModel;
 import com.xln.xlncasemanagement.model.table.ExpensesTableModel;
-import com.xln.xlncasemanagement.model.table.MaintenanceMatterTypeTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
 import com.xln.xlncasemanagement.sql.SQLExpense;
 import com.xln.xlncasemanagement.util.DebugTools;
@@ -17,27 +16,14 @@ import com.xln.xlncasemanagement.util.TableObjects;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Cell;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -55,8 +41,7 @@ public class ExpensesSceneController implements Initializable {
     @FXML private TableColumn<ExpensesTableModel, String> costColumn;
     @FXML private TableColumn<ExpensesTableModel, String> recieptColumn;
     @FXML private TableColumn<ExpensesTableModel, Boolean> invoicedColumn;
-    
-    
+        
     /**
      * Initializes the controller class.
      * @param url
@@ -173,7 +158,7 @@ public class ExpensesSceneController implements Initializable {
                         //setGraphic(TableObjects.viewButton());
                         //
                         //Insert Icon for File
-                        setGraphic(TableObjects.fileIcon());
+                        setGraphic(TableObjects.fileIcon(item));
                     }
                 }
             };

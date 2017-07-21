@@ -23,16 +23,66 @@ public class TableObjects {
         return viewButton;
     }
 
-    public static HBox fileIcon() {
+    public static HBox fileIcon(String file) {
         HBox box = new HBox();
 
         ImageView imageview = new ImageView();
         imageview.setFitHeight(20);
         imageview.setFitWidth(20);
-        imageview.setImage(new Image(TableObjects.class.getResourceAsStream("/fileIcon/doc.png")));
+        imageview.setImage(new Image(TableObjects.class.getResourceAsStream("/fileIcon/" + fileIconType(file) + ".png")));
         box.setAlignment(Pos.CENTER);
         box.getChildren().addAll(imageview);
         return box;
+    }
+    
+    private static String fileIconType(String file) {
+        String icon = "unknown";
+        
+        if (file.toLowerCase().endsWith(".apk")) {
+            icon = "apk";
+        } else if (file.toLowerCase().endsWith(".mp3") || 
+                file.toLowerCase().endsWith(".wav")){
+            icon = "audio";
+        } else if (file.toLowerCase().endsWith(".doc") || 
+                file.toLowerCase().endsWith(".docx")){
+            icon = "doc";
+        } else if (file.toLowerCase().endsWith(".ics")) {
+            icon = "ics";
+        } else if (file.toLowerCase().endsWith(".jpg") || 
+                file.toLowerCase().endsWith(".jpeg") ||
+                file.toLowerCase().endsWith(".png") ||
+                file.toLowerCase().endsWith(".eps") ||
+                file.toLowerCase().endsWith(".psd") ||
+                file.toLowerCase().endsWith(".ai") ||
+                file.toLowerCase().endsWith(".gif")){
+            icon = "image";
+        } else if (file.toLowerCase().endsWith(".lnk")){
+            icon = "link";
+        } else if (file.toLowerCase().endsWith(".pdf")){
+            icon = "pdf";
+        } else if (file.toLowerCase().endsWith(".ppt") ||
+                file.toLowerCase().endsWith(".pptx")){
+            icon = "ppt";
+        } else if (file.toLowerCase().endsWith(".rar")){
+            icon = "rar";
+        } else if (file.toLowerCase().endsWith(".wmv") ||
+                file.toLowerCase().endsWith(".mp4") ||
+                file.toLowerCase().endsWith(".avi") ||
+                file.toLowerCase().endsWith(".mov") ||
+                file.toLowerCase().endsWith(".flv") ||
+                file.toLowerCase().endsWith(".swf") ||
+                file.toLowerCase().endsWith(".mpg") ||
+                file.toLowerCase().endsWith(".mpeg") ||
+                file.toLowerCase().endsWith(".m4v") ||
+                file.toLowerCase().endsWith(".mkv")){
+            icon = "video";
+        } else if (file.toLowerCase().endsWith(".xls") ||
+                file.toLowerCase().endsWith(".xlsx")){
+            icon = "xls";
+        } else if (file.toLowerCase().endsWith(".zip")){
+            icon = "zip";
+        }
+        return icon;
     }
     
 }
