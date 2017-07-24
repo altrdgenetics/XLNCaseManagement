@@ -12,8 +12,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -28,7 +30,7 @@ import javax.imageio.ImageIO;
  */
 public class FileUtilities {
 
-    public static byte[] ImageFileToBytes(File imageFile) {
+    public static byte[] companyLogoFileToBytes(File imageFile) {
         try {
             Image image = new Image(new FileInputStream(imageFile), 200, 200, true, true);
             
@@ -43,6 +45,31 @@ public class FileUtilities {
             Logger.getLogger(FileUtilities.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    public static byte[] fileToBytes(File file) {
+        FileInputStream fileInputStream = null;
+        byte[] bytesArray = null;
+
+        try {
+            bytesArray = new byte[(int) file.length()];
+
+            //read file into bytes[]
+            fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bytesArray);
+
+        } catch (IOException ex) {
+            DebugTools.Printout(ex.getMessage());
+        } finally {
+            if (fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (IOException ex) {
+                    DebugTools.Printout(ex.getMessage());
+                }
+            }
+        }
+        return bytesArray;
     }
 
     public static String generateFileCheckSum(File inputFile) {
@@ -108,4 +135,49 @@ public class FileUtilities {
         }
         return false;
     }
+    
+    public static File generateFileFromBlobData(InputStream is, String fileName) {
+        File tempFile = null;
+        String tempDirectory = System.getProperty("java.io.tmpdir");
+        OutputStream outputStream = null;
+
+        try {
+            // write the inputStream to a FileOutputStream
+            tempFile = new File(tempDirectory + fileName);
+            outputStream = new FileOutputStream(tempFile);
+
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = is.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, read);
+            }
+            
+            
+        } catch (IOException ex) {
+            DebugTools.Printout(ex.getMessage());
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException ex) {
+                    DebugTools.Printout(ex.getMessage());
+                }
+            }
+            if (outputStream != null) {
+                try {
+                    // outputStream.flush();
+                    outputStream.close();
+                } catch (IOException ex) {
+                    DebugTools.Printout(ex.getMessage());
+                }
+            }
+        }
+        return tempFile;
+    }
+    
+    
+
+    
+    
 }

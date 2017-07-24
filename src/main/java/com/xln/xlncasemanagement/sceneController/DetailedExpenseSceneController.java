@@ -9,7 +9,6 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ExpenseModel;
 import com.xln.xlncasemanagement.model.sql.ExpenseTypeModel;
 import com.xln.xlncasemanagement.model.sql.UserModel;
-import com.xln.xlncasemanagement.sql.SQLCompany;
 import com.xln.xlncasemanagement.sql.SQLExpense;
 import com.xln.xlncasemanagement.sql.SQLExpenseType;
 import com.xln.xlncasemanagement.sql.SQLUser;
@@ -27,6 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -54,6 +54,7 @@ public class DetailedExpenseSceneController implements Initializable {
     @FXML private TextField costTextField;
     @FXML private TextArea descriptionTextArea;
     @FXML private Button receiptButton;
+    @FXML private ProgressBar progressBar;
         
         
     /**
@@ -63,6 +64,7 @@ public class DetailedExpenseSceneController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        progressBar.setVisible(false);
         setListeners();
         setTextformatter();
         setComboBoxModel();        
@@ -198,6 +200,8 @@ public class DetailedExpenseSceneController implements Initializable {
         
     @FXML
     private void saveButtonAction() {
+        progressBar.setVisible(true);
+        progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
         int keyID = -1;
         
         if ("Save".equals(saveButton.getText().trim())){

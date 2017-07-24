@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -21,15 +22,7 @@
         <URL value="@/styles/Styles.css" />
     </stylesheets>
     <bottom>
-        <ButtonBar buttonMinWidth="100.0" prefHeight="40.0" prefWidth="448.0" BorderPane.alignment="CENTER">
-            <buttons>
-                <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleClose" text="Close" ButtonBar.buttonData="LEFT" />
-                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" styleClass="primary" text="Save" ButtonBar.buttonData="RIGHT" />
-            </buttons>
-            <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
-        </ButtonBar>
+        
     </bottom>
     <top>
         <AnchorPane prefHeight="47.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -42,59 +35,81 @@
             </children>
         </AnchorPane>
     </top>
-   <center>
-      <GridPane BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Expense Date:" />
-            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="User:" GridPane.columnIndex="3" />
-            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Expense Type:" GridPane.rowIndex="1" />
-            <DatePicker fx:id="expenseDateDatePicker" GridPane.columnIndex="1" GridPane.columnSpan="2">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin>
-            </DatePicker>
-            <ComboBox fx:id="userComboBox" maxWidth="1.7976931348623157E308" prefWidth="171.0" GridPane.columnIndex="4" GridPane.columnSpan="2">
-               <GridPane.margin>
-                  <Insets left="5.0" right="10.0" />
-               </GridPane.margin>
-            </ComboBox>
-            <ComboBox fx:id="expenseTypeComboBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin>
-            </ComboBox>
-            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Description:" GridPane.rowIndex="2" />
-            <TextArea fx:id="descriptionTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.rowSpan="4" GridPane.vgrow="NEVER">
-               <GridPane.margin>
-                  <Insets left="5.0" right="10.0" top="5.0" />
-               </GridPane.margin>
-            </TextArea>
-            <Button fx:id="receiptButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleFileButtonAction" prefHeight="32.0" prefWidth="222.0" text="Add Receipt" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.rowSpan="2" GridPane.valignment="CENTER" />
-            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Cost:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <TextField fx:id="costTextField" GridPane.columnIndex="4" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets left="5.0" right="10.0" />
-               </GridPane.margin>
-            </TextField>
-         </children>
-      </GridPane>
-   </center>
+    <center>
+        <GridPane BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Expense Date:" />
+                <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="User:" GridPane.columnIndex="3" />
+                <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Expense Type:" GridPane.rowIndex="1" />
+                <DatePicker fx:id="expenseDateDatePicker" GridPane.columnIndex="1" GridPane.columnSpan="2">
+                    <GridPane.margin>
+                        <Insets left="5.0" />
+                    </GridPane.margin>
+                </DatePicker>
+                <ComboBox fx:id="userComboBox" maxWidth="1.7976931348623157E308" prefWidth="171.0" GridPane.columnIndex="4" GridPane.columnSpan="2">
+                    <GridPane.margin>
+                        <Insets left="5.0" right="10.0" />
+                    </GridPane.margin>
+                </ComboBox>
+                <ComboBox fx:id="expenseTypeComboBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets left="5.0" />
+                    </GridPane.margin>
+                </ComboBox>
+                <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Description:" GridPane.rowIndex="2" />
+                <TextArea fx:id="descriptionTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.rowSpan="4" GridPane.vgrow="NEVER">
+                    <GridPane.margin>
+                        <Insets left="5.0" right="10.0" top="5.0" />
+                    </GridPane.margin>
+                </TextArea>
+                <Button fx:id="receiptButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleFileButtonAction" prefHeight="32.0" prefWidth="222.0" text="Add Receipt" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.rowSpan="2" GridPane.valignment="CENTER" />
+                <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Cost:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                <TextField fx:id="costTextField" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets left="5.0" right="10.0" />
+                    </GridPane.margin>
+                </TextField>
+            </children>
+        </GridPane>
+    </center>
+    <bottom>
+        <BorderPane prefHeight="47.0" prefWidth="755.0" BorderPane.alignment="CENTER">
+            <bottom>
+                <ButtonBar buttonMinWidth="100.0" prefHeight="40.0" prefWidth="448.0" BorderPane.alignment="CENTER">
+                    <buttons>
+                        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleClose" text="Close" ButtonBar.buttonData="LEFT" />
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" styleClass="primary" text="Save" ButtonBar.buttonData="RIGHT" />
+                    </buttons>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </ButtonBar>
+            </bottom>
+         <center>
+            <ProgressBar fx:id="progressBar" prefHeight="18.0" prefWidth="792.0" progress="0.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets left="10.0" right="10.0" />
+               </BorderPane.margin>
+            </ProgressBar>
+         </center>
+        </BorderPane>
+    </bottom>
 </BorderPane>

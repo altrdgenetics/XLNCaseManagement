@@ -125,7 +125,7 @@ public class SQLCompany {
 
             ps = conn.prepareStatement(sql);
             
-            byte[] imageFile = FileUtilities.ImageFileToBytes(image);
+            byte[] imageFile = FileUtilities.companyLogoFileToBytes(image);
             
             ps.setBytes(1, imageFile);
             ps.setString(2, FileUtilities.generateFileCheckSum(new ByteArrayInputStream(imageFile)));

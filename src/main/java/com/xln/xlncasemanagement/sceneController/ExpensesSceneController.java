@@ -13,8 +13,16 @@ import com.xln.xlncasemanagement.sql.SQLActiveStatus;
 import com.xln.xlncasemanagement.sql.SQLExpense;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.TableObjects;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -41,6 +49,8 @@ public class ExpensesSceneController implements Initializable {
     @FXML private TableColumn<ExpensesTableModel, String> costColumn;
     @FXML private TableColumn<ExpensesTableModel, String> recieptColumn;
     @FXML private TableColumn<ExpensesTableModel, Boolean> invoicedColumn;
+    
+    List<TableColumn<ExpensesTableModel, ?>> sortOrder;    
         
     /**
      * Initializes the controller class.
@@ -80,9 +90,7 @@ public class ExpensesSceneController implements Initializable {
             };
 
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
-                    tableListener(cell.getIndex());
-                }
+                tableListener(event, cell.getIndex());
             });
             return cell;
         });
@@ -101,9 +109,7 @@ public class ExpensesSceneController implements Initializable {
                 }
             };
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
-                    tableListener(cell.getIndex());
-                }
+                tableListener(event, cell.getIndex());
             });
             return cell;
         });
@@ -122,9 +128,7 @@ public class ExpensesSceneController implements Initializable {
             };
 
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
-                    tableListener(cell.getIndex());
-                }
+                tableListener(event, cell.getIndex());
             });
             return cell;
         });
@@ -144,9 +148,7 @@ public class ExpensesSceneController implements Initializable {
             };
 
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
-                    tableListener(cell.getIndex());
-                }
+                tableListener(event, cell.getIndex());
             });
             return cell;
         });
@@ -185,39 +187,60 @@ public class ExpensesSceneController implements Initializable {
         invoicedColumn.setCellFactory((TableColumn<ExpensesTableModel, Boolean> param) -> {
             CheckBoxTableCell cell = new CheckBoxTableCell<>();
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
-                    tableListener(cell.getIndex());
-                }
+                tableListener(event, cell.getIndex());
             });
             return cell;
         });
     }
-    
+
     public void setActive() {
-            search();
-    }    
-    
-    private void tableListener(int cellIndex) {
-        ExpensesTableModel row = expensesTable.getItems().get(cellIndex);
+        search();
+    }
 
-        if (row != null) {
-            DebugTools.Printout("Expense Table Double Click");
-            Global.getStageLauncher().detailedExpenseAddEditScene(Global.getMainStage(), (ExpenseModel) row.getObject().getValue());
-            search();
+    private void tableListener(MouseEvent event, int cellIndex) {
+        if (cellIndex > -1) {
+            ExpensesTableModel row = expensesTable.getItems().get(cellIndex);
+
+            if (row != null) {
+                if (event.getClickCount() == 1) {
+                    DebugTools.Printout("Expense Table Single Click");
+                    Global.getMainStageController().getButtonDelete().setDisable(false);
+
+                } else if (event.getClickCount() >= 2) {
+                    DebugTools.Printout("Expense Table Double Click");
+                    Global.getStageLauncher().detailedExpenseAddEditScene(Global.getMainStage(), (ExpenseModel) row.getObject().getValue());
+                    setActive();
+                }
+            }
         }
     }
 
-    @FXML private void search(){
-        expensesTable.getItems().clear();
+    @FXML
+    private void search() {
+        Platform.runLater(() -> {
+            getSortedColumn();
+            expensesTable.getItems().clear();
+            if (Global.getCurrentMatter() != null) {
+                String[] searchParam = searchTextField.getText().trim().split(" ");
+                ObservableList<ExpensesTableModel> list = SQLExpense.searchExpenses(searchParam, Global.getCurrentMatter().getId());
+                loadTable(list);
+            }
+            setSortedColumn();
+        });
+    }
+
+    private void getSortedColumn() {
+        sortOrder = new ArrayList<>(expensesTable.getSortOrder());
+    }
+    
+    private void setSortedColumn() {
+        if (sortOrder != null) {
+            expensesTable.getSortOrder().clear();
+            expensesTable.getSortOrder().addAll(sortOrder);
+        }
+    }
         
-        if (Global.getCurrentMatter() != null){
-            String[] searchParam = searchTextField.getText().trim().split(" ");
-            ObservableList<ExpensesTableModel> list = SQLExpense.searchExpenses(searchParam, Global.getCurrentMatter().getId());
-            loadTable(list);
-        }
-    }
-    
-    private void loadTable(ObservableList<ExpensesTableModel> list) {
+    private void loadTable(ObservableList<ExpensesTableModel> list) {        
         if (list != null) {
             expensesTable.setItems(list);
         }
@@ -232,14 +255,26 @@ public class ExpensesSceneController implements Initializable {
             ExpenseModel item = (ExpenseModel) row.getObject().getValue();
             
             SQLActiveStatus.setActive("table13", item.getId(), false);
-            search();
+            setActive();
         }
     }
     
     private void handleOpenFile(int cellIndex) {
         ExpensesTableModel row = expensesTable.getItems().get(cellIndex);
         if (row != null) {
+            ExpenseModel item = (ExpenseModel) row.getObject().getValue();
+            
+            File selectedFile = SQLExpense.openExpenseFile(item.getId());
+            if (selectedFile != null){
+                try {
+                    Desktop.getDesktop().open(selectedFile);
+                } catch (IOException ex) {
+                    Logger.getLogger(ExpensesSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
             DebugTools.Printout("Clicked Icon Twice");
         }
     }
+    
 }

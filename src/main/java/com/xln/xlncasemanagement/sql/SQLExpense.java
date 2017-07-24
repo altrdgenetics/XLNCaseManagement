@@ -14,6 +14,7 @@ import com.xln.xlncasemanagement.util.NumberFormatService;
 import com.xln.xlncasemanagement.util.StringUtilities;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,7 +38,9 @@ public class SQLExpense {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String sql = "SELECT table13.*, table14.col03 AS expenseType, table22.col03 as firstName, "
+        String sql = "SELECT table13.col01, table13.col02, table13.col03, table13.col04, table13.col05, "
+                + "table13.col06, table13.col07, table13.col08, table13.col09, table13.col10, table13.col12,  "
+                + "table14.col03 AS expenseType, table22.col03 as firstName, "
                 + "table22.col04 as middleName, table22.col05 as lastName, table22.col08 as userName "
                 + "FROM table13 "
                 + "LEFT JOIN table14 ON table13.col04 = table14.col01 "
@@ -54,7 +57,7 @@ public class SQLExpense {
                         + ") LIKE ? ";
             }
         }
-        sql += " AND table13.col05 = ?";
+        sql += " AND table13.col05 = ? ORDER BY table13.col06 DESC";
         
         try {
             conn = DBConnection.connectToDB();
@@ -82,6 +85,12 @@ public class SQLExpense {
                 item.setFileName(rs.getString("col09"));
                 item.setInvoiced(rs.getBoolean("col10"));
 
+                String file = null;
+                if (rs.getString("col09") != null && rs.getString("col12") != null){
+                    file = rs.getString("col09");
+                }
+                
+                
                 list.add(
                         new ExpensesTableModel(
                                 item,  //Object
@@ -89,7 +98,7 @@ public class SQLExpense {
                                 StringUtilities.buildName(rs.getString("firstName"), rs.getString("middleName"), rs.getString("lastName")), //user
                                 rs.getString("expenseType") + (rs.getString("col07") == null ? "" : " - " + rs.getString("col07")), //Description
                                 rs.getDouble("col08") == 0 ? "N/A" : NumberFormatService.formatMoney(rs.getDouble("col08")), //Cost
-                                rs.getString("col09"), //File
+                                file, //File
                                 rs.getBoolean("col10") //Invoiced
                         )
                 );
@@ -160,7 +169,7 @@ public class SQLExpense {
 
             ps = conn.prepareStatement(sql);
             
-            byte[] fileInBytes = FileUtilities.ImageFileToBytes(fileUpload);
+            byte[] fileInBytes = FileUtilities.fileToBytes(fileUpload);
             
             ps.setBytes(1, fileInBytes);
             ps.setString(2, FileUtilities.generateFileCheckSum(new ByteArrayInputStream(fileInBytes)));
@@ -204,6 +213,34 @@ public class SQLExpense {
             DbUtils.closeQuietly(rs);
         }
         return false;
+    }
+    
+    public static File openExpenseFile(int id) {
+        File itemFile = null;        
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.connectToDB();
+            String sql = "SELECT * FROM table13 WHERE col01 = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.first()) {                
+                if (rs.getBytes("col11") != null) {
+                    String fileName = rs.getString("col09");
+                    InputStream is = rs.getBinaryStream("col11");
+                    itemFile = FileUtilities.generateFileFromBlobData(is, fileName);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLCompany.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return itemFile;
     }
     
 }
