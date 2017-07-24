@@ -13,7 +13,10 @@ import com.xln.xlncasemanagement.sql.SQLActiveStatus;
 import com.xln.xlncasemanagement.sql.SQLCaseParty;
 import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,6 +39,8 @@ public class CasePartySceneController implements Initializable {
     @FXML private TableColumn<CasePartyTableModel, String> nameColumn;
     @FXML private TableColumn<CasePartyTableModel, String> addressColumn;
     @FXML private TableColumn<CasePartyTableModel, String> phoneNumberColumn;
+    
+    List<TableColumn<CasePartyTableModel, ?>> sortOrder; 
     
     /**
      * Initializes the controller class.
@@ -73,15 +78,18 @@ public class CasePartySceneController implements Initializable {
     public void setActive() {
         search();
     }
-        
-    @FXML
-    private void search() {
-        partyTable.getItems().clear();
-        if (Global.getCurrentMatter() != null) {
-            String[] searchParam = searchTextField.getText().trim().split(" ");
-            ObservableList<CasePartyTableModel> list = SQLCaseParty.searchParty(searchParam, Global.getCurrentMatter().getId());
-            loadTable(list);
-        }
+
+    @FXML private void search() {
+        Platform.runLater(() -> {
+            getSortedColumn();
+            partyTable.getItems().clear();
+            if (Global.getCurrentMatter() != null) {
+                String[] searchParam = searchTextField.getText().trim().split(" ");
+                ObservableList<CasePartyTableModel> list = SQLCaseParty.searchParty(searchParam, Global.getCurrentMatter().getId());
+                loadTable(list);
+            }
+            setSortedColumn();
+        });
     }
 
     private void loadTable(ObservableList<CasePartyTableModel> list) {
@@ -100,6 +108,17 @@ public class CasePartySceneController implements Initializable {
             
             SQLActiveStatus.setActive("table04", party.getId(), false);
             search();
+        }
+    }
+    
+    private void getSortedColumn() {
+        sortOrder = new ArrayList<>(partyTable.getSortOrder());
+    }
+    
+    private void setSortedColumn() {
+        if (sortOrder != null) {
+            partyTable.getSortOrder().clear();
+            partyTable.getSortOrder().addAll(sortOrder);
         }
     }
     
