@@ -34,6 +34,8 @@ public class Global {
     private static UserModel currentUser;
     private static PartyModel currentClient;
     private static MatterModel currentMatter;
+    private static String moneySymbol;
+    private static String decimalSep; 
     
     //list of all states
     private static final String STATES[] = { "AL", "AK", "AS", "AZ", "AR", "CA", "CO",
@@ -282,6 +284,21 @@ public class Global {
     public static SimpleDateFormat getHhmmssa() {
         return hhmmssa;
     }
-    
+
+    public static String getMoneySymbol() {
+        return moneySymbol;
+    }
+
+    public static void setMoneySymbol(String moneySymbol) {
+        Global.moneySymbol = moneySymbol;
+    }
+
+    public static String getDecimalSep() {
+        return decimalSep;
+    }
+
+    public static void setDecimalSep(String decimalSep) {
+        Global.decimalSep = decimalSep;
+    }
     
 }

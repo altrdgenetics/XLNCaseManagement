@@ -16,10 +16,14 @@ import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.io.File;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.ParsePosition;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -101,27 +105,14 @@ public class DetailedExpenseSceneController implements Initializable {
     }
     
     private void setTextformatter() {
-        DecimalFormatSymbols decimal = new DecimalFormatSymbols(Locale.getDefault());
-        String sep = String.valueOf(decimal.getDecimalSeparator());
-        
-        UnaryOperator<TextFormatter.Change> filter = (TextFormatter.Change t) -> {
-            if (t.isReplaced()) {
-                if (t.getText().matches("[^0-9]")) {
-                    t.setText(t.getControlText().substring(t.getRangeStart(), t.getRangeEnd()));
-                }
-            }
+        Pattern decimalPattern = Pattern.compile("-?\\d*(\\" + Global.getDecimalSep() + "\\d{0,2})?");
 
-            if (t.isAdded()) {
-                if (t.getControlText().contains(sep)) {
-                    if (t.getText().matches("[^0-9]")) {
-                        t.setText("");
-                    }
-                } else if (t.getText().matches("[^0-9" + sep + "]")) {
-                    t.setText("");
-                }
+        UnaryOperator<TextFormatter.Change> filter = c -> {
+            if (decimalPattern.matcher(c.getControlNewText()).matches()) {
+                return c ;
+            } else {
+                return null ;
             }
-
-            return t;
         };
 
         costTextField.setTextFormatter(new TextFormatter<>(filter));
@@ -185,8 +176,7 @@ public class DetailedExpenseSceneController implements Initializable {
         descriptionTextArea.setText(expenseObject.getDescription() == null ? "" : expenseObject.getDescription().trim());
         
         if (expenseObject.isInvoiced()){
-            saveButton.setVisible(false);
-            receiptButton.setDisable(true);
+            setPanelDisabled();
         }
         if (expenseObject.getFileName() != null){
             receiptButton.setText("Change Receipt");
@@ -241,17 +231,14 @@ public class DetailedExpenseSceneController implements Initializable {
         ExpenseTypeModel expenseType = (ExpenseTypeModel) expenseTypeComboBox.getValue();
         UserModel user = (UserModel) userComboBox.getValue();
         
-        item.setActive(expenseObject.isActive());
+        item.setId(expenseObject.getId());
         item.setUserID(user.getId());
         item.setExpenseType(expenseType.getId());
-        item.setMatterID(expenseObject.getMatterID());
         item.setDateOccurred(expenseDateDatePicker.getValue() == null ? null : java.sql.Date.valueOf(expenseDateDatePicker.getValue()));
         item.setDescription(descriptionTextArea.getText().trim().equals("") ? null : descriptionTextArea.getText().trim());        
-        item.setCost(costTextField.getText().trim().equals("") ? null : Double.valueOf(descriptionTextArea.getText().trim()));
-        item.setFileName(null);
-        item.setInvoiced(expenseObject.isInvoiced());
+        item.setCost(costTextField.getText().trim().equals("") ? null : Double.valueOf(costTextField.getText().trim()));
         
-        //SQLExpense.updateExpense(item);
+        SQLExpense.updateExpenseByID(item);
     }
     
     @FXML private void handleFileButtonAction(){
@@ -280,5 +267,28 @@ public class DetailedExpenseSceneController implements Initializable {
                     "The file was not able to be saved to the database.");
         }
     }
-    
+        
+    private void setPanelDisabled() {
+        expenseDateDatePicker.setEditable(false);
+        expenseDateDatePicker.setOnMouseClicked(e -> {
+                expenseDateDatePicker.hide();
+        });
+        
+        
+        expenseTypeComboBox.setEditable(false);
+        expenseTypeComboBox.setOnMouseClicked(e -> {
+                expenseTypeComboBox.hide();
+        });
+        
+        userComboBox.setEditable(false);
+        userComboBox.setOnMouseClicked(e -> {
+                userComboBox.hide();
+        });
+        
+        costTextField.setEditable(false);
+        descriptionTextArea.setEditable(false);
+        
+        receiptButton.setDisable(true);
+        saveButton.setVisible(false);
+    }
 }

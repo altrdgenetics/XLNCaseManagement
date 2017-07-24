@@ -113,6 +113,35 @@ public class SQLExpense {
         return list;
     }
     
+    public static void updateExpenseByID(ExpenseModel item) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE table13 SET "
+                + "col03 = ?, " //01 userID
+                + "col04 = ?, " //02 expenseTypeID
+                + "col06 = ?, " //03 dateOccurred
+                + "col07 = ?, " //04 description
+                + "col08 = ? "  //05 cost
+                + "WHERE col01 = ?";
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setInt   (1, item.getUserID());
+            ps.setInt   (2, item.getExpenseType());
+            ps.setDate  (3, item.getDateOccurred());
+            ps.setString(4, item.getDescription());
+            ps.setDouble(5, item.getCost());
+            ps.setInt   (6, item.getId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLExpense.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+    }
+    
     public static int insertExpense(ExpenseModel item) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -234,7 +263,7 @@ public class SQLExpense {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SQLCompany.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SQLExpense.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
