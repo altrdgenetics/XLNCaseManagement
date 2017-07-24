@@ -40,8 +40,11 @@ public class SQLExpense {
         if (param.length > 0) {
             for (String param1 : param) {
                 sql += " AND CONCAT("          
-                        + "IFNULL(table13.col07,''), "
-                        + "IFNULL(table14.col03,'') "
+                        + "IFNULL(table13.col07,''), " // description
+                        + "IFNULL(table14.col03,''), " // expense type
+                        + "IFNULL(table22.col03,''), " // first name
+                        + "IFNULL(table22.col05,''), " // last name
+                        + "IFNULL(table22.col08,'') "  // username
                         + ") LIKE ? ";
             }
         }

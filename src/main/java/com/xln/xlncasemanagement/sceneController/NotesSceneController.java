@@ -67,12 +67,14 @@ public class NotesSceneController implements Initializable {
         return updateMode;
     }
     
-    private void loadInformation(){
-        Global.setCurrentMatter(SQLMatter.getMatterByID(Global.getCurrentMatter().getId()));
-        notesArea.setText(Global.getCurrentMatter().getNote() == null 
-                ? "" : Global.getCurrentMatter().getNote().trim());
+    private void loadInformation() {
+        if (Global.getCurrentMatter() != null) {
+            Global.setCurrentMatter(SQLMatter.getMatterByID(Global.getCurrentMatter().getId()));
+            notesArea.setText(Global.getCurrentMatter().getNote() == null
+                    ? "" : Global.getCurrentMatter().getNote().trim());
+        }
     }
-    
+
     private void saveInformation(){
         Global.getCurrentMatter().setNote(notesArea.getText().trim().equals("") 
                 ? null : notesArea.getText().trim());

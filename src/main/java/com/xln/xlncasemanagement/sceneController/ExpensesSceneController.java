@@ -159,14 +159,13 @@ public class ExpensesSceneController implements Initializable {
             TableCell<ExpensesTableModel, String> cell = new TableCell<ExpensesTableModel, String>() {
                 @Override
                 public void updateItem(String item, boolean empty) {
-                    if (item != null) {
-
-                        // Insert View Button To Table
-                        //setGraphic(TableObjects.viewButton());
-                        //
-                        //Insert Icon for File
-                        setGraphic(TableObjects.fileIcon(item));
-                    }
+                    // Insert View Button To Table
+                    //if (item != null) {
+                    //    setGraphic(TableObjects.viewButton());
+                    //}
+                    //
+                    //Insert Icon for File
+                    setGraphic(TableObjects.fileIcon(item));
                 }
             };
 
@@ -209,6 +208,8 @@ public class ExpensesSceneController implements Initializable {
     }
 
     @FXML private void search(){
+        expensesTable.getItems().clear();
+        
         if (Global.getCurrentMatter() != null){
             String[] searchParam = searchTextField.getText().trim().split(" ");
             ObservableList<ExpensesTableModel> list = SQLExpense.searchExpenses(searchParam, Global.getCurrentMatter().getId());
@@ -217,7 +218,6 @@ public class ExpensesSceneController implements Initializable {
     }
     
     private void loadTable(ObservableList<ExpensesTableModel> list) {
-        expensesTable.getItems().removeAll();
         if (list != null) {
             expensesTable.setItems(list);
         }

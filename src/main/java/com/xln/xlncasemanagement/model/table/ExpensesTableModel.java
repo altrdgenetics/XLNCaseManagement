@@ -92,6 +92,4 @@ public class ExpensesTableModel {
         this.invoiced = invoiced;
     }
     
-    
-    
 }

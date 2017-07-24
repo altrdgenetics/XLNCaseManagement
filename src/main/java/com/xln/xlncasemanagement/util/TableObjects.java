@@ -38,7 +38,9 @@ public class TableObjects {
     private static String fileIconType(String file) {
         String icon = "unknown";
         
-        if (file.toLowerCase().endsWith(".apk")) {
+        if (file == null){
+            icon = "none";
+        } else if (file.toLowerCase().endsWith(".apk")) {
             icon = "apk";
         } else if (file.toLowerCase().endsWith(".mp3") || 
                 file.toLowerCase().endsWith(".wav")){
