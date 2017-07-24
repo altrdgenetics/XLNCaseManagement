@@ -8,13 +8,19 @@ package com.xln.xlncasemanagement.sql;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ExpenseModel;
 import com.xln.xlncasemanagement.model.table.ExpensesTableModel;
+import com.xln.xlncasemanagement.util.DebugTools;
+import com.xln.xlncasemanagement.util.FileUtilities;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import com.xln.xlncasemanagement.util.StringUtilities;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.dbutils.DbUtils;
@@ -132,7 +138,7 @@ public class SQLExpense {
             ps.executeUpdate();
 
             ResultSet newRow = ps.getGeneratedKeys();
-            if (newRow.next()) {
+            if (newRow.first()) {
                 return newRow.getInt(1);
             }
         } catch (SQLException ex) {
@@ -142,6 +148,62 @@ public class SQLExpense {
             DbUtils.closeQuietly(ps);
         }
         return 0;
+    }
+    
+    public static boolean insertExpenseFile(int id, File fileUpload) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBConnection.connectToDB();
+
+            String sql = "UPDATE table13 SET col11 = ?, col12 = ? WHERE col01 = ?";
+
+            ps = conn.prepareStatement(sql);
+            
+            byte[] fileInBytes = FileUtilities.ImageFileToBytes(fileUpload);
+            
+            ps.setBytes(1, fileInBytes);
+            ps.setString(2, FileUtilities.generateFileCheckSum(new ByteArrayInputStream(fileInBytes)));
+            ps.setInt(3, id);
+            ps.executeUpdate();       
+            
+            if (verifyImageChecksum(id)) { 
+                DebugTools.Printout("Expense File Inserted Successfully");
+                return true;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLExpense.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+        }
+        return true;
+    }
+    
+    public static boolean verifyImageChecksum(int id){
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.connectToDB();
+            String sql = "SELECT col11, col12 "
+                    + "FROM table13 WHERE col01 = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                return FileUtilities.compareCheckSum(rs.getBytes("col11"), rs.getString("col12"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLExpense.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
     }
     
 }

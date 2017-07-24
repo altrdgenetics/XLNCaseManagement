@@ -222,16 +222,16 @@ public class ActivitySceneController implements Initializable {
         }
     }
     
-    @FXML private void search(){
-        if (Global.getCurrentMatter() != null){
-        String[] searchParam = searchTextField.getText().trim().split(" ");
-        ObservableList<ActivityTableModel> list = SQLActivity.searchActivity(searchParam, Global.getCurrentMatter().getId());
-        loadTable(list);
+    @FXML private void search() {
+        activityTable.getItems().clear();
+        if (Global.getCurrentMatter() != null) {
+            String[] searchParam = searchTextField.getText().trim().split(" ");
+            ObservableList<ActivityTableModel> list = SQLActivity.searchActivity(searchParam, Global.getCurrentMatter().getId());
+            loadTable(list);
         }
     }
-    
+
     private void loadTable(ObservableList<ActivityTableModel> list) {
-        activityTable.getItems().removeAll(activityTable.getItems());
         if (list != null) {
             activityTable.setItems(list);
         }

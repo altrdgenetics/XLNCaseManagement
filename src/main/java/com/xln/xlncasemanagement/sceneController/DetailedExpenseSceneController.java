@@ -9,10 +9,13 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ExpenseModel;
 import com.xln.xlncasemanagement.model.sql.ExpenseTypeModel;
 import com.xln.xlncasemanagement.model.sql.UserModel;
+import com.xln.xlncasemanagement.sql.SQLCompany;
 import com.xln.xlncasemanagement.sql.SQLExpense;
 import com.xln.xlncasemanagement.sql.SQLExpenseType;
 import com.xln.xlncasemanagement.sql.SQLUser;
+import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.NumberFormatService;
+import java.io.File;
 import java.net.URL;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -27,6 +30,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -39,6 +43,7 @@ public class DetailedExpenseSceneController implements Initializable {
 
     Stage stage;
     ExpenseModel expenseObject;
+    File imageSelection;
     
     @FXML private Label headerLabel;
     @FXML private Button saveButton;
@@ -179,6 +184,7 @@ public class DetailedExpenseSceneController implements Initializable {
         
         if (expenseObject.isInvoiced()){
             saveButton.setVisible(false);
+            receiptButton.setDisable(true);
         }
         if (expenseObject.getFileName() != null){
             receiptButton.setText("Change Receipt");
@@ -192,15 +198,23 @@ public class DetailedExpenseSceneController implements Initializable {
         
     @FXML
     private void saveButtonAction() {
+        int keyID = -1;
+        
         if ("Save".equals(saveButton.getText().trim())){
             update();
+            keyID = expenseObject.getId();
         } else if ("Add".equals(saveButton.getText().trim())) {
-            insert();
+            keyID = insert();
         }
+        
+        if (imageSelection != null && keyID > 0){
+            updateFile(keyID, imageSelection);
+        }
+        
         stage.close();
     }
     
-    private void insert() {
+    private int insert() {
         ExpenseModel item = new ExpenseModel();
         ExpenseTypeModel expenseType = (ExpenseTypeModel) expenseTypeComboBox.getValue();
         UserModel user = (UserModel) userComboBox.getValue();
@@ -212,10 +226,10 @@ public class DetailedExpenseSceneController implements Initializable {
         item.setDateOccurred(expenseDateDatePicker.getValue() == null ? null : java.sql.Date.valueOf(expenseDateDatePicker.getValue()));
         item.setDescription(descriptionTextArea.getText().trim().equals("") ? null : descriptionTextArea.getText().trim());        
         item.setCost(costTextField.getText().trim().equals("") ? null : Double.valueOf(costTextField.getText().trim()));
-        item.setFileName(null);
+        item.setFileName(imageSelection == null ? null : imageSelection.getName());
         item.setInvoiced(false);
         
-        SQLExpense.insertExpense(item);
+        return SQLExpense.insertExpense(item);
     }
     
     private void update() {
@@ -234,6 +248,33 @@ public class DetailedExpenseSceneController implements Initializable {
         item.setInvoiced(expenseObject.isInvoiced());
         
         //SQLExpense.updateExpense(item);
+    }
+    
+    @FXML private void handleFileButtonAction(){
+        imageSelection = fileChooser();
+        
+        if (imageSelection != null){
+            receiptButton.setText(imageSelection.getName());
+        }
+    }
+    
+    private File fileChooser(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select File");
+        fileChooser.setInitialDirectory(
+            new File(System.getProperty("user.home"))
+        );
+         return fileChooser.showOpenDialog(stage);
+    }
+    
+    private void updateFile(int id, File image) {
+        if (SQLExpense.insertExpenseFile(id, image)){
+            // success
+        } else {
+            AlertDialog.StaticAlert(4, "Save Error",
+                    "Unable To Insert File",
+                    "The file was not able to be saved to the database.");
+        }
     }
     
 }

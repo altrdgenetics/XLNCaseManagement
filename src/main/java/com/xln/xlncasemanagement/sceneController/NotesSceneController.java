@@ -68,6 +68,7 @@ public class NotesSceneController implements Initializable {
     }
     
     private void loadInformation() {
+        notesArea.setText("");
         if (Global.getCurrentMatter() != null) {
             Global.setCurrentMatter(SQLMatter.getMatterByID(Global.getCurrentMatter().getId()));
             notesArea.setText(Global.getCurrentMatter().getNote() == null

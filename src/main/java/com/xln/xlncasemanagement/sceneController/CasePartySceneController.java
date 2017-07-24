@@ -74,14 +74,17 @@ public class CasePartySceneController implements Initializable {
         search();
     }
         
-    @FXML private void search(){
-        String[] searchParam = searchTextField.getText().trim().split(" ");
-        ObservableList<CasePartyTableModel> list = SQLCaseParty.searchParty(searchParam, Global.getCurrentMatter().getId());
-        loadTable(list);
+    @FXML
+    private void search() {
+        partyTable.getItems().clear();
+        if (Global.getCurrentMatter() != null) {
+            String[] searchParam = searchTextField.getText().trim().split(" ");
+            ObservableList<CasePartyTableModel> list = SQLCaseParty.searchParty(searchParam, Global.getCurrentMatter().getId());
+            loadTable(list);
+        }
     }
-    
+
     private void loadTable(ObservableList<CasePartyTableModel> list) {
-        partyTable.getItems().removeAll();
         if (list != null) {
             partyTable.setItems(list);
         }
