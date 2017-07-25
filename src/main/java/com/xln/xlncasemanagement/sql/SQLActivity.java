@@ -82,17 +82,17 @@ public class SQLActivity {
                 item.setFileName(rs.getString("col13"));
 
                 String file = null;
-                if (rs.getString("col09") != null && rs.getString("col12") != null){
-                    file = rs.getString("col09");
+                if (rs.getString("col13") != null && rs.getString("col14") != null){
+                    file = rs.getString("col13");
                 }
                 
                 list.add(
                         new ActivityTableModel(
                                 item,  //Object
                                 Global.getMmddyyyy().format(rs.getDate("col06")), //Date
-                                String.valueOf(rs.getBigDecimal("col08")), //Hours
+                                String.valueOf(rs.getBigDecimal("col07")), //Hours
                                 StringUtilities.buildName(rs.getString("firstName"), rs.getString("middleName"), rs.getString("lastName")), //user
-                                rs.getString("activityType") + (rs.getString("col07") == null ? "" : " - " + rs.getString("col07")), //Description
+                                rs.getString("activityType") + (rs.getString("col10") == null ? "" : " - " + rs.getString("col10")), //Description
                                 file, //File
                                 rs.getBoolean("col11"), //billable
                                 rs.getBoolean("col12") //Invoiced
