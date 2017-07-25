@@ -15,14 +15,7 @@ import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.io.File;
-import java.math.BigDecimal;
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.text.ParsePosition;
-import java.util.Currency;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
@@ -221,7 +214,6 @@ public class DetailedExpenseSceneController implements Initializable {
         item.setDateOccurred(expenseDateDatePicker.getValue() == null ? null : java.sql.Date.valueOf(expenseDateDatePicker.getValue()));
         item.setDescription(descriptionTextArea.getText().trim().equals("") ? null : descriptionTextArea.getText().trim());        
         item.setCost(costTextField.getText().trim().equals("") ? null : NumberFormatService.stripMoney(costTextField.getText().trim()));
-        item.setFileName(imageSelection == null ? null : imageSelection.getName());
         item.setInvoiced(false);
         
         return SQLExpense.insertExpense(item);

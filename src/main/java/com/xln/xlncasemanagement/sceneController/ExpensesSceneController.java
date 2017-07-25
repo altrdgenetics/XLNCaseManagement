@@ -193,19 +193,18 @@ public class ExpensesSceneController implements Initializable {
         });
     }
 
-    public void setActive() {
+    public void setActive() {        
         search();
     }
 
     private void tableListener(MouseEvent event, int cellIndex) {
-        if (cellIndex > -1) {
+        if (cellIndex > -1 && cellIndex < expensesTable.getItems().size()) {
             ExpensesTableModel row = expensesTable.getItems().get(cellIndex);
 
             if (row != null) {
                 if (event.getClickCount() == 1) {
                     DebugTools.Printout("Expense Table Single Click");
                     Global.getMainStageController().getButtonDelete().setDisable(false);
-
                 } else if (event.getClickCount() >= 2) {
                     DebugTools.Printout("Expense Table Double Click");
                     Global.getStageLauncher().detailedExpenseAddEditScene(Global.getMainStage(), (ExpenseModel) row.getObject().getValue());

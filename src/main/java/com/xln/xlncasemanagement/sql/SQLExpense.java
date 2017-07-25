@@ -153,13 +153,12 @@ public class SQLExpense {
                 + "col06, " //date Occurred
                 + "col07, " //description
                 + "col08, " //cost
-                + "col09, " //file name
                 + "col10 "  //invoiced
                 + ") VALUES (";
-                for(int i=0; i<8; i++){
-                        sql += "?, ";   //01-08
+                for(int i=0; i<7; i++){
+                        sql += "?, ";   //01-07
                     }
-                sql += "?)"; //09
+                sql += "?)"; //08
         try {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -170,8 +169,7 @@ public class SQLExpense {
             ps.setDate   (5, item.getDateOccurred());
             ps.setString (6, item.getDescription());
             ps.setBigDecimal(7, item.getCost());
-            ps.setString (8, item.getFileName());
-            ps.setBoolean(9, item.isInvoiced());
+            ps.setBoolean(8, item.isInvoiced());
             ps.executeUpdate();
 
             ResultSet newRow = ps.getGeneratedKeys();
@@ -193,15 +191,15 @@ public class SQLExpense {
         try {
             conn = DBConnection.connectToDB();
 
-            String sql = "UPDATE table13 SET col11 = ?, col12 = ? WHERE col01 = ?";
+            String sql = "UPDATE table13 SET col09 = ?, col11 = ?, col12 = ? WHERE col01 = ?";
 
             ps = conn.prepareStatement(sql);
             
             byte[] fileInBytes = FileUtilities.fileToBytes(fileUpload);
-            
-            ps.setBytes(1, fileInBytes);
-            ps.setString(2, FileUtilities.generateFileCheckSum(new ByteArrayInputStream(fileInBytes)));
-            ps.setInt(3, id);
+            ps.setString(1, fileUpload.getName());
+            ps.setBytes (2, fileInBytes);
+            ps.setString(3, FileUtilities.generateFileCheckSum(new ByteArrayInputStream(fileInBytes)));
+            ps.setInt   (4, id);
             ps.executeUpdate();       
             
             if (verifyImageChecksum(id)) { 
