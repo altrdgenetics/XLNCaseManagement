@@ -37,7 +37,7 @@ public class SQLCaseParty {
         if (param.length > 0) {
             for (String param1 : param) {
                 sql += " AND CONCAT("          
-                        + "IFNULL(table17.col03,''), "
+                        + "IFNULL(table17.col03,'Client'), "
                         + "IFNULL(table04.col06,''), "
                         + "IFNULL(table04.col08,''), "
                         + "IFNULL(table04.col09,''), "
