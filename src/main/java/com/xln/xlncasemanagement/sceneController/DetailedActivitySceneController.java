@@ -18,8 +18,6 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
-import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

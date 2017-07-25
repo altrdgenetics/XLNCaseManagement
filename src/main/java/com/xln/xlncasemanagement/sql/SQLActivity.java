@@ -237,7 +237,7 @@ public class SQLActivity {
         try {
             conn = DBConnection.connectToDB();
             String sql = "SELECT col14, col15 "
-                    + "FROM table13 WHERE col01 = ?";
+                    + "FROM table01 WHERE col01 = ?";
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -261,14 +261,14 @@ public class SQLActivity {
         ResultSet rs = null;
         try {
             conn = DBConnection.connectToDB();
-            String sql = "SELECT * FROM table01 WHERE col01 = ?";
+            String sql = "SELECT col13, col14 FROM table01 WHERE col01 = ?";
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
             if (rs.first()) {                
-                if (rs.getBytes("col12") != null) {
-                    String fileName = rs.getString("col11");
-                    InputStream is = rs.getBinaryStream("col12");
+                if (rs.getBytes("col14") != null) {
+                    String fileName = rs.getString("col13");
+                    InputStream is = rs.getBinaryStream("col14");
                     itemFile = FileUtilities.generateFileFromBlobData(is, fileName);
                 }
             }

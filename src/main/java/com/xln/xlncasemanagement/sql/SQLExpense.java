@@ -248,7 +248,7 @@ public class SQLExpense {
         ResultSet rs = null;
         try {
             conn = DBConnection.connectToDB();
-            String sql = "SELECT * FROM table13 WHERE col01 = ?";
+            String sql = "SELECT col09, col11 FROM table13 WHERE col01 = ?";
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();

@@ -117,7 +117,7 @@
             </ComboBox>
             <TextField fx:id="rateTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Hour(s)" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <CheckBox fx:id="billableCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <CheckBox fx:id="billableCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" selected="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="durationTextField" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets right="5.0" />
