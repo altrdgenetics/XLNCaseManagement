@@ -49,8 +49,9 @@ public class Global {
     private static final SimpleDateFormat mmddyyyy = new SimpleDateFormat("MM/dd/yyyy");
     private static final SimpleDateFormat hhmmssa = new SimpleDateFormat("hh:mm:ss a");
     
-    //Money Formatter
+    //String Formatter
     private static final String moneyRegex = "-?\\p{Sc}?(([1-9]\\d{0,2}(,\\d{3})*)|(([1-9]\\d*)?\\d))*(\\.\\d{0,2})?";
+    private static final String durationRegex = "(([1-9]\\d{0,2}(,\\d{3})*)|(([1-9]\\d*)?\\d))*(\\.\\d{0,2})?";
     
     //List of Label Changes
     private static String newCaseType = "";
@@ -288,6 +289,10 @@ public class Global {
 
     public static String getMoneyRegex() {
         return moneyRegex;
+    }
+
+    public static String getDurationRegex() {
+        return durationRegex;
     }
     
 }

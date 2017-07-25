@@ -5,10 +5,14 @@
  */
 package com.xln.xlncasemanagement.util;
 
+import com.xln.xlncasemanagement.Global;
 import java.math.BigDecimal;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
+import javafx.scene.control.TextFormatter;
 
 /**
  *
@@ -44,10 +48,35 @@ public class NumberFormatService {
         return currencyFormatter.format(amount);
     }
     
-    public static BigDecimal stripMoney(String amount){  
+    public static BigDecimal convertToBigDecimal(String amount){  
         String seperatorsRemoved = amount.replaceAll(String.valueOf(DecimalFormatSymbols.getInstance().getGroupingSeparator()), "");
         String currencyRemoved = seperatorsRemoved.replaceAll("\\p{Sc}", "");
         
         return new BigDecimal(currencyRemoved);
     }
+    
+    public static UnaryOperator<TextFormatter.Change> moneyMaskFormatter() {
+        Pattern moneyFormatPattern = Pattern.compile(Global.getMoneyRegex());
+        UnaryOperator<TextFormatter.Change> filter = c -> {
+            if (moneyFormatPattern.matcher(c.getControlNewText()).matches()) {
+                return c ;
+            } else {
+                return null ;
+            }
+        };
+        return filter;
+    }
+    
+    public static UnaryOperator<TextFormatter.Change> durationMaskFormatter() {
+        Pattern durationPattern = Pattern.compile(Global.getDurationRegex());
+        UnaryOperator<TextFormatter.Change> filter = c -> {
+            if (durationPattern.matcher(c.getControlNewText()).matches()) {
+                return c ;
+            } else {
+                return null ;
+            }
+        };
+        return filter;
+    }
+    
 }

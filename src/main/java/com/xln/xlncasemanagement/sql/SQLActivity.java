@@ -14,6 +14,7 @@ import com.xln.xlncasemanagement.util.StringUtilities;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -197,8 +198,6 @@ public class SQLActivity {
         return 0;
     }
     
-    
-    
     public static boolean insertActivityFile(int id, File fileUpload) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -281,6 +280,32 @@ public class SQLActivity {
             DbUtils.closeQuietly(rs);
         }
         return itemFile;
+    }
+    
+    public static BigDecimal getLastRate(int userID, int matterID){
+        BigDecimal value = BigDecimal.ZERO;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT col08 FROM table01 WHERE col03 = ? AND col05 = ? ORDER BY col06 DESC LIMIT 1";
+
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userID);
+            ps.setInt(2, matterID);
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                value = rs.getBigDecimal("col08");
+            }
+        } catch (SQLException ex) {
+            DebugTools.Printout(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return value;
     }
     
 }

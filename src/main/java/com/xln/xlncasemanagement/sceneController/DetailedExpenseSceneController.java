@@ -15,10 +15,9 @@ import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.io.File;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
-import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -100,31 +99,15 @@ public class DetailedExpenseSceneController implements Initializable {
     }
     
     private void setTextformatter() {
-        Pattern moneyFormatPattern = Pattern.compile(Global.getMoneyRegex());
-        UnaryOperator<TextFormatter.Change> filter = c -> {
-            if (moneyFormatPattern.matcher(c.getControlNewText()).matches()) {
-                return c ;
-            } else {
-                return null ;
-            }
-        };
-
-        costTextField.setTextFormatter(new TextFormatter<>(filter));
+        costTextField.setTextFormatter(new TextFormatter<>(NumberFormatService.moneyMaskFormatter()));
     }
 
     public void setActive(Stage stagePassed, ExpenseModel expenseObjectObjectPassed){
         stage = stagePassed;
         expenseObject = expenseObjectObjectPassed;
-        String title = "Add Expense";
-        String buttonText = "Add";
-        
-        if (expenseObject != null){
-            title = "Edit Expense";
-            buttonText = "Save";
-        }
-        stage.setTitle(title);
-        headerLabel.setText(title);
-        saveButton.setText(buttonText);
+        stage.setTitle(expenseObject == null ? "Add Expense" : "Edit Expense");
+        headerLabel.setText(expenseObject == null ? "Add Expense" : "Edit Expense");
+        saveButton.setText(expenseObject == null ? "Add" : "Save");
         loadInformation();
     }
     
@@ -213,7 +196,7 @@ public class DetailedExpenseSceneController implements Initializable {
         item.setMatterID(Global.getCurrentMatter().getId());
         item.setDateOccurred(expenseDateDatePicker.getValue() == null ? null : java.sql.Date.valueOf(expenseDateDatePicker.getValue()));
         item.setDescription(descriptionTextArea.getText().trim().equals("") ? null : descriptionTextArea.getText().trim());        
-        item.setCost(costTextField.getText().trim().equals("") ? null : NumberFormatService.stripMoney(costTextField.getText().trim()));
+        item.setCost(costTextField.getText().trim().equals("") ? BigDecimal.ZERO : NumberFormatService.convertToBigDecimal(costTextField.getText().trim()));
         item.setInvoiced(false);
         
         return SQLExpense.insertExpense(item);
@@ -229,7 +212,7 @@ public class DetailedExpenseSceneController implements Initializable {
         item.setExpenseType(expenseType.getId());
         item.setDateOccurred(expenseDateDatePicker.getValue() == null ? null : java.sql.Date.valueOf(expenseDateDatePicker.getValue()));
         item.setDescription(descriptionTextArea.getText().trim().equals("") ? null : descriptionTextArea.getText().trim());        
-        item.setCost(costTextField.getText().trim().equals("") ? null : NumberFormatService.stripMoney(costTextField.getText().trim()));
+        item.setCost(costTextField.getText().trim().equals("") ? BigDecimal.ZERO : NumberFormatService.convertToBigDecimal(costTextField.getText().trim()));
         
         SQLExpense.updateExpenseByID(item);
     }

@@ -18,6 +18,8 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -28,6 +30,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -65,6 +68,7 @@ public class DetailedActivitySceneController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         progressBar.setVisible(false);
         setListeners();
+        setTextformatter();
         setComboBoxModel();        
     }    
     
@@ -98,19 +102,17 @@ public class DetailedActivitySceneController implements Initializable {
         activityTypeComboBox.setConverter(converter2);
     }
     
+    private void setTextformatter() {
+        rateTextField.setTextFormatter(new TextFormatter<>(NumberFormatService.moneyMaskFormatter()));
+        durationTextField.setTextFormatter(new TextFormatter<>(NumberFormatService.durationMaskFormatter()));
+    }
+    
     public void setActive(Stage stagePassed, ActivityModel activityObjectPassed){
         stage = stagePassed;
         activityObject = activityObjectPassed;
-        String title = "Add Activity";
-        String buttonText = "Add";
-        
-        if (activityObject != null){
-            title = "Edit Activity";
-            buttonText = "Save";
-        }
-        stage.setTitle(title);
-        headerLabel.setText(title);
-        saveButton.setText(buttonText);
+        stage.setTitle(activityObject == null ? "Add Activity" : "Edit Activity");
+        headerLabel.setText(activityObject == null ? "Add Activity" : "Edit Activity");
+        saveButton.setText(activityObject == null ? "Add" : "Save");
         loadInformation();
     }
     
@@ -179,6 +181,20 @@ public class DetailedActivitySceneController implements Initializable {
         }
     }
     
+    @FXML private void handleSelectedUserDefaultRate(){
+        if (userComboBox.getValue() != null && rateTextField.getText().equals("")){
+            UserModel user = (UserModel) userComboBox.getValue();
+            BigDecimal defaultRate = user.getDefaultRate();
+            BigDecimal previousMatterRate = SQLActivity.getLastRate(user.getId(), Global.getCurrentMatter().getId());
+            
+            if (previousMatterRate != BigDecimal.ZERO){
+                rateTextField.setText(NumberFormatService.formatMoney(previousMatterRate));
+            } else {
+                rateTextField.setText(NumberFormatService.formatMoney(defaultRate));
+            }
+        }
+    }
+    
     private File fileChooser(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select File");
@@ -218,8 +234,8 @@ public class DetailedActivitySceneController implements Initializable {
         item.setActivityTypeID(activityType.getId());
         item.setMatterID(Global.getCurrentMatter().getId());
         item.setDateOccurred(occurredDatePicker.getValue() == null ? null : java.sql.Date.valueOf(occurredDatePicker.getValue()));
-        item.setDuration(new BigDecimal(durationTextField.getText().trim()));
-        item.setRate(rateTextField.getText().trim().equals("") ? new BigDecimal("0") : NumberFormatService.stripMoney(rateTextField.getText().trim()));
+        item.setDuration(durationTextField.getText().trim().equals("") ? BigDecimal.ZERO : NumberFormatService.convertToBigDecimal(durationTextField.getText().trim()));
+        item.setRate(rateTextField.getText().trim().equals("") ? BigDecimal.ZERO : NumberFormatService.convertToBigDecimal(rateTextField.getText().trim()));
         item.setTotal(item.getDuration().multiply(item.getRate()));
         item.setDescription(descriptionTextArea.getText().trim().equals("") ? null : descriptionTextArea.getText().trim());        
         item.setBillable(billableCheckBox.isSelected());
@@ -236,8 +252,8 @@ public class DetailedActivitySceneController implements Initializable {
         item.setUserID(user.getId());
         item.setActivityTypeID(activityType.getId());
         item.setDateOccurred(occurredDatePicker.getValue() == null ? null : java.sql.Date.valueOf(occurredDatePicker.getValue()));
-        item.setDuration(new BigDecimal(durationTextField.getText().trim()));
-        item.setRate(rateTextField.getText().trim().equals("") ? new BigDecimal("0") : NumberFormatService.stripMoney(rateTextField.getText().trim()));
+        item.setDuration(durationTextField.getText().trim().equals("") ? BigDecimal.ZERO : NumberFormatService.convertToBigDecimal(durationTextField.getText().trim()));
+        item.setRate(rateTextField.getText().trim().equals("") ? BigDecimal.ZERO : NumberFormatService.convertToBigDecimal(rateTextField.getText().trim()));
         item.setTotal(item.getDuration().multiply(item.getRate()));
         item.setDescription(descriptionTextArea.getText().trim().equals("") ? null : descriptionTextArea.getText().trim());        
         item.setBillable(billableCheckBox.isSelected());

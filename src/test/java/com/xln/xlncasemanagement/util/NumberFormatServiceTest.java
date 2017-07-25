@@ -16,14 +16,14 @@ import static org.junit.Assert.*;
 public class NumberFormatServiceTest {
 
     /**
-     * Test of stripMoney method, of class NumberFormatService.
+     * Test of convertToBigDecimal method, of class NumberFormatService.
      */
     @Test
     public void testStripMoney() {
         System.out.println("stripMoney");
         String amount = "$203,203.23";
         BigDecimal expResult = new BigDecimal("203203.23");
-        BigDecimal result = NumberFormatService.stripMoney(amount);
+        BigDecimal result = NumberFormatService.convertToBigDecimal(amount);
         assertEquals(expResult, result);
     }
     

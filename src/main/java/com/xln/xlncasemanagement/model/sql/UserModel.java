@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.model.sql;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
@@ -30,7 +31,7 @@ public class UserModel {
     private int lastMatterID;
     private boolean activeLogin;
     private boolean adminRights;
-    private double defaultRate;
+    private BigDecimal defaultRate;
 
     public int getId() {
         return id;
@@ -168,11 +169,11 @@ public class UserModel {
         this.adminRights = adminRights;
     }
 
-    public double getDefaultRate() {
+    public BigDecimal getDefaultRate() {
         return defaultRate;
     }
 
-    public void setDefaultRate(double defaultRate) {
+    public void setDefaultRate(BigDecimal defaultRate) {
         this.defaultRate = defaultRate;
     }
     

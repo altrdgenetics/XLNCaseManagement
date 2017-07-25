@@ -10,6 +10,7 @@ import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.model.table.UserMaintanceTableModel;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.StringUtilities;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,7 +71,7 @@ public class SQLUser {
                 item.setLastMatterID(rs.getInt("col15"));
                 item.setActiveLogin(rs.getBoolean("col16"));
                 item.setAdminRights(rs.getBoolean("col17"));
-                item.setDefaultRate(rs.getDouble("col18"));
+                item.setDefaultRate(rs.getBigDecimal("col18"));
                 
                 list.add(
                         new UserMaintanceTableModel(
@@ -122,7 +123,7 @@ public class SQLUser {
                 item.setLastMatterID(rs.getInt("col15"));
                 item.setActiveLogin(rs.getBoolean("col16"));
                 item.setAdminRights(rs.getBoolean("col17"));
-                item.setDefaultRate(rs.getDouble("col18"));
+                item.setDefaultRate(rs.getBigDecimal("col18"));
                 list.add(item);
             }
         } catch (SQLException ex) {
@@ -165,7 +166,7 @@ public class SQLUser {
                 item.setLastMatterID(rs.getInt("col15"));
                 item.setActiveLogin(rs.getBoolean("col16"));
                 item.setAdminRights(rs.getBoolean("col17"));
-                item.setDefaultRate(rs.getDouble("col18"));
+                item.setDefaultRate(rs.getBigDecimal("col18"));
             }
         } catch (SQLException ex) {
             DebugTools.Printout(ex.getMessage());

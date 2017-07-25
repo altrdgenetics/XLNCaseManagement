@@ -3,10 +3,6 @@ package com.xln.xlncasemanagement;
 import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.sql.SQLCompany;
 import com.xln.xlncasemanagement.util.LabelHashTables;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.util.Currency;
-import java.util.Locale;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
