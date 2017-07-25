@@ -202,7 +202,7 @@ public class SQLExpense {
             ps.setInt   (4, id);
             ps.executeUpdate();       
             
-            if (verifyImageChecksum(id)) { 
+            if (verifyFileChecksum(id)) { 
                 DebugTools.Printout("Expense File Inserted Successfully");
                 return true;
             }
@@ -217,7 +217,7 @@ public class SQLExpense {
         return true;
     }
     
-    public static boolean verifyImageChecksum(int id){
+    public static boolean verifyFileChecksum(int id){
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

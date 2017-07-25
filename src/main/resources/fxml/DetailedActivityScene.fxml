@@ -8,6 +8,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -23,15 +24,26 @@
         <URL value="@/styles/Styles.css" />
     </stylesheets>
     <bottom>
-        <ButtonBar buttonMinWidth="100.0" prefHeight="40.0" prefWidth="448.0" BorderPane.alignment="CENTER">
-            <buttons>
-                <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleClose" text="Close" ButtonBar.buttonData="LEFT" />
-                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" styleClass="primary" text="Save" ButtonBar.buttonData="RIGHT" />
-            </buttons>
-            <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
-        </ButtonBar>
+        <BorderPane prefHeight="47.0" prefWidth="755.0" BorderPane.alignment="CENTER">
+            <bottom>
+                <ButtonBar buttonMinWidth="100.0" prefHeight="40.0" prefWidth="448.0" BorderPane.alignment="CENTER">
+                    <buttons>
+                        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleClose" text="Close" ButtonBar.buttonData="LEFT" />
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" styleClass="primary" text="Save" ButtonBar.buttonData="RIGHT" />
+                    </buttons>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </ButtonBar>
+            </bottom>
+         <center>
+            <ProgressBar fx:id="progressBar" prefHeight="18.0" prefWidth="792.0" progress="0.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets left="10.0" right="10.0" />
+               </BorderPane.margin>
+            </ProgressBar>
+         </center>
+        </BorderPane>
     </bottom>
     <top>
         <AnchorPane prefHeight="47.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -93,30 +105,30 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </Label>
-            <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.vgrow="ALWAYS">
+            <ComboBox fx:id="activityTypeComboBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </ComboBox>
-            <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+            <ComboBox fx:id="userComboBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </ComboBox>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="rateTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Hour(s)" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <CheckBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <CheckBox fx:id="billableCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="durationTextField" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
             </TextField>
-            <DatePicker GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-            <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="151.0" text="Add File" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <DatePicker fx:id="occurredDatePicker" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <Button fx:id="fileButton" mnemonicParsing="false" onAction="#handleFileButtonAction" prefHeight="32.0" prefWidth="151.0" text="Add File" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.rowSpan="5">
                <children>
                   <Label text="Description:" />
-                  <TextArea prefHeight="200.0" prefWidth="200.0">
+                  <TextArea fx:id="descriptionTextArea" prefHeight="200.0" prefWidth="200.0">
                      <VBox.margin>
                         <Insets bottom="5.0" right="10.0" top="5.0" />
                      </VBox.margin>

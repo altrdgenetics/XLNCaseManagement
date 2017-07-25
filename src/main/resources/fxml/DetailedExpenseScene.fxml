@@ -21,9 +21,6 @@
     <stylesheets>
         <URL value="@/styles/Styles.css" />
     </stylesheets>
-    <bottom>
-        
-    </bottom>
     <top>
         <AnchorPane prefHeight="47.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>

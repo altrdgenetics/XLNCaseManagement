@@ -132,7 +132,7 @@ public class DetailedExpenseSceneController implements Initializable {
         saveButton.disableProperty().bind(
                 (userComboBox.valueProperty().isNull())
                         .or(expenseDateDatePicker.valueProperty().isNull())
-                        .or(expenseDateDatePicker.valueProperty().isNull())
+                        .or(expenseTypeComboBox.valueProperty().isNull())
                         .or(costTextField.textProperty().isEmpty())
         );
     }

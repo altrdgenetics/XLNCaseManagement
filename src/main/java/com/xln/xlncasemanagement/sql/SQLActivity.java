@@ -8,14 +8,17 @@ package com.xln.xlncasemanagement.sql;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ActivityModel;
 import com.xln.xlncasemanagement.model.table.ActivityTableModel;
+import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.FileUtilities;
 import com.xln.xlncasemanagement.util.StringUtilities;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -107,6 +110,149 @@ public class SQLActivity {
             DbUtils.closeQuietly(conn);
         }
         return list;
+    }
+    
+    public static void updateActivityByID(ActivityModel item) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE table01 SET "
+                + "col03 = ?, " //01 userID
+                + "col04 = ?, " //02 activityTypeID
+                + "col06 = ?, " //03 dateOccurred
+                + "col07 = ?, " //04 duration
+                + "col08 = ?, " //05 rate
+                + "col09 = ?, " //06 total
+                + "col10 = ?, " //07 description
+                + "col11 = ? "  //08 billable
+                + "WHERE col01 = ?";
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setInt       (1, item.getUserID());
+            ps.setInt       (2, item.getActivityTypeID());
+            ps.setDate      (3, item.getDateOccurred());
+            ps.setBigDecimal(4, item.getDuration());
+            ps.setBigDecimal(5, item.getRate());
+            ps.setBigDecimal(6, item.getTotal());
+            ps.setString    (7, item.getDescription());
+            ps.setBoolean   (8, item.isBillable());
+            ps.setInt       (9, item.getId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLActivity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+    }
+    
+    public static int insertActivity(ActivityModel item) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "INSERT INTO table01 ("
+                + "col02, " //01 active
+                + "col03, " //02 user ID
+                + "col04, " //03 activity type ID
+                + "col05, " //04 matter ID
+                + "col06, " //05 date Occurred
+                + "col07, " //06 duration
+                + "col08, " //07 rate
+                + "col09, " //08 total
+                + "col10, " //09 description
+                + "col11, " //10 billable
+                + "col12 "  //11 invoiced
+                + ") VALUES (";
+                for(int i=0; i<10; i++){
+                        sql += "?, ";   //01-10
+                    }
+                sql += "?)"; //11
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setBoolean   ( 1, item.isActive());
+            ps.setInt       ( 2, item.getUserID());
+            ps.setInt       ( 3, item.getActivityTypeID());
+            ps.setInt       ( 4, item.getMatterID());
+            ps.setDate      ( 5, item.getDateOccurred());
+            ps.setBigDecimal( 6, item.getDuration());
+            ps.setBigDecimal( 7, item.getRate());
+            ps.setBigDecimal( 8, item.getTotal());
+            ps.setString    ( 9, item.getDescription());
+            ps.setBoolean   (10, item.isBillable());
+            ps.setBoolean   (11, item.isInvoiced());
+            ps.executeUpdate();
+
+            ResultSet newRow = ps.getGeneratedKeys();
+            if (newRow.first()) {
+                return newRow.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+        }
+        return 0;
+    }
+    
+    
+    
+    public static boolean insertActivityFile(int id, File fileUpload) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBConnection.connectToDB();
+
+            String sql = "UPDATE table01 SET col13 = ?, col14 = ?, col15 = ? WHERE col01 = ?";
+
+            ps = conn.prepareStatement(sql);
+            
+            byte[] fileInBytes = FileUtilities.fileToBytes(fileUpload);
+            ps.setString(1, fileUpload.getName());
+            ps.setBytes (2, fileInBytes);
+            ps.setString(3, FileUtilities.generateFileCheckSum(new ByteArrayInputStream(fileInBytes)));
+            ps.setInt   (4, id);
+            ps.executeUpdate();       
+            
+            if (verifyFileChecksum(id)) { 
+                DebugTools.Printout("Activity File Inserted Successfully");
+                return true;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLActivity.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+        }
+        return true;
+    }
+    
+    public static boolean verifyFileChecksum(int id){
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.connectToDB();
+            String sql = "SELECT col14, col15 "
+                    + "FROM table13 WHERE col01 = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                return FileUtilities.compareCheckSum(rs.getBytes("col14"), rs.getString("col15"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLActivity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
     }
     
     public static File openActivityFile(int id) {
