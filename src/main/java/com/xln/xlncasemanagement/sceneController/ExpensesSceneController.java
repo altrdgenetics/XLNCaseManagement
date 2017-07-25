@@ -226,6 +226,7 @@ public class ExpensesSceneController implements Initializable {
                 loadTable(list);
             }
             setSortedColumn();
+            expensesTable.refresh();
         });
     }
 

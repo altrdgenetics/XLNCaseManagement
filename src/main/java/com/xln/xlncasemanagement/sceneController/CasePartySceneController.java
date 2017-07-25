@@ -87,6 +87,7 @@ public class CasePartySceneController implements Initializable {
                 loadTable(list);
             }
             setSortedColumn();
+            partyTable.refresh();
         });
     }
 

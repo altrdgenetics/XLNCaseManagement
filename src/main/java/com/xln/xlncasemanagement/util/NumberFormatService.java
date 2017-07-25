@@ -38,8 +38,7 @@ public class NumberFormatService {
     public static String convertPhoneNumberToString(String number) {
         return number.replaceAll("[^0-9]", "");
     }
-    
-    
+        
     public static String formatMoney(BigDecimal amount){  
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
         return currencyFormatter.format(amount);
