@@ -25,6 +25,8 @@ public class ExpenseModel {
     private BigDecimal cost;
     private String fileName;
     private boolean invoiced;
+    private byte[] fileBlob;
+    private String fileBlobHash;
 
     public int getId() {
         return id;
@@ -113,7 +115,21 @@ public class ExpenseModel {
     public void setInvoiced(boolean invoiced) {
         this.invoiced = invoiced;
     }
-    
-    
+
+    public byte[] getFileBlob() {
+        return fileBlob;
+    }
+
+    public void setFileBlob(byte[] fileBlob) {
+        this.fileBlob = fileBlob;
+    }
+
+    public String getFileBlobHash() {
+        return fileBlobHash;
+    }
+
+    public void setFileBlobHash(String fileBlobHash) {
+        this.fileBlobHash = fileBlobHash;
+    }
     
 }

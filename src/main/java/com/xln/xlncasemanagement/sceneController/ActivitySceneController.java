@@ -12,8 +12,16 @@ import com.xln.xlncasemanagement.sql.SQLActiveStatus;
 import com.xln.xlncasemanagement.sql.SQLActivity;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.TableObjects;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,8 +47,11 @@ public class ActivitySceneController implements Initializable {
     @FXML private TableColumn<ActivityTableModel, String> userColumn;
     @FXML private TableColumn<ActivityTableModel, String> descriptionColumn;
     @FXML private TableColumn<ActivityTableModel, String> fileColumn;
+    @FXML private TableColumn<ActivityTableModel, Boolean> billableColumn;
     @FXML private TableColumn<ActivityTableModel, Boolean> invoicedColumn;
 
+    List<TableColumn<ActivityTableModel, ?>> sortOrder;  
+    
     /**
      * Initializes the controller class.
      *
@@ -63,7 +74,7 @@ public class ActivitySceneController implements Initializable {
         initializeBillableColumn();
         initializeInvoicedColumn();
     }
-    
+  
     private void initializeObjectColumn() {
         objectColumn.setCellValueFactory(cellData -> cellData.getValue().getObject());
     }
@@ -81,15 +92,13 @@ public class ActivitySceneController implements Initializable {
             };
 
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
-                    tableListener(cell.getIndex());
-                }
+                tableListener(event, cell.getIndex());
             });
             return cell;
         });
         dateColumn.setStyle("-fx-alignment: CENTER;");
     }
-    
+
     private void initializeHoursColumn() {
         hoursColumn.setCellValueFactory(cellData -> cellData.getValue().getHours());
         hoursColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
@@ -104,9 +113,7 @@ public class ActivitySceneController implements Initializable {
             };
 
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
-                    tableListener(cell.getIndex());
-                }
+                tableListener(event, cell.getIndex());
             });
             return cell;
         });
@@ -124,9 +131,7 @@ public class ActivitySceneController implements Initializable {
                 }
             };
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
-                    tableListener(cell.getIndex());
-                }
+                tableListener(event, cell.getIndex());
             });
             return cell;
         });
@@ -145,9 +150,7 @@ public class ActivitySceneController implements Initializable {
             };
 
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
-                    tableListener(cell.getIndex());
-                }
+                tableListener(event, cell.getIndex());
             });
             return cell;
         });
@@ -161,10 +164,6 @@ public class ActivitySceneController implements Initializable {
                 @Override
                 public void updateItem(String item, boolean empty) {
                     if (item != null) {
-
-                        // Insert View Button To Table
-                        //setGraphic(TableObjects.viewButton());
-                        //
                         //Insert Icon for File
                         setGraphic(TableObjects.fileIcon(item));
                     }
@@ -172,24 +171,20 @@ public class ActivitySceneController implements Initializable {
             };
 
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
-                    handleOpenFile(cell.getIndex());
-                }
+                handleOpenFile(event, cell.getIndex());
             });
 
             return cell;
         });
         fileColumn.setStyle("-fx-alignment: CENTER;");
     }
-    
+
     private void initializeBillableColumn() {
-        invoicedColumn.setCellValueFactory(cellData -> cellData.getValue().getBillable());
-        invoicedColumn.setCellFactory((TableColumn<ActivityTableModel, Boolean> param) -> {
+        billableColumn.setCellValueFactory(cellData -> cellData.getValue().getBillable());
+        billableColumn.setCellFactory((TableColumn<ActivityTableModel, Boolean> param) -> {
             CheckBoxTableCell cell = new CheckBoxTableCell<>();
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
-                    tableListener(cell.getIndex());
-                }
+                tableListener(event, cell.getIndex());
             });
             return cell;
         });
@@ -200,9 +195,7 @@ public class ActivitySceneController implements Initializable {
         invoicedColumn.setCellFactory((TableColumn<ActivityTableModel, Boolean> param) -> {
             CheckBoxTableCell cell = new CheckBoxTableCell<>();
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-                if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
-                    tableListener(cell.getIndex());
-                }
+                tableListener(event, cell.getIndex());
             });
             return cell;
         });
@@ -212,25 +205,48 @@ public class ActivitySceneController implements Initializable {
         search();
     }
 
-    private void tableListener(int cellIndex) {
-        ActivityTableModel row = activityTable.getItems().get(cellIndex);
+    private void tableListener(MouseEvent event, int cellIndex) {
+        if (cellIndex > -1 && cellIndex < activityTable.getItems().size()) {
+            ActivityTableModel row = activityTable.getItems().get(cellIndex);
 
-        if (row != null) {
-            DebugTools.Printout("Activity Table Double Click");
-            Global.getStageLauncher().detailedActivityAddEditScene(Global.getMainStage(), (ActivityModel) row.getObject().getValue());
-            search();
+            if (row != null) {
+                if (event.getClickCount() == 1) {
+                    DebugTools.Printout("Expense Table Single Click");
+                    Global.getMainStageController().getButtonDelete().setDisable(false);
+                } else if (event.getClickCount() >= 2) {
+                    DebugTools.Printout("Activity Table Double Click");
+                    Global.getStageLauncher().detailedActivityAddEditScene(Global.getMainStage(), (ActivityModel) row.getObject().getValue());
+                    search();
+                }
+            }
         }
     }
     
     @FXML private void search() {
-        activityTable.getItems().clear();
-        if (Global.getCurrentMatter() != null) {
-            String[] searchParam = searchTextField.getText().trim().split(" ");
+        Platform.runLater(() -> {
+            getSortedColumn();
+            activityTable.getItems().clear();
+            if (Global.getCurrentMatter() != null) {
+                String[] searchParam = searchTextField.getText().trim().split(" ");
             ObservableList<ActivityTableModel> list = SQLActivity.searchActivity(searchParam, Global.getCurrentMatter().getId());
             loadTable(list);
-        }
+            }
+            setSortedColumn();
+            activityTable.refresh();
+        });
     }
 
+    private void getSortedColumn() {
+        sortOrder = new ArrayList<>(activityTable.getSortOrder());
+    }
+    
+    private void setSortedColumn() {
+        if (sortOrder != null) {
+            activityTable.getSortOrder().clear();
+            activityTable.getSortOrder().addAll(sortOrder);
+        }
+    }
+    
     private void loadTable(ObservableList<ActivityTableModel> list) {
         if (list != null) {
             activityTable.setItems(list);
@@ -249,11 +265,24 @@ public class ActivitySceneController implements Initializable {
             search();
         }
     }
-    
-    private void handleOpenFile(int cellIndex) {
-        ActivityTableModel row = activityTable.getItems().get(cellIndex);
-        if (row != null) {
-            DebugTools.Printout("Clicked Icon Twice");
+
+    private void handleOpenFile(MouseEvent event, int cellIndex) {
+        if (cellIndex > -1 && cellIndex < activityTable.getItems().size() && event.getClickCount() >= 2) {
+            ActivityTableModel row = activityTable.getItems().get(cellIndex);
+            if (row != null) {
+                ActivityModel item = (ActivityModel) row.getObject().getValue();
+
+                File selectedFile = SQLActivity.openActivityFile(item.getId());
+                if (selectedFile != null) {
+                    try {
+                        Desktop.getDesktop().open(selectedFile);
+                    } catch (IOException ex) {
+                        Logger.getLogger(ExpensesSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                DebugTools.Printout("Clicked Icon Twice");
+            }
         }
     }
     

@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.model.sql;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -19,11 +20,15 @@ public class ActivityModel {
     private int activityTypeID;
     private int matterID;
     private Date dateOccurred;
-    private double duration;
+    private BigDecimal duration;
+    private BigDecimal rate;
+    private BigDecimal total;
     private String description;
-    private String fileName;
     private boolean billable;
     private boolean invoiced;
+    private String fileName;
+    private byte[] fileBlob;
+    private String fileBlobHash;
 
     public int getId() {
         return id;
@@ -73,12 +78,28 @@ public class ActivityModel {
         this.dateOccurred = dateOccurred;
     }
 
-    public double getDuration() {
+    public BigDecimal getDuration() {
         return duration;
     }
 
-    public void setDuration(double duration) {
+    public void setDuration(BigDecimal duration) {
         this.duration = duration;
+    }
+
+    public BigDecimal getRate() {
+        return rate;
+    }
+
+    public void setRate(BigDecimal rate) {
+        this.rate = rate;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
     public String getDescription() {
@@ -112,7 +133,21 @@ public class ActivityModel {
     public void setInvoiced(boolean invoiced) {
         this.invoiced = invoiced;
     }
-    
-    
+
+    public byte[] getFileBlob() {
+        return fileBlob;
+    }
+
+    public void setFileBlob(byte[] fileBlob) {
+        this.fileBlob = fileBlob;
+    }
+
+    public String getFileBlobHash() {
+        return fileBlobHash;
+    }
+
+    public void setFileBlobHash(String fileBlobHash) {
+        this.fileBlobHash = fileBlobHash;
+    }
     
 }

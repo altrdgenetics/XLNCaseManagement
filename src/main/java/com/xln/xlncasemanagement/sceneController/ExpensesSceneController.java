@@ -161,11 +161,6 @@ public class ExpensesSceneController implements Initializable {
             TableCell<ExpensesTableModel, String> cell = new TableCell<ExpensesTableModel, String>() {
                 @Override
                 public void updateItem(String item, boolean empty) {
-                    // Insert View Button To Table
-                    //if (item != null) {
-                    //    setGraphic(TableObjects.viewButton());
-                    //}
-                    //
                     //Insert Icon for File
                     setGraphic(TableObjects.fileIcon(item));
                 }
@@ -173,7 +168,7 @@ public class ExpensesSceneController implements Initializable {
 
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
                 if (cell.getIndex() > -1 && event.getClickCount() >= 2) {
-                    handleOpenFile(cell.getIndex());
+                    handleOpenFile(event, cell.getIndex());
                 }
             });
 
@@ -214,8 +209,7 @@ public class ExpensesSceneController implements Initializable {
         }
     }
 
-    @FXML
-    private void search() {
+    @FXML private void search() {
         Platform.runLater(() -> {
             getSortedColumn();
             expensesTable.getItems().clear();
@@ -259,22 +253,24 @@ public class ExpensesSceneController implements Initializable {
         }
     }
     
-    private void handleOpenFile(int cellIndex) {
-        ExpensesTableModel row = expensesTable.getItems().get(cellIndex);
-        if (row != null) {
-            ExpenseModel item = (ExpenseModel) row.getObject().getValue();
-            
-            File selectedFile = SQLExpense.openExpenseFile(item.getId());
-            if (selectedFile != null){
-                try {
-                    Desktop.getDesktop().open(selectedFile);
-                } catch (IOException ex) {
-                    Logger.getLogger(ExpensesSceneController.class.getName()).log(Level.SEVERE, null, ex);
+    private void handleOpenFile(MouseEvent event, int cellIndex) {
+        if (cellIndex > -1 && cellIndex < expensesTable.getItems().size() && event.getClickCount() >= 2) {
+            ExpensesTableModel row = expensesTable.getItems().get(cellIndex);
+            if (row != null) {
+                ExpenseModel item = (ExpenseModel) row.getObject().getValue();
+
+                File selectedFile = SQLExpense.openExpenseFile(item.getId());
+                if (selectedFile != null) {
+                    try {
+                        Desktop.getDesktop().open(selectedFile);
+                    } catch (IOException ex) {
+                        Logger.getLogger(ExpensesSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
+
+                DebugTools.Printout("Clicked Icon Twice");
             }
-            
-            DebugTools.Printout("Clicked Icon Twice");
         }
     }
-    
+
 }
