@@ -4,6 +4,7 @@ import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.sql.SQLCompany;
 import com.xln.xlncasemanagement.util.LabelHashTables;
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Locale;
 import javafx.application.Application;
@@ -23,15 +24,6 @@ public class MainApp extends Application {
     private void setApplicationDefaults(){
         //Remove Later
         setSpoofData();
-
-        //Get Locale Information
-        Locale locale = Locale.getDefault();
-        
-        DecimalFormatSymbols decimal = new DecimalFormatSymbols(locale);
-        Currency currency = Currency.getInstance(locale);
-        Global.setMoneySymbol(currency.getSymbol(locale));
-        Global.setDecimalSep(String.valueOf(decimal.getDecimalSeparator()));
-        
         
         //Set company Information
         Global.setCompanyInformation(SQLCompany.getCompanyInformation());

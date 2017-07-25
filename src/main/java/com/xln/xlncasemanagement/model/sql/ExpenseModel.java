@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.model.sql;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -21,7 +22,7 @@ public class ExpenseModel {
     private int matterID;
     private Date dateOccurred;
     private String description;
-    private double cost;
+    private BigDecimal cost;
     private String fileName;
     private boolean invoiced;
 
@@ -89,11 +90,11 @@ public class ExpenseModel {
         this.description = description;
     }
 
-    public double getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 

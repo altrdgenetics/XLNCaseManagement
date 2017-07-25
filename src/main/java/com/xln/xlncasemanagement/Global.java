@@ -33,9 +33,7 @@ public class Global {
     private static Image applicationLogo;
     private static UserModel currentUser;
     private static PartyModel currentClient;
-    private static MatterModel currentMatter;
-    private static String moneySymbol;
-    private static String decimalSep; 
+    private static MatterModel currentMatter; 
     
     //list of all states
     private static final String STATES[] = { "AL", "AK", "AS", "AZ", "AR", "CA", "CO",
@@ -50,6 +48,9 @@ public class Global {
     private static final SimpleDateFormat iCalendarDateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmm'00'");
     private static final SimpleDateFormat mmddyyyy = new SimpleDateFormat("MM/dd/yyyy");
     private static final SimpleDateFormat hhmmssa = new SimpleDateFormat("hh:mm:ss a");
+    
+    //Money Formatter
+    private static final String moneyRegex = "-?\\p{Sc}?(([1-9]\\d{0,2}(,\\d{3})*)|(([1-9]\\d*)?\\d))*(\\.\\d{0,2})?";
     
     //List of Label Changes
     private static String newCaseType = "";
@@ -285,20 +286,8 @@ public class Global {
         return hhmmssa;
     }
 
-    public static String getMoneySymbol() {
-        return moneySymbol;
-    }
-
-    public static void setMoneySymbol(String moneySymbol) {
-        Global.moneySymbol = moneySymbol;
-    }
-
-    public static String getDecimalSep() {
-        return decimalSep;
-    }
-
-    public static void setDecimalSep(String decimalSep) {
-        Global.decimalSep = decimalSep;
+    public static String getMoneyRegex() {
+        return moneyRegex;
     }
     
 }

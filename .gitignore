@@ -15,3 +15,4 @@ DBConnectionInfo.java
 target/*
 target/
 /src/main/java/com/xln/xlncasemanagement/sql/DBCInfo.java
+/nbproject/

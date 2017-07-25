@@ -15,9 +15,11 @@ import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.io.File;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.Currency;
 import java.util.Locale;
@@ -105,10 +107,9 @@ public class DetailedExpenseSceneController implements Initializable {
     }
     
     private void setTextformatter() {
-        Pattern decimalPattern = Pattern.compile("-?\\d*(\\" + Global.getDecimalSep() + "\\d{0,2})?");
-
+        Pattern moneyFormatPattern = Pattern.compile(Global.getMoneyRegex());
         UnaryOperator<TextFormatter.Change> filter = c -> {
-            if (decimalPattern.matcher(c.getControlNewText()).matches()) {
+            if (moneyFormatPattern.matcher(c.getControlNewText()).matches()) {
                 return c ;
             } else {
                 return null ;
@@ -172,7 +173,7 @@ public class DetailedExpenseSceneController implements Initializable {
         expenseDateDatePicker.setValue(expenseObject.getDateOccurred().toLocalDate());
         userComboBox.setValue(user);
         expenseTypeComboBox.setValue(expenseType);
-        costTextField.setText(NumberFormatService.formatMoney(expenseObject.getCost()).replace("$", ""));
+        costTextField.setText(NumberFormatService.formatMoney(expenseObject.getCost()));
         descriptionTextArea.setText(expenseObject.getDescription() == null ? "" : expenseObject.getDescription().trim());
         
         if (expenseObject.isInvoiced()){
@@ -219,7 +220,7 @@ public class DetailedExpenseSceneController implements Initializable {
         item.setMatterID(Global.getCurrentMatter().getId());
         item.setDateOccurred(expenseDateDatePicker.getValue() == null ? null : java.sql.Date.valueOf(expenseDateDatePicker.getValue()));
         item.setDescription(descriptionTextArea.getText().trim().equals("") ? null : descriptionTextArea.getText().trim());        
-        item.setCost(costTextField.getText().trim().equals("") ? null : Double.valueOf(costTextField.getText().trim()));
+        item.setCost(costTextField.getText().trim().equals("") ? null : NumberFormatService.stripMoney(costTextField.getText().trim()));
         item.setFileName(imageSelection == null ? null : imageSelection.getName());
         item.setInvoiced(false);
         
@@ -236,7 +237,7 @@ public class DetailedExpenseSceneController implements Initializable {
         item.setExpenseType(expenseType.getId());
         item.setDateOccurred(expenseDateDatePicker.getValue() == null ? null : java.sql.Date.valueOf(expenseDateDatePicker.getValue()));
         item.setDescription(descriptionTextArea.getText().trim().equals("") ? null : descriptionTextArea.getText().trim());        
-        item.setCost(costTextField.getText().trim().equals("") ? null : Double.valueOf(costTextField.getText().trim()));
+        item.setCost(costTextField.getText().trim().equals("") ? null : NumberFormatService.stripMoney(costTextField.getText().trim()));
         
         SQLExpense.updateExpenseByID(item);
     }

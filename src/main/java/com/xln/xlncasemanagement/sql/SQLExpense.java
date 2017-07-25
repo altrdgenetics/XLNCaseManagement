@@ -81,7 +81,7 @@ public class SQLExpense {
                 item.setMatterID(rs.getInt("col05"));
                 item.setDateOccurred(rs.getDate("col06"));
                 item.setDescription(rs.getString("col07"));
-                item.setCost(rs.getDouble("col08"));
+                item.setCost(rs.getBigDecimal("col08"));
                 item.setFileName(rs.getString("col09"));
                 item.setInvoiced(rs.getBoolean("col10"));
 
@@ -89,15 +89,14 @@ public class SQLExpense {
                 if (rs.getString("col09") != null && rs.getString("col12") != null){
                     file = rs.getString("col09");
                 }
-                
-                
+                                
                 list.add(
                         new ExpensesTableModel(
                                 item,  //Object
                                 Global.getMmddyyyy().format(rs.getDate("col06")), //Date
                                 StringUtilities.buildName(rs.getString("firstName"), rs.getString("middleName"), rs.getString("lastName")), //user
                                 rs.getString("expenseType") + (rs.getString("col07") == null ? "" : " - " + rs.getString("col07")), //Description
-                                rs.getDouble("col08") == 0 ? "N/A" : NumberFormatService.formatMoney(rs.getDouble("col08")), //Cost
+                                rs.getDouble("col08") == 0 ? "N/A" : NumberFormatService.formatMoney(rs.getBigDecimal("col08")), //Cost
                                 file, //File
                                 rs.getBoolean("col10") //Invoiced
                         )
@@ -131,7 +130,7 @@ public class SQLExpense {
             ps.setInt   (2, item.getExpenseType());
             ps.setDate  (3, item.getDateOccurred());
             ps.setString(4, item.getDescription());
-            ps.setDouble(5, item.getCost());
+            ps.setBigDecimal(5, item.getCost());
             ps.setInt   (6, item.getId());
             ps.executeUpdate();
         } catch (SQLException ex) {
@@ -170,7 +169,7 @@ public class SQLExpense {
             ps.setInt    (4, item.getMatterID());
             ps.setDate   (5, item.getDateOccurred());
             ps.setString (6, item.getDescription());
-            ps.setDouble (7, item.getCost());
+            ps.setBigDecimal(7, item.getCost());
             ps.setString (8, item.getFileName());
             ps.setBoolean(9, item.isInvoiced());
             ps.executeUpdate();

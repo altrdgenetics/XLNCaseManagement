@@ -5,6 +5,8 @@
  */
 package com.xln.xlncasemanagement.util;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -38,9 +40,15 @@ public class NumberFormatService {
     }
     
     
-    public static String formatMoney(double amount){
-        Locale locale = new Locale("en", "US");      
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+    public static String formatMoney(BigDecimal amount){  
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
         return currencyFormatter.format(amount);
+    }
+    
+    public static BigDecimal stripMoney(String amount){  
+        String seperatorsRemoved = amount.replaceAll(String.valueOf(DecimalFormatSymbols.getInstance().getGroupingSeparator()), "");
+        String currencyRemoved = seperatorsRemoved.replaceAll("\\p{Sc}", "");
+        
+        return new BigDecimal(currencyRemoved);
     }
 }
