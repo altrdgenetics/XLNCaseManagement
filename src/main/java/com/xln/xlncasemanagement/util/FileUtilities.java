@@ -136,7 +136,7 @@ public class FileUtilities {
         return false;
     }
     
-    public static File generateFileFromBlobData(InputStream is, String fileName) {
+    public static File generateFileFromBlobData(InputStream is, String fileName, String checkSum) {
         File tempFile = null;
         String tempDirectory = System.getProperty("java.io.tmpdir");
         OutputStream outputStream = null;
@@ -152,8 +152,7 @@ public class FileUtilities {
             while ((read = is.read(bytes)) != -1) {
                 outputStream.write(bytes, 0, read);
             }
-            
-            
+                        
         } catch (IOException ex) {
             DebugTools.Printout(ex.getMessage());
         } finally {

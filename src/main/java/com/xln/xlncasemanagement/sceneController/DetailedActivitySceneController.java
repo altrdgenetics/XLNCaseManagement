@@ -13,6 +13,7 @@ import com.xln.xlncasemanagement.sql.SQLActivity;
 import com.xln.xlncasemanagement.sql.SQLActivityType;
 import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.AlertDialog;
+import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.io.File;
 import java.math.BigDecimal;
@@ -226,7 +227,10 @@ public class DetailedActivitySceneController implements Initializable {
                 }
 
                 if (imageSelection != null && keyID > 0) {
+                    long lStartTime = System.currentTimeMillis();  
                     success = SQLActivity.insertActivityFile(keyID, imageSelection);
+                    long lEndTime = System.currentTimeMillis();
+                    DebugTools.Printout("Saved File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
                 }
 
                 if (success) {
@@ -239,7 +243,7 @@ public class DetailedActivitySceneController implements Initializable {
                         AlertDialog.StaticAlert(4, "Save Error",
                                 "Unable To Insert File",
                                 "The file was not able to be saved to the database. "
-                                        + "The rest of the information was properly saved.");
+                                        + "The rest of the information was saved properly.");
                         loadInformation();
                         progressBar.setVisible(false);
                         setPanelDisabled(false);

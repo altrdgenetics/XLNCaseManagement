@@ -277,7 +277,7 @@ public class SQLExpense {
         ResultSet rs = null;
         try {
             conn = DBConnection.connectToDB();
-            String sql = "SELECT col09, col11 FROM table13 WHERE col01 = ?";
+            String sql = "SELECT col09, col11, col12 FROM table13 WHERE col01 = ?";
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -285,7 +285,10 @@ public class SQLExpense {
                 if (rs.getBytes("col11") != null) {
                     String fileName = rs.getString("col09");
                     InputStream is = rs.getBinaryStream("col11");
-                    itemFile = FileUtilities.generateFileFromBlobData(is, fileName);
+                    String checkSum = rs.getString("col12");
+                    if (FileUtilities.compareCheckSum(rs.getBytes("col11"), rs.getString("col12"))){
+                        itemFile = FileUtilities.generateFileFromBlobData(is, fileName, checkSum);
+                    }
                 }
             }
         } catch (SQLException ex) {

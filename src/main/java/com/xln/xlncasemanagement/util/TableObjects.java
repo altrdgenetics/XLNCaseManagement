@@ -46,7 +46,9 @@ public class TableObjects {
                 file.toLowerCase().endsWith(".wav")){
             icon = "audio";
         } else if (file.toLowerCase().endsWith(".doc") || 
-                file.toLowerCase().endsWith(".docx")){
+                file.toLowerCase().endsWith(".docx") || 
+                file.toLowerCase().endsWith(".rtf") || 
+                file.toLowerCase().endsWith(".txt")){
             icon = "doc";
         } else if (file.toLowerCase().endsWith(".ics")) {
             icon = "ics";

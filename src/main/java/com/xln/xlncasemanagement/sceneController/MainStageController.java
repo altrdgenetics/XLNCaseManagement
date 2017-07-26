@@ -485,8 +485,10 @@ public class MainStageController implements Initializable {
     
     private void loadMatterComboBox(){
         headerField1.getItems().removeAll(headerField1.getItems());
-        for (MatterModel item : SQLMatter.getActiveMattersByClient(Global.getCurrentClient().getId())){
-            headerField1.getItems().addAll(item);
+        if (Global.getCurrentClient() != null){
+            for (MatterModel item : SQLMatter.getActiveMattersByClient(Global.getCurrentClient().getId())){
+                headerField1.getItems().addAll(item);
+            }
         }
         disableTabsAndButtons(true);
         headerField1.getSelectionModel().selectFirst();

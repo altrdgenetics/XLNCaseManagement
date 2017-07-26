@@ -8,7 +8,9 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.sql.SQLActivity;
 import com.xln.xlncasemanagement.sql.SQLExpense;
+import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.DebugTools;
+import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -53,9 +55,9 @@ public class LoadingFileSceneController implements Initializable {
             }
         }.start();   
     }
-    
-    
+
     private void retrieveFile(String type, int id) {
+        long lStartTime = System.currentTimeMillis();        
         File selectedFile = null;
 
         if (type.equals("Expense")) {
@@ -70,8 +72,15 @@ public class LoadingFileSceneController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(ExpensesSceneController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            AlertDialog.StaticAlert(4, "Save Error",
+                    "Unable To Retrieve File",
+                    "The file was not able to be opened. Please try again later.");
         }
+        
+        long lEndTime = System.currentTimeMillis();
+        DebugTools.Printout("Opened File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
     }
 
-    
+
 }

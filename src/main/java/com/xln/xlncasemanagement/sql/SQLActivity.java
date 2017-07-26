@@ -296,7 +296,7 @@ public class SQLActivity {
         ResultSet rs = null;
         try {
             conn = DBConnection.connectToDB();
-            String sql = "SELECT col13, col14 FROM table01 WHERE col01 = ?";
+            String sql = "SELECT col13, col14, col15 FROM table01 WHERE col01 = ?";
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -304,7 +304,10 @@ public class SQLActivity {
                 if (rs.getBytes("col14") != null) {
                     String fileName = rs.getString("col13");
                     InputStream is = rs.getBinaryStream("col14");
-                    itemFile = FileUtilities.generateFileFromBlobData(is, fileName);
+                    String checkSum = rs.getString("col15");
+                    if (FileUtilities.compareCheckSum(rs.getBytes("col14"), rs.getString("col15"))){
+                        itemFile = FileUtilities.generateFileFromBlobData(is, fileName, checkSum);
+                    }
                 }
             }
         } catch (SQLException ex) {

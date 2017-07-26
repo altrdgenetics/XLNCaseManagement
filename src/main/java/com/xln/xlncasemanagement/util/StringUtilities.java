@@ -73,26 +73,6 @@ public class StringUtilities {
     public static String currentTime(){
         return Global.getMmddyyyyhhmmssa().format(new Date());
     }
-
-    /**
-     * converts millis to [__hr __min __sec] format
-     *
-     * @param millis long
-     * @return String of duration
-     */
-    public static String convertLongToTime(long millis) {
-        String duration = String.format("%02dhr %02dmin %02dsec",
-                TimeUnit.MILLISECONDS.toHours(millis),
-                TimeUnit.MILLISECONDS.toMinutes(millis)
-                - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
-                TimeUnit.MILLISECONDS.toSeconds(millis)
-                - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
-        if (TimeUnit.MILLISECONDS.toHours(millis) == 0) {
-            String[] split = duration.split("hr");
-            duration = split[1].trim();
-        }
-        return duration.trim();
-    }
     
     public static String buildPartyName(PartyModel item) {
         String fullName = "";
