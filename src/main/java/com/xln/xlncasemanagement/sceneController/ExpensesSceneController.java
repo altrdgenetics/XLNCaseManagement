@@ -13,15 +13,10 @@ import com.xln.xlncasemanagement.sql.SQLActiveStatus;
 import com.xln.xlncasemanagement.sql.SQLExpense;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.TableObjects;
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -257,20 +252,13 @@ public class ExpensesSceneController implements Initializable {
         if (cellIndex > -1 && cellIndex < expensesTable.getItems().size() && event.getClickCount() >= 2) {
             ExpensesTableModel row = expensesTable.getItems().get(cellIndex);
             if (row != null) {
-                ExpenseModel item = (ExpenseModel) row.getObject().getValue();
-
-                File selectedFile = SQLExpense.openExpenseFile(item.getId());
-                if (selectedFile != null) {
-                    try {
-                        Desktop.getDesktop().open(selectedFile);
-                    } catch (IOException ex) {
-                        Logger.getLogger(ExpensesSceneController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-
                 DebugTools.Printout("Clicked Icon Twice");
+                ExpenseModel item = (ExpenseModel) row.getObject().getValue();
+                Global.getStageLauncher().retrieveFileLoadingScene(Global.getMainStage(), "Expense", item.getId());
             }
+            expensesTable.getSelectionModel().clearSelection(cellIndex);
         }
+        
     }
 
 }

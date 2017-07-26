@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -529,6 +530,60 @@ public class StageLauncher {
             controller.setActive(stage);
 
             stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void retrieveFileLoadingScene(Stage stagePassed, String type, int id) {
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/LoadingFileScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            
+            Bounds boundsInScreen = null;
+            if (type.equals("Expense")) {
+                boundsInScreen = Global
+                        .getMainStageController()
+                        .getExpensesScene()
+                        .localToScreen(Global
+                                .getMainStageController()
+                                .getExpensesScene()
+                                .getBoundsInLocal()
+                        );
+            } else if (type.equals("Activity")) {
+                boundsInScreen = Global
+                        .getMainStageController()
+                        .getActivityScene()
+                        .localToScreen(Global
+                                .getMainStageController()
+                                .getActivityScene()
+                                .getBoundsInLocal()
+                        );
+            }
+
+            if (boundsInScreen != null) {
+                double height = boundsInScreen.getHeight();
+                double width = boundsInScreen.getWidth();
+                double centerXPosition = boundsInScreen.getMaxX() - width;
+                double centerYPosition = boundsInScreen.getMaxY() - height;
+                stage.setHeight(height);
+                stage.setWidth(width);
+                stage.setX(centerXPosition);
+                stage.setY(centerYPosition);
+            }
+
+            stage.setScene(scene);
+            Global.getMainStageController().disableEverythingForLoading(true);
+            stage.show();
+
+            LoadingFileSceneController controller = loader.getController();
+            controller.getFile(stage, type, id);
         } catch (IOException ex) {
             Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
         }

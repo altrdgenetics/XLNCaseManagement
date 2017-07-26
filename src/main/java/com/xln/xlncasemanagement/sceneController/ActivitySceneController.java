@@ -270,18 +270,10 @@ public class ActivitySceneController implements Initializable {
         if (cellIndex > -1 && cellIndex < activityTable.getItems().size() && event.getClickCount() >= 2) {
             ActivityTableModel row = activityTable.getItems().get(cellIndex);
             if (row != null) {
-                ActivityModel item = (ActivityModel) row.getObject().getValue();
-
-                File selectedFile = SQLActivity.openActivityFile(item.getId());
-                if (selectedFile != null) {
-                    try {
-                        Desktop.getDesktop().open(selectedFile);
-                    } catch (IOException ex) {
-                        Logger.getLogger(ExpensesSceneController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-
                 DebugTools.Printout("Clicked Icon Twice");
+                ActivityModel item = (ActivityModel) row.getObject().getValue();
+                Global.getStageLauncher().retrieveFileLoadingScene(Global.getMainStage(), "Activity", item.getId());
+                activityTable.getSelectionModel().clearSelection(cellIndex);
             }
         }
     }

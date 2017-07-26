@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.Tab;
@@ -46,6 +47,7 @@ public class MainStageController implements Initializable {
     private Tab selectedTabTitle;
     
     //Menu Items----------------------------------------------------
+    @FXML private MenuBar menuBar;
     @FXML private Menu fileMenu;
     @FXML private MenuItem preferencesMenuItem;
     @FXML private MenuItem closeMenuItem;
@@ -150,7 +152,7 @@ public class MainStageController implements Initializable {
     }    
         
     public void setActive(Stage stagePassed) {
-        Global.setMainStage(stage);
+        Global.setMainStage(stagePassed);
         stage = stagePassed;
         setVersionInformation();
         stage.setTitle("Case Management");
@@ -509,6 +511,46 @@ public class MainStageController implements Initializable {
         }
     }
     
+    public void disableEverythingForLoading(boolean disabled){
+        //Menu Bar
+        menuBar.setDisable(disabled);
+        
+        //Header Information
+        clientLabel.setDisable(disabled);
+        clientField.setDisable(disabled);
+        headerLabel1.setDisable(disabled);
+        headerField1.setDisable(disabled);
+        phoneLabel.setDisable(disabled);
+        phoneField.setDisable(disabled);
+        emailLabel.setDisable(disabled);
+        emailField.setDisable(disabled);
+        headerLabel2.setDisable(disabled);
+        headerField2.setDisable(disabled);
+        headerLabel3.setDisable(disabled);
+        headerField3.setDisable(disabled);
+        headerLabel4.setDisable(disabled);
+        headerField4.setDisable(disabled);
+        headerLabel5.setDisable(disabled);
+        headerField5.setDisable(disabled);
+        
+        //Buttons
+        buttonOne.setDisable(disabled);
+        buttonTwo.setDisable(disabled);
+        buttonThree.setDisable(disabled);
+        buttonFour.setDisable(disabled);
+        buttonFive.setDisable(disabled);
+        buttonSix.setDisable(disabled);
+        buttonSeven.setDisable(disabled);
+        
+        if (disabled){
+            buttonDelete.setDisable(disabled);
+        }
+        
+        //Tabs
+        mainTabPane.setDisable(disabled);
+    }
+    
+    
     private void clearHeaderLabels() {
         phoneField.setText("");
         emailField.setText("");
@@ -736,4 +778,6 @@ public class MainStageController implements Initializable {
         this.headerField1 = headerField1;
     }
 
+    
+    
 }
