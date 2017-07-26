@@ -12,7 +12,7 @@
     <center>
         <TableView fx:id="partyTable" onMouseClicked="#tableListener" prefHeight="355.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <placeholder>
-                <Label text="No Perties For This Matter"/>
+                <Label text="No Perties For This Matter" />
             </placeholder>
             <columns>
                 <TableColumn fx:id="objectColumn" prefWidth="0.0" text="Object" visible="false" />

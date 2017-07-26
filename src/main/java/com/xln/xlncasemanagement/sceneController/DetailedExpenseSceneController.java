@@ -18,6 +18,7 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -62,7 +63,6 @@ public class DetailedExpenseSceneController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        progressBar.setVisible(false);
         setListeners();
         setTextformatter();
         setComboBoxModel();        
@@ -105,9 +105,6 @@ public class DetailedExpenseSceneController implements Initializable {
     public void setActive(Stage stagePassed, ExpenseModel expenseObjectObjectPassed){
         stage = stagePassed;
         expenseObject = expenseObjectObjectPassed;
-        stage.setTitle(expenseObject == null ? "Add Expense" : "Edit Expense");
-        headerLabel.setText(expenseObject == null ? "Add Expense" : "Edit Expense");
-        saveButton.setText(expenseObject == null ? "Add" : "Save");
         loadInformation();
     }
     
@@ -117,10 +114,15 @@ public class DetailedExpenseSceneController implements Initializable {
                         .or(expenseDateDatePicker.valueProperty().isNull())
                         .or(expenseTypeComboBox.valueProperty().isNull())
                         .or(costTextField.textProperty().isEmpty())
+                        .or(expenseTypeComboBox.disabledProperty())
         );
     }
 
     private void loadInformation(){
+        imageSelection = null;
+        stage.setTitle(expenseObject == null ? "Add Expense" : "Edit Expense");
+        headerLabel.setText(expenseObject == null ? "Add Expense" : "Edit Expense");
+        saveButton.setText(expenseObject == null ? "Add" : "Save");
         loadUserComboBox();
         loadExpenseTypeComboBox();
         if (expenseObject != null){
@@ -153,10 +155,12 @@ public class DetailedExpenseSceneController implements Initializable {
         descriptionTextArea.setText(expenseObject.getDescription() == null ? "" : expenseObject.getDescription().trim());
         
         if (expenseObject.isInvoiced()){
-            setPanelDisabled();
+            setPanelInvoiced();
         }
         if (expenseObject.getFileName() != null){
             receiptButton.setText("Change Receipt");
+        } else {
+            receiptButton.setText("Add Receipt");
         }
     }
     
@@ -167,22 +171,46 @@ public class DetailedExpenseSceneController implements Initializable {
         
     @FXML
     private void saveButtonAction() {
-        progressBar.setVisible(true);
-        progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
-        int keyID = -1;
-        
-        if ("Save".equals(saveButton.getText().trim())){
-            update();
-            keyID = expenseObject.getId();
-        } else if ("Add".equals(saveButton.getText().trim())) {
-            keyID = insert();
-        }
-        
-        if (imageSelection != null && keyID > 0){
-            updateFile(keyID, imageSelection);
-        }
-        
-        stage.close();
+        new Thread() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    setPanelDisabled(true);
+                    progressBar.setVisible(true);
+                });
+
+                int keyID = -1;
+                boolean success = true;
+
+                if ("Save".equals(saveButton.getText().trim())) {
+                    update();
+                    keyID = expenseObject.getId();
+                } else if ("Add".equals(saveButton.getText().trim())) {
+                    keyID = insert();
+                }
+
+                if (imageSelection != null && keyID > 0) {
+                    success = SQLExpense.insertExpenseFile(keyID, imageSelection);
+                }
+
+                if (success) {
+                    Platform.runLater(() -> {
+                        stage.close();
+                    });
+                } else {
+                    expenseObject = SQLExpense.geExpenseByID(keyID);
+                    Platform.runLater(() -> {
+                        AlertDialog.StaticAlert(4, "Save Error",
+                                "Unable To Insert File",
+                                "The file was not able to be saved to the database. "
+                                        + "The rest of the information was properly saved.");
+                        loadInformation();
+                        progressBar.setVisible(false);
+                        setPanelDisabled(false);
+                    });
+                }
+            }
+        }.start();
     }
     
     private int insert() {
@@ -233,18 +261,8 @@ public class DetailedExpenseSceneController implements Initializable {
         );
          return fileChooser.showOpenDialog(stage);
     }
-    
-    private void updateFile(int id, File image) {
-        if (SQLExpense.insertExpenseFile(id, image)){
-            // success
-        } else {
-            AlertDialog.StaticAlert(4, "Save Error",
-                    "Unable To Insert File",
-                    "The file was not able to be saved to the database.");
-        }
-    }
-        
-    private void setPanelDisabled() {
+            
+    private void setPanelInvoiced() {
         expenseDateDatePicker.setEditable(false);
         expenseDateDatePicker.setOnMouseClicked(e -> {
                 expenseDateDatePicker.hide();
@@ -267,4 +285,15 @@ public class DetailedExpenseSceneController implements Initializable {
         receiptButton.setDisable(true);
         saveButton.setVisible(false);
     }
+    
+    private void setPanelDisabled(boolean disabled) {
+        closeButton.setDisable(disabled);
+        expenseDateDatePicker.setDisable(disabled);
+        expenseTypeComboBox.setDisable(disabled);
+        userComboBox.setDisable(disabled);
+        costTextField.setDisable(disabled);
+        descriptionTextArea.setDisable(disabled);
+        receiptButton.setDisable(disabled);
+    }
+    
 }

@@ -38,7 +38,10 @@ public class SQLActivity {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String sql = "SELECT table01.*, table02.col03 AS activityType, table22.col03 as firstName, "
+        String sql = "SELECT table01.col01, table01.col02, table01.col03, table01.col04, "
+                + "table01.col05, table01.col06, table01.col07, table01.col08, table01.col09, "
+                + "table01.col10, table01.col11, table01.col12, table01.col13, "
+                + "table02.col03 AS activityType, table22.col03 as firstName, "
                 + "table22.col04 as middleName, table22.col05 as lastName, table22.col08 as userName "
                 + "FROM table01 "
                 + "LEFT JOIN table02 ON table01.col04 = table02.col01 "
@@ -55,7 +58,7 @@ public class SQLActivity {
                         + ") LIKE ? ";
             }
         }
-        sql += " AND table01.col05 = ?";
+        sql += " AND table01.col05 = ? ORDER BY table01.col06 DESC";
         
         try {
             conn = DBConnection.connectToDB();
@@ -84,11 +87,6 @@ public class SQLActivity {
                 item.setBillable(rs.getBoolean("col11"));
                 item.setInvoiced(rs.getBoolean("col12"));
                 item.setFileName(rs.getString("col13"));
-
-                String file = null;
-                if (rs.getString("col13") != null && rs.getString("col14") != null){
-                    file = rs.getString("col13");
-                }
                 
                 list.add(
                         new ActivityTableModel(
@@ -97,7 +95,7 @@ public class SQLActivity {
                                 String.valueOf(rs.getBigDecimal("col07")), //Hours
                                 StringUtilities.buildName(rs.getString("firstName"), rs.getString("middleName"), rs.getString("lastName")), //user
                                 rs.getString("activityType") + (rs.getString("col10") == null ? "" : " - " + rs.getString("col10")), //Description
-                                file, //File
+                                rs.getString("col13"), //File
                                 rs.getBoolean("col11"), //billable
                                 rs.getBoolean("col12") //Invoiced
                         )
@@ -111,6 +109,43 @@ public class SQLActivity {
             DbUtils.closeQuietly(conn);
         }
         return list;
+    }
+    
+    public static ActivityModel geActivityByID(int id) {
+        ActivityModel item = new ActivityModel();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM table01 WHERE col01 = ?";
+
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                item.setId(rs.getInt("col01"));
+                item.setActive(rs.getBoolean("col02"));
+                item.setUserID(rs.getInt("col03"));
+                item.setActivityTypeID(rs.getInt("col04"));
+                item.setMatterID(rs.getInt("col05"));
+                item.setDateOccurred(rs.getDate("col06"));
+                item.setDuration(rs.getBigDecimal("col07"));
+                item.setRate(rs.getBigDecimal("col08"));
+                item.setTotal(rs.getBigDecimal("col09"));
+                item.setDescription(rs.getString("col10"));
+                item.setBillable(rs.getBoolean("col11"));
+                item.setInvoiced(rs.getBoolean("col12"));
+                item.setFileName(rs.getString("col13"));
+            }
+        } catch (SQLException ex) {
+            DebugTools.Printout(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return item;
     }
     
     public static void updateActivityByID(ActivityModel item) {

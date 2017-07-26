@@ -49,7 +49,7 @@ public class SQLCaseParty {
                         + ") LIKE ? ";
             }
         }
-        sql += " AND table04.col18 = ?";
+        sql += " AND table04.col18 = ? ORDER BY table17.col03 ASC";
         
         try {
             conn = DBConnection.connectToDB();
@@ -85,13 +85,19 @@ public class SQLCaseParty {
                 item.setEmail(rs.getString("col17"));
                 item.setMatterID(rs.getInt("col18"));
 
+                String phone = NumberFormatService.convertStringToPhoneNumber(rs.getString("col15"));
+                if (rs.getString("col16") != null && !phone.trim().equals("")) {
+                    phone += ", ";
+                }
+                phone += NumberFormatService.convertStringToPhoneNumber(rs.getString("col16"));
+
                 list.add(
                         new CasePartyTableModel(
                                 item,
                                 rs.getInt("col03") == 0 ? "Client" : rs.getString("relationName").trim(),
                                 StringUtilities.buildPartyName(item),
                                 StringUtilities.buildTableAddressBlock(item),
-                                NumberFormatService.convertStringToPhoneNumber(rs.getString("col15"))
+                                phone
                         ));
             }
         } catch (SQLException ex) {

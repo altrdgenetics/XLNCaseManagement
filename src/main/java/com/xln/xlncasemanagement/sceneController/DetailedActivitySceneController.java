@@ -18,6 +18,7 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -64,7 +65,6 @@ public class DetailedActivitySceneController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        progressBar.setVisible(false);
         setListeners();
         setTextformatter();
         setComboBoxModel();        
@@ -108,9 +108,6 @@ public class DetailedActivitySceneController implements Initializable {
     public void setActive(Stage stagePassed, ActivityModel activityObjectPassed){
         stage = stagePassed;
         activityObject = activityObjectPassed;
-        stage.setTitle(activityObject == null ? "Add Activity" : "Edit Activity");
-        headerLabel.setText(activityObject == null ? "Add Activity" : "Edit Activity");
-        saveButton.setText(activityObject == null ? "Add" : "Save");
         loadInformation();
     }
     
@@ -121,10 +118,14 @@ public class DetailedActivitySceneController implements Initializable {
                         .or(rateTextField.textProperty().isEmpty())
                         .or(occurredDatePicker.valueProperty().isNull())
                         .or(durationTextField.textProperty().isEmpty())
+                        .or(userComboBox.disabledProperty())
         );
     }
 
     private void loadInformation(){
+        stage.setTitle(activityObject == null ? "Add Activity" : "Edit Activity");
+        headerLabel.setText(activityObject == null ? "Add Activity" : "Edit Activity");
+        saveButton.setText(activityObject == null ? "Add" : "Save");
         loadUserComboBox();
         loadActivityTypeComboBox();
         if (activityObject != null){
@@ -159,10 +160,12 @@ public class DetailedActivitySceneController implements Initializable {
         descriptionTextArea.setText(activityObject.getDescription() == null ? "" : activityObject.getDescription().trim());
         
         if (activityObject.isInvoiced()){
-            setPanelDisabled();
+            setPanelInvoiced();
         }
         if (activityObject.getFileName() != null){
             fileButton.setText("Change File");
+        } else {
+            fileButton.setText("Add File");
         }
     }
     
@@ -204,22 +207,46 @@ public class DetailedActivitySceneController implements Initializable {
     
     @FXML
     private void saveButtonAction() {
-        progressBar.setVisible(true);
-        progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
-        int keyID = -1;
-        
-        if ("Save".equals(saveButton.getText().trim())){
-            update();
-            keyID = activityObject.getId();
-        } else if ("Add".equals(saveButton.getText().trim())) {
-            keyID = insert();
-        }
-        
-        if (imageSelection != null && keyID > 0){
-            updateFile(keyID, imageSelection);
-        }
-        
-        stage.close();
+        new Thread() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    setPanelDisabled(true);
+                    progressBar.setVisible(true);
+                });
+
+                int keyID = -1;
+                boolean success = true;
+
+                if ("Save".equals(saveButton.getText().trim())) {
+                    update();
+                    keyID = activityObject.getId();
+                } else if ("Add".equals(saveButton.getText().trim())) {
+                    keyID = insert();
+                }
+
+                if (imageSelection != null && keyID > 0) {
+                    success = SQLActivity.insertActivityFile(keyID, imageSelection);
+                }
+
+                if (success) {
+                    Platform.runLater(() -> {
+                        stage.close();
+                    });
+                } else {
+                    activityObject = SQLActivity.geActivityByID(keyID);
+                    Platform.runLater(() -> {
+                        AlertDialog.StaticAlert(4, "Save Error",
+                                "Unable To Insert File",
+                                "The file was not able to be saved to the database. "
+                                        + "The rest of the information was properly saved.");
+                        loadInformation();
+                        progressBar.setVisible(false);
+                        setPanelDisabled(false);
+                    });
+                }
+            }
+        }.start();
     }
     
     private int insert() {
@@ -260,17 +287,7 @@ public class DetailedActivitySceneController implements Initializable {
         SQLActivity.updateActivityByID(item);
     }
     
-    private void updateFile(int id, File image) {
-        if (SQLActivity.insertActivityFile(id, image)){
-            // success
-        } else {
-            AlertDialog.StaticAlert(4, "Save Error",
-                    "Unable To Insert File",
-                    "The file was not able to be saved to the database.");
-        }
-    }
-    
-    private void setPanelDisabled() {
+    private void setPanelInvoiced() {
         occurredDatePicker.setEditable(false);
         occurredDatePicker.setOnMouseClicked(e -> {
                 occurredDatePicker.hide();
@@ -295,4 +312,17 @@ public class DetailedActivitySceneController implements Initializable {
         fileButton.setDisable(true);
         saveButton.setVisible(false);
     }
+    
+    private void setPanelDisabled(boolean disabled) {
+        activityTypeComboBox.setDisable(disabled);
+        userComboBox.setDisable(disabled);
+        rateTextField.setDisable(disabled);
+        occurredDatePicker.setDisable(disabled);
+        durationTextField.setDisable(disabled);
+        billableCheckBox.setDisable(disabled);
+        descriptionTextArea.setDisable(disabled);
+        fileButton.setDisable(disabled);
+        closeButton.setDisable(disabled);
+    }
+    
 }

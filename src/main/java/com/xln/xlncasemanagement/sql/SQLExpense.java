@@ -84,12 +84,7 @@ public class SQLExpense {
                 item.setCost(rs.getBigDecimal("col08"));
                 item.setFileName(rs.getString("col09"));
                 item.setInvoiced(rs.getBoolean("col10"));
-
-                String file = null;
-                if (rs.getString("col09") != null && rs.getString("col12") != null){
-                    file = rs.getString("col09");
-                }
-                                
+             
                 list.add(
                         new ExpensesTableModel(
                                 item,  //Object
@@ -97,7 +92,7 @@ public class SQLExpense {
                                 StringUtilities.buildName(rs.getString("firstName"), rs.getString("middleName"), rs.getString("lastName")), //user
                                 rs.getString("expenseType") + (rs.getString("col07") == null ? "" : " - " + rs.getString("col07")), //Description
                                 rs.getDouble("col08") == 0 ? "N/A" : NumberFormatService.formatMoney(rs.getBigDecimal("col08")), //Cost
-                                file, //File
+                                rs.getString("col09"), //File
                                 rs.getBoolean("col10") //Invoiced
                         )
                 );
@@ -110,6 +105,40 @@ public class SQLExpense {
             DbUtils.closeQuietly(conn);
         }
         return list;
+    }
+    
+    public static ExpenseModel geExpenseByID(int id) {
+        ExpenseModel item = new ExpenseModel();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM table13 WHERE col01 = ?";
+
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                item.setId(rs.getInt("col01"));
+                item.setActive(rs.getBoolean("col02"));
+                item.setUserID(rs.getInt("col03"));
+                item.setExpenseType(rs.getInt("col04"));
+                item.setMatterID(rs.getInt("col05"));
+                item.setDateOccurred(rs.getDate("col06"));
+                item.setDescription(rs.getString("col07"));
+                item.setCost(rs.getBigDecimal("col08"));
+                item.setFileName(rs.getString("col09"));
+                item.setInvoiced(rs.getBoolean("col10"));
+            }
+        } catch (SQLException ex) {
+            DebugTools.Printout(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return item;
     }
     
     public static void updateExpenseByID(ExpenseModel item) {
