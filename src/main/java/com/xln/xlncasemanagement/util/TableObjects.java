@@ -89,4 +89,25 @@ public class TableObjects {
         return icon;
     }
     
+    public static HBox websiteIcon(String file) {
+        HBox box = new HBox();
+
+        ImageView imageview = new ImageView();
+        imageview.setFitHeight(20);
+        imageview.setFitWidth(20);
+        imageview.setImage(new Image(TableObjects.class.getResourceAsStream("/fileIcon/" + websiteColumn(file) + ".png")));
+        box.setAlignment(Pos.CENTER);
+        box.getChildren().addAll(imageview);
+        return box;
+    }
+    
+    private static String websiteColumn(String file) {
+        String icon = "none";
+        
+        if (file != null){
+            icon = "link";
+        }
+        return icon;
+    }
+    
 }

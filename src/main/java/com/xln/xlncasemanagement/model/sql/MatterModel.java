@@ -20,8 +20,14 @@ public class MatterModel {
     private String matterTypeName;
     private Date openDate;
     private Date closeDate;
-    
     private String note;
+    private Date warranty;
+    private int make;
+    private String makeName;
+    private int model;
+    private String modelName;
+    private String serial;
+    
 
     public int getId() {
         return id;
@@ -85,6 +91,54 @@ public class MatterModel {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Date getWarranty() {
+        return warranty;
+    }
+
+    public void setWarranty(Date warranty) {
+        this.warranty = warranty;
+    }
+
+    public int getMake() {
+        return make;
+    }
+
+    public void setMake(int make) {
+        this.make = make;
+    }
+
+    public String getMakeName() {
+        return makeName;
+    }
+
+    public void setMakeName(String makeName) {
+        this.makeName = makeName;
+    }
+
+    public int getModel() {
+        return model;
+    }
+
+    public void setModel(int model) {
+        this.model = model;
+    }
+
+    public String getModelName() {
+        return modelName;
+    }
+
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
+    }
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
     }
     
     

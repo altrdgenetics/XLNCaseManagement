@@ -31,14 +31,12 @@ public class SQLMatter {
                 + "col02, "
                 + "col03, "
                 + "col04, "
-                + "col05, "
-                + "col06 "
+                + "col05 "
                 + ") VALUES ("
                 + "?, " //1
                 + "?, " //2
-                + "?, " //3                
-                + "?, " //4
-                + "?)"; //5
+                + "?, " //3   
+                + "?)"; //4
         try {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -46,7 +44,6 @@ public class SQLMatter {
             ps.setInt    (2, item.getPartyID());
             ps.setInt    (3, item.getMatterTypeID());
             ps.setDate   (4, item.getOpenDate());
-            ps.setDate   (5, item.getCloseDate());   
             ps.executeUpdate();
 
             ResultSet newRow = ps.getGeneratedKeys();
@@ -109,7 +106,7 @@ public class SQLMatter {
         String sql = "SELECT table15.*, table23.col03 AS matterName "
                 + "FROM table15 "
                 + "LEFT JOIN table23 ON table23.col01 = table15.col04 "
-                + "WHERE table15.col03 = ?";
+                + "WHERE table15.col01 = ?";
 
         try {
             conn = DBConnection.connectToDB();

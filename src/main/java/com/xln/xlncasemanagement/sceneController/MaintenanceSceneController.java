@@ -26,8 +26,8 @@ public class MaintenanceSceneController implements Initializable {
     @FXML private Button CompanyButton;
     @FXML private Button DocumentButton;
     @FXML private Button ExpenseTypeButton;
-    @FXML private Button JudgeButton;
-    @FXML private Button JurisdictionButton;
+    @FXML private Button MakeButton;
+    @FXML private Button ModelButton;
     @FXML private Button MatterTypeButton;
     @FXML private Button PartyButton;
     @FXML private Button PartyNamePreFixButton;
@@ -47,6 +47,10 @@ public class MaintenanceSceneController implements Initializable {
     
     public void setActive(Stage stagePassed) {
         stage = stagePassed;
+        
+        //Set Button Labels
+        MakeButton.setText(Global.getHeaderLabel2().replace(":", ""));
+        ModelButton.setText(Global.getHeaderLabel3().replace(":", ""));
         MatterTypeButton.setText(Global.getNewCaseType() + " Type");
     }
     
@@ -70,12 +74,12 @@ public class MaintenanceSceneController implements Initializable {
         Global.getStageLauncher().MaintenanceExpenseTypeScene(stage);
     }
     
-    @FXML private void judgeButtonAction() {
-        
+    @FXML private void makeButtonAction() {
+        Global.getStageLauncher().MaintenanceMakeScene(stage);
     }
     
-    @FXML private void jurisdictionButtonAction() {
-        
+    @FXML private void modelButtonAction() {
+        Global.getStageLauncher().MaintenanceModelScene(stage);
     }
     
     @FXML private void matterTypeButtonAction() {

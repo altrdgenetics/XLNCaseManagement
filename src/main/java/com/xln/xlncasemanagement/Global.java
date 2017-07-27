@@ -70,6 +70,8 @@ public class Global {
     private static String informationLabel2 = "";
     private static String informationLabel3 = "";
     private static String informationLabel4 = "";
+    private static String informationLabel5 = "";
+    private static String informationLabel6 = "";
 
     public static boolean isDebug() {
         return debug;
@@ -269,6 +271,22 @@ public class Global {
 
     public static void setInformationLabel4(String informationLabel4) {
         Global.informationLabel4 = informationLabel4;
+    }
+
+    public static String getInformationLabel5() {
+        return informationLabel5;
+    }
+
+    public static void setInformationLabel5(String informationLabel5) {
+        Global.informationLabel5 = informationLabel5;
+    }
+
+    public static String getInformationLabel6() {
+        return informationLabel6;
+    }
+
+    public static void setInformationLabel6(String informationLabel6) {
+        Global.informationLabel6 = informationLabel6;
     }
 
     public static SimpleDateFormat getMmddyyyyhhmmssa() {
