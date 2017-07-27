@@ -10,6 +10,7 @@ import com.xln.xlncasemanagement.model.sql.ActivityModel;
 import com.xln.xlncasemanagement.model.sql.ActivityTypeModel;
 import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.sql.SQLActivity;
+import com.xln.xlncasemanagement.sql.SQLActivityFile;
 import com.xln.xlncasemanagement.sql.SQLActivityType;
 import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.AlertDialog;
@@ -228,7 +229,7 @@ public class DetailedActivitySceneController implements Initializable {
 
                 if (imageSelection != null && keyID > 0) {
                     long lStartTime = System.currentTimeMillis();  
-                    success = SQLActivity.insertActivityFile(keyID, imageSelection);
+                    success = SQLActivityFile.insertActivityFile(keyID, imageSelection);
                     long lEndTime = System.currentTimeMillis();
                     DebugTools.Printout("Saved File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
                 }

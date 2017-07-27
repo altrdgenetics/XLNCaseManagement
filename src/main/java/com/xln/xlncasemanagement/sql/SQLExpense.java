@@ -9,12 +9,8 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ExpenseModel;
 import com.xln.xlncasemanagement.model.table.ExpensesTableModel;
 import com.xln.xlncasemanagement.util.DebugTools;
-import com.xln.xlncasemanagement.util.FileUtilities;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import com.xln.xlncasemanagement.util.StringUtilities;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,12 +34,12 @@ public class SQLExpense {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String sql = "SELECT table13.col01, table13.col02, table13.col03, table13.col04, table13.col05, "
-                + "table13.col06, table13.col07, table13.col08, table13.col09, table13.col10, table13.col12,  "
+        String sql = "SELECT table13.*, table20.col03 AS fileName, "
                 + "table14.col03 AS expenseType, table22.col03 as firstName, "
                 + "table22.col04 as middleName, table22.col05 as lastName, table22.col08 as userName "
                 + "FROM table13 "
                 + "LEFT JOIN table14 ON table13.col04 = table14.col01 "
+                + "LEFT JOIN table20 ON table13.col01 = table20.col02 "
                 + "LEFT JOIN table22 ON table13.col03 = table22.col01 "
                 + "WHERE table13.col02 = 1 ";
         if (param.length > 0) {
@@ -82,8 +78,8 @@ public class SQLExpense {
                 item.setDateOccurred(rs.getDate("col06"));
                 item.setDescription(rs.getString("col07"));
                 item.setCost(rs.getBigDecimal("col08"));
-                item.setFileName(rs.getString("col09"));
-                item.setInvoiced(rs.getBoolean("col10"));
+                item.setFileName(rs.getString("fileName"));
+                item.setInvoiced(rs.getBoolean("col09"));
              
                 list.add(
                         new ExpensesTableModel(
@@ -92,8 +88,8 @@ public class SQLExpense {
                                 StringUtilities.buildName(rs.getString("firstName"), rs.getString("middleName"), rs.getString("lastName")), //user
                                 rs.getString("expenseType") + (rs.getString("col07") == null ? "" : " - " + rs.getString("col07")), //Description
                                 rs.getDouble("col08") == 0 ? "N/A" : NumberFormatService.formatMoney(rs.getBigDecimal("col08")), //Cost
-                                rs.getString("col09"), //File
-                                rs.getBoolean("col10") //Invoiced
+                                rs.getString("fileName"), //File
+                                rs.getBoolean("col09") //Invoiced
                         )
                 );
             }
@@ -128,8 +124,7 @@ public class SQLExpense {
                 item.setDateOccurred(rs.getDate("col06"));
                 item.setDescription(rs.getString("col07"));
                 item.setCost(rs.getBigDecimal("col08"));
-                item.setFileName(rs.getString("col09"));
-                item.setInvoiced(rs.getBoolean("col10"));
+                item.setInvoiced(rs.getBoolean("col09"));
             }
         } catch (SQLException ex) {
             DebugTools.Printout(ex.getMessage());
@@ -182,7 +177,7 @@ public class SQLExpense {
                 + "col06, " //date Occurred
                 + "col07, " //description
                 + "col08, " //cost
-                + "col10 "  //invoiced
+                + "col09 "  //invoiced
                 + ") VALUES (";
                 for(int i=0; i<7; i++){
                         sql += "?, ";   //01-07
@@ -213,92 +208,5 @@ public class SQLExpense {
         }
         return 0;
     }
-    
-    public static boolean insertExpenseFile(int id, File fileUpload) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        try {
-            conn = DBConnection.connectToDB();
-
-            String sql = "UPDATE table13 SET col09 = ?, col11 = ?, col12 = ? WHERE col01 = ?";
-
-            ps = conn.prepareStatement(sql);
-            
-            byte[] fileInBytes = FileUtilities.fileToBytes(fileUpload);
-            ps.setString(1, fileUpload.getName());
-            ps.setBytes (2, fileInBytes);
-            ps.setString(3, FileUtilities.generateFileCheckSum(new ByteArrayInputStream(fileInBytes)));
-            ps.setInt   (4, id);
-            ps.executeUpdate();       
-            
-            if (verifyFileChecksum(id)) { 
-                DebugTools.Printout("Expense File Inserted Successfully");
-                return true;
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(SQLExpense.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        } finally {
-            DbUtils.closeQuietly(conn);
-            DbUtils.closeQuietly(ps);
-        }
-        return true;
-    }
-    
-    public static boolean verifyFileChecksum(int id){
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = DBConnection.connectToDB();
-            String sql = "SELECT col11, col12 "
-                    + "FROM table13 WHERE col01 = ?";
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            if (rs.first()) {
-                return FileUtilities.compareCheckSum(rs.getBytes("col11"), rs.getString("col12"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SQLExpense.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DbUtils.closeQuietly(conn);
-            DbUtils.closeQuietly(ps);
-            DbUtils.closeQuietly(rs);
-        }
-        return false;
-    }
-    
-    public static File openExpenseFile(int id) {
-        File itemFile = null;        
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = DBConnection.connectToDB();
-            String sql = "SELECT col09, col11, col12 FROM table13 WHERE col01 = ?";
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            if (rs.first()) {                
-                if (rs.getBytes("col11") != null) {
-                    String fileName = rs.getString("col09");
-                    InputStream is = rs.getBinaryStream("col11");
-                    String checkSum = rs.getString("col12");
-                    if (FileUtilities.compareCheckSum(rs.getBytes("col11"), rs.getString("col12"))){
-                        itemFile = FileUtilities.generateFileFromBlobData(is, fileName, checkSum);
-                    }
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SQLExpense.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DbUtils.closeQuietly(conn);
-            DbUtils.closeQuietly(ps);
-            DbUtils.closeQuietly(rs);
-        }
-        return itemFile;
-    }
-    
+        
 }

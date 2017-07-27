@@ -9,11 +9,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ActivityModel;
 import com.xln.xlncasemanagement.model.table.ActivityTableModel;
 import com.xln.xlncasemanagement.util.DebugTools;
-import com.xln.xlncasemanagement.util.FileUtilities;
 import com.xln.xlncasemanagement.util.StringUtilities;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,13 +34,12 @@ public class SQLActivity {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String sql = "SELECT table01.col01, table01.col02, table01.col03, table01.col04, "
-                + "table01.col05, table01.col06, table01.col07, table01.col08, table01.col09, "
-                + "table01.col10, table01.col11, table01.col12, table01.col13, "
-                + "table02.col03 AS activityType, table22.col03 as firstName, "
-                + "table22.col04 as middleName, table22.col05 as lastName, table22.col08 as userName "
+        String sql = "SELECT table01.*, table11.col03 AS fileName, table02.col03 AS activityType, "
+                + "table22.col03 AS firstName, table22.col04 AS middleName, table22.col05 AS lastName, "
+                + "table22.col08 AS userName "
                 + "FROM table01 "
                 + "LEFT JOIN table02 ON table01.col04 = table02.col01 "
+                + "LEFT JOIN table11 ON table01.col01 = table11.col02 "
                 + "LEFT JOIN table22 ON table01.col03 = table22.col01 "
                 + "WHERE table01.col02 = 1 ";
         if (param.length > 0) {
@@ -86,7 +81,7 @@ public class SQLActivity {
                 item.setDescription(rs.getString("col10"));
                 item.setBillable(rs.getBoolean("col11"));
                 item.setInvoiced(rs.getBoolean("col12"));
-                item.setFileName(rs.getString("col13"));
+                item.setFileName(rs.getString("fileName"));
                 
                 list.add(
                         new ActivityTableModel(
@@ -95,7 +90,7 @@ public class SQLActivity {
                                 String.valueOf(rs.getBigDecimal("col07")), //Hours
                                 StringUtilities.buildName(rs.getString("firstName"), rs.getString("middleName"), rs.getString("lastName")), //user
                                 rs.getString("activityType") + (rs.getString("col10") == null ? "" : " - " + rs.getString("col10")), //Description
-                                rs.getString("col13"), //File
+                                rs.getString("fileName"), //File
                                 rs.getBoolean("col11"), //billable
                                 rs.getBoolean("col12") //Invoiced
                         )
@@ -231,93 +226,6 @@ public class SQLActivity {
             DbUtils.closeQuietly(ps);
         }
         return 0;
-    }
-    
-    public static boolean insertActivityFile(int id, File fileUpload) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        try {
-            conn = DBConnection.connectToDB();
-
-            String sql = "UPDATE table01 SET col13 = ?, col14 = ?, col15 = ? WHERE col01 = ?";
-
-            ps = conn.prepareStatement(sql);
-            
-            byte[] fileInBytes = FileUtilities.fileToBytes(fileUpload);
-            ps.setString(1, fileUpload.getName());
-            ps.setBytes (2, fileInBytes);
-            ps.setString(3, FileUtilities.generateFileCheckSum(new ByteArrayInputStream(fileInBytes)));
-            ps.setInt   (4, id);
-            ps.executeUpdate();       
-            
-            if (verifyFileChecksum(id)) { 
-                DebugTools.Printout("Activity File Inserted Successfully");
-                return true;
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(SQLActivity.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        } finally {
-            DbUtils.closeQuietly(conn);
-            DbUtils.closeQuietly(ps);
-        }
-        return true;
-    }
-    
-    public static boolean verifyFileChecksum(int id){
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = DBConnection.connectToDB();
-            String sql = "SELECT col14, col15 "
-                    + "FROM table01 WHERE col01 = ?";
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            if (rs.first()) {
-                return FileUtilities.compareCheckSum(rs.getBytes("col14"), rs.getString("col15"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SQLActivity.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DbUtils.closeQuietly(conn);
-            DbUtils.closeQuietly(ps);
-            DbUtils.closeQuietly(rs);
-        }
-        return false;
-    }
-    
-    public static File openActivityFile(int id) {
-        File itemFile = null;        
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = DBConnection.connectToDB();
-            String sql = "SELECT col13, col14, col15 FROM table01 WHERE col01 = ?";
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            if (rs.first()) {                
-                if (rs.getBytes("col14") != null) {
-                    String fileName = rs.getString("col13");
-                    InputStream is = rs.getBinaryStream("col14");
-                    String checkSum = rs.getString("col15");
-                    if (FileUtilities.compareCheckSum(rs.getBytes("col14"), rs.getString("col15"))){
-                        itemFile = FileUtilities.generateFileFromBlobData(is, fileName, checkSum);
-                    }
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SQLActivity.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DbUtils.closeQuietly(conn);
-            DbUtils.closeQuietly(ps);
-            DbUtils.closeQuietly(rs);
-        }
-        return itemFile;
     }
     
     public static BigDecimal getLastRate(int userID, int matterID){

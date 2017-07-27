@@ -6,8 +6,8 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
-import com.xln.xlncasemanagement.sql.SQLActivity;
-import com.xln.xlncasemanagement.sql.SQLExpense;
+import com.xln.xlncasemanagement.sql.SQLActivityFile;
+import com.xln.xlncasemanagement.sql.SQLExpenseFile;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.NumberFormatService;
@@ -61,9 +61,9 @@ public class LoadingFileSceneController implements Initializable {
         File selectedFile = null;
 
         if (type.equals("Expense")) {
-            selectedFile = SQLExpense.openExpenseFile(id);
+            selectedFile = SQLExpenseFile.openExpenseFile(id);
         } else if (type.equals("Activity")) {
-            selectedFile = SQLActivity.openActivityFile(id);
+            selectedFile = SQLActivityFile.openActivityFile(id);
         }
 
         if (selectedFile != null) {

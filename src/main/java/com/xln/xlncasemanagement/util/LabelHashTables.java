@@ -21,6 +21,9 @@ public class LabelHashTables {
             case "2":
                 ComputerRepair();
                 break;
+            case "3":
+                ComputerRepair();
+                break;
             default:
                 break;
         }
@@ -47,9 +50,9 @@ public class LabelHashTables {
         
         //Information Labels
         Global.setInformationLabel1("Statue of Limitations:");
-        Global.setInformationLabel2("");
-        Global.setInformationLabel3("");
-        Global.setInformationLabel4("");
+        Global.setInformationLabel2(Global.getHeaderLabel2());
+        Global.setInformationLabel3(Global.getHeaderLabel3());
+        Global.setInformationLabel4(Global.getHeaderLabel4());
     }
     
     /**
@@ -73,9 +76,35 @@ public class LabelHashTables {
         
         //Information Labels
         Global.setInformationLabel1("Warranty:");
-        Global.setInformationLabel2("");
-        Global.setInformationLabel3("");
-        Global.setInformationLabel4("");
+        Global.setInformationLabel2(Global.getHeaderLabel2());
+        Global.setInformationLabel3(Global.getHeaderLabel3());
+        Global.setInformationLabel4(Global.getHeaderLabel4());
     }
         
+    /**
+     * Labels for Marketing Firm
+     */
+    private static void MarketingFirm(){
+        //Matter Type
+        Global.setNewCaseType("Project");
+        
+        //Type for the New Button
+        Global.setButtonLabel1("New " + Global.getNewCaseType());
+        Global.setButtonLabel2("");
+        Global.setButtonLabel3("");
+        
+        //Header Labels
+        Global.setHeaderLabel1(Global.getNewCaseType() + ":");
+        Global.setHeaderLabel2("");
+        Global.setHeaderLabel3("");
+        Global.setHeaderLabel4("");
+        Global.setHeaderLabel5("");
+        
+        //Information Labels
+        Global.setInformationLabel1("Warranty:");
+        Global.setInformationLabel2(Global.getHeaderLabel2());
+        Global.setInformationLabel3(Global.getHeaderLabel3());
+        Global.setInformationLabel4(Global.getHeaderLabel4());
+    }
+    
 }

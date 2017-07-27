@@ -27,8 +27,6 @@ public class ActivityModel {
     private boolean billable;
     private boolean invoiced;
     private String fileName;
-    private byte[] fileBlob;
-    private String fileBlobHash;
 
     public int getId() {
         return id;
@@ -110,14 +108,6 @@ public class ActivityModel {
         this.description = description;
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
     public boolean isBillable() {
         return billable;
     }
@@ -134,20 +124,12 @@ public class ActivityModel {
         this.invoiced = invoiced;
     }
 
-    public byte[] getFileBlob() {
-        return fileBlob;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setFileBlob(byte[] fileBlob) {
-        this.fileBlob = fileBlob;
-    }
-
-    public String getFileBlobHash() {
-        return fileBlobHash;
-    }
-
-    public void setFileBlobHash(String fileBlobHash) {
-        this.fileBlobHash = fileBlobHash;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
     
 }

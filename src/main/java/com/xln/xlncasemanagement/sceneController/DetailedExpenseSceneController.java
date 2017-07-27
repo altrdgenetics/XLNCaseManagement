@@ -10,6 +10,7 @@ import com.xln.xlncasemanagement.model.sql.ExpenseModel;
 import com.xln.xlncasemanagement.model.sql.ExpenseTypeModel;
 import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.sql.SQLExpense;
+import com.xln.xlncasemanagement.sql.SQLExpenseFile;
 import com.xln.xlncasemanagement.sql.SQLExpenseType;
 import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.AlertDialog;
@@ -192,7 +193,7 @@ public class DetailedExpenseSceneController implements Initializable {
 
                 if (imageSelection != null && keyID > 0) {
                     long lStartTime = System.currentTimeMillis(); 
-                    success = SQLExpense.insertExpenseFile(keyID, imageSelection);
+                    success = SQLExpenseFile.insertExpenseFile(keyID, imageSelection);
                     long lEndTime = System.currentTimeMillis();
                     DebugTools.Printout("Saved File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
                 }
