@@ -64,8 +64,7 @@ public class MaintenanceMakeAddEditSceneController implements Initializable {
         }
         stage.setTitle(title);
         headerLabel.setText(title);
-        saveButton.setText(buttonText);
-        
+        saveButton.setText(buttonText);        
     }
     
     private void setListeners() {

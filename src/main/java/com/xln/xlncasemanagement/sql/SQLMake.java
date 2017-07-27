@@ -162,7 +162,7 @@ public class SQLMake {
         return list;
     }
     
-    public static MakeModel geMakeByID(int id) {
+    public static MakeModel getMakeByID(int id) {
         MakeModel item = new MakeModel();
         Connection conn = null;
         PreparedStatement ps = null;

@@ -14,6 +14,7 @@ public class ModelModel {
     private int id;
     private boolean active;
     private int makeID;
+    private String makeName;
     private String name;
     private String website;
 
@@ -39,6 +40,14 @@ public class ModelModel {
 
     public void setMakeID(int makeID) {
         this.makeID = makeID;
+    }
+
+    public String getMakeName() {
+        return makeName;
+    }
+
+    public void setMakeName(String makeName) {
+        this.makeName = makeName;
     }
 
     public String getName() {
