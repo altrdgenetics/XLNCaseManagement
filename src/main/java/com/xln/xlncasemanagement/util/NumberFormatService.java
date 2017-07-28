@@ -44,8 +44,10 @@ public class NumberFormatService {
         return number.replaceAll("[^0-9]", "");
     }
         
-    public static String formatMoney(BigDecimal amount){  
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+    public static String formatMoney(BigDecimal amount){
+        NumberFormat currencyFormatter = NumberFormat
+                .getCurrencyInstance(Locale.getDefault().equals(Locale.US) 
+                        ? Locale.CANADA : Locale.getDefault());
         return currencyFormatter.format(amount);
     }
     

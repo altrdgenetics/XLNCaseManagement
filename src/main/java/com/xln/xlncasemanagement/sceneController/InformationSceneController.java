@@ -10,12 +10,16 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MakeModel;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.model.sql.ModelModel;
+import com.xln.xlncasemanagement.sql.SQLActivity;
+import com.xln.xlncasemanagement.sql.SQLExpense;
 import com.xln.xlncasemanagement.sql.SQLMake;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.sql.SQLModel;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.NumberFormatService;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -229,14 +233,19 @@ public class InformationSceneController implements Initializable {
                 ? "" : Global.getCurrentMatter().getSerial());
 
         //RIGHT SIDE OF PANEL
-        TotalHoursTextField.setText("");
-        BilledHoursTextField.setText("");
-        UnBilledHoursTextField.setText("");
-        TotalExpensesTextField.setText("");
-        BilledExpensesTextField.setText("");
-        UnBilledExpensesTextField.setText("");
-        TotalCostTextField.setText("");
-        BalanceTextField.setText("");
+        HashMap billables = SQLMatter.getSummaryByMatterID(Global.getCurrentMatter().getId());
+        BigDecimal budget = Global.getCurrentMatter().getBudget() == null 
+                        ? BigDecimal.ZERO : Global.getCurrentMatter().getBudget();
+        BigDecimal total = NumberFormatService.convertToBigDecimal(billables.get("totalBilledAmount").toString());
+        
+        TotalHoursTextField.setText(billables.get("totalActivityHour").toString());
+        BilledHoursTextField.setText(billables.get("billedActivityHour").toString());
+        UnBilledHoursTextField.setText(billables.get("unBilledActivityHour").toString());
+        TotalExpensesTextField.setText(billables.get("totalExpenseAmount").toString());
+        BilledExpensesTextField.setText(billables.get("billedExpenseAmount").toString());
+        UnBilledExpensesTextField.setText(billables.get("unBilledExpenseAmount").toString());
+        TotalCostTextField.setText(billables.get("totalBilledAmount").toString());
+        BalanceTextField.setText(NumberFormatService.formatMoney(budget.subtract(total)));
     }
 
     public void clearWindow(){
@@ -262,8 +271,7 @@ public class InformationSceneController implements Initializable {
     private void saveInformation(){
         MakeModel make = (MakeModel) Label3ComboBox.getValue();
         ModelModel model = (ModelModel) Label4ComboBox.getValue();
-        
-        
+                
         //Update Matter
         Global.getCurrentMatter().setOpenDate(OpenDateDatePicker.getValue() == null 
                 ? null : java.sql.Date.valueOf(OpenDateDatePicker.getValue()));
@@ -273,13 +281,16 @@ public class InformationSceneController implements Initializable {
         
         Global.getCurrentMatter().setWarranty(WarrantyDateDatePicker.getValue() == null 
                 ? null : java.sql.Date.valueOf(WarrantyDateDatePicker.getValue()));
-//        Global.getCurrentMatter().setBudget(Label2TextField);
+        Global.getCurrentMatter().setBudget(Label2TextField.getText().trim().equals("")
+                ? BigDecimal.ZERO : NumberFormatService.convertToBigDecimal(Label2TextField.getText().trim()));
         Global.getCurrentMatter().setMake(make.getId());
         Global.getCurrentMatter().setModel(model.getId());
         Global.getCurrentMatter().setSerial(Label5TextField.getText().trim().equals("") 
                 ? null : Label5TextField.getText().trim());
                 
-        SQLMatter.updateMatterInformationByID(Global.getCurrentMatter());        
+        SQLMatter.updateMatterInformationByID(Global.getCurrentMatter());  
+        
+        loadInformation();
     }
     
 }

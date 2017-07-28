@@ -7,12 +7,14 @@ package com.xln.xlncasemanagement.sql;
 
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.util.DebugTools;
+import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.apache.commons.dbutils.DbUtils;
 
@@ -203,6 +205,67 @@ public class SQLMatter {
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(conn);
         }
+    }
+
+    public static HashMap getSummaryByMatterID(int id) {
+        HashMap hm = new HashMap();
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT "
+                //Expenses Amounts
+                + "IFNULL(SUM(table13.col08), 0) AS totalExpenseAmount, "
+                + "IFNULL(SUM(IF(table13.col09 = 1, table13.col08, 0)), 0) as billedExpenseAmount, "
+                + "IFNULL(SUM(IF(table13.col09 = 0, table13.col08, 0)), 0) as unBilledExpenseAmount, "
+                //Activity Hours
+                + "IFNULL(SUM(table01.col07), 0) AS totalActivityHour, "
+                + "IFNULL(SUM(IF(table01.col12 = 1, table01.col07, 0)), 0) as billedActivityHour, "
+                + "IFNULL(SUM(IF(table01.col12 = 0, table01.col07, 0)), 0) as unBilledActivityHour, "
+                //Total Amount
+                + "(IFNULL(SUM(table01.col07), 0 ) + IFNULL(SUM(table13.col08), 0)) AS totalTotalAmount, "
+                + "(IFNULL(SUM(IF(table01.col12 = 1, table01.col07, 0)), 0) + IFNULL(SUM(IF(table13.col09 = 1, table13.col08, 0)), 0)) as totalBilledAmount, "
+                + "(IFNULL(SUM(IF(table01.col12 = 0, table01.col07, 0)), 0) + IFNULL(SUM(IF(table13.col09 = 0, table13.col08, 0)), 0))as totalUnBilledAmount "
+                //Linking it all Together
+                + "FROM table01, table13 "
+                + "WHERE table01.col02 = 1 AND table13.col02 = 1 "
+                + "AND table01.col05 = ? AND table13.col05 = ?";
+
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.setInt(2, id);
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                hm.put("totalExpenseAmount", NumberFormatService.formatMoney(rs.getBigDecimal("totalExpenseAmount")));
+                hm.put("billedExpenseAmount", NumberFormatService.formatMoney(rs.getBigDecimal("billedExpenseAmount")));
+                hm.put("unBilledExpenseAmount", NumberFormatService.formatMoney(rs.getBigDecimal("unBilledExpenseAmount")));
+                hm.put("totalActivityHour", rs.getString("totalActivityHour"));
+                hm.put("billedActivityHour", rs.getString("billedActivityHour"));
+                hm.put("unBilledActivityHour", rs.getString("unBilledActivityHour"));
+                hm.put("totalTotalAmount", NumberFormatService.formatMoney(rs.getBigDecimal("totalTotalAmount")));
+                hm.put("totalBilledAmount", NumberFormatService.formatMoney(rs.getBigDecimal("totalBilledAmount")));
+                hm.put("totalUnBilledAmount", NumberFormatService.formatMoney(rs.getBigDecimal("totalUnBilledAmount")));
+            } else {
+                hm.put("totalExpenseAmount", "");
+                hm.put("billedExpenseAmount", "");
+                hm.put("unBilledExpenseAmount", "");
+                hm.put("totalActivityHour", "");
+                hm.put("billedActivityHour", "");
+                hm.put("unBilledActivityHour", "");
+                hm.put("totalTotalAmount", "");
+                hm.put("totalBilledAmount", "");
+                hm.put("totalUnBilledAmount", "");
+            }
+        } catch (SQLException ex) {
+            DebugTools.Printout(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return hm;
     }
     
 }
