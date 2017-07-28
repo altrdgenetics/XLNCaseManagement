@@ -134,16 +134,12 @@ public class DetailedExpenseSceneController implements Initializable {
     
     private void loadUserComboBox() {
         userComboBox.getItems().removeAll(userComboBox.getItems());
-        for (UserModel item : SQLUser.getActiveUsers()){
-            userComboBox.getItems().addAll(item);
-        }
+        SQLUser.getActiveUsers().forEach(item -> userComboBox.getItems().addAll(item));
     }
     
     private void loadExpenseTypeComboBox() {
         expenseTypeComboBox.getItems().removeAll(expenseTypeComboBox.getItems());
-        for (ExpenseTypeModel item : SQLExpenseType.getActiveExpenseType()){
-            expenseTypeComboBox.getItems().addAll(item);
-        }
+        SQLExpenseType.getActiveExpenseType().forEach(item -> expenseTypeComboBox.getItems().addAll(item));
     }
     
     private void loadExpenseInformation() {

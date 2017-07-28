@@ -137,16 +137,12 @@ public class DetailedActivitySceneController implements Initializable {
     
     private void loadUserComboBox() {
         userComboBox.getItems().removeAll(userComboBox.getItems());
-        for (UserModel item : SQLUser.getActiveUsers()){
-            userComboBox.getItems().addAll(item);
-        }
+        SQLUser.getActiveUsers().forEach(item -> userComboBox.getItems().addAll(item));
     }
     
     private void loadActivityTypeComboBox() {
         activityTypeComboBox.getItems().removeAll(activityTypeComboBox.getItems());
-        for (ActivityTypeModel item : SQLActivityType.getActiveActivityType()){
-            activityTypeComboBox.getItems().addAll(item);
-        }
+        SQLActivityType.getActiveActivityType().forEach(item -> activityTypeComboBox.getItems().addAll(item));
     }
     
     private void loadActivityInformation() {

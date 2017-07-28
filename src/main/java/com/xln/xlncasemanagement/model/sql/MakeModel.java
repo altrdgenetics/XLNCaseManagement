@@ -13,7 +13,7 @@ public class MakeModel {
     
     private int id;
     private boolean active;
-    private String name;
+    private String name = "";
     private String website;
 
     public int getId() {

@@ -111,18 +111,17 @@ public class DetailedPartySceneController implements Initializable {
     }
     
     private void loadCaseRelationComboBox() {
-        for (PartyRelationTypeModel item : SQLPartyRelationType.getActivePartyRelationType()){
-            CaseRelationCombobox.getItems().addAll(item);
-        }
+        CaseRelationCombobox.getItems().removeAll(CaseRelationCombobox.getItems());
+        SQLPartyRelationType.getActivePartyRelationType().forEach(item -> CaseRelationCombobox.getItems().addAll(item));
     }
     
     private void loadPrefixComboBox() {
-        for (PartyNamePrefixModel item : SQLPartyNamePrefix.getActivePartyNamePrefix()){
-            PrefixCombobox.getItems().addAll(item.getPrefix());
-        }
+        PrefixCombobox.getItems().removeAll(PrefixCombobox.getItems());
+        SQLPartyNamePrefix.getActivePartyNamePrefix().forEach(item -> PrefixCombobox.getItems().addAll(item));
     }
     
     private void loadStateComboBox() {
+        StateComboBox.getItems().removeAll(StateComboBox.getItems());
         for (String item : Global.getSTATES()) {
             StateComboBox.getItems().addAll(item);
         }
@@ -133,7 +132,6 @@ public class DetailedPartySceneController implements Initializable {
             PartyRelationTypeModel relation = new PartyRelationTypeModel();
             relation.setId(partyItem.getRelationID());
             relation.setPartyRelationType(partyItem.getRelationName());
-            
             CaseRelationCombobox.setValue(relation);
         }
                 

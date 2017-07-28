@@ -5,7 +5,6 @@
  */
 package com.xln.xlncasemanagement.sql;
 
-import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.util.DebugTools;
 import java.sql.Connection;
@@ -64,9 +63,11 @@ public class SQLMatter {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "SELECT table15.*, table23.col03 AS matterName "
+        String sql = "SELECT table15.*, table23.col03 AS matterName, table24.col03 AS makeName, table25.col04 AS modelName "
                 + "FROM table15 "
                 + "LEFT JOIN table23 ON table23.col01 = table15.col04 "
+                + "LEFT JOIN table24 ON table24.col01 = table15.col09 "
+                + "LEFT JOIN table25 ON table25.col01 = table15.col10 "
                 + "WHERE table15.col02 = 1 AND table15.col03 = ? "
                 + "ORDER BY table15.col05 DESC";
 
@@ -85,6 +86,14 @@ public class SQLMatter {
                 item.setMatterTypeName(rs.getString("matterName"));
                 item.setOpenDate(rs.getDate("col05"));
                 item.setCloseDate(rs.getDate("col06"));
+                item.setNote(rs.getString("col07"));
+                item.setWarranty(rs.getDate("col08"));
+                item.setMake(rs.getInt("col09"));
+                item.setMakeName(rs.getString("makeName"));
+                item.setModel(rs.getInt("col10"));
+                item.setModelName(rs.getString("modelName"));
+                item.setSerial(rs.getString("col11"));
+                item.setBudget(rs.getBigDecimal("col12"));
                 
                 list.add(item);
             }
@@ -103,15 +112,17 @@ public class SQLMatter {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "SELECT table15.*, table23.col03 AS matterName "
+        String sql = "SELECT table15.*, table23.col03 AS matterName, table24.col03 AS makeName, table25.col04 AS modelName "
                 + "FROM table15 "
                 + "LEFT JOIN table23 ON table23.col01 = table15.col04 "
+                + "LEFT JOIN table24 ON table24.col01 = table15.col09 "
+                + "LEFT JOIN table25 ON table25.col01 = table15.col10 "
                 + "WHERE table15.col01 = ?";
 
         try {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, Global.getCurrentClient().getId());
+            ps.setInt(1, id);
             
             rs = ps.executeQuery();
             if (rs.first()) {
@@ -124,6 +135,13 @@ public class SQLMatter {
                 item.setOpenDate(rs.getDate("col05"));
                 item.setCloseDate(rs.getDate("col06"));
                 item.setNote(rs.getString("col07"));
+                item.setWarranty(rs.getDate("col08"));
+                item.setMake(rs.getInt("col09"));
+                item.setMakeName(rs.getString("makeName"));
+                item.setModel(rs.getInt("col10"));
+                item.setModelName(rs.getString("modelName"));
+                item.setSerial(rs.getString("col11"));
+                item.setBudget(rs.getBigDecimal("col12"));
             }
         } catch (SQLException ex) {
             DebugTools.Printout(ex.getMessage());
@@ -140,15 +158,25 @@ public class SQLMatter {
         PreparedStatement ps = null;
 
         String sql = "UPDATE table15 SET "
-                + "col05 = ?, " //Open Date
-                + "col06 = ? "  //Close Date
-                + "WHERE col01 = ?";
+                + "col05 = ?, " //01 - Open Date
+                + "col06 = ?, " //02 - Close Date
+                + "col08 = ?, " //03 - Warranty
+                + "col09 = ?, " //04 - Make
+                + "col10 = ?, " //05 - Model
+                + "col11 = ?, " //06 - Serial
+                + "col12 = ? "  //07 - Budget / Trust
+                + "WHERE col01 = ?"; //08
         try {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql);
-            ps.setDate(1, item.getOpenDate());
-            ps.setDate(2, item.getCloseDate());
-            ps.setInt (3, item.getId());
+            ps.setDate      (1, item.getOpenDate());
+            ps.setDate      (2, item.getCloseDate());
+            ps.setDate      (3, item.getWarranty());
+            ps.setInt       (4, item.getMake());
+            ps.setInt       (5, item.getModel());
+            ps.setString    (6, item.getSerial());
+            ps.setBigDecimal(7, item.getBudget());
+            ps.setInt       (8, item.getId());
             ps.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

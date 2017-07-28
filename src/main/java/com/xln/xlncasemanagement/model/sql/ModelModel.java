@@ -15,7 +15,7 @@ public class ModelModel {
     private boolean active;
     private int makeID;
     private String makeName;
-    private String name;
+    private String name = "";
     private String website;
 
     public int getId() {

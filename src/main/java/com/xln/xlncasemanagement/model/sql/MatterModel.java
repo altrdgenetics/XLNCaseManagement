@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.model.sql;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -27,7 +28,7 @@ public class MatterModel {
     private int model;
     private String modelName;
     private String serial;
-    
+    private BigDecimal budget;
 
     public int getId() {
         return id;
@@ -140,6 +141,13 @@ public class MatterModel {
     public void setSerial(String serial) {
         this.serial = serial;
     }
-    
-    
+
+    public BigDecimal getBudget() {
+        return budget;
+    }
+
+    public void setBudget(BigDecimal budget) {
+        this.budget = budget;
+    }
+        
 }

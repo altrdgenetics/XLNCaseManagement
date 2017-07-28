@@ -477,18 +477,15 @@ public class MainStageController implements Initializable {
     }
     
     public void loadClientComboBox(){
-        clientField.getItems().removeAll(clientField.getItems());
-        for (PartyModel item : SQLParty.getActiveClients()){
-            clientField.getItems().addAll(item);
-        }
+        clientField.getItems().removeAll(clientField.getItems());    
+        SQLParty.getActiveClients().forEach(item -> clientField.getItems().addAll(item));
     }
     
     private void loadMatterComboBox(){
         headerField1.getItems().removeAll(headerField1.getItems());
         if (Global.getCurrentClient() != null){
-            for (MatterModel item : SQLMatter.getActiveMattersByClient(Global.getCurrentClient().getId())){
-                headerField1.getItems().addAll(item);
-            }
+            SQLMatter.getActiveMattersByClient(Global.getCurrentClient().getId())
+                    .forEach(item -> headerField1.getItems().addAll(item));
         }
         disableTabsAndButtons(true);
         headerField1.getSelectionModel().selectFirst();
@@ -510,6 +507,7 @@ public class MainStageController implements Initializable {
         
         if (disabled){
             mainTabPane.getSelectionModel().select(informationTab);
+            informationSceneController.clearWindow();
         }
     }
     
@@ -778,6 +776,38 @@ public class MainStageController implements Initializable {
 
     public void setHeaderField1(ComboBox headerField1) {
         this.headerField1 = headerField1;
+    }
+
+    public TextField getHeaderField2() {
+        return headerField2;
+    }
+
+    public void setHeaderField2(TextField headerField2) {
+        this.headerField2 = headerField2;
+    }
+
+    public TextField getHeaderField3() {
+        return headerField3;
+    }
+
+    public void setHeaderField3(TextField headerField3) {
+        this.headerField3 = headerField3;
+    }
+
+    public TextField getHeaderField4() {
+        return headerField4;
+    }
+
+    public void setHeaderField4(TextField headerField4) {
+        this.headerField4 = headerField4;
+    }
+
+    public TextField getHeaderField5() {
+        return headerField5;
+    }
+
+    public void setHeaderField5(TextField headerField5) {
+        this.headerField5 = headerField5;
     }
 
     
