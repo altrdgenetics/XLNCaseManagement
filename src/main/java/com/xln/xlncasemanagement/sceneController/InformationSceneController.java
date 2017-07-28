@@ -10,8 +10,6 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MakeModel;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.model.sql.ModelModel;
-import com.xln.xlncasemanagement.sql.SQLActivity;
-import com.xln.xlncasemanagement.sql.SQLExpense;
 import com.xln.xlncasemanagement.sql.SQLMake;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.sql.SQLModel;
@@ -237,7 +235,7 @@ public class InformationSceneController implements Initializable {
         HashMap billables = SQLMatter.getSummaryByMatterID(Global.getCurrentMatter().getId());
         BigDecimal budget = Global.getCurrentMatter().getBudget() == null 
                         ? BigDecimal.ZERO : Global.getCurrentMatter().getBudget();
-        BigDecimal total = NumberFormatService.convertToBigDecimal(billables.get("totalBilledAmount").toString());
+        BigDecimal total = NumberFormatService.convertToBigDecimal(billables.get("totalTotalAmount").toString());
         BigDecimal balance = budget.subtract(total);
 
         Platform.runLater(() -> {
@@ -256,7 +254,7 @@ public class InformationSceneController implements Initializable {
         TotalExpensesTextField.setText(billables.get("totalExpenseAmount").toString());
         BilledExpensesTextField.setText(billables.get("billedExpenseAmount").toString());
         UnBilledExpensesTextField.setText(billables.get("unBilledExpenseAmount").toString());
-        TotalCostTextField.setText(billables.get("totalBilledAmount").toString());
+        TotalCostTextField.setText(billables.get("totalTotalAmount").toString());
         BalanceTextField.setText(NumberFormatService.formatMoney(balance));
     }
 

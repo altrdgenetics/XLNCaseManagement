@@ -222,22 +222,36 @@ public class SQLMatter {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sql = "SELECT "
-                //Expenses Amounts
+                + "activity.totalActivityHour, "
+                + "activity.billedActivityHour, "
+                + "activity.unBilledActivityHour, "
+                + "activity.totalActivityAmount, "
+                + "activity.billedActivityAmount, "
+                + "activity.unBilledActivityAmount, "
+                + "expense.totalExpenseAmount, "
+                + "expense.billedExpenseAmount, "
+                + "expense.unBilledExpenseAmount "
+                + "FROM "
+                + "(SELECT "
+                + "IFNULL(SUM(table01.col09), 0) AS totalActivityAmount, "
+                + "IFNULL(SUM(IF(table01.col12 = 1, table01.col09, 0)), 0) as billedActivityAmount, "
+                + "IFNULL(SUM(IF(table01.col12 = 0, table01.col09, 0)), 0) as unBilledActivityAmount, "
+                + "IFNULL(SUM(table01.col07), 0) AS totalActivityHour,  "
+                + "IFNULL(SUM(IF(table01.col12 = 1, table01.col07, 0)), 0) as billedActivityHour,  "
+                + "IFNULL(SUM(IF(table01.col12 = 0, table01.col07, 0)), 0) as unBilledActivityHour "
+                + "FROM table01 "
+                + "WHERE table01.col02 = 1 "
+                + "AND table01.col05 = ? "
+                + ") AS activity "
+                + "INNER JOIN "
+                + "(SELECT "
                 + "IFNULL(SUM(table13.col08), 0) AS totalExpenseAmount, "
                 + "IFNULL(SUM(IF(table13.col09 = 1, table13.col08, 0)), 0) as billedExpenseAmount, "
-                + "IFNULL(SUM(IF(table13.col09 = 0, table13.col08, 0)), 0) as unBilledExpenseAmount, "
-                //Activity Hours
-                + "IFNULL(SUM(table01.col07), 0) AS totalActivityHour, "
-                + "IFNULL(SUM(IF(table01.col12 = 1, table01.col07, 0)), 0) as billedActivityHour, "
-                + "IFNULL(SUM(IF(table01.col12 = 0, table01.col07, 0)), 0) as unBilledActivityHour, "
-                //Total Amount
-                + "(IFNULL(SUM(table01.col07), 0 ) + IFNULL(SUM(table13.col08), 0)) AS totalTotalAmount, "
-                + "(IFNULL(SUM(IF(table01.col12 = 1, table01.col07, 0)), 0) + IFNULL(SUM(IF(table13.col09 = 1, table13.col08, 0)), 0)) as totalBilledAmount, "
-                + "(IFNULL(SUM(IF(table01.col12 = 0, table01.col07, 0)), 0) + IFNULL(SUM(IF(table13.col09 = 0, table13.col08, 0)), 0))as totalUnBilledAmount "
-                //Linking it all Together
-                + "FROM table01, table13 "
-                + "WHERE table01.col02 = 1 AND table13.col02 = 1 "
-                + "AND table01.col05 = ? AND table13.col05 = ?";
+                + "IFNULL(SUM(IF(table13.col09 = 0, table13.col08, 0)), 0) as unBilledExpenseAmount "
+                + "FROM table13 "
+                + "WHERE table13.col02 = 1 "
+                + "AND table13.col05 = ? "
+                + ") AS expense";
 
         try {
             conn = DBConnection.connectToDB();
@@ -252,9 +266,16 @@ public class SQLMatter {
                 hm.put("totalActivityHour", rs.getString("totalActivityHour"));
                 hm.put("billedActivityHour", rs.getString("billedActivityHour"));
                 hm.put("unBilledActivityHour", rs.getString("unBilledActivityHour"));
-                hm.put("totalTotalAmount", NumberFormatService.formatMoney(rs.getBigDecimal("totalTotalAmount")));
-                hm.put("totalBilledAmount", NumberFormatService.formatMoney(rs.getBigDecimal("totalBilledAmount")));
-                hm.put("totalUnBilledAmount", NumberFormatService.formatMoney(rs.getBigDecimal("totalUnBilledAmount")));
+                String total = NumberFormatService.formatMoney(
+                        rs.getBigDecimal("totalExpenseAmount").add(rs.getBigDecimal("totalActivityAmount")));
+                String unbilled = NumberFormatService.formatMoney(
+                        rs.getBigDecimal("billedExpenseAmount").add(rs.getBigDecimal("billedActivityAmount")));
+                String billed = NumberFormatService.formatMoney(
+                        rs.getBigDecimal("unBilledExpenseAmount").add(rs.getBigDecimal("unbilledActivityAmount")));
+                
+                hm.put("totalTotalAmount", total);
+                hm.put("totalBilledAmount", unbilled);
+                hm.put("totalUnBilledAmount", billed);
             } else {
                 hm.put("totalExpenseAmount", "");
                 hm.put("billedExpenseAmount", "");
