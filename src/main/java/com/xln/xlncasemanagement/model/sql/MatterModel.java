@@ -25,8 +25,10 @@ public class MatterModel {
     private Date warranty;
     private int make;
     private String makeName;
+    private String makeWebsite;
     private int model;
     private String modelName;
+    private String modelWebsite;
     private String serial;
     private BigDecimal budget;
 
@@ -149,5 +151,23 @@ public class MatterModel {
     public void setBudget(BigDecimal budget) {
         this.budget = budget;
     }
+
+    public String getMakeWebsite() {
+        return makeWebsite;
+    }
+
+    public void setMakeWebsite(String makeWebsite) {
+        this.makeWebsite = makeWebsite;
+    }
+
+    public String getModelWebsite() {
+        return modelWebsite;
+    }
+
+    public void setModelWebsite(String modelWebsite) {
+        this.modelWebsite = modelWebsite;
+    }
         
+    
+    
 }

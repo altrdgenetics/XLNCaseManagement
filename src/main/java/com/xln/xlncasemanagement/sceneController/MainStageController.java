@@ -10,9 +10,14 @@ import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.sql.SQLParty;
+import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import com.xln.xlncasemanagement.util.StringUtilities;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -29,6 +34,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -267,6 +273,54 @@ public class MainStageController implements Initializable {
         buttonBar.getChildren().remove(buttonSeven);
     }
     
+    @FXML
+    private void onHeaderField2Action(MouseEvent event) {
+        if (event.getClickCount() >= 2) {
+            if (Global.getCurrentMatter() != null && !headerField2.getText().trim().equals("")) {
+                if (Global.getCurrentMatter().getMakeWebsite() != null) {
+                    AlertDialog.StaticAlert(4, "No Website",
+                            "No Website Available",
+                            "There is no website for " + Global.getHeaderLabel2().replace(":", ""));
+                } else {
+                    try {
+                        Desktop dt = Desktop.getDesktop();
+                        URI uri = new URI(Global.getCurrentMatter().getMakeWebsite());
+                        dt.browse(uri.resolve(uri));
+                    } catch (IOException | URISyntaxException ex) {
+                        AlertDialog.StaticAlert(4, "Website Error",
+                                "Unable to open this URL",
+                                "There was an issue opening the website for this " + Global.getHeaderLabel2().replace(":", ""));
+                    }
+                }
+            }
+        }
+    }
+
+    @FXML
+    private void onHeaderField3Action(MouseEvent event) {
+        if (event.getClickCount() >= 2) {
+            if (Global.getCurrentMatter() != null && !headerField3.getText().trim().equals("")) {
+                if (Global.getCurrentMatter().getModelWebsite() == null) {
+                    AlertDialog.StaticAlert(4, "No Website",
+                            "No WebSite Available",
+                            "There is no website for this "
+                            + Global.getHeaderLabel3().replace(":", ""));
+                } else {
+                    try {
+                        Desktop dt = Desktop.getDesktop();
+                        URI uri = new URI(Global.getCurrentMatter().getModelWebsite());
+                        dt.browse(uri.resolve(uri));
+                    } catch (IOException | URISyntaxException ex) {
+                        AlertDialog.StaticAlert(4, "Website Error",
+                                "Unable to open this URL",
+                                "There was an issue opening the website for this "
+                                + Global.getHeaderLabel3().replace(":", ""));
+                    }
+                }
+            }
+        }
+    }
+
     @FXML private void buttonOneAction(){
         Global.getStageLauncher().partySearchScene(stage, false, true);
     }

@@ -114,7 +114,13 @@ public class SQLMatter {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "SELECT table15.*, table23.col03 AS matterName, table24.col03 AS makeName, table25.col04 AS modelName "
+        String sql = "SELECT "
+                + "table15.*, "
+                + "table23.col03 AS matterName, "
+                + "table24.col03 AS makeName, "
+                + "table24.col04 AS makeWebsite, "
+                + "table25.col04 AS modelName, "
+                + "table25.col05 AS modelWebsite "
                 + "FROM table15 "
                 + "LEFT JOIN table23 ON table23.col01 = table15.col04 "
                 + "LEFT JOIN table24 ON table24.col01 = table15.col09 "
@@ -140,8 +146,10 @@ public class SQLMatter {
                 item.setWarranty(rs.getDate("col08"));
                 item.setMake(rs.getInt("col09"));
                 item.setMakeName(rs.getString("makeName"));
+                item.setMakeWebsite(rs.getString("makeWebsite"));
                 item.setModel(rs.getInt("col10"));
                 item.setModelName(rs.getString("modelName"));
+                item.setModelWebsite(rs.getString("modelWebsite"));
                 item.setSerial(rs.getString("col11"));
                 item.setBudget(rs.getBigDecimal("col12"));
             }
