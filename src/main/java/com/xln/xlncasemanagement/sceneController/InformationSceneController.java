@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -237,7 +238,18 @@ public class InformationSceneController implements Initializable {
         BigDecimal budget = Global.getCurrentMatter().getBudget() == null 
                         ? BigDecimal.ZERO : Global.getCurrentMatter().getBudget();
         BigDecimal total = NumberFormatService.convertToBigDecimal(billables.get("totalBilledAmount").toString());
-        
+        BigDecimal balance = budget.subtract(total);
+
+        Platform.runLater(() -> {
+            if (balance.signum() == -1) {
+                BalanceTextField.setStyle("-fx-text-fill: #d9534f; -fx-background-color: #f2dede;"); //Red
+            } else if (balance.compareTo(BigDecimal.ZERO) == 0) {
+                BalanceTextField.setStyle("-fx-text-fill: #333333; -fx-background-color: white;"); //Black
+            } else {
+                BalanceTextField.setStyle("-fx-text-fill: #3c763d; -fx-background-color: #dff0d8;"); //Green
+            }
+        });
+ 
         TotalHoursTextField.setText(billables.get("totalActivityHour").toString());
         BilledHoursTextField.setText(billables.get("billedActivityHour").toString());
         UnBilledHoursTextField.setText(billables.get("unBilledActivityHour").toString());
@@ -245,7 +257,7 @@ public class InformationSceneController implements Initializable {
         BilledExpensesTextField.setText(billables.get("billedExpenseAmount").toString());
         UnBilledExpensesTextField.setText(billables.get("unBilledExpenseAmount").toString());
         TotalCostTextField.setText(billables.get("totalBilledAmount").toString());
-        BalanceTextField.setText(NumberFormatService.formatMoney(budget.subtract(total)));
+        BalanceTextField.setText(NumberFormatService.formatMoney(balance));
     }
 
     public void clearWindow(){

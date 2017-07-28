@@ -261,6 +261,8 @@ public class MainStageController implements Initializable {
         }
         
         //currently not used
+        buttonBar.getChildren().remove(buttonTwo);
+        buttonBar.getChildren().remove(buttonThree);
         buttonBar.getChildren().remove(buttonSix);
         buttonBar.getChildren().remove(buttonSeven);
     }
