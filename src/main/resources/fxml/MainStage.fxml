@@ -19,6 +19,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import org.controlsfx.control.textfield.CustomTextField?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="650.0" minWidth="1100.0" prefHeight="650.0" prefWidth="1100.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xln.xlncasemanagement.sceneController.MainStageController">
     <top>
@@ -107,8 +108,8 @@
                         <ComboBox fx:id="clientField" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleClientSelection" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
                         <TextField fx:id="phoneField" editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
                         <TextField fx:id="emailField" editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
-                        <TextField fx:id="headerField2" editable="false" onMouseClicked="#onHeaderField2Action" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
-                        <TextField fx:id="headerField3" editable="false" onAction="#onHeaderField3Action" onMouseClicked="#onHeaderField3Action" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                        <CustomTextField fx:id="headerField2" editable="false" onMouseClicked="#onHeaderField2Action" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER" />
+                        <CustomTextField fx:id="headerField3" editable="false" onMouseClicked="#onHeaderField3Action" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER" />
                         <TextField fx:id="headerField4" editable="false" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
                         <TextField fx:id="headerField5" editable="false" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
                         <Label fx:id="headerLabel2" alignment="CENTER_RIGHT" prefHeight="132.0" prefWidth="196.0" text="&lt;&lt;Label 2&gt;&gt;" GridPane.columnIndex="2">

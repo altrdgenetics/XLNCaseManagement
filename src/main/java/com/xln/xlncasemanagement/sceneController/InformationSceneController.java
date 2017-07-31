@@ -45,9 +45,9 @@ public class InformationSceneController implements Initializable {
     @FXML Label Label2;
     @FXML TextField Label2TextField;
     @FXML Label Label3;
-    @FXML ComboBox<MakeModel> Label3ComboBox;
+    @FXML ComboBox Label3ComboBox;
     @FXML Label Label4;
-    @FXML ComboBox<ModelModel> Label4ComboBox;
+    @FXML ComboBox Label4ComboBox;
     @FXML Label Label5;
     @FXML TextField Label5TextField;
         
@@ -68,8 +68,10 @@ public class InformationSceneController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        setVersionInformation();
+        setSelectorsHiddenOnNonEdit();   
         setComboBoxModel(); 
-        setSelectorsHiddenOnNonEdit();         
+        loadComboBoxes();
     }
 
     private void setSelectorsHiddenOnNonEdit(){
@@ -106,7 +108,6 @@ public class InformationSceneController implements Initializable {
             @Override
             public String toString(MakeModel object) {
                     return object.getName();
-                
             }
 
             @Override
@@ -121,7 +122,6 @@ public class InformationSceneController implements Initializable {
             @Override
             public String toString(ModelModel object) {
                     return object.getName();
-                
             }
 
             @Override
@@ -133,9 +133,6 @@ public class InformationSceneController implements Initializable {
     }
     
     public void setActive() {
-        setVersionInformation();
-        setComboBoxModel();
-        loadComboBoxes();
         loadInformation();
     }
         
@@ -171,8 +168,8 @@ public class InformationSceneController implements Initializable {
         ClosedDateDatePicker.setEditable(editable);
         WarrantyDateDatePicker.setEditable(editable);
         Label2TextField.setEditable(editable);
-//        Label3ComboBox.setEditable(editable);
-//        Label4ComboBox.setEditable(editable);
+        Label3ComboBox.setEditable(editable);
+        Label4ComboBox.setEditable(editable);
         Label5TextField.setEditable(editable);
     }
 
@@ -207,16 +204,7 @@ public class InformationSceneController implements Initializable {
         }
     }
 
-    private void setInformation() {
-        //HEADER PANEL
-        Global.getMainStageController().getHeaderField2().setText(Global.getCurrentMatter().getMakeName() == null
-                ? "" : Global.getCurrentMatter().getMakeName());
-        Global.getMainStageController().getHeaderField3().setText(Global.getCurrentMatter().getModelName() == null
-                ? "" : Global.getCurrentMatter().getModelName());
-        Global.getMainStageController().getHeaderField4().setText(Global.getCurrentMatter().getSerial() == null
-                ? "" : Global.getCurrentMatter().getSerial());
-        Global.getMainStageController().getHeaderField5().setText("");
-        
+    private void setInformation() {        
         //LEFT SIDE OF PANEL
         OpenDateDatePicker.setValue(Global.getCurrentMatter().getOpenDate() == null
                 ? null : Global.getCurrentMatter().getOpenDate().toLocalDate());

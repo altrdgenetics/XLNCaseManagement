@@ -33,6 +33,7 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -41,6 +42,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.StringConverter;
+import org.controlsfx.control.textfield.CustomTextField;
 
 /**
  * FXML Controller class
@@ -77,11 +79,11 @@ public class MainStageController implements Initializable {
     @FXML private Label emailLabel;
     @FXML private TextField emailField;
     @FXML private Label headerLabel2;
-    @FXML private TextField headerField2;
+    @FXML private CustomTextField headerField2; //Make
     @FXML private Label headerLabel3;
-    @FXML private TextField headerField3;
+    @FXML private CustomTextField headerField3; //Model
     @FXML private Label headerLabel4;
-    @FXML private TextField headerField4;
+    @FXML private TextField headerField4; //Serial
     @FXML private Label headerLabel5;
     @FXML private TextField headerField5;
     @FXML private ImageView headerLogo;
@@ -233,6 +235,7 @@ public class MainStageController implements Initializable {
     @FXML private void handleHeaderField1Selection(){
         Global.setCurrentMatter((MatterModel) headerField1.getValue());
         disableTabsAndButtons(false);
+        loadHeader();
         onTabSelection();
     }
     
@@ -277,7 +280,7 @@ public class MainStageController implements Initializable {
     private void onHeaderField2Action(MouseEvent event) {
         if (event.getClickCount() >= 2) {
             if (Global.getCurrentMatter() != null && !headerField2.getText().trim().equals("")) {
-                if (Global.getCurrentMatter().getMakeWebsite() != null) {
+                if (Global.getCurrentMatter().getMakeWebsite() == null) {
                     AlertDialog.StaticAlert(4, "No Website",
                             "No Website Available",
                             "There is no website for " + Global.getHeaderLabel2().replace(":", ""));
@@ -411,6 +414,44 @@ public class MainStageController implements Initializable {
         buttonSix.setDisable(disable);
         buttonSeven.setDisable(disable);
         updateButtonFourLabel(disable);
+    }
+    
+    private void loadHeader() {
+        if (Global.getCurrentMatter() != null) {            
+            headerField2.setText(Global.getCurrentMatter().getMakeName() == null
+                    ? "" : Global.getCurrentMatter().getMakeName());
+            headerField3.setText(Global.getCurrentMatter().getModelName() == null
+                    ? "" : Global.getCurrentMatter().getModelName());
+            headerField4.setText(Global.getCurrentMatter().getSerial() == null
+                    ? "" : Global.getCurrentMatter().getSerial());
+            headerField5.setText("");
+        } else {
+            headerField2.setText("");
+            headerField3.setText("");
+            headerField4.setText("");
+            headerField5.setText("");
+        }
+        setHeaderIcons();
+    }
+
+    private void setHeaderIcons(){
+        ImageView headerField2Icon = new ImageView();
+        ImageView headerField3Icon = new ImageView();
+        
+        Image link = new Image(MainStageController.class.getResourceAsStream("/fileIcon/link.png"));
+        Image blank = new Image(MainStageController.class.getResourceAsStream("/fileIcon/none.png"));
+        
+        headerField2Icon.setFitHeight(20);
+        headerField2Icon.setFitWidth(20);
+        
+        headerField3Icon.setFitHeight(20);
+        headerField3Icon.setFitWidth(20);
+                
+        headerField2Icon.setImage(headerField2.getText().equals("") ? blank : link);
+        headerField3Icon.setImage(headerField3.getText().equals("") ? blank : link);
+        
+        headerField2.setRight(headerField2Icon);
+        headerField3.setRight(headerField2Icon);
     }
     
     private void onTabSelection() {
@@ -605,8 +646,7 @@ public class MainStageController implements Initializable {
         //Tabs
         mainTabPane.setDisable(disabled);
     }
-    
-    
+        
     private void clearHeaderLabels() {
         phoneField.setText("");
         emailField.setText("");
@@ -834,19 +874,19 @@ public class MainStageController implements Initializable {
         this.headerField1 = headerField1;
     }
 
-    public TextField getHeaderField2() {
+    public CustomTextField getHeaderField2() {
         return headerField2;
     }
 
-    public void setHeaderField2(TextField headerField2) {
+    public void setHeaderField2(CustomTextField headerField2) {
         this.headerField2 = headerField2;
     }
 
-    public TextField getHeaderField3() {
+    public CustomTextField getHeaderField3() {
         return headerField3;
     }
 
-    public void setHeaderField3(TextField headerField3) {
+    public void setHeaderField3(CustomTextField headerField3) {
         this.headerField3 = headerField3;
     }
 
@@ -866,6 +906,4 @@ public class MainStageController implements Initializable {
         this.headerField5 = headerField5;
     }
 
-    
-    
 }
