@@ -425,13 +425,16 @@ public class MainStageController implements Initializable {
             headerField4.setText(Global.getCurrentMatter().getSerial() == null
                     ? "" : Global.getCurrentMatter().getSerial());
             headerField5.setText("");
+            
+            Platform.runLater(() -> {
+                setHeaderIcons();   
+            });
         } else {
             headerField2.setText("");
             headerField3.setText("");
             headerField4.setText("");
             headerField5.setText("");
         }
-        setHeaderIcons();
     }
 
     private void setHeaderIcons(){
@@ -446,12 +449,12 @@ public class MainStageController implements Initializable {
         
         headerField3Icon.setFitHeight(20);
         headerField3Icon.setFitWidth(20);
-                
-        headerField2Icon.setImage(headerField2.getText().equals("") ? blank : link);
-        headerField3Icon.setImage(headerField3.getText().equals("") ? blank : link);
+                 
+        headerField2Icon.setImage(Global.getCurrentMatter().getMakeWebsite() == null ? blank : link);
+        headerField3Icon.setImage(Global.getCurrentMatter().getModelWebsite() == null ? blank : link);
         
         headerField2.setRight(headerField2Icon);
-        headerField3.setRight(headerField2Icon);
+        headerField3.setRight(headerField3Icon);
     }
     
     private void onTabSelection() {

@@ -7,12 +7,8 @@ package com.xln.xlncasemanagement.sceneController;
  */
 
 import com.xln.xlncasemanagement.Global;
-import com.xln.xlncasemanagement.model.sql.MakeModel;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
-import com.xln.xlncasemanagement.model.sql.ModelModel;
-import com.xln.xlncasemanagement.sql.SQLMake;
 import com.xln.xlncasemanagement.sql.SQLMatter;
-import com.xln.xlncasemanagement.sql.SQLModel;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.math.BigDecimal;
@@ -22,11 +18,10 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.util.StringConverter;
 
 /**
  * FXML Controller class
@@ -36,6 +31,8 @@ import javafx.util.StringConverter;
 public class InformationSceneController implements Initializable {
 
     boolean updateMode = false;
+    int makeID = 0;
+    int modelID = 0;
     
     //LEFT SIDE OF PANEL
     @FXML DatePicker OpenDateDatePicker;
@@ -45,9 +42,9 @@ public class InformationSceneController implements Initializable {
     @FXML Label Label2;
     @FXML TextField Label2TextField;
     @FXML Label Label3;
-    @FXML ComboBox Label3ComboBox;
+    @FXML Button Label3Button;
     @FXML Label Label4;
-    @FXML ComboBox Label4ComboBox;
+    @FXML Button Label4Button;
     @FXML Label Label5;
     @FXML TextField Label5TextField;
         
@@ -70,8 +67,6 @@ public class InformationSceneController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setVersionInformation();
         setSelectorsHiddenOnNonEdit();   
-        setComboBoxModel(); 
-        loadComboBoxes();
     }
 
     private void setSelectorsHiddenOnNonEdit(){
@@ -90,46 +85,14 @@ public class InformationSceneController implements Initializable {
                 WarrantyDateDatePicker.hide();
             }
         });
-        Label3ComboBox.setOnMouseClicked(e -> {
-            if (!Label3ComboBox.isEditable() && Label3ComboBox.isShowing()) {
-                Label3ComboBox.hide();
-            }
-        });
-        Label4ComboBox.setOnMouseClicked(e -> {
-            if (!Label4ComboBox.isEditable() && Label4ComboBox.isShowing()) {
-                Label4ComboBox.hide();
-            }
-        });
+    }
+        
+    @FXML private void onLabel3ButtonAction() {
+        
     }
     
-    private void setComboBoxModel(){
-        //Setup Make ComboBox
-        StringConverter<MakeModel> con1 = new StringConverter<MakeModel>() {
-            @Override
-            public String toString(MakeModel object) {
-                    return object.getName();
-            }
-
-            @Override
-            public MakeModel fromString(String string) {
-                return null;
-            }
-        };
-        Label3ComboBox.setConverter(con1);
+    @FXML private void onLabel4ButtonAction() {
         
-        //Setup Model ComboBox
-        StringConverter<ModelModel> con2 = new StringConverter<ModelModel>() {
-            @Override
-            public String toString(ModelModel object) {
-                    return object.getName();
-            }
-
-            @Override
-            public ModelModel fromString(String string) {
-                return null;
-            }
-        };
-        Label4ComboBox.setConverter(con2);
     }
     
     public void setActive() {
@@ -153,6 +116,7 @@ public class InformationSceneController implements Initializable {
             OpenDateDatePicker.requestFocus();
         } else {
             saveInformation();
+            loadInformation(); //Reload After Save
             DebugTools.Printout("Saved Information");
         }
     }
@@ -168,30 +132,13 @@ public class InformationSceneController implements Initializable {
         ClosedDateDatePicker.setEditable(editable);
         WarrantyDateDatePicker.setEditable(editable);
         Label2TextField.setEditable(editable);
-        Label3ComboBox.setEditable(editable);
-        Label4ComboBox.setEditable(editable);
+        Label3Button.setDisable(!editable);
+        Label4Button.setDisable(!editable);
         Label5TextField.setEditable(editable);
     }
 
     public boolean isUpdateMode() {
         return updateMode;
-    }
-
-    private void loadComboBoxes(){
-        loadMakeComboBox();
-        loadModelComboBox();
-    }
-    
-    private void loadMakeComboBox(){
-        Label3ComboBox.getItems().removeAll(Label3ComboBox.getItems());
-        Label3ComboBox.getItems().addAll(new MakeModel());
-        SQLMake.getActiveMake().forEach(item -> Label3ComboBox.getItems().addAll(item));
-    }
-    
-    private void loadModelComboBox(){
-        Label4ComboBox.getItems().removeAll(Label4ComboBox.getItems());
-        Label4ComboBox.getItems().addAll(new ModelModel());        
-        SQLModel.getActiveModel().forEach(item -> Label4ComboBox.getItems().addAll(item));
     }
     
     private void loadInformation(){
@@ -204,7 +151,11 @@ public class InformationSceneController implements Initializable {
         }
     }
 
-    private void setInformation() {        
+    private void setInformation() { 
+        //Master IDs
+        makeID = Global.getCurrentMatter().getMake();
+        modelID = Global.getCurrentMatter().getModel();
+        
         //LEFT SIDE OF PANEL
         OpenDateDatePicker.setValue(Global.getCurrentMatter().getOpenDate() == null
                 ? null : Global.getCurrentMatter().getOpenDate().toLocalDate());
@@ -214,8 +165,10 @@ public class InformationSceneController implements Initializable {
                 ? null : Global.getCurrentMatter().getWarranty().toLocalDate());
         Label2TextField.setText(Global.getCurrentMatter().getBudget() == null 
                 ? "" : NumberFormatService.formatMoney(Global.getCurrentMatter().getBudget()));
-        Label3ComboBox.setValue(SQLMake.getMakeByID(Global.getCurrentMatter().getMake()));
-        Label4ComboBox.setValue(SQLModel.geModelByID(Global.getCurrentMatter().getModel()));
+        Label3Button.setText(Global.getCurrentMatter().getMakeName() == null 
+                ? "No " + Global.getHeaderLabel2().replace(":", "") : Global.getCurrentMatter().getMakeName());
+        Label4Button.setText(Global.getCurrentMatter().getModelName() == null
+        ? "No " + Global.getHeaderLabel3().replace(":", "") : Global.getCurrentMatter().getModelName());
         Label5TextField.setText(Global.getCurrentMatter().getSerial() == null
                 ? "" : Global.getCurrentMatter().getSerial());
 
@@ -251,8 +204,8 @@ public class InformationSceneController implements Initializable {
         ClosedDateDatePicker.setValue(null);
         WarrantyDateDatePicker.setValue(null);
         Label2TextField.setText("");
-        Label3ComboBox.setValue(new MakeModel());
-        Label4ComboBox.setValue(new ModelModel());
+        Label3Button.setText("No " + Global.getHeaderLabel2().replace(":", ""));
+        Label4Button.setText("No " + Global.getHeaderLabel3().replace(":", ""));
         Label5TextField.setText("");
 
         //RIGHT SIDE OF PANEL
@@ -266,10 +219,7 @@ public class InformationSceneController implements Initializable {
         BalanceTextField.setText("");
     }
     
-    private void saveInformation(){
-        MakeModel make = (MakeModel) Label3ComboBox.getValue();
-        ModelModel model = (ModelModel) Label4ComboBox.getValue();
-                
+    private void saveInformation(){                
         //Update Matter
         Global.getCurrentMatter().setOpenDate(OpenDateDatePicker.getValue() == null 
                 ? null : java.sql.Date.valueOf(OpenDateDatePicker.getValue()));
@@ -281,14 +231,12 @@ public class InformationSceneController implements Initializable {
                 ? null : java.sql.Date.valueOf(WarrantyDateDatePicker.getValue()));
         Global.getCurrentMatter().setBudget(Label2TextField.getText().trim().equals("")
                 ? BigDecimal.ZERO : NumberFormatService.convertToBigDecimal(Label2TextField.getText().trim()));
-        Global.getCurrentMatter().setMake(make.getId());
-        Global.getCurrentMatter().setModel(model.getId());
+        Global.getCurrentMatter().setMake(makeID);
+        Global.getCurrentMatter().setModel(modelID);
         Global.getCurrentMatter().setSerial(Label5TextField.getText().trim().equals("") 
                 ? null : Label5TextField.getText().trim());
                 
         SQLMatter.updateMatterInformationByID(Global.getCurrentMatter());  
-        
-        loadInformation();
     }
     
 }
