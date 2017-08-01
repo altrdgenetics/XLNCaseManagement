@@ -157,6 +157,11 @@ public class MainStageController implements Initializable {
             }
         };
         headerField1.setConverter(converter2);
+        
+        //Disable Property
+        headerField1.disableProperty().bind(
+                clientField.valueProperty().isNull()
+        );
     }    
         
     public void setActive(Stage stagePassed) {
