@@ -7,7 +7,9 @@ package com.xln.xlncasemanagement.sceneController;
  */
 
 import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.model.sql.MakeModel;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
+import com.xln.xlncasemanagement.model.sql.ModelModel;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.NumberFormatService;
@@ -31,8 +33,8 @@ import javafx.scene.control.TextField;
 public class InformationSceneController implements Initializable {
 
     boolean updateMode = false;
-    int makeID = 0;
-    int modelID = 0;
+    int makeID;
+    int modelID;
     
     //LEFT SIDE OF PANEL
     @FXML DatePicker OpenDateDatePicker;
@@ -85,14 +87,56 @@ public class InformationSceneController implements Initializable {
                 WarrantyDateDatePicker.hide();
             }
         });
+        
+        Label4Button.disableProperty().bind(
+                Label3Button.textProperty().isEqualTo("No " + Global.getHeaderLabel2().replace(":", ""))
+                .or(Label3Button.disabledProperty())
+        );
     }
         
-    @FXML private void onLabel3ButtonAction() {
-        
+    @FXML
+    private void onLabel3ButtonAction() {
+        if (updateMode) {
+            DebugTools.Printout("Searching Make");
+            MakeModel make = Global.getStageLauncher().MaintenanceMakeScene(Global.getMainStage(), false);
+
+            if (make != null) {
+                if (make.getId() == 0 || make.getId() != makeID){
+                    modelID = 0;
+                    Global.getCurrentMatter().setModel(modelID);
+                    Label4Button.setText("No " + Global.getHeaderLabel3().replace(":", ""));
+                }
+                
+                makeID = make.getId();
+                Global.getCurrentMatter().setMake(makeID);
+                Label3Button.setText(make.getId() == 0 ? "No " + Global.getHeaderLabel2().replace(":", "") : make.getName());
+                
+                if (make.getId() == 0){
+                    modelID = 0;
+                    Global.getCurrentMatter().setModel(modelID);
+                    Label4Button.setText("No " + Global.getHeaderLabel3().replace(":", ""));
+                }
+            }
+            
+        } else {
+            DebugTools.Printout("Searching Disabled");
+        }
     }
     
     @FXML private void onLabel4ButtonAction() {
-        
+        if (updateMode){
+            DebugTools.Printout("Searching Model");
+            ModelModel model = Global.getStageLauncher().MaintenanceModelScene(Global.getMainStage(), false, makeID);
+
+            if (model != null) {
+                modelID = model.getId();
+                Global.getCurrentMatter().setModel(modelID);
+                Label4Button.setText(model.getId() == 0 ? "No " + Global.getHeaderLabel3().replace(":", "") : model.getName());
+            }
+            
+        } else {
+            DebugTools.Printout("Searching Disabled");
+        }
     }
     
     public void setActive() {
@@ -133,7 +177,7 @@ public class InformationSceneController implements Initializable {
         WarrantyDateDatePicker.setEditable(editable);
         Label2TextField.setEditable(editable);
         Label3Button.setDisable(!editable);
-        Label4Button.setDisable(!editable);
+        //Label4Button.setDisable(!editable);
         Label5TextField.setEditable(editable);
     }
 
@@ -151,7 +195,7 @@ public class InformationSceneController implements Initializable {
         }
     }
 
-    private void setInformation() { 
+    private void setInformation() {         
         //Master IDs
         makeID = Global.getCurrentMatter().getMake();
         modelID = Global.getCurrentMatter().getModel();

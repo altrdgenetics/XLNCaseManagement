@@ -7,15 +7,9 @@ package com.xln.xlncasemanagement.sceneController;
 
 
 import com.xln.xlncasemanagement.Global;
-import com.xln.xlncasemanagement.model.sql.ActivityTypeModel;
-import com.xln.xlncasemanagement.model.sql.MakeModel;
 import com.xln.xlncasemanagement.model.sql.ModelModel;
-import com.xln.xlncasemanagement.model.table.MaintenanceActivityTypeTableModel;
-import com.xln.xlncasemanagement.model.table.MaintenanceMakeTableModel;
 import com.xln.xlncasemanagement.model.table.MaintenanceModelTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
-import com.xln.xlncasemanagement.sql.SQLActivityType;
-import com.xln.xlncasemanagement.sql.SQLMake;
 import com.xln.xlncasemanagement.sql.SQLModel;
 import com.xln.xlncasemanagement.util.TableObjects;
 import java.net.URL;
@@ -45,6 +39,9 @@ import javafx.stage.Stage;
 public class MaintenanceModelSceneController implements Initializable {
 
     Stage stage;
+    boolean maintenanceMode;
+    int makeID;
+    ModelModel selectedModel  = null;
 
     @FXML
     private Label headerLabel;
@@ -54,6 +51,8 @@ public class MaintenanceModelSceneController implements Initializable {
     private TextField searchTextField;
     @FXML
     private Button editButton;
+    @FXML
+    private Button clearButton;    
     @FXML
     private Button closeButton;
     @FXML
@@ -115,14 +114,31 @@ public class MaintenanceModelSceneController implements Initializable {
         editButton.disableProperty().bind(Bindings.isEmpty(searchTable.getSelectionModel().getSelectedItems()));
     }
 
-    public void setActive(Stage stagePassed) {
+    public void setActive(Stage stagePassed, boolean maintenanceModePassed, int makePassed) {
         stage = stagePassed;
-        stage.setTitle(Global.getHeaderLabel3().replace(":", "") + " Maintenance");
-        headerLabel.setText(Global.getHeaderLabel3().replace(":", "") + " Maintenance");
+        maintenanceMode = maintenanceModePassed;
+        makeID = makePassed;
         makeColumn.setText(Global.getHeaderLabel2().replace(":", ""));
         modelColumn.setText(Global.getHeaderLabel3().replace(":", ""));
         emptyTableLabel.setText("No " + Global.getHeaderLabel3().replace(":", ""));
+        stage.setTitle((maintenanceMode) 
+                ? Global.getHeaderLabel3().replace(":", "") + " Maintenance" 
+                : "Select " + Global.getHeaderLabel3().replace(":", ""));
+        headerLabel.setText((maintenanceMode) 
+                ? Global.getHeaderLabel3().replace(":", "") + " Maintenance" 
+                : "Select " + Global.getHeaderLabel3().replace(":", ""));
+        
+        editButton.setText(maintenanceMode ? "Edit" : "Select");
+        if (!maintenanceMode){
+            activeColumn.setVisible(false);
+        } else {
+            clearButton.setVisible(false);
+        }
         search();
+        
+        
+        
+        
     }
 
     private void checkboxlistener(int cellIndex) {
@@ -140,7 +156,11 @@ public class MaintenanceModelSceneController implements Initializable {
             getSortedColumn();
             searchTable.getItems().clear();
             String[] searchParam = searchTextField.getText().trim().split(" ");
-            ObservableList<MaintenanceModelTableModel> list = SQLModel.searchModels(searchParam);
+            if (!maintenanceMode){
+                makeColumn.setPrefWidth(297.5);
+                modelColumn.setPrefWidth(297.5);
+            }
+            ObservableList<MaintenanceModelTableModel> list = SQLModel.searchModels(searchParam, makeID);
             loadTable(list);
             setSortedColumn();
             searchTable.refresh();
@@ -191,8 +211,37 @@ public class MaintenanceModelSceneController implements Initializable {
     @FXML
     private void editButtonAction() {
         MaintenanceModelTableModel row = searchTable.getSelectionModel().getSelectedItem();
-        Global.getStageLauncher().MaintenanceModelAddEditScene(stage, (ModelModel) row.getObject().getValue());
-        search();
+
+        if (row != null) {
+            ModelModel selected = (ModelModel) row.getObject().getValue();
+            
+            if (maintenanceMode) {
+                Global.getStageLauncher().MaintenanceModelAddEditScene(stage, (ModelModel) row.getObject().getValue());
+                search();
+            } else {
+                selectedModel = selected;
+                stage.close();
+            }
+        }
     }
     
+    @FXML
+    private void handleClear() {
+        ModelModel item = new ModelModel();
+        item.setId(0);
+        item.setActive(false);
+        item.setName("");
+        item.setWebsite("");
+        selectedModel = item;
+        stage.close();
+    }
+
+    public ModelModel getSelectedModel() {
+        return selectedModel;
+    }
+
+    public void setSelectedModel(ModelModel selectedModel) {
+        this.selectedModel = selectedModel;
+    }
+        
 }

@@ -25,7 +25,7 @@ import org.apache.commons.dbutils.DbUtils;
  */
 public class SQLModel {
     
-    public static ObservableList<MaintenanceModelTableModel> searchModels(String[] param) {
+    public static ObservableList<MaintenanceModelTableModel> searchModels(String[] param, int makeID) {
         ObservableList<MaintenanceModelTableModel> list = FXCollections.observableArrayList();
         Connection conn = null;
         PreparedStatement ps = null;
@@ -36,7 +36,6 @@ public class SQLModel {
                 + "LEFT JOIN table24 ON table25.col03 = table24.col01 "
                 + "WHERE ";
         if (param.length > 0) {
-
             for (int i = 0; i < param.length; i++) {
                 if (i > 0) {
                     sql += " AND";
@@ -47,6 +46,12 @@ public class SQLModel {
                         + ") LIKE ? ";
             }
         }
+        if (param.length == 0 && makeID > 0){
+            sql += " table25.col03 = " + makeID + " AND table25.col02 = 1";
+        } else if (param.length > 0 && makeID > 0){
+            sql += " AND table25.col03 = " + makeID + " AND table25.col02 = 1";
+        }
+        
         try {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql);

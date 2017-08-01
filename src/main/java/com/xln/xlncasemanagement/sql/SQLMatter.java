@@ -196,7 +196,7 @@ public class SQLMatter {
         }
     }
     
-    public static void updateMAtterNoteByID(MatterModel item) {
+    public static void updateMatterNoteByID(MatterModel item) {
         Connection conn = null;
         PreparedStatement ps = null;
 

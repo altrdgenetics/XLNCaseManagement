@@ -25,7 +25,7 @@ import org.apache.commons.dbutils.DbUtils;
  */
 public class SQLMake {
     
-    public static ObservableList<MaintenanceMakeTableModel> searchMakes(String[] param) {
+    public static ObservableList<MaintenanceMakeTableModel> searchMakes(String[] param, boolean maintenanceMode) {
         ObservableList<MaintenanceMakeTableModel> list = FXCollections.observableArrayList();
         Connection conn = null;
         PreparedStatement ps = null;
@@ -33,14 +33,20 @@ public class SQLMake {
 
         String sql = "SELECT * FROM table24 WHERE ";
         if (param.length > 0) {
-
             for (int i = 0; i < param.length; i++) {
                 if (i > 0) {
                     sql += " AND";
                 }
-                sql += " col03 LIKE ?";
+                sql += " col03 LIKE ? ";
             }
         }
+        if (param.length == 0 && !maintenanceMode){
+            sql += " table24.col02 = 1";
+        } else if (param.length > 0 && !maintenanceMode){
+            sql += " AND table24.col02 = 1";
+        }
+        
+        
         try {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql);

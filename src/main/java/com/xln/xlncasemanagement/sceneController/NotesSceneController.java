@@ -80,6 +80,6 @@ public class NotesSceneController implements Initializable {
         Global.getCurrentMatter().setNote(notesArea.getText().trim().equals("") 
                 ? null : notesArea.getText().trim());
         
-        SQLMatter.updateMAtterNoteByID(Global.getCurrentMatter());
+        SQLMatter.updateMatterNoteByID(Global.getCurrentMatter());
     }
 }

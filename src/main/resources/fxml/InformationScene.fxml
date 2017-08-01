@@ -215,12 +215,12 @@
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </TextField>
-            <Button fx:id="Label3Button" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLabel3ButtonAction" styleClass="info" text="&lt;&lt;LABEL 3 BUTTON&gt;&gt;" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+            <Button fx:id="Label3Button" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLabel3ButtonAction" styleClass="info" text="&lt;&lt;LABEL 3 BUTTON&gt;&gt;" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="Label4Button" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLabel4ButtonAction" styleClass="info" text="&lt;&lt;LABEL 4 BUTTON&gt;&gt;" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+            <Button fx:id="Label4Button" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLabel4ButtonAction" styleClass="info" text="&lt;&lt;LABEL 4 BUTTON&gt;&gt;" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>

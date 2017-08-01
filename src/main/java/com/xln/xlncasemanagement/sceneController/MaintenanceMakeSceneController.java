@@ -39,6 +39,8 @@ import javafx.stage.Stage;
 public class MaintenanceMakeSceneController implements Initializable {
 
     Stage stage;
+    boolean maintenanceMode;
+    MakeModel selectedMake = null;
 
     @FXML
     private Label headerLabel;
@@ -48,6 +50,8 @@ public class MaintenanceMakeSceneController implements Initializable {
     private TextField searchTextField;
     @FXML
     private Button editButton;
+    @FXML
+    private Button clearButton;
     @FXML
     private Button closeButton;
     @FXML
@@ -106,12 +110,24 @@ public class MaintenanceMakeSceneController implements Initializable {
         editButton.disableProperty().bind(Bindings.isEmpty(searchTable.getSelectionModel().getSelectedItems()));
     }
 
-    public void setActive(Stage stagePassed) {
+    public void setActive(Stage stagePassed, boolean maintenanceModePassed) {
         stage = stagePassed;
-        stage.setTitle(Global.getHeaderLabel2().replace(":", "") + " Maintenance");
-        headerLabel.setText(Global.getHeaderLabel2().replace(":", "") + " Maintenance");
+        maintenanceMode = maintenanceModePassed;
+                
         makeColumn.setText(Global.getHeaderLabel2().replace(":", ""));
         emptyTableLabel.setText("No " + Global.getHeaderLabel2().replace(":", ""));
+        stage.setTitle((maintenanceMode) 
+                ? Global.getHeaderLabel2().replace(":", "") + " Maintenance" 
+                : "Select " + Global.getHeaderLabel2().replace(":", ""));
+        headerLabel.setText((maintenanceMode) 
+                ? Global.getHeaderLabel2().replace(":", "") + " Maintenance" 
+                : "Select " + Global.getHeaderLabel2().replace(":", ""));
+        editButton.setText(maintenanceMode ? "Edit" : "Select");
+        if (!maintenanceMode){
+            activeColumn.setVisible(false);
+        } else {
+            clearButton.setVisible(false);
+        }
         search();
     }
 
@@ -130,7 +146,7 @@ public class MaintenanceMakeSceneController implements Initializable {
             getSortedColumn();
             searchTable.getItems().clear();
             String[] searchParam = searchTextField.getText().trim().split(" ");
-            ObservableList<MaintenanceMakeTableModel> list = SQLMake.searchMakes(searchParam);
+            ObservableList<MaintenanceMakeTableModel> list = SQLMake.searchMakes(searchParam, maintenanceMode);
             loadTable(list);
             setSortedColumn();
             searchTable.refresh();
@@ -162,6 +178,17 @@ public class MaintenanceMakeSceneController implements Initializable {
     }
     
     @FXML
+    private void handleClear() {
+        MakeModel item = new MakeModel();
+        item.setId(0);
+        item.setActive(false);
+        item.setName("");
+        item.setWebsite("");
+        selectedMake = item;
+        stage.close();
+    }
+    
+    @FXML
     private void tableListener(MouseEvent event) {
         MaintenanceMakeTableModel row = searchTable.getSelectionModel().getSelectedItem();
 
@@ -181,8 +208,25 @@ public class MaintenanceMakeSceneController implements Initializable {
     @FXML
     private void editButtonAction() {
         MaintenanceMakeTableModel row = searchTable.getSelectionModel().getSelectedItem();
-        Global.getStageLauncher().MaintenanceMakeAddEditScene(stage, (MakeModel) row.getObject().getValue());
-        search();
+
+        if (row != null) {
+            MakeModel selected = (MakeModel) row.getObject().getValue();
+            
+            if (maintenanceMode) {
+                Global.getStageLauncher().MaintenanceMakeAddEditScene(stage, selected);
+                search();
+            } else {
+                selectedMake = selected;
+                stage.close();
+            }
+        }
     }
-    
+
+    public MakeModel getSelectedMake() {
+        return selectedMake;
+    }
+
+    public void setSelectedMake(MakeModel selectedMake) {
+        this.selectedMake = selectedMake;
+    }
 }

@@ -589,7 +589,8 @@ public class StageLauncher {
         }
     }
     
-    public void MaintenanceMakeScene(Stage stagePassed) {
+    public MakeModel MaintenanceMakeScene(Stage stagePassed, boolean maintenaceModePassed) {
+        MakeModel make = null;        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -601,12 +602,15 @@ public class StageLauncher {
             stage.setScene(scene);
 
             MaintenanceMakeSceneController controller = loader.getController();
-            controller.setActive(stage);
+            controller.setActive(stage, maintenaceModePassed);
 
             stage.showAndWait();
+            make = controller.getSelectedMake();
+            
         } catch (IOException ex) {
             Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return make;        
     }
     
     public void MaintenanceMakeAddEditScene(Stage stagePassed, MakeModel objectPassed) {
@@ -629,7 +633,8 @@ public class StageLauncher {
         }
     }
     
-    public void MaintenanceModelScene(Stage stagePassed) {
+    public ModelModel MaintenanceModelScene(Stage stagePassed, boolean maintenaceModePassed, int makePassed) {
+        ModelModel model = null;
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -641,12 +646,15 @@ public class StageLauncher {
             stage.setScene(scene);
 
             MaintenanceModelSceneController controller = loader.getController();
-            controller.setActive(stage);
+            controller.setActive(stage, maintenaceModePassed, makePassed);
 
             stage.showAndWait();
+            model = controller.getSelectedModel();
+            
         } catch (IOException ex) {
             Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return model;
     }
     
     public void MaintenanceModelAddEditScene(Stage stagePassed, ModelModel objectPassed) {
