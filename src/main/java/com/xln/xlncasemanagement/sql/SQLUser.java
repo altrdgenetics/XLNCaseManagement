@@ -10,7 +10,6 @@ import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.model.table.UserMaintanceTableModel;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.StringUtilities;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -176,6 +175,43 @@ public class SQLUser {
             DbUtils.closeQuietly(rs);
         }
         return item;
+    }
+    
+    public static void updateUserByID(UserModel item) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE table22 SET "
+                + "col03 = ?, " //01 - FirstName
+                + "col04 = ?, " //02 - MiddleInitial
+                + "col05 = ?, " //03 - LastName
+                + "col06 = ?, " //04 - Phone
+                + "col07 = ?, " //05 - Email
+                + "col08 = ?, " //06 - Username
+                + "col16 = ?, " //07 - activeLogin
+                + "col17 = ?, " //08 - AdminRights
+                + "col18 = ? "  //09 - DefaultRate
+                + "WHERE col01 = ?";
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setString    ( 1, item.getFirstName());
+            ps.setString    ( 2, item.getMiddleInitial());
+            ps.setString    ( 3, item.getLastName());
+            ps.setString    ( 4, item.getPhoneNumber());
+            ps.setString    ( 5, item.getEmailAddress());
+            ps.setString    ( 6, item.getUsername());
+            ps.setBoolean   ( 7, item.isActiveLogin());
+            ps.setBoolean   ( 8, item.isAdminRights());
+            ps.setBigDecimal( 9, item.getDefaultRate());
+            ps.setInt       (10, item.getId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
     }
     
 }

@@ -7,7 +7,6 @@ package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
-import com.xln.xlncasemanagement.model.sql.PartyNamePrefixModel;
 import com.xln.xlncasemanagement.model.sql.PartyRelationTypeModel;
 import com.xln.xlncasemanagement.sql.SQLCaseParty;
 import com.xln.xlncasemanagement.sql.SQLParty;
@@ -16,6 +15,7 @@ import com.xln.xlncasemanagement.sql.SQLPartyRelationType;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -78,6 +78,14 @@ public class DetailedPartySceneController implements Initializable {
             }
         };
         CaseRelationCombobox.setConverter(converter);
+        
+        MiddleInitialTextField.textProperty().addListener(
+                (final ObservableValue<? extends String> v, final String ov, final String nv) -> {
+            if (MiddleInitialTextField.getText().length() > 1) {
+                String s = MiddleInitialTextField.getText().substring(0, 1);
+                MiddleInitialTextField.setText(s);
+            }
+        });
         
         SaveButton.disableProperty().bind(lastNameTextField.textProperty().isEmpty());
     }    

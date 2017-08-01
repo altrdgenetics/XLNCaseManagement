@@ -8,7 +8,6 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MakeModel;
 import com.xln.xlncasemanagement.model.sql.ModelModel;
-import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.sql.SQLMake;
 import com.xln.xlncasemanagement.sql.SQLModel;
 import java.net.URL;

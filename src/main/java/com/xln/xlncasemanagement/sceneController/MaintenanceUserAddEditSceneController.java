@@ -6,14 +6,20 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.model.sql.UserModel;
+import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.NumberFormatService;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 
 /**
@@ -29,11 +35,14 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
     @FXML private Label headerLabel;
     @FXML private Button saveButton;
     @FXML private Button closeButton;
+    @FXML private CheckBox loggedInCheckBox;
+    @FXML private CheckBox adminRightsCheckBox;
     @FXML private TextField userNameTextfield;
     @FXML private TextField firstNameTextfield;
     @FXML private TextField middleInitialTextfield;
     @FXML private TextField lastNameNameTextfield;
     @FXML private TextField phoneNumberTextfield;
+    @FXML private TextField defaultRateTextField;
         
     /**
      * Initializes the controller class.
@@ -63,6 +72,15 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
     
     private void setListeners() {
         saveButton.disableProperty().bind(userNameTextfield.textProperty().isEmpty());
+        defaultRateTextField.setTextFormatter(new TextFormatter<>(NumberFormatService.moneyMaskFormatter()));
+        
+        middleInitialTextfield.textProperty().addListener(
+                (final ObservableValue<? extends String> v, final String ov, final String nv) -> {
+            if (middleInitialTextfield.getText().length() > 1) {
+                String s = middleInitialTextfield.getText().substring(0, 1);
+                middleInitialTextfield.setText(s);
+            }
+        });
     }
     
     private void loadInformation(){
@@ -71,6 +89,9 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
         middleInitialTextfield.setText(userObject.getMiddleInitial() == null ? "" : userObject.getMiddleInitial());
         lastNameNameTextfield.setText(userObject.getLastName() == null ? "" : userObject.getLastName());
         phoneNumberTextfield.setText(userObject.getPhoneNumber() == null ? "" : NumberFormatService.convertStringToPhoneNumber(userObject.getPhoneNumber()));
+        loggedInCheckBox.setSelected(userObject.isActiveLogin());
+        adminRightsCheckBox.setSelected(userObject.isAdminRights());
+        defaultRateTextField.setText(NumberFormatService.formatMoney(userObject.getDefaultRate()));
     }
     
     @FXML
@@ -93,6 +114,18 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
     }
     
     private void updateUser() {
-        //TODO
+        UserModel item = new UserModel();
+        item.setFirstName(firstNameTextfield.getText().trim().equals("") ? null : firstNameTextfield.getText().trim());
+        item.setMiddleInitial(middleInitialTextfield.getText().trim().equals("") ? null : middleInitialTextfield.getText().trim());
+        item.setLastName(lastNameNameTextfield.getText().trim().equals("") ? null : lastNameNameTextfield.getText().trim());
+        item.setPhoneNumber(phoneNumberTextfield.getText().trim().equals("") ? null : phoneNumberTextfield.getText().trim());
+        item.setEmailAddress(null);
+        item.setUsername(userNameTextfield.getText().trim().equals("") ? null : userNameTextfield.getText().trim());
+        item.setActiveLogin(loggedInCheckBox.isSelected());
+        item.setAdminRights(adminRightsCheckBox.isSelected());
+        item.setDefaultRate(defaultRateTextField.getText().trim().equals("") ? BigDecimal.ZERO : NumberFormatService.convertToBigDecimal(defaultRateTextField.getText().trim()));
+        item.setId(userObject.getId());
+        
+        SQLUser.updateUserByID(item);
     }
 }

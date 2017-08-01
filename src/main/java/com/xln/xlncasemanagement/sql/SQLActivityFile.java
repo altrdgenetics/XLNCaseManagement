@@ -5,7 +5,6 @@
  */
 package com.xln.xlncasemanagement.sql;
 
-import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.FileUtilities;
 import java.io.ByteArrayInputStream;
 import java.io.File;

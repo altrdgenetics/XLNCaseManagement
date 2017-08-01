@@ -9,7 +9,6 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.sql.UserModel;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import org.apache.commons.io.FilenameUtils;
 
