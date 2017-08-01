@@ -416,7 +416,7 @@ public class MainStageController implements Initializable {
         updateButtonFourLabel(disable);
     }
     
-    private void loadHeader() {
+    public void loadHeader() {
         if (Global.getCurrentMatter() != null) {            
             headerField2.setText(Global.getCurrentMatter().getMakeName() == null
                     ? "" : Global.getCurrentMatter().getMakeName());

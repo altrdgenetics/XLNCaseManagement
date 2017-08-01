@@ -190,6 +190,7 @@ public class InformationSceneController implements Initializable {
             MatterModel model = SQLMatter.getMatterByID(Global.getCurrentMatter().getId());
             Global.setCurrentMatter(model);
             setInformation();
+            Global.getMainStageController().loadHeader();
         } else {
             clearWindow();
         }
