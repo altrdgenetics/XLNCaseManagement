@@ -160,7 +160,8 @@ public class MainStageController implements Initializable {
         
         //Disable Property
         headerField1.disableProperty().bind(
-                clientField.valueProperty().isNull()
+                (clientField.valueProperty().isNull())
+                .or(clientField.disabledProperty())
         );
     }    
         
@@ -377,7 +378,7 @@ public class MainStageController implements Initializable {
     }
     
     @FXML private void buttonFiveAction(){
-        //Letters Button Action
+        Global.getStageLauncher().LetterSelectionScene(stage);
     }
     
     @FXML private void buttonSixAction(){
@@ -411,7 +412,6 @@ public class MainStageController implements Initializable {
             }
         }
         clientField.setDisable(disable);
-        headerField1.setDisable(disable);
         buttonOne.setDisable(disable);
         buttonTwo.setDisable(disable);
         buttonThree.setDisable(disable);
