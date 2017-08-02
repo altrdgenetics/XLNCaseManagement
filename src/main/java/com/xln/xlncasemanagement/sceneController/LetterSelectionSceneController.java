@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.model.sql.TemplateModel;
+import com.xln.xlncasemanagement.sql.SQLTemplate;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -61,7 +62,8 @@ public class LetterSelectionSceneController implements Initializable {
     }
     
     private void loadInforamtion() {
-        //TODO load from Database
+        letterComboBox.getItems().removeAll(letterComboBox.getItems());
+        SQLTemplate.getActiveTemplate().forEach(item -> letterComboBox.getItems().addAll(item));
     }
     
     @FXML private void comboBoxAction() {
