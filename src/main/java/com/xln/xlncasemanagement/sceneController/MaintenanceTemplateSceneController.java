@@ -7,11 +7,11 @@ package com.xln.xlncasemanagement.sceneController;
 
 
 import com.xln.xlncasemanagement.Global;
-import com.xln.xlncasemanagement.model.sql.ActivityTypeModel;
 import com.xln.xlncasemanagement.model.sql.TemplateModel;
 import com.xln.xlncasemanagement.model.table.MaintenanceTemplateTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
 import com.xln.xlncasemanagement.sql.SQLTemplate;
+import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -89,8 +89,8 @@ public class MaintenanceTemplateSceneController implements Initializable {
     private void checkboxlistener(int cellIndex) {
         MaintenanceTemplateTableModel row = searchTable.getItems().get(cellIndex);
         if (row != null) {
-            ActivityTypeModel item = (ActivityTypeModel) row.getObject().getValue();
-            SQLActiveStatus.setActive("table02", item.getId(), row.getChecked());
+            TemplateModel item = (TemplateModel) row.getObject().getValue();
+            SQLActiveStatus.setActive("table10", item.getId(), row.getChecked());
             searchTable.getSelectionModel().clearSelection();
         }
     }
