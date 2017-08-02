@@ -53,6 +53,21 @@
             <artifactId>jacob</artifactId>
             <version>1.18</version>
         </dependency>
+        <dependency> <!-- Document Modification (Mail Merge)-->
+            <groupId>org.docx4j</groupId>
+            <artifactId>docx4j</artifactId>
+            <version>3.3.5</version>
+        </dependency>
+        <dependency> <!-- Logging for docx4j-->
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <dependency> <!-- Extra Dependency for docx4j-->
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.moxy</artifactId>
+            <version>2.5.1</version>
+        </dependency>
     </dependencies>
 
     <build>

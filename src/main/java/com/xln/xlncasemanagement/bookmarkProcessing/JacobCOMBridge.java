@@ -9,6 +9,8 @@ import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.LibraryLoader;
 import com.jacob.com.Variant;
 import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.util.FileUtilities;
+import java.io.File;
 
 /**
  *
@@ -18,15 +20,10 @@ public class JacobCOMBridge {
 
     public static ActiveXComponent setWordActive(boolean active, boolean visible, ActiveXComponent eolWord) {
         final String libFile = "amd64".equals(System.getProperty("os.arch")) ? "jacob-1.18-x64.dll" : "jacob-1.18-x86.dll";    
-        String dllPath = Global.getTempDirectory(); 
         
-//        File dll = new File(libFile);
-//        if (dll.exists()) {
-//            dllPath = dll.getAbsolutePath();
-//
-//        }
+        File dll = FileUtilities.generateFileFromInputStream(JacobCOMBridge.class.getResourceAsStream("/jacob/" + libFile), libFile);
 
-        if (loadLibrary(dllPath)) {
+        if (loadLibrary(dll.toString())) {
             if (active) {
                 if (eolWord == null) {
                     eolWord = new ActiveXComponent("Word.Application");

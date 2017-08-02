@@ -174,4 +174,41 @@ public class FileUtilities {
         return tempFile;
     }
     
+    public static File generateFileFromInputStream(InputStream is, String fileName) {
+        File tempFile = null;
+        OutputStream outputStream = null;
+
+        try {
+            // write the inputStream to a FileOutputStream
+            tempFile = new File(Global.getTempDirectory() + fileName);
+            outputStream = new FileOutputStream(tempFile);
+
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = is.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, read);
+            }
+                        
+        } catch (IOException ex) {
+            DebugTools.Printout(ex.getMessage());
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException ex) {
+                    DebugTools.Printout(ex.getMessage());
+                }
+            }
+            if (outputStream != null) {
+                try {
+                    // outputStream.flush();
+                    outputStream.close();
+                } catch (IOException ex) {
+                    DebugTools.Printout(ex.getMessage());
+                }
+            }
+        }
+        return tempFile;
+    }
 }

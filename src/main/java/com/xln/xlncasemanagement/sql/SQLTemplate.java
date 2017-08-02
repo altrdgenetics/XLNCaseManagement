@@ -187,10 +187,10 @@ public class SQLTemplate {
                 item.setId(rs.getInt("col01"));
                 item.setActive(rs.getBoolean("col02"));
                 item.setName(rs.getString("col03"));
-                item.setDescription(rs.getString("col03"));
-                item.setFileName(rs.getString("col03"));
-                item.setFileBlob(rs.getBytes("col03"));
-                item.setFileBlobHash(rs.getString("col03"));
+                item.setDescription(rs.getString("col04"));
+                item.setFileName(rs.getString("col05"));
+                item.setFileBlob(rs.getBytes("col06"));
+                item.setFileBlobHash(rs.getString("col07"));
             }
         } catch (SQLException ex) {
             DebugTools.Printout(ex.getMessage());

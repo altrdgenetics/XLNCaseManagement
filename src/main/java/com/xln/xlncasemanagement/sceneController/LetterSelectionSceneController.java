@@ -5,6 +5,8 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
+import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.bookmarkProcessing.GenerateDocument;
 import com.xln.xlncasemanagement.model.sql.TemplateModel;
 import com.xln.xlncasemanagement.sql.SQLTemplate;
 import java.net.URL;
@@ -74,7 +76,10 @@ public class LetterSelectionSceneController implements Initializable {
     }
     
     @FXML private void selectButtonAction(){
-        //TODO generate letter
+        TemplateModel selectedItem = (TemplateModel) letterComboBox.getValue();
+        TemplateModel template = SQLTemplate.geTemplateByID(selectedItem.getId());
+        
+        GenerateDocument.generateDocument(template, Global.getCurrentMatter());
     }
     
     @FXML private void handleClose() {

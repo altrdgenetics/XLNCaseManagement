@@ -10,6 +10,9 @@ import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
+import com.xln.xlncasemanagement.model.sql.TemplateModel;
+import com.xln.xlncasemanagement.util.FileUtilities;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.Date;
 
@@ -17,34 +20,33 @@ import java.util.Date;
  *
  * @author User
  */
-public class generateDocument {
+public class GenerateDocument {
     
-    public static String generateDocument(MatterModel matter) {
-        File docPath = null;
+    public static String generateDocument(TemplateModel template, MatterModel matter) {
         String saveDocName = null;
         ActiveXComponent eolWord = null;
         eolWord = JacobCOMBridge.setWordActive(true, false, eolWord);
         if (eolWord != null) {
             //Setup Document
-            docPath = new File(Global.getTempDirectory());
-            docPath.mkdirs();
-
-            saveDocName = String.valueOf(new Date().getTime()) + ".docx";
-
+            File templateFile = FileUtilities.generateFileFromInputStream(
+                    new ByteArrayInputStream(template.getFileBlob()), template.getFileName()
+            );
+                        
+            saveDocName = String.valueOf(new Date().getTime()) + "_" + template.getFileName() + ".docx";
             saveDocName = saveDocName.replaceAll("[:\\\\/*?|<>]", "_");
 
-            Dispatch document = Dispatch.call(eolWord.getProperty("Documents").toDispatch(), "Open",
-                    Global.getTempDirectory() + "SERBAnnualReport.docx").toDispatch();
+            //Run Bookmarks
+            Dispatch document = Dispatch.call(eolWord.getProperty("Documents").toDispatch(), "Open", templateFile).toDispatch();
             ActiveXComponent.call(eolWord.getProperty("Selection").toDispatch(), "Find").toDispatch();
 
-            document = documentProcessing.processAWordLetter(document, matter);
+            document = DocumentProcessing.processAWordLetter(document, matter);
 
+            //Save Document
             Dispatch WordBasic = (Dispatch) Dispatch.call(eolWord, "WordBasic").getDispatch();
-            String newFilePath = docPath + File.separator + saveDocName;
+            String newFilePath = Global.getTempDirectory() + File.separator + saveDocName;
             Dispatch.call(WordBasic, "FileSaveAs", newFilePath, new Variant(16));
             JacobCOMBridge.setWordActive(false, false, eolWord);
         }
-
         return saveDocName;
     }
     

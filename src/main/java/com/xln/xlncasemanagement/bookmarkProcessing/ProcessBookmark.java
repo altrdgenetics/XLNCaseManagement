@@ -11,7 +11,7 @@ import com.jacob.com.Dispatch;
  *
  * @author User
  */
-public class processBookmark {
+public class ProcessBookmark {
     
 //      Microsoft Word Save Formats    
 //      Variant(0)  //  Microsoft Office Word Format
