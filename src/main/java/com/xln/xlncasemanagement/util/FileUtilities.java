@@ -138,12 +138,11 @@ public class FileUtilities {
     
     public static File generateFileFromBlobData(InputStream is, String fileName, String checkSum) {
         File tempFile = null;
-        String tempDirectory = System.getProperty("java.io.tmpdir");
         OutputStream outputStream = null;
 
         try {
             // write the inputStream to a FileOutputStream
-            tempFile = new File(tempDirectory + fileName);
+            tempFile = new File(Global.getTempDirectory() + fileName);
             outputStream = new FileOutputStream(tempFile);
 
             int read = 0;

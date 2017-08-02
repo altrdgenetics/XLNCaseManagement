@@ -696,4 +696,44 @@ public class StageLauncher {
             Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void MaintenanceTemplateScene(Stage stagePassed) {
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/MaintenanceTemplateScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            MaintenanceTemplateSceneController controller = loader.getController();
+            controller.setActive(stage);
+
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void MaintenanceTemplateAddEditScene(Stage stagePassed, TemplateModel objectPassed) {
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/MaintenanceTemplateAddEditScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            MaintenanceTemplateAddEditSceneController controller = loader.getController();
+            controller.setActive(stage, objectPassed);
+
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

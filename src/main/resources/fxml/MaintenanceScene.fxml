@@ -27,7 +27,6 @@
          <children>
             <Button fx:id="ActivityTypeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activityTypeButtonAction" prefWidth="150.0" styleClass="primary" text="Activity Type" />
             <Button fx:id="CompanyButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#companyButtonAction" prefWidth="150.0" styleClass="primary" text="Company" />
-            <Button fx:id="DocumentButton" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#documentButtonAction" prefWidth="150.0" styleClass="primary" text="Document" />
             <Button fx:id="ExpenseTypeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#expenseTypeButtonAction" prefWidth="150.0" styleClass="primary" text="Expense Type" />
             <Button fx:id="MakeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#makeButtonAction" prefWidth="150.0" styleClass="primary" text="Make" />
             <Button fx:id="ModelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#modelButtonAction" prefWidth="150.0" styleClass="primary" text="Model" />
@@ -35,7 +34,8 @@
             <Button fx:id="PartyButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#partyButtonAction" prefWidth="150.0" styleClass="primary" text="Party" />
             <Button fx:id="PartyNamePreFixButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#partyNamePreFixButtonAction" prefWidth="150.0" styleClass="primary" text="Party Name Prefix" />
             <Button fx:id="PartyRelationTypeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#partyRelationTypeButtonAction" prefWidth="150.0" styleClass="primary" text="Party Relation Type" />
-            <Button fx:id="reportButton" disable="true" layoutX="219.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#reportButtonAction" prefWidth="150.0" styleClass="primary" text="Report" />
+            <Button fx:id="ReportButton" disable="true" layoutX="219.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#reportButtonAction" prefWidth="150.0" styleClass="primary" text="Report" />
+            <Button fx:id="TemplateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#templateButtonAction" prefWidth="150.0" styleClass="primary" text="Template" />
             <Button fx:id="UserButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#userButtonAction" prefWidth="150.0" styleClass="primary" text="User" />
          </children>
          <BorderPane.margin>

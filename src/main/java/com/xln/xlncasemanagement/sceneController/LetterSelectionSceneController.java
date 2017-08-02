@@ -5,7 +5,7 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
-import com.xln.xlncasemanagement.model.sql.DocumentModel;
+import com.xln.xlncasemanagement.model.sql.TemplateModel;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -41,14 +41,14 @@ public class LetterSelectionSceneController implements Initializable {
                 .bind((letterComboBox.valueProperty().isNull()));
         
         //Setup ComboBox
-        StringConverter<DocumentModel> converter = new StringConverter<DocumentModel>() {
+        StringConverter<TemplateModel> converter = new StringConverter<TemplateModel>() {
             @Override
-            public String toString(DocumentModel object) {
+            public String toString(TemplateModel object) {
                 return object.getName();
             }
 
             @Override
-            public DocumentModel fromString(String string) {
+            public TemplateModel fromString(String string) {
                 return null;
             }
         };
@@ -65,7 +65,7 @@ public class LetterSelectionSceneController implements Initializable {
     }
     
     @FXML private void comboBoxAction() {
-        DocumentModel selectedItem = (DocumentModel) letterComboBox.getValue();
+        TemplateModel selectedItem = (TemplateModel) letterComboBox.getValue();
         if (selectedItem != null){
             descriptionTextArea.setText(selectedItem.getDescription() == null ? "" : selectedItem.getDescription().trim());
         }

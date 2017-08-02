@@ -9,7 +9,7 @@ package com.xln.xlncasemanagement.model.sql;
  *
  * @author User
  */
-public class DocumentModel {
+public class TemplateModel {
     
     private int id;
     private boolean active;

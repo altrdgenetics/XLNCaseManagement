@@ -34,6 +34,8 @@ public class Global {
     private static UserModel currentUser;
     private static PartyModel currentClient;
     private static MatterModel currentMatter; 
+    private static final int GLOBAL_BOOKMARKLIMIT = 10;
+    private static final String tempDirectory = System.getProperty("java.io.tmpdir");
     
     //list of all states
     private static final String STATES[] = { "AL", "AK", "AS", "AZ", "AR", "CA", "CO",
@@ -46,6 +48,7 @@ public class Global {
     //Date Formatters
     private static final SimpleDateFormat mmddyyyyhhmmssa = new SimpleDateFormat("EEE, MM/dd/yyyy hh:mm:ss a");
     private static final SimpleDateFormat iCalendarDateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmm'00'");
+    private static final SimpleDateFormat MMMMMdyyyy = new SimpleDateFormat("MMMMM d, yyyy");
     private static final SimpleDateFormat mmddyyyy = new SimpleDateFormat("MM/dd/yyyy");
     private static final SimpleDateFormat hhmmssa = new SimpleDateFormat("hh:mm:ss a");
     
@@ -165,6 +168,14 @@ public class Global {
         Global.currentMatter = currentMatter;
     }
 
+    public static int getGLOBAL_BOOKMARKLIMIT() {
+        return GLOBAL_BOOKMARKLIMIT;
+    }
+
+    public static String getTempDirectory() {
+        return tempDirectory;
+    }
+    
     public static String[] getSTATES() {
         return STATES;
     }
@@ -297,6 +308,10 @@ public class Global {
         return iCalendarDateFormat;
     }
 
+    public static SimpleDateFormat getMMMMMdyyyy() {
+        return MMMMMdyyyy;
+    }
+    
     public static SimpleDateFormat getMmddyyyy() {
         return mmddyyyy;
     }
