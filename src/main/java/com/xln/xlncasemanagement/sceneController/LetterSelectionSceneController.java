@@ -9,8 +9,13 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.bookmarkProcessing.GenerateDocument;
 import com.xln.xlncasemanagement.model.sql.TemplateModel;
 import com.xln.xlncasemanagement.sql.SQLTemplate;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -79,11 +84,21 @@ public class LetterSelectionSceneController implements Initializable {
         TemplateModel selectedItem = (TemplateModel) letterComboBox.getValue();
         TemplateModel template = SQLTemplate.geTemplateByID(selectedItem.getId());
         
-        GenerateDocument.generateDocument(template, Global.getCurrentMatter());
+        generateDocument(template);
     }
     
     @FXML private void handleClose() {
         stage.close();
+    }
+    
+    private void generateDocument(TemplateModel template){
+        String saveDocName = GenerateDocument.generateDocument(template, Global.getCurrentMatter());
+        
+        try {
+            Desktop.getDesktop().open(new File(Global.getTempDirectory() + File.separator + saveDocName));
+        } catch (IOException ex) {
+            Logger.getLogger(LetterSelectionSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

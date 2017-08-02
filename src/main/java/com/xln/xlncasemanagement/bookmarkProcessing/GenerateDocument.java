@@ -28,11 +28,11 @@ public class GenerateDocument {
         eolWord = JacobCOMBridge.setWordActive(true, false, eolWord);
         if (eolWord != null) {
             //Setup Document
-            File templateFile = FileUtilities.generateFileFromInputStream(
+            String templateFile = FileUtilities.generateFilePathFromInputStream(
                     new ByteArrayInputStream(template.getFileBlob()), template.getFileName()
             );
                         
-            saveDocName = String.valueOf(new Date().getTime()) + "_" + template.getFileName() + ".docx";
+            saveDocName = String.valueOf(new Date().getTime()) + "_" + template.getFileName();
             saveDocName = saveDocName.replaceAll("[:\\\\/*?|<>]", "_");
 
             //Run Bookmarks

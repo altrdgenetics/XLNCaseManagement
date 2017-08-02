@@ -174,13 +174,13 @@ public class FileUtilities {
         return tempFile;
     }
     
-    public static File generateFileFromInputStream(InputStream is, String fileName) {
-        File tempFile = null;
+    public static String generateFilePathFromInputStream(InputStream is, String fileName) {
+        String tempFile = null;
         OutputStream outputStream = null;
 
         try {
             // write the inputStream to a FileOutputStream
-            tempFile = new File(Global.getTempDirectory() + fileName);
+            tempFile = Global.getTempDirectory() + fileName;
             outputStream = new FileOutputStream(tempFile);
 
             int read = 0;
@@ -202,7 +202,7 @@ public class FileUtilities {
             }
             if (outputStream != null) {
                 try {
-                    // outputStream.flush();
+                    outputStream.flush();
                     outputStream.close();
                 } catch (IOException ex) {
                     DebugTools.Printout(ex.getMessage());

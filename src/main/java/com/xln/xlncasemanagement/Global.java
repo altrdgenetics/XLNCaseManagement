@@ -36,6 +36,7 @@ public class Global {
     private static MatterModel currentMatter; 
     private static final int GLOBAL_BOOKMARKLIMIT = 10;
     private static final String tempDirectory = System.getProperty("java.io.tmpdir");
+    private static String JACOBDLL_PATH = "";
     
     //list of all states
     private static final String STATES[] = { "AL", "AK", "AS", "AZ", "AR", "CA", "CO",
@@ -174,6 +175,14 @@ public class Global {
 
     public static String getTempDirectory() {
         return tempDirectory;
+    }
+
+    public static String getJACOBDLL_PATH() {
+        return JACOBDLL_PATH;
+    }
+
+    public static void setJACOBDLL_PATH(String JACOBDLL_PATH) {
+        Global.JACOBDLL_PATH = JACOBDLL_PATH;
     }
     
     public static String[] getSTATES() {
