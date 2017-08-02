@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement.util;
 
 import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.model.sql.CompanyModel;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.sql.UserModel;
 import java.util.Date;
@@ -90,6 +91,17 @@ public class StringUtilities {
         return fullName.trim();
     }
     
+    public static String buildAddresseeName(PartyModel item) {
+        String fullName = "";
+        if (item.getPrefix() != null) {
+            fullName = fullName.trim() + (item.getPrefix().equals("") ? "" : item.getPrefix().trim());
+        }  
+        if (item.getLastName() != null) {
+            fullName = fullName.trim() + (item.getLastName().equals("") ? "" : " " + item.getLastName().trim());
+        }
+        return fullName.trim();
+    }
+    
     public static String buildUserName(UserModel item) {
         String fullName = "";
 
@@ -148,5 +160,57 @@ public class StringUtilities {
         }
 
         return addressLine.trim();
+    }
+    
+    public static String buildAddressBlockWithLineBreaks(CompanyModel item) {
+        String addressBlock = "";
+
+        addressBlock += item.getName();
+        if (item.getAddressOne()!= null) {
+            if (!item.getAddressOne().equals("")) {
+                addressBlock += System.lineSeparator() + item.getAddressOne();
+            }
+        }
+        if (item.getAddressTwo() != null) {
+            if (!item.getAddressTwo().equals("")) {
+                addressBlock += System.lineSeparator() + item.getAddressTwo();
+            }
+        }
+        if (item.getAddressThree() != null) {
+            if (!item.getAddressThree().equals("")) {
+                addressBlock += System.lineSeparator() + item.getAddressThree();
+            }
+        }
+        addressBlock += System.lineSeparator() + (item.getCity() == null ? "" : item.getCity())
+                + ", " + (item.getState() == null ? "" : item.getState())
+                + " " + (item.getZip() == null ? "" : item.getZip());
+
+        return addressBlock.trim();
+    }
+    
+    public static String buildAddressBlockWithLineBreaks(PartyModel item) {
+        String addressBlock = "";
+
+        addressBlock += buildPartyName(item);
+        if (item.getAddressOne()!= null) {
+            if (!item.getAddressOne().equals("")) {
+                addressBlock += System.lineSeparator() + item.getAddressOne();
+            }
+        }
+        if (item.getAddressTwo() != null) {
+            if (!item.getAddressTwo().equals("")) {
+                addressBlock += System.lineSeparator() + item.getAddressTwo();
+            }
+        }
+        if (item.getAddressThree() != null) {
+            if (!item.getAddressThree().equals("")) {
+                addressBlock += System.lineSeparator() + item.getAddressThree();
+            }
+        }
+        addressBlock += System.lineSeparator() + (item.getCity() == null ? "" : item.getCity())
+                + ", " + (item.getState() == null ? "" : item.getState())
+                + " " + (item.getZip() == null ? "" : item.getZip());
+
+        return addressBlock.trim();
     }
 }

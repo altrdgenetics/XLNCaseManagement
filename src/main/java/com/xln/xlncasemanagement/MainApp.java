@@ -35,6 +35,7 @@ public class MainApp extends Application {
      */
     private void setSpoofData() {
         LabelHashTables.setGlobalLabels("1");
+        Global.setVersion("1");
         
         UserModel user = new UserModel();
         user.setAdminRights(true);

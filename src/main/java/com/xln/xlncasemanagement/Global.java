@@ -23,6 +23,7 @@ public class Global {
     
     private static final boolean debug = true;
     
+    private static String version;
     private static Parent root;    
     private static Stage mainStage;
     private static MainStageController mainStageController;
@@ -77,6 +78,16 @@ public class Global {
     private static String informationLabel5 = "";
     private static String informationLabel6 = "";
 
+    public static String getVersion() {
+        return version;
+    }
+
+    public static void setVersion(String version) {
+        Global.version = version;
+    }
+
+    
+    
     public static boolean isDebug() {
         return debug;
     }

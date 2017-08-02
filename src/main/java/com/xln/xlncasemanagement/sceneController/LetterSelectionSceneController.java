@@ -92,8 +92,7 @@ public class LetterSelectionSceneController implements Initializable {
     }
     
     private void generateDocument(TemplateModel template){
-        String saveDocName = GenerateDocument.generateDocument(template, Global.getCurrentMatter());
-        
+        String saveDocName = GenerateDocument.generateDocument(template, Global.getCurrentClient(), Global.getCurrentMatter());
         try {
             Desktop.getDesktop().open(new File(Global.getTempDirectory() + File.separator + saveDocName));
         } catch (IOException ex) {

@@ -10,6 +10,7 @@ import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
+import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.sql.TemplateModel;
 import com.xln.xlncasemanagement.util.FileUtilities;
 import java.io.ByteArrayInputStream;
@@ -22,7 +23,7 @@ import java.util.Date;
  */
 public class GenerateDocument {
     
-    public static String generateDocument(TemplateModel template, MatterModel matter) {
+    public static String generateDocument(TemplateModel template, PartyModel client, MatterModel matter) {
         String saveDocName = null;
         ActiveXComponent eolWord = null;
         eolWord = JacobCOMBridge.setWordActive(true, false, eolWord);
@@ -39,7 +40,7 @@ public class GenerateDocument {
             Dispatch document = Dispatch.call(eolWord.getProperty("Documents").toDispatch(), "Open", templateFile).toDispatch();
             ActiveXComponent.call(eolWord.getProperty("Selection").toDispatch(), "Find").toDispatch();
 
-            document = DocumentProcessing.processAWordLetter(document, matter);
+            document = DocumentProcessing.processAWordLetter(document, client ,matter);
 
             //Save Document
             Dispatch WordBasic = (Dispatch) Dispatch.call(eolWord, "WordBasic").getDispatch();
