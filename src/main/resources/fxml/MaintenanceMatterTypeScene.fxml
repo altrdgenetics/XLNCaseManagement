@@ -24,7 +24,7 @@
             <children>
                 <TableView fx:id="searchTable" editable="true" layoutX="382.0" layoutY="30.0" onMouseClicked="#tableListener" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
                     <placeholder>
-                        <Label text="No Matter Types"/>
+                        <Label fx:id="emptyTableLabel" text="No Matter Types" />
                     </placeholder>
                     <columns>
                         <TableColumn fx:id="iDColumn" editable="false" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="Object" visible="false" />
@@ -56,7 +56,7 @@
                         <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="910.0" text="Matter Type Maintenance" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <Label fx:id="headerLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="910.0" text="Matter Type Maintenance" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                             <font>
                                 <Font name="System Bold" size="18.0" />
                             </font>

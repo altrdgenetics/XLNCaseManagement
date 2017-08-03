@@ -34,10 +34,12 @@ public class MainApp extends Application {
      * Set pre-configured options for testing
      */
     private void setSpoofData() {
-        LabelHashTables.setGlobalLabels("1");
-        Global.setVersion("1");
+        String version = "1";
         
-        UserModel user = SQLUser.getUserByUserName("andrew.schmidt");
+        LabelHashTables.setGlobalLabels(version);
+        Global.setVersion(version);
+        
+        UserModel user = SQLUser.getUserByUserName("anthony.perk");
         Global.setCurrentUser(user);
     }
 }

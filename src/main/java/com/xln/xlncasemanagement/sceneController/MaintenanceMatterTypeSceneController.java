@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -34,6 +35,10 @@ public class MaintenanceMatterTypeSceneController implements Initializable {
 
     Stage stage;
 
+    @FXML
+    private Label headerLabel;
+    @FXML
+    private Label emptyTableLabel;
     @FXML
     private TextField searchTextField;
     @FXML
@@ -78,7 +83,10 @@ public class MaintenanceMatterTypeSceneController implements Initializable {
 
     public void setActive(Stage stagePassed) {
         stage = stagePassed;
-        stage.setTitle("Matter Type Maintenance");
+        stage.setTitle(Global.getNewCaseType() + " Type Maintenance");
+        headerLabel.setText(Global.getNewCaseType() + " Type Maintenance");
+        nameColumn.setText(Global.getNewCaseType() + " Type");
+        emptyTableLabel.setText("No " + Global.getNewCaseType() + " Types");
         search();
     }
 

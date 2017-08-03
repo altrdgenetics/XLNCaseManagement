@@ -196,10 +196,8 @@ public class MainStageController implements Initializable {
     }
     
     @FXML private void handleCloseMenuItem() { 
-        stage.setOnCloseRequest((WindowEvent t) -> {
-            Platform.exit();
-            System.exit(0);
-        });
+        Platform.exit();
+        System.exit(0);
     }
     
     @FXML private void handlePartyRolodexMenuItem(){

@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
+import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MatterTypeModel;
 import com.xln.xlncasemanagement.sql.SQLMatterType;
 import java.net.URL;
@@ -31,6 +32,8 @@ public class MaintenanceMatterTypeAddEditSceneController implements Initializabl
     @FXML
     private TextField matterTypetextField;
     @FXML
+    private Label typeLabel;
+    @FXML
     private Button saveButton;
     @FXML
     private Button closeButton;
@@ -48,11 +51,13 @@ public class MaintenanceMatterTypeAddEditSceneController implements Initializabl
     public void setActive(Stage stagePassed, MatterTypeModel matterTypeObjectPassed){
         stage = stagePassed;
         matterTypeObject = matterTypeObjectPassed;
-        String title = "Add Matter Type";
+        String title = "Add " + Global.getNewCaseType() + " Type";
         String buttonText = "Add";
         
+        typeLabel.setText(Global.getNewCaseType() + ":");
+        
         if (matterTypeObject != null){
-            title = "Edit Matter Type";
+            title = "Edit " + Global.getNewCaseType() + " Type";
             buttonText = "Save";
             loadInformation();
         }
@@ -92,7 +97,7 @@ public class MaintenanceMatterTypeAddEditSceneController implements Initializabl
         matterTypeObject.setActive(true);
         matterTypeObject.setMatterType(matterTypetextField.getText().trim());
         int id = SQLMatterType.insertMatterType(matterTypeObject);
-        System.out.println("New Matter Type ID: " + id);
+        System.out.println("New " + Global.getNewCaseType() + " Type ID: " + id);
     }
     
     private void updateCompany() {
