@@ -53,6 +53,11 @@
             <artifactId>jacob</artifactId>
             <version>1.18</version>
         </dependency>
+        <dependency> <!-- Generating Reports -->
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>6.4.0</version>
+        </dependency>
     </dependencies>
 
     <build>
