@@ -16,6 +16,8 @@ public class ReportModel {
     private String name;
     private String description;
     private String fileName;
+    private byte[] fileBlob;
+    private String fileBlobHash;
 
     public int getId() {
         return id;
@@ -55,6 +57,22 @@ public class ReportModel {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public byte[] getFileBlob() {
+        return fileBlob;
+    }
+
+    public void setFileBlob(byte[] fileBlob) {
+        this.fileBlob = fileBlob;
+    }
+
+    public String getFileBlobHash() {
+        return fileBlobHash;
+    }
+
+    public void setFileBlobHash(String fileBlobHash) {
+        this.fileBlobHash = fileBlobHash;
     }
     
 }

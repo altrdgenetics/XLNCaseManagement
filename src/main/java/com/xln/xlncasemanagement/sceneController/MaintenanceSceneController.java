@@ -96,7 +96,7 @@ public class MaintenanceSceneController implements Initializable {
     }
     
     @FXML private void reportButtonAction() {
-        
+        Global.getStageLauncher().MaintenanceReportScene(stage);
     }
     
     @FXML private void templateButtonAction() {

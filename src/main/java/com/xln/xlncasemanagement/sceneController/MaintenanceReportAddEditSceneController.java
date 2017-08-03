@@ -5,7 +5,9 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
+import com.xln.xlncasemanagement.model.sql.ReportModel;
 import com.xln.xlncasemanagement.model.sql.TemplateModel;
+import com.xln.xlncasemanagement.sql.SQLReport;
 import com.xln.xlncasemanagement.sql.SQLTemplate;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.DebugTools;
@@ -31,10 +33,10 @@ import javafx.stage.Stage;
  *
  * @author User
  */
-public class MaintenanceTemplateAddEditSceneController implements Initializable {
+public class MaintenanceReportAddEditSceneController implements Initializable {
 
     Stage stage;
-    TemplateModel templateObject;
+    ReportModel reportObject;
     File fileSelection;
     
     @FXML private Label headerLabel;
@@ -56,15 +58,15 @@ public class MaintenanceTemplateAddEditSceneController implements Initializable 
         setListeners();
     }    
     
-    public void setActive(Stage stagePassed, TemplateModel templateObjectPassed){
+    public void setActive(Stage stagePassed, ReportModel reportObjectPassed){
         stage = stagePassed;
-        templateObject = templateObjectPassed;
-        String title = "Add Template";
+        reportObject = reportObjectPassed;
+        String title = "Add Report";
         String buttonText = "Add";
                 
-        if (templateObject != null){
+        if (reportObject != null){
             TemplateFileButton.setText(title.replace("Add", "Update"));
-            title = "Edit Template";
+            title = "Edit Report";
             buttonText = "Save";
             loadInformation();
         } else {
@@ -85,8 +87,8 @@ public class MaintenanceTemplateAddEditSceneController implements Initializable 
     }
     
     private void loadInformation(){
-        NameTextField.setText(templateObject.getName());
-        DescriptionTextArea.setText(templateObject.getDescription());
+        NameTextField.setText(reportObject.getName());
+        DescriptionTextArea.setText(reportObject.getDescription());
     }
     
     @FXML private void handleClose() {
@@ -107,7 +109,7 @@ public class MaintenanceTemplateAddEditSceneController implements Initializable 
 
                 if ("Save".equals(saveButton.getText().trim())) {
                     updateTemplate();
-                    keyID = templateObject.getId();
+                    keyID = reportObject.getId();
                 } else if ("Add".equals(saveButton.getText().trim())) {
                     keyID = insertTemplate();
                 }
@@ -124,7 +126,7 @@ public class MaintenanceTemplateAddEditSceneController implements Initializable 
                         stage.close();
                     });
                 } else {
-                    templateObject = SQLTemplate.geTemplateByID(keyID);
+                    reportObject = SQLReport.getReportByID(keyID);
                     Platform.runLater(() -> {
                         AlertDialog.StaticAlert(4, "Save Error",
                                 "Unable To Insert File",
@@ -149,7 +151,7 @@ public class MaintenanceTemplateAddEditSceneController implements Initializable 
     
     @FXML private void handleDownloadFileAction() {
         long lStartTime = System.currentTimeMillis();        
-        File selectedFile = SQLTemplate.openTemplateFile(templateObject.getId());
+        File selectedFile = SQLTemplate.openTemplateFile(reportObject.getId());
 
         if (selectedFile != null) {
             try {
@@ -176,25 +178,25 @@ public class MaintenanceTemplateAddEditSceneController implements Initializable 
             new File(System.getProperty("user.home"))
         );
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Docx", "*.docx")
+                new FileChooser.ExtensionFilter("Jasper", "*.jasper")
             );
         
          return fileChooser.showOpenDialog(stage);
     }
     
     private int insertTemplate() {
-        templateObject = new TemplateModel();
-        templateObject.setActive(true);
-        templateObject.setName(NameTextField.getText().trim());
-        templateObject.setDescription(DescriptionTextArea.getText().trim());
+        reportObject = new ReportModel();
+        reportObject.setActive(true);
+        reportObject.setName(NameTextField.getText().trim());
+        reportObject.setDescription(DescriptionTextArea.getText().trim());
         
-        return SQLTemplate.insertTemplate(templateObject);
+        return SQLReport.insertReport(reportObject);
     }
     
     private void updateTemplate() {
-        templateObject.setName(NameTextField.getText().trim());
-        templateObject.setDescription(DescriptionTextArea.getText().trim());
-        SQLTemplate.updateTemplateByID(templateObject);
+        reportObject.setName(NameTextField.getText().trim());
+        reportObject.setDescription(DescriptionTextArea.getText().trim());
+        SQLReport.updateReportByID(reportObject);
     }
         
     private void setPanelDisabled(boolean disabled) {

@@ -256,7 +256,7 @@ public class SQLTemplate {
         return false;
     }
     
-    public static File openTemplateFile(int expenseID) {
+    public static File openTemplateFile(int templateID) {
         File itemFile = null;        
         Connection conn = null;
         PreparedStatement ps = null;
@@ -265,7 +265,7 @@ public class SQLTemplate {
             conn = DBConnection.connectToDB();
             String sql = "SELECT * FROM table10 WHERE col01 = ?";
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, expenseID);
+            ps.setInt(1, templateID);
             rs = ps.executeQuery();
             if (rs.first()) {                
                 if (rs.getBytes("col06") != null) {
