@@ -263,6 +263,9 @@ public class SQLMatter {
                 hm.put("totalExpenseAmount", NumberFormatService.formatMoney(rs.getBigDecimal("totalExpenseAmount")));
                 hm.put("billedExpenseAmount", NumberFormatService.formatMoney(rs.getBigDecimal("billedExpenseAmount")));
                 hm.put("unBilledExpenseAmount", NumberFormatService.formatMoney(rs.getBigDecimal("unBilledExpenseAmount")));
+                hm.put("totalActivityAmount", NumberFormatService.formatMoney(rs.getBigDecimal("totalActivityAmount")));
+                hm.put("billedActivityAmount", NumberFormatService.formatMoney(rs.getBigDecimal("billedActivityAmount")));
+                hm.put("unbilledActivityAmount", NumberFormatService.formatMoney(rs.getBigDecimal("unbilledActivityAmount")));
                 hm.put("totalActivityHour", rs.getString("totalActivityHour"));
                 hm.put("billedActivityHour", rs.getString("billedActivityHour"));
                 hm.put("unBilledActivityHour", rs.getString("unBilledActivityHour"));

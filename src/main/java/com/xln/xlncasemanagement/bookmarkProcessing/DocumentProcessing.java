@@ -9,8 +9,11 @@ import com.jacob.com.Dispatch;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
+import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import com.xln.xlncasemanagement.util.StringUtilities;
+import java.math.BigDecimal;
+import java.util.HashMap;
 
 /**
  *
@@ -43,10 +46,13 @@ public class DocumentProcessing {
         
         
         //Build Out Matter Information
-        //
-        // none yet
-        
-        
+        HashMap billables = SQLMatter.getSummaryByMatterID(Global.getCurrentMatter().getId());
+        BigDecimal budget = Global.getCurrentMatter().getBudget() == null 
+                        ? BigDecimal.ZERO : Global.getCurrentMatter().getBudget();
+        BigDecimal total = NumberFormatService.convertToBigDecimal(billables.get("totalTotalAmount").toString());
+        BigDecimal balance = budget.subtract(total);
+
+                
         //ProcessBookmarks
         for (int i = 0; i < Global.getGLOBAL_BOOKMARKLIMIT(); i++) {
             //COMPANY INFORMATION
@@ -72,10 +78,23 @@ public class DocumentProcessing {
 
 
             //MATTER INFORMATION
+            ProcessBookmark.process("MATTERTYPE" + (i == 0 ? "" : i), matter.getMatterTypeName() == null ? "" : matter.getMatterTypeName(), Document);
             ProcessBookmark.process("OPENDATESHORT" + (i == 0 ? "" : i), Global.getMmddyyyy().format(matter.getOpenDate()), Document);
             ProcessBookmark.process("OPENDATELONG" + (i == 0 ? "" : i), Global.getMMMMMdyyyy().format(matter.getOpenDate()), Document);
             ProcessBookmark.process("CLOSEDDATESHORT" + (i == 0 ? "" : i), Global.getMmddyyyy().format(matter.getCloseDate()), Document);
             ProcessBookmark.process("CLOSEDDATELONG" + (i == 0 ? "" : i), Global.getMMMMMdyyyy().format(matter.getCloseDate()), Document);
+            ProcessBookmark.process("TOTALHOURS" + (i == 0 ? "" : i), billables.get("totalActivityHour").toString(), Document);
+            ProcessBookmark.process("BILLEDHOURS" + (i == 0 ? "" : i), billables.get("billedActivityHour").toString(), Document);
+            ProcessBookmark.process("UNBILLEDHOURS" + (i == 0 ? "" : i), billables.get("unBilledActivityHour").toString(), Document);
+            ProcessBookmark.process("TOTALACTIVITYCOST" + (i == 0 ? "" : i), billables.get("totalActivityAmount").toString(), Document);
+            ProcessBookmark.process("BILLEDACTIVITYCOST" + (i == 0 ? "" : i), billables.get("billedActivityAmount").toString(), Document);
+            ProcessBookmark.process("UNBILLEDACTIVITYCOST" + (i == 0 ? "" : i), billables.get("unbilledActivityAmount").toString(), Document);
+            ProcessBookmark.process("TOTALEXPENSES" + (i == 0 ? "" : i), billables.get("totalExpenseAmount").toString(), Document);
+            ProcessBookmark.process("BILLEDEXPENSES" + (i == 0 ? "" : i), billables.get("billedExpenseAmount").toString(), Document);
+            ProcessBookmark.process("UNBILLEDEXPENSES" + (i == 0 ? "" : i), billables.get("unBilledExpenseAmount").toString(), Document);
+            ProcessBookmark.process("TOTALCOST" + (i == 0 ? "" : i), billables.get("totalTotalAmount").toString(), Document);
+            ProcessBookmark.process("BALANCE" + (i == 0 ? "" : i), NumberFormatService.formatMoney(balance), Document);
+            ProcessBookmark.process("NOTE", matter.getNote() == null ? "" : matter.getNote(), Document);
 
 
             //VERSION DIFFERENCES
