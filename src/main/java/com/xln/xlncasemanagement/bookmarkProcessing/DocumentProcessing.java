@@ -19,10 +19,11 @@ import com.xln.xlncasemanagement.util.StringUtilities;
 public class DocumentProcessing {
  
     public static Dispatch processAWordLetter(Dispatch Document, PartyModel client, MatterModel matter) {
-        
         //Build Out User Name
-        String LoggedInUserName = StringUtilities.buildUserName(Global.getCurrentUser());
-        String UserDefaultRate = NumberFormatService.formatMoney(Global.getCurrentUser().getDefaultRate());
+        String LoggedInUserName = StringUtilities.buildUsersName(Global.getCurrentUser());
+        String UserDefaultRate = Global.getCurrentUser().getDefaultRate() == null ? "" :
+                NumberFormatService.formatMoney(Global.getCurrentUser().getDefaultRate());
+        
         
         //Build Out Company Information
         String CompanyPhoneNumber = NumberFormatService.convertStringToPhoneNumber(Global.getCompanyInformation().getPhone());
@@ -39,7 +40,8 @@ public class DocumentProcessing {
             ClientPhoneNumbers += ", ";
         }
         ClientPhoneNumbers += NumberFormatService.convertStringToPhoneNumber(client.getPhoneTwo());
-                
+        
+        
         //Build Out Matter Information
         //
         // none yet
@@ -96,7 +98,6 @@ public class DocumentProcessing {
                     break;
             }
         }
-
         return Document;
     }
 

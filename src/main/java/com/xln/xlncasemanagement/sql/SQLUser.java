@@ -75,7 +75,7 @@ public class SQLUser {
                 list.add(
                         new UserMaintanceTableModel(
                                 item,
-                                StringUtilities.buildUserName(item),
+                                StringUtilities.buildUserNameWithUserName(item),
                                 rs.getTimestamp("col12") == null 
                                         ? "Never Signed In" 
                                         : Global.getMmddyyyyhhmmssa().format(rs.getTimestamp("col12"))
@@ -146,6 +146,48 @@ public class SQLUser {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                item.setId(rs.getInt("col01"));
+                item.setActive(rs.getBoolean("col02"));
+                item.setFirstName(rs.getString("col03"));
+                item.setMiddleInitial(rs.getString("col04"));
+                item.setLastName(rs.getString("col05"));
+                item.setPhoneNumber(rs.getString("col06"));
+                item.setEmailAddress(rs.getString("col07"));
+                item.setUsername(rs.getString("col08"));
+                item.setPassword(rs.getString("col09"));
+                item.setPasswordSalt(rs.getString("col10"));
+                item.setPasswordReset(rs.getString("col11"));
+                item.setLastLoginDateTime(rs.getTimestamp("col12"));
+                item.setLastLoginPCName(rs.getString("col13"));
+                item.setLastLoginIP(rs.getString("col14"));
+                item.setLastMatterID(rs.getInt("col15"));
+                item.setActiveLogin(rs.getBoolean("col16"));
+                item.setAdminRights(rs.getBoolean("col17"));
+                item.setDefaultRate(rs.getBigDecimal("col18"));
+            }
+        } catch (SQLException ex) {
+            DebugTools.Printout(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return item;
+    }
+    
+    public static UserModel getUserByUserName(String UserName) {
+        UserModel item = new UserModel();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM table22 WHERE col08 = ?";
+
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, UserName);
             rs = ps.executeQuery();
             if (rs.first()) {
                 item.setId(rs.getInt("col01"));

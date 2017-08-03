@@ -2,6 +2,7 @@ package com.xln.xlncasemanagement;
 
 import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.sql.SQLCompany;
+import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.LabelHashTables;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -28,8 +29,7 @@ public class MainApp extends Application {
             Global.setApplicationLogo(Global.getCompanyInformation().getLogo());
         }
     }
-    
-    
+        
     /**
      * Set pre-configured options for testing
      */
@@ -37,9 +37,7 @@ public class MainApp extends Application {
         LabelHashTables.setGlobalLabels("1");
         Global.setVersion("1");
         
-        UserModel user = new UserModel();
-        user.setAdminRights(true);
+        UserModel user = SQLUser.getUserByUserName("andrew.schmidt");
         Global.setCurrentUser(user);
-                
     }
 }
