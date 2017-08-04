@@ -20,6 +20,7 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -32,6 +33,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class CasePartySceneController implements Initializable {
 
+    @FXML Label emptyTableLabel;
     @FXML TextField searchTextField;
     @FXML private TableView<CasePartyTableModel> partyTable;
     @FXML private TableColumn<CasePartyTableModel, Object> objectColumn;
@@ -49,6 +51,8 @@ public class CasePartySceneController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        emptyTableLabel.setText("No Parties For This " + Global.getNewCaseType());
+
         //Setup Table
         objectColumn.setCellValueFactory(cellData -> cellData.getValue().getObject()); 
         relationColumn.setCellValueFactory(cellData -> cellData.getValue().getRelation());

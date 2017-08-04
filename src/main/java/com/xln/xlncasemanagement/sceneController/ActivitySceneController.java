@@ -20,6 +20,7 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,6 +35,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class ActivitySceneController implements Initializable {
 
+    @FXML Label emptyTableLabel;
     @FXML TextField searchTextField;
     @FXML private TableView<ActivityTableModel> activityTable;
     @FXML private TableColumn<ActivityTableModel, Object> objectColumn;
@@ -57,6 +59,7 @@ public class ActivitySceneController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //Setup Table
         initializeTable();
+        emptyTableLabel.setText("No Activities For This " + Global.getNewCaseType());
     }
 
     private void initializeTable() {

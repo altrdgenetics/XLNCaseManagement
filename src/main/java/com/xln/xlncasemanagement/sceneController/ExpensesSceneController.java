@@ -21,6 +21,7 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -35,6 +36,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class ExpensesSceneController implements Initializable {
 
+    @FXML Label emptyTableLabel;
     @FXML TextField searchTextField;
     @FXML private TableView<ExpensesTableModel> expensesTable;
     @FXML private TableColumn<ExpensesTableModel, Object> objectColumn;
@@ -54,6 +56,8 @@ public class ExpensesSceneController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        emptyTableLabel.setText("No Expenses For This " + Global.getNewCaseType());
+
         //Setup Table
         initializeTable();
     }

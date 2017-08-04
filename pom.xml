@@ -4,7 +4,7 @@
 
     <groupId>com.XLN</groupId>
     <artifactId>XLNCaseManagement</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>XLNCaseManagement</name>
@@ -23,13 +23,18 @@
         <dependency> <!-- Database Connector -->
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
-            <version>2.0.3</version>
+            <version>2.1.0</version>
         </dependency>
         <dependency> <!-- closing DB connections safely easily -->
             <groupId>commons-dbutils</groupId>
             <artifactId>commons-dbutils</artifactId>
-            <version>1.6</version>
+            <version>1.7</version>
             <type>jar</type>
+        </dependency>
+        <dependency> <!-- String Utilities -->
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.6</version>
         </dependency>
         <dependency> <!-- JUnit For Code Testing -->
             <groupId>junit</groupId>
@@ -53,10 +58,15 @@
             <artifactId>jacob</artifactId>
             <version>1.18</version>
         </dependency>
+        <!--<dependency>  (CURRENT ISSUE WITH JAR) --> <!-- Generating Reports -->
+        <!--    <groupId>net.sf.jasperreports</groupId> -->
+        <!--    <artifactId>jasperreports</artifactId> -->
+        <!--    <version>6.4.0</version> -->
+        <!--</dependency> -->
         <dependency> <!-- Generating Reports -->
             <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports</artifactId>
-            <version>6.4.0</version>
+            <artifactId>jasperreports-LOCAL</artifactId>
+            <version>6.4.1</version>
         </dependency>
     </dependencies>
 
@@ -88,7 +98,6 @@
                 <executions>
                     <execution>
                         <id>unpack-dependencies</id>
-                        
                         <phase>package</phase>
                         <goals>
                             <goal>exec</goal>

@@ -39,7 +39,7 @@ public class MainApp extends Application {
         LabelHashTables.setGlobalLabels(version);
         Global.setVersion(version);
         
-        UserModel user = SQLUser.getUserByUserName("anthony.perk");
+        UserModel user = SQLUser.getUserByUserName("andrew.schmidt");
         Global.setCurrentUser(user);
     }
 }
