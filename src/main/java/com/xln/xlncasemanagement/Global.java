@@ -5,11 +5,13 @@
  */
 package com.xln.xlncasemanagement;
 
+import com.sun.org.apache.bcel.internal.generic.F2D;
 import com.xln.xlncasemanagement.model.sql.CompanyModel;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.sceneController.MainStageController;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
@@ -36,7 +38,7 @@ public class Global {
     private static PartyModel currentClient;
     private static MatterModel currentMatter; 
     private static final int GLOBAL_BOOKMARKLIMIT = 10;
-    private static final String tempDirectory = System.getProperty("java.io.tmpdir");
+    private static final String tempDirectory = System.getProperty("java.io.tmpdir") + "XLNCase";
     private static String JACOBDLL_PATH = "";
     
     //list of all states

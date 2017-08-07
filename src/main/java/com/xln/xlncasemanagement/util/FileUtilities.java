@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
@@ -210,5 +211,16 @@ public class FileUtilities {
             }
         }
         return tempFile;
+    }
+    
+    public static void generateTempLocation(){
+        File tempPath = new File(Global.getTempDirectory());
+        if (!tempPath.exists()){
+            tempPath.mkdirs();
+        }
+    }
+    
+    public static void cleanTempLocation(){
+        Arrays.stream(new File(Global.getTempDirectory()).listFiles()).forEach(File::delete);
     }
 }

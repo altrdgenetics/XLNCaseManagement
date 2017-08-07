@@ -12,6 +12,7 @@ import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.sql.SQLParty;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.DebugTools;
+import com.xln.xlncasemanagement.util.FileUtilities;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import com.xln.xlncasemanagement.util.StringUtilities;
 import java.awt.Desktop;
@@ -171,8 +172,7 @@ public class MainStageController implements Initializable {
         setVersionInformation();
         stage.setTitle("Case Management");
         stage.setOnCloseRequest((WindowEvent t) -> {
-            Platform.exit();
-            System.exit(0);
+            handleCloseMenuItem();
         });
         
         if (!Global.getCurrentUser().isAdminRights()){
@@ -196,6 +196,7 @@ public class MainStageController implements Initializable {
     }
     
     @FXML private void handleCloseMenuItem() { 
+        FileUtilities.cleanTempLocation();
         Platform.exit();
         System.exit(0);
     }
