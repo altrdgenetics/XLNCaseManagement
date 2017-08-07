@@ -5,9 +5,11 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
+import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ReportModel;
-import com.xln.xlncasemanagement.model.sql.TemplateModel;
+import com.xln.xlncasemanagement.model.table.MaintenanceReportParametersTableModel;
 import com.xln.xlncasemanagement.sql.SQLReport;
+import com.xln.xlncasemanagement.sql.SQLReportParameter;
 import com.xln.xlncasemanagement.sql.SQLTemplate;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.DebugTools;
@@ -23,8 +25,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -38,7 +43,8 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
     Stage stage;
     ReportModel reportObject;
     File fileSelection;
-    
+    @FXML private Button addParameterButton;
+    @FXML private Button removeParameterButton;
     @FXML private Label headerLabel;
     @FXML private TextField NameTextField;
     @FXML private Button TemplateFileButton;
@@ -48,6 +54,13 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
     @FXML private Button closeButton;
     @FXML private ProgressBar progressBar;
     
+    @FXML
+    private TableView<MaintenanceReportParametersTableModel> paramTable;
+    @FXML
+    private TableColumn<MaintenanceReportParametersTableModel, String> iDColumn;
+    @FXML
+    private TableColumn<MaintenanceReportParametersTableModel, String> nameColumn;
+    
     /**
      * Initializes the controller class.
      * @param url
@@ -56,7 +69,13 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setListeners();
+        setTable();
     }    
+    
+    private void setTable(){
+        iDColumn.setCellValueFactory(cellData -> cellData.getValue().getId());
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue().getName());
+    }
     
     public void setActive(Stage stagePassed, ReportModel reportObjectPassed){
         stage = stagePassed;
@@ -86,9 +105,18 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
         );
     }
     
+    @FXML
+    private void tableListener(MouseEvent event) {
+        MaintenanceReportParametersTableModel row = paramTable.getSelectionModel().getSelectedItem();
+
+        if (row != null) {
+            removeParameterButton.setDisable(false);
+        }
+    }
+    
     private void loadInformation(){
-        NameTextField.setText(reportObject.getName());
-        DescriptionTextArea.setText(reportObject.getDescription());
+        NameTextField.setText(reportObject.getName() == null ? "" : reportObject.getName());
+        DescriptionTextArea.setText(reportObject.getDescription() == null ? "" : reportObject.getDescription());
     }
     
     @FXML private void handleClose() {
@@ -108,10 +136,10 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
                 boolean success = true;
 
                 if ("Save".equals(saveButton.getText().trim())) {
-                    updateTemplate();
+                    updateReport();
                     keyID = reportObject.getId();
                 } else if ("Add".equals(saveButton.getText().trim())) {
-                    keyID = insertTemplate();
+                    keyID = insertReport();
                 }
 
                 if (fileSelection != null && keyID > 0) {
@@ -184,16 +212,17 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
          return fileChooser.showOpenDialog(stage);
     }
     
-    private int insertTemplate() {
+    private int insertReport() {
         reportObject = new ReportModel();
         reportObject.setActive(true);
         reportObject.setName(NameTextField.getText().trim());
-        reportObject.setDescription(DescriptionTextArea.getText().trim());
+        reportObject.setDescription(DescriptionTextArea.getText().trim().equals("") 
+                ? null : DescriptionTextArea.getText().trim());
         
         return SQLReport.insertReport(reportObject);
     }
     
-    private void updateTemplate() {
+    private void updateReport() {
         reportObject.setName(NameTextField.getText().trim());
         reportObject.setDescription(DescriptionTextArea.getText().trim());
         SQLReport.updateReportByID(reportObject);
@@ -205,6 +234,30 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
         TemplateFileButton.setDisable(disabled);
         DownloadFileButton.setDisable(disabled);
         DescriptionTextArea.setDisable(disabled);
+    }
+        
+    @FXML private void addParameterButton(){
+        if (reportObject == null){
+            int id = insertReport();
+            reportObject = SQLReport.getReportByID(id);
+        }
+        
+        Global.getStageLauncher().ReportParameterScene(stage, reportObject.getId());
+        loadParameterTable();
+    }
+    
+    @FXML private void removeParameterButton(){
+        MaintenanceReportParametersTableModel row = paramTable.getSelectionModel().getSelectedItem();
+
+        if (row != null) {
+            //Remove warning           
+            SQLReportParameter.deleteReportParameter(Integer.valueOf(row.getId().toString()));
+            loadParameterTable();
+        }
+    }
+    
+    private void loadParameterTable(){
+        removeParameterButton.setDisable(true);
     }
     
 }

@@ -65,7 +65,7 @@ public class MaintenanceReportSceneController implements Initializable {
         activeColumn.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
         activeColumn.setCellFactory((TableColumn<MaintenanceReportTableModel, Boolean> param) -> {
             CheckBoxTableCell cell = new CheckBoxTableCell<>();
-            cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+            cell.addEventFilter(MouseEvent.MOUSE_CLICKED, ev -> {
                 if (cell.getIndex() > -1) {
                     checkboxlistener(cell.getIndex());
                 }
