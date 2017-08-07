@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -117,6 +118,7 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
     private void loadInformation(){
         NameTextField.setText(reportObject.getName() == null ? "" : reportObject.getName());
         DescriptionTextArea.setText(reportObject.getDescription() == null ? "" : reportObject.getDescription());
+        loadParameterTable();
     }
     
     @FXML private void handleClose() {
@@ -246,18 +248,40 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
         loadParameterTable();
     }
     
-    @FXML private void removeParameterButton(){
+    @FXML
+    private void removeParameterButton() {
         MaintenanceReportParametersTableModel row = paramTable.getSelectionModel().getSelectedItem();
 
         if (row != null) {
-            //Remove warning           
-            SQLReportParameter.deleteReportParameter(Integer.valueOf(row.getId().toString()));
-            loadParameterTable();
+            boolean approved = AlertDialog.StaticAlert(
+                    1,
+                    "Remove Parameter",
+                    "Do You Wish To Remove This Parameter?",
+                    ""
+            );
+
+            if (approved) {
+                int parameterID = Integer.valueOf(row.getId().getValue());
+                SQLReportParameter.deleteReportParameter(parameterID);
+                loadParameterTable();
+            }
+
         }
     }
-    
+
     private void loadParameterTable(){
         removeParameterButton.setDisable(true);
+        
+        ObservableList<MaintenanceReportParametersTableModel> list = SQLReportParameter.getParameterList(reportObject.getId());
+        loadTable(list);
+    }
+    
+    private void loadTable(ObservableList<MaintenanceReportParametersTableModel> list) {
+        paramTable.getItems().removeAll();
+        if (list != null) {
+            paramTable.setItems(list);
+        }
+        paramTable.getSelectionModel().clearSelection();
     }
     
 }
