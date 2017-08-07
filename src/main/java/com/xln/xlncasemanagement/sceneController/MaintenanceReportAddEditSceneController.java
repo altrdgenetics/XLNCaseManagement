@@ -85,7 +85,13 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
         String buttonText = "Add";
                 
         if (reportObject != null){
-            TemplateFileButton.setText(title.replace("Add", "Update"));
+            reportObject = SQLReport.getReportByID(reportObject.getId());
+            if (reportObject.getFileBlob() != null){
+                TemplateFileButton.setText(title.replace("Add", "Update"));
+            } else {
+                TemplateFileButton.setText(title);
+                DownloadFileButton.setVisible(false);
+            }
             title = "Edit Report";
             buttonText = "Save";
             loadInformation();
@@ -248,8 +254,7 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
         loadParameterTable();
     }
     
-    @FXML
-    private void removeParameterButton() {
+    @FXML private void removeParameterButton() {
         MaintenanceReportParametersTableModel row = paramTable.getSelectionModel().getSelectedItem();
 
         if (row != null) {
@@ -265,7 +270,6 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
                 SQLReportParameter.deleteReportParameter(parameterID);
                 loadParameterTable();
             }
-
         }
     }
 

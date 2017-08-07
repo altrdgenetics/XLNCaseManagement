@@ -101,4 +101,33 @@ public class SQLReportParameter {
         }
     }
     
+    public static boolean checkExistingParameter(int reportID, String parameter){
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT COUNT(*) AS total FROM table21 WHERE col02 = ? AND col03 = ?";
+
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, reportID);
+            ps.setString(2, parameter);
+            rs = ps.executeQuery();
+
+            if (rs.first()) {
+                if (rs.getInt("total") > 0){
+                    return true;
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+        return false;
+    }
+    
 }

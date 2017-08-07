@@ -7,6 +7,7 @@ package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.model.sql.ReportParameterModel;
 import com.xln.xlncasemanagement.sql.SQLReportParameter;
+import com.xln.xlncasemanagement.util.AlertDialog;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -45,7 +46,9 @@ public class MaintenanceReportParametersSceneController implements Initializable
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        addButton.disableProperty().bind(
+                reportComboBox.valueProperty().isNull()
+        );
     }
 
     public void setActive(Stage stagePassed, int reportIDPassed) {
@@ -72,8 +75,16 @@ public class MaintenanceReportParametersSceneController implements Initializable
 
     @FXML
     private void handleAddButton() {
-        saveParameter();
-        stage.close();
+        boolean exists = SQLReportParameter.checkExistingParameter(reportID, reportComboBox.getValue().toString());
+
+        if (exists) {
+            AlertDialog.StaticAlert(4, "Save Error", "Parameter Exists",
+                    "The selected parameter already exists for this report. "
+                            + "Please select a different parameter.");
+        } else {
+            saveParameter();
+            stage.close();
+        }
     }
 
     private void saveParameter() {
