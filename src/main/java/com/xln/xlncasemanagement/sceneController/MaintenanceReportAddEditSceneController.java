@@ -152,7 +152,7 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
 
                 if (fileSelection != null && keyID > 0) {
                     long lStartTime = System.currentTimeMillis(); 
-                    success = SQLTemplate.insertTemplateFile(keyID, fileSelection);
+                    success = SQLReport.insertReportFile(keyID, fileSelection);
                     long lEndTime = System.currentTimeMillis();
                     DebugTools.Printout("Saved File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
                 }

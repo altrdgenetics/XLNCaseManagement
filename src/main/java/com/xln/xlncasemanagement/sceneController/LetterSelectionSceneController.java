@@ -82,7 +82,7 @@ public class LetterSelectionSceneController implements Initializable {
     
     @FXML private void selectButtonAction(){
         TemplateModel selectedItem = (TemplateModel) letterComboBox.getValue();
-        TemplateModel template = SQLTemplate.geTemplateByID(selectedItem.getId());
+        TemplateModel template = SQLTemplate.getTemplateByID(selectedItem.getId());
         
         generateDocument(template);
     }

@@ -12,6 +12,7 @@ import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import com.xln.xlncasemanagement.util.StringUtilities;
 import java.awt.Desktop;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -38,9 +39,8 @@ public class GenerateReport {
         long lStartTime = System.currentTimeMillis();
         Connection conn = null;
 
-        String jasperFileName = "";
-        //jasperFileName = Global.reportingPath + report.section + File.separator + report.fileName;
-
+        ByteArrayInputStream bis = new ByteArrayInputStream(report.getFileBlob());
+        
         if (report.getFileBlob() != null) {
             try {
                 String fileName = report.getFileName().substring(0, report.getFileName().lastIndexOf("."));
@@ -50,10 +50,10 @@ public class GenerateReport {
                     fileName = fileName + "_" + System.currentTimeMillis();
                 }
 
-                String pdfFileName = System.getProperty("java.io.tmpdir") + fileName + ".pdf";
+                String pdfFileName = Global.getTempDirectory() + fileName + ".pdf";
 
                 conn = DBConnection.connectToDB();
-                JasperPrint jprint = (JasperPrint) JasperFillManager.fillReport(jasperFileName, hash, conn);
+                JasperPrint jprint = (JasperPrint) JasperFillManager.fillReport(bis, hash, conn);
                 try {
                     JasperExportManager.exportReportToPdfFile(jprint, pdfFileName);
                 } catch (JRException e) {

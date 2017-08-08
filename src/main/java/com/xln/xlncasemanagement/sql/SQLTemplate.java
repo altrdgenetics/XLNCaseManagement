@@ -171,7 +171,7 @@ public class SQLTemplate {
         return list;
     }
     
-    public static TemplateModel geTemplateByID(int id) {
+    public static TemplateModel getTemplateByID(int id) {
         TemplateModel item = new TemplateModel();
         Connection conn = null;
         PreparedStatement ps = null;

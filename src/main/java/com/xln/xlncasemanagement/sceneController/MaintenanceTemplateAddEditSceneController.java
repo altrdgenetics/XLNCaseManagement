@@ -124,7 +124,7 @@ public class MaintenanceTemplateAddEditSceneController implements Initializable 
                         stage.close();
                     });
                 } else {
-                    templateObject = SQLTemplate.geTemplateByID(keyID);
+                    templateObject = SQLTemplate.getTemplateByID(keyID);
                     Platform.runLater(() -> {
                         AlertDialog.StaticAlert(4, "Save Error",
                                 "Unable To Insert File",

@@ -6,7 +6,6 @@
 package com.xln.xlncasemanagement.sql;
 
 import com.xln.xlncasemanagement.model.sql.ReportModel;
-import com.xln.xlncasemanagement.model.sql.TemplateModel;
 import com.xln.xlncasemanagement.model.table.MaintenanceReportTableModel;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.FileUtilities;
@@ -90,7 +89,8 @@ public class SQLReport {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "SELECT * FROM table19 WHERE col02 = 1";
+        String sql = "SELECT col01, col03, col04 FROM table19 "
+                + "WHERE col02 = 1 AND col06 IS NOT NULL";
 
         try {
             conn = DBConnection.connectToDB();
@@ -99,7 +99,8 @@ public class SQLReport {
             while (rs.next()) {
                 ReportModel item = new ReportModel();
                 item.setId(rs.getInt("col01"));
-                item.setActive(rs.getBoolean("col02"));
+                item.setName(rs.getString("col03"));
+                item.setDescription(rs.getString("col04"));
                 list.add(item);
             }
         } catch (SQLException ex) {
@@ -113,7 +114,6 @@ public class SQLReport {
     }
     
     public static boolean insertReportFile(int reportID, File fileUpload) {
-        
         Connection conn = null;
         PreparedStatement ps = null;
         byte[] fileInBytes = FileUtilities.fileToBytes(fileUpload);
@@ -142,7 +142,7 @@ public class SQLReport {
         return false;
     }
     
-    public static boolean verifyFileChecksum(int id){
+    public static boolean verifyFileChecksum(int id) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

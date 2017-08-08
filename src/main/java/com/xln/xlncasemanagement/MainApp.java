@@ -47,4 +47,5 @@ public class MainApp extends Application {
         UserModel user = SQLUser.getUserByUserName("andrew.schmidt");
         Global.setCurrentUser(user);
     }
+    
 }

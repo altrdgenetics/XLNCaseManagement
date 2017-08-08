@@ -58,15 +58,32 @@
             <artifactId>jacob</artifactId>
             <version>1.18</version>
         </dependency>
-        <!--<dependency>  (CURRENT ISSUE WITH JAR) --> <!-- Generating Reports -->
-        <!--    <groupId>net.sf.jasperreports</groupId> -->
-        <!--    <artifactId>jasperreports</artifactId> -->
-        <!--    <version>6.4.0</version> -->
-        <!--</dependency> -->
-        <dependency> <!-- Generating Reports -->
+        <dependency><!-- Generating Reports -->
             <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports-LOCAL</artifactId>
+            <artifactId>jasperreports</artifactId>
             <version>6.4.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bouncycastle</groupId>
+                    <artifactId>bcmail-jdk14</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>bouncycastle</groupId>
+                    <artifactId>bcmail-jdk14</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bouncycastle</groupId>
+                    <artifactId>bctsp-jdk14</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>bouncycastle</groupId>
+                    <artifactId>bcprov-jdk14</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bouncycastle</groupId>
+                    <artifactId>bcprov-jdk15on</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -75,7 +92,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <id>unpack-dependencies</id>
