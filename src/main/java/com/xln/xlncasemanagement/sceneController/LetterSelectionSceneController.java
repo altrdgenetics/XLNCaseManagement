@@ -16,10 +16,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -37,6 +39,7 @@ public class LetterSelectionSceneController implements Initializable {
     @FXML Button closeButton;
     @FXML Button selectButton;
     @FXML TextArea descriptionTextArea;
+    @FXML ProgressBar progressBar;
     
     /**
      * Initializes the controller class.
@@ -83,8 +86,17 @@ public class LetterSelectionSceneController implements Initializable {
     @FXML private void selectButtonAction(){
         TemplateModel selectedItem = (TemplateModel) letterComboBox.getValue();
         TemplateModel template = SQLTemplate.getTemplateByID(selectedItem.getId());
-        
-        generateDocument(template);
+
+        new Thread() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    setPanelDisabled(true);
+                });
+                generateDocument(template);
+                setPanelDisabled(false);
+            }
+        }.start();
     }
     
     @FXML private void handleClose() {
@@ -98,6 +110,13 @@ public class LetterSelectionSceneController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(LetterSelectionSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private void setPanelDisabled(boolean disabled) {
+        progressBar.setVisible(disabled);
+        letterComboBox.setDisable(disabled);        
+        descriptionTextArea.setDisable(disabled);
+        closeButton.setDisable(disabled);
     }
     
 }

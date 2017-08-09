@@ -11,11 +11,13 @@ import com.xln.xlncasemanagement.sql.SQLReport;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -33,7 +35,9 @@ public class ReportSelectionSceneController implements Initializable {
     @FXML Label comboBoxLabel;
     @FXML ComboBox reportComboBox;
     @FXML Button runReportButton;
+    @FXML Button closeButton;
     @FXML TextArea descriptionTextArea;
+    @FXML ProgressBar progressBar;
     
     /**
      * Initializes the controller class.
@@ -77,7 +81,16 @@ public class ReportSelectionSceneController implements Initializable {
     }
     
     @FXML private void handleRunReportButton(){
-        runReport();
+        new Thread() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    setPanelDisabled(true);
+                });
+                runReport();
+                setPanelDisabled(false);
+            }
+        }.start();
     }    
         
     @FXML private void comboBoxAction() {
@@ -92,10 +105,14 @@ public class ReportSelectionSceneController implements Initializable {
         ReportModel reportSelected = SQLReport.getReportByID(selection.getId());
         
         HashMap hash = new HashMap();
-        
         GenerateReport.generateDefaultInformation(reportSelected, hash);
-        
-        //TODO run report
     }    
+    
+    private void setPanelDisabled(boolean disabled) {
+        progressBar.setVisible(disabled);
+        reportComboBox.setDisable(disabled);        
+        descriptionTextArea.setDisable(disabled);
+        closeButton.setDisable(disabled);
+    }
     
 }
