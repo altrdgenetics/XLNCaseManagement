@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -32,6 +33,7 @@ public class ReportSelectionSceneController implements Initializable {
     @FXML Label comboBoxLabel;
     @FXML ComboBox reportComboBox;
     @FXML Button runReportButton;
+    @FXML TextArea descriptionTextArea;
     
     /**
      * Initializes the controller class.
@@ -78,6 +80,13 @@ public class ReportSelectionSceneController implements Initializable {
         runReport();
     }    
         
+    @FXML private void comboBoxAction() {
+        ReportModel selectedItem = (ReportModel) reportComboBox.getValue();
+        if (selectedItem != null){
+            descriptionTextArea.setText(selectedItem.getDescription() == null ? "" : selectedItem.getDescription().trim());
+        }
+    }
+    
     private void runReport(){
         ReportModel selection = (ReportModel) reportComboBox.getValue(); 
         ReportModel reportSelected = SQLReport.getReportByID(selection.getId());
