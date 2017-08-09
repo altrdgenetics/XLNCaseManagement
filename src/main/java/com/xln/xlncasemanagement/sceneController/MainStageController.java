@@ -8,6 +8,7 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
+import com.xln.xlncasemanagement.sql.SQLCaseParty;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.sql.SQLParty;
 import com.xln.xlncasemanagement.util.AlertDialog;
@@ -241,7 +242,12 @@ public class MainStageController implements Initializable {
         Global.setCurrentMatter((MatterModel) headerField1.getValue());
         disableTabsAndButtons(false);
         loadHeader();
+        updateClientPhoneEmail();
         onTabSelection();
+    }
+    
+    private void updateClientPhoneEmail(){
+        SQLCaseParty.updateHeaderPhoneAndEmail(Global.getCurrentMatter().getId());
     }
     
     private void setHeaderLabels(){
@@ -873,6 +879,22 @@ public class MainStageController implements Initializable {
         this.clientField = clientField;
     }
 
+    public TextField getPhoneField() {
+        return phoneField;
+    }
+
+    public void setPhoneField(TextField phoneField) {
+        this.phoneField = phoneField;
+    }
+
+    public TextField getEmailField() {
+        return emailField;
+    }
+
+    public void setEmailField(TextField emailField) {
+        this.emailField = emailField;
+    }
+    
     public ComboBox getHeaderField1() {
         return headerField1;
     }

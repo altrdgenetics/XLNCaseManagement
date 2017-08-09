@@ -72,6 +72,10 @@ public class CasePartySceneController implements Initializable {
             } else if (event.getClickCount() >= 2) {
                 DebugTools.Printout("Party Table Double Click");
                 Global.getStageLauncher().detailedPartyAddEditScene(Global.getMainStage(), false, (PartyModel) row.getObject().getValue());
+                
+                if (row.getRelation().get().equals("Client")){
+                    SQLCaseParty.updateHeaderPhoneAndEmail(Global.getCurrentMatter().getId());
+                }
                 search();
             }
         }

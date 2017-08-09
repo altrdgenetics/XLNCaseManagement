@@ -5,8 +5,10 @@
  */
 package com.xln.xlncasemanagement.sql;
 
+import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.table.CasePartyTableModel;
+import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import com.xln.xlncasemanagement.util.StringUtilities;
 import java.sql.Connection;
@@ -270,6 +272,37 @@ public class SQLCaseParty {
         } finally {
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(conn);
+        }
+    }
+    
+    public static void updateHeaderPhoneAndEmail(int matterID) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM table04 "
+                + "WHERE col03 = 0 AND col18 = ?";
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, matterID);
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                String phone = NumberFormatService.convertStringToPhoneNumber(rs.getString("col15"));
+                if (rs.getString("col16") != null && !phone.trim().equals("")) {
+                    phone += ", ";
+                }
+                phone += NumberFormatService.convertStringToPhoneNumber(rs.getString("col16"));
+
+                Global.getMainStageController().getEmailField().setText(
+                        rs.getString("col17") == null ? "" : rs.getString("col17"));
+                Global.getMainStageController().getPhoneField().setText(phone);
+            }
+        } catch (SQLException ex) {
+            DebugTools.Printout(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
         }
     }
     
