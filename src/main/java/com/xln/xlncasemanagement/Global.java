@@ -5,7 +5,6 @@
  */
 package com.xln.xlncasemanagement;
 
-import com.sun.org.apache.bcel.internal.generic.F2D;
 import com.xln.xlncasemanagement.model.sql.CompanyModel;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
@@ -38,8 +37,10 @@ public class Global {
     private static PartyModel currentClient;
     private static MatterModel currentMatter; 
     private static final int GLOBAL_BOOKMARKLIMIT = 10;
-    private static final String tempDirectory = System.getProperty("java.io.tmpdir") + "XLNCase";
     private static String JACOBDLL_PATH = "";
+    private static final String tempDirectory = 
+            System.getProperty("java.io.tmpdir") + "XLNCase" + File.separator;
+    
     
     //list of all states
     private static final String STATES[] = { "AL", "AK", "AS", "AZ", "AR", "CA", "CO",

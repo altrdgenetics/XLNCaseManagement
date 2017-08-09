@@ -47,6 +47,8 @@ public class GenerateDocument {
             String newFilePath = Global.getTempDirectory() + File.separator + saveDocName;
             Dispatch.call(WordBasic, "FileSaveAs", newFilePath, new Variant(16));
             JacobCOMBridge.setWordActive(false, false, eolWord);
+            
+            new File(templateFile).delete();
         }
         return saveDocName;
     }
