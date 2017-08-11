@@ -291,6 +291,7 @@ public class MainStageController implements Initializable {
     private void onHeaderField2Action(MouseEvent event) {
         if (event.getClickCount() >= 2) {
             if (Global.getCurrentMatter() != null && !headerField2.getText().trim().equals("")) {
+                Global.setCurrentMatter(SQLMatter.getMatterByID(Global.getCurrentMatter().getId()));
                 if (Global.getCurrentMatter().getMakeWebsite() == null) {
                     AlertDialog.StaticAlert(4, "No Website",
                             "No Website Available",
@@ -314,6 +315,7 @@ public class MainStageController implements Initializable {
     private void onHeaderField3Action(MouseEvent event) {
         if (event.getClickCount() >= 2) {
             if (Global.getCurrentMatter() != null && !headerField3.getText().trim().equals("")) {
+                Global.setCurrentMatter(SQLMatter.getMatterByID(Global.getCurrentMatter().getId()));
                 if (Global.getCurrentMatter().getModelWebsite() == null) {
                     AlertDialog.StaticAlert(4, "No Website",
                             "No WebSite Available",

@@ -133,6 +133,7 @@ public class ActivitySceneController implements Initializable {
             });
             return cell;
         });
+        userColumn.setStyle("-fx-alignment: CENTER;");
     }
 
     private void initializeDescriptionColumn() {
@@ -226,12 +227,12 @@ public class ActivitySceneController implements Initializable {
             activityTable.getItems().clear();
             if (Global.getCurrentMatter() != null) {
                 String[] searchParam = searchTextField.getText().trim().split(" ");
-            ObservableList<ActivityTableModel> list = SQLActivity.searchActivity(searchParam, Global.getCurrentMatter().getId());
-            loadTable(list);
+                ObservableList<ActivityTableModel> list = SQLActivity.searchActivity(searchParam, Global.getCurrentMatter().getId());
+                loadTable(list);
             }
             setSortedColumn();
-            activityTable.refresh();
         });
+        activityTable.refresh();
     }
 
     private void getSortedColumn() {
