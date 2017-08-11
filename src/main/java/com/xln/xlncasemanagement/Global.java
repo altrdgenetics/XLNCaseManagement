@@ -24,7 +24,7 @@ public class Global {
     
     private static final boolean debug = true;
     
-    private static String version;
+    
     private static Parent root;    
     private static Stage mainStage;
     private static MainStageController mainStageController;
@@ -38,10 +38,14 @@ public class Global {
     private static MatterModel currentMatter; 
     private static final int GLOBAL_BOOKMARKLIMIT = 10;
     private static String JACOBDLL_PATH = "";
+    private static final String DBdriver = "org.mariadb.jdbc.Driver";
     private static final String tempDirectory = 
             System.getProperty("java.io.tmpdir") + "XLNCase" + File.separator;
-    
-    
+        
+    //Config File
+    private static String version = "";
+    private static String companyID = "";
+            
     //list of all states
     private static final String STATES[] = { "AL", "AK", "AS", "AZ", "AR", "CA", "CO",
         "CT", "DE", "DC", "FL", "FM", "GA", "GU", "HI", "ID", "IL", "IN", "IA",
@@ -349,6 +353,14 @@ public class Global {
 
     public static String getDurationRegex() {
         return durationRegex;
+    }
+
+    public static String getCompanyID() {
+        return companyID;
+    }
+
+    public static void setCompanyID(String companyID) {
+        Global.companyID = companyID;
     }
     
 }

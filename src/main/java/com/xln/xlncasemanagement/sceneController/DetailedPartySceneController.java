@@ -125,7 +125,7 @@ public class DetailedPartySceneController implements Initializable {
     
     private void loadPrefixComboBox() {
         PrefixCombobox.getItems().removeAll(PrefixCombobox.getItems());
-        SQLPartyNamePrefix.getActivePartyNamePrefix().forEach(item -> PrefixCombobox.getItems().addAll(item));
+        SQLPartyNamePrefix.getActivePartyNamePrefix().forEach(item -> PrefixCombobox.getItems().addAll(item.getPrefix()));
     }
     
     private void loadStateComboBox() {

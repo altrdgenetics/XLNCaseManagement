@@ -629,7 +629,7 @@ public class MainStageController implements Initializable {
         clientLabel.setDisable(disabled);
         clientField.setDisable(disabled);
         headerLabel1.setDisable(disabled);
-        headerField1.setDisable(disabled);
+        //headerField1.setDisable(disabled); //boolean bound
         phoneLabel.setDisable(disabled);
         phoneField.setDisable(disabled);
         emailLabel.setDisable(disabled);
