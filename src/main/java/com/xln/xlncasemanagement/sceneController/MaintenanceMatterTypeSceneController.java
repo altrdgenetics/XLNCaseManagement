@@ -34,6 +34,8 @@ import javafx.stage.Stage;
 public class MaintenanceMatterTypeSceneController implements Initializable {
 
     Stage stage;
+    boolean maintenanceMode;
+    MatterTypeModel matterType = null;
 
     @FXML
     private Label headerLabel;
@@ -81,10 +83,22 @@ public class MaintenanceMatterTypeSceneController implements Initializable {
         editButton.disableProperty().bind(Bindings.isEmpty(searchTable.getSelectionModel().getSelectedItems()));
     }
 
-    public void setActive(Stage stagePassed) {
+    public void setActive(Stage stagePassed, boolean maintenanceModePassed) {
         stage = stagePassed;
-        stage.setTitle(Global.getNewCaseType() + " Type Maintenance");
-        headerLabel.setText(Global.getNewCaseType() + " Type Maintenance");
+        maintenanceMode = maintenanceModePassed;
+        
+        
+        
+        stage.setTitle((maintenanceMode 
+                ? Global.getNewCaseType().replace(":", "") + " Type Maintenance" 
+                : "Select " + Global.getNewCaseType().replace(":", "") + " Type"));
+        headerLabel.setText((maintenanceMode
+                ? Global.getNewCaseType().replace(":", "") + " Type Maintenance" 
+                : "Select " + Global.getNewCaseType().replace(":", "")+ " Type"));
+        editButton.setText(maintenanceMode ? "Edit" : "Select");
+        if (!maintenanceMode){
+            activeColumn.setVisible(false);
+        }
         nameColumn.setText(Global.getNewCaseType() + " Type");
         emptyTableLabel.setText("No " + Global.getNewCaseType() + " Types");
         search();
@@ -100,9 +114,24 @@ public class MaintenanceMatterTypeSceneController implements Initializable {
     }
 
     @FXML
-    private void search(){
+    private void search() {
         String[] searchParam = searchTextField.getText().trim().split(" ");
         ObservableList<MaintenanceMatterTypeTableModel> list = SQLMatterType.searchMatterTypes(searchParam);
+
+        //Add Potential Client Matter Type
+        if (!maintenanceMode) {
+            MatterTypeModel item = new MatterTypeModel();
+            item.setId(0);
+            item.setActive(true);
+            item.setMatterType(Global.getLeadWording());
+
+            list.add(
+                    new MaintenanceMatterTypeTableModel(
+                            item,
+                            true,
+                            Global.getLeadWording()
+                    ));
+        }
         loadTable(list);
     }
     
@@ -139,8 +168,27 @@ public class MaintenanceMatterTypeSceneController implements Initializable {
     @FXML
     private void editButtonAction() {
         MaintenanceMatterTypeTableModel row = searchTable.getSelectionModel().getSelectedItem();
-        Global.getStageLauncher().MaintenanceMatterTypeAddEditScene(stage, (MatterTypeModel) row.getObject().getValue());
+        
+        if (row != null) {
+            MatterTypeModel selected = (MatterTypeModel) row.getObject().getValue();
+            
+            if (maintenanceMode) {
+                Global.getStageLauncher().MaintenanceMatterTypeAddEditScene(stage, selected);
+                search();
+            } else {
+                matterType = selected;
+                stage.close();
+            }
+        }        
         search();
+    }
+
+    public MatterTypeModel getMatterType() {
+        return matterType;
+    }
+
+    public void setMatterType(MatterTypeModel matterType) {
+        this.matterType = matterType;
     }
     
 }

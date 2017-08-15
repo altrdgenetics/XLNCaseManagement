@@ -247,7 +247,9 @@ public class MainStageController implements Initializable {
     }
     
     private void updateClientPhoneEmail(){
-        SQLCaseParty.updateHeaderPhoneAndEmail(Global.getCurrentMatter().getId());
+        if (Global.getCurrentMatter() != null) {    
+            SQLCaseParty.updateHeaderPhoneAndEmail(Global.getCurrentMatter().getId());
+        }
     }
     
     private void setHeaderLabels(){
@@ -593,7 +595,7 @@ public class MainStageController implements Initializable {
         SQLParty.getActiveClients().forEach(item -> clientField.getItems().addAll(item));
     }
     
-    private void loadMatterComboBox(){
+    public void loadMatterComboBox(){
         headerField1.getItems().removeAll(headerField1.getItems());
         if (Global.getCurrentClient() != null){
             SQLMatter.getActiveMattersByClient(Global.getCurrentClient().getId())

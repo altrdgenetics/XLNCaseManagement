@@ -80,7 +80,7 @@ public class MaintenanceSceneController implements Initializable {
     }
     
     @FXML private void matterTypeButtonAction() {
-        Global.getStageLauncher().MaintenanceMatterTypeScene(stage);
+        Global.getStageLauncher().MaintenanceMatterTypeScene(stage, true);
     }
     
     @FXML private void partyButtonAction() {

@@ -9,6 +9,7 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MakeModel;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
+import com.xln.xlncasemanagement.model.sql.MatterTypeModel;
 import com.xln.xlncasemanagement.model.sql.ModelModel;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.util.DebugTools;
@@ -37,6 +38,8 @@ public class InformationSceneController implements Initializable {
     int modelID;
     
     //LEFT SIDE OF PANEL
+    @FXML Label matterTypeLabel;
+    @FXML Button matterTypeButton;
     @FXML DatePicker OpenDateDatePicker;
     @FXML DatePicker ClosedDateDatePicker;
     @FXML Label Label1;
@@ -93,7 +96,25 @@ public class InformationSceneController implements Initializable {
                 .or(Label3Button.disabledProperty())
         );
     }
-        
+       
+    @FXML
+    private void onMatterTypeButtonAction() {
+        if (updateMode) {
+            DebugTools.Printout("Searching Matter Type");
+            MatterTypeModel matterType = Global.getStageLauncher().MaintenanceMatterTypeScene(Global.getMainStage(), false);
+
+            if (matterType != null) {
+                SQLMatter.updateMatterTypeByID(matterType.getId(), Global.getCurrentMatter().getId());
+                matterTypeButton.setText(matterType.getMatterType());
+                
+                
+                DebugTools.Printout("Need To Update Matter Type In Header");
+            }
+        } else {
+            DebugTools.Printout("Searching Disabled");
+        }
+    }
+    
     @FXML
     private void onLabel3ButtonAction() {
         if (updateMode) {
@@ -144,6 +165,7 @@ public class InformationSceneController implements Initializable {
     }
         
     private void setVersionInformation(){
+        matterTypeLabel.setText(Global.getNewCaseType() + " Type:");
         Label1.setText(Global.getInformationLabel1());
         Label2.setText(Global.getInformationLabel2());
         Label3.setText(Global.getInformationLabel3());
@@ -160,6 +182,12 @@ public class InformationSceneController implements Initializable {
             OpenDateDatePicker.requestFocus();
         } else {
             saveInformation();
+            
+            MatterModel matterID = SQLMatter.getMatterByID(Global.getCurrentMatter().getId());
+            Global.getMainStageController().loadMatterComboBox();
+            
+            Global.getMainStageController().getHeaderField1().getSelectionModel().select(matterID);
+            
             loadInformation(); //Reload After Save
             DebugTools.Printout("Saved Information");
         }
@@ -172,12 +200,13 @@ public class InformationSceneController implements Initializable {
     }
     
     private void setEditableStatus(boolean editable){
+        matterTypeButton.setDisable(!editable);
         OpenDateDatePicker.setEditable(editable);
         ClosedDateDatePicker.setEditable(editable);
         WarrantyDateDatePicker.setEditable(editable);
         Label2TextField.setEditable(editable);
         Label3Button.setDisable(!editable);
-        //Label4Button.setDisable(!editable);
+        //Label4Button.setDisable(!editable); //bound already
         Label5TextField.setEditable(editable);
     }
 
@@ -202,6 +231,8 @@ public class InformationSceneController implements Initializable {
         modelID = Global.getCurrentMatter().getModel();
         
         //LEFT SIDE OF PANEL
+        matterTypeButton.setText(Global.getCurrentMatter().getMatterTypeName()== null 
+                ? "No " + Global.getNewCaseType().replace(":", "") + " Type" : Global.getCurrentMatter().getMatterTypeName());
         OpenDateDatePicker.setValue(Global.getCurrentMatter().getOpenDate() == null
                 ? null : Global.getCurrentMatter().getOpenDate().toLocalDate());
         ClosedDateDatePicker.setValue(Global.getCurrentMatter().getCloseDate() == null
@@ -245,6 +276,8 @@ public class InformationSceneController implements Initializable {
     }
 
     public void clearWindow(){
+        //LEFT SIDE OF PANEL
+        matterTypeButton.setText("No " + Global.getNewCaseType().replace(":", "") + " Type");
         OpenDateDatePicker.setValue(null);
         ClosedDateDatePicker.setValue(null);
         WarrantyDateDatePicker.setValue(null);
@@ -270,8 +303,6 @@ public class InformationSceneController implements Initializable {
                 ? null : java.sql.Date.valueOf(OpenDateDatePicker.getValue()));
         Global.getCurrentMatter().setCloseDate(ClosedDateDatePicker.getValue() == null 
                 ? null : java.sql.Date.valueOf(ClosedDateDatePicker.getValue()));
-        
-        
         Global.getCurrentMatter().setWarranty(WarrantyDateDatePicker.getValue() == null 
                 ? null : java.sql.Date.valueOf(WarrantyDateDatePicker.getValue()));
         Global.getCurrentMatter().setBudget(Label2TextField.getText().trim().equals("")

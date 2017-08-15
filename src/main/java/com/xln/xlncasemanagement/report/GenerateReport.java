@@ -32,6 +32,8 @@ public class GenerateReport {
 
     public static void generateDefaultInformation(ReportModel report, HashMap hash) {
         hash.put("current user", StringUtilities.buildUsersName(Global.getCurrentUser()));
+        hash.put("mattertype", Global.getNewCaseType());
+        hash.put("leadwording", Global.getLeadWording());
         generateReport(report, hash);
     }
 

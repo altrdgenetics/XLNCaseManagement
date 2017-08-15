@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.sql;
 
+import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MatterTypeModel;
 import com.xln.xlncasemanagement.model.table.MaintenanceMatterTypeTableModel;
 import com.xln.xlncasemanagement.util.DebugTools;
@@ -137,6 +138,14 @@ public class SQLMatterType {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
+            
+            //Add Potential Client Matter Type
+            MatterTypeModel defItem = new MatterTypeModel();
+            defItem.setId(0);
+            defItem.setActive(true);
+            defItem.setMatterType(Global.getLeadWording());
+            list.add(defItem);
+                        
             while (rs.next()) {
                 MatterTypeModel item = new MatterTypeModel();
                 item.setId(rs.getInt("col01"));

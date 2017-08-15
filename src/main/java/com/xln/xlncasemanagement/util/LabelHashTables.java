@@ -35,6 +35,7 @@ public class LabelHashTables {
     private static void Legal(){
         //Matter Type
         Global.setNewCaseType("Matter");
+        Global.setLeadWording("Potential Client");
         
         //Type for the New Button
         Global.setButtonLabel1("New " + Global.getNewCaseType());
@@ -62,6 +63,7 @@ public class LabelHashTables {
     private static void ComputerRepair(){
         //Matter Type
         Global.setNewCaseType("Service");
+        Global.setLeadWording("Potential Client");
         
         //Type for the New Button
         Global.setButtonLabel1("New " + Global.getNewCaseType());
@@ -89,6 +91,7 @@ public class LabelHashTables {
     private static void MarketingFirm(){
         //Matter Type
         Global.setNewCaseType("Project");
+        Global.setLeadWording("Potential Client");
         
         //Type for the New Button
         Global.setButtonLabel1("New " + Global.getNewCaseType());

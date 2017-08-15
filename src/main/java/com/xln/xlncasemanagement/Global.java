@@ -67,6 +67,7 @@ public class Global {
     
     //List of Label Changes
     private static String newCaseType = "";
+    private static String leadWording = "";
     
     private static String buttonLabel1 = "";
     private static String buttonLabel2 = "";
@@ -213,6 +214,14 @@ public class Global {
 
     public static void setNewCaseType(String newCaseType) {
         Global.newCaseType = newCaseType;
+    }
+
+    public static String getLeadWording() {
+        return leadWording;
+    }
+
+    public static void setLeadWording(String leadWording) {
+        Global.leadWording = leadWording;
     }
 
     public static String getButtonLabel1() {

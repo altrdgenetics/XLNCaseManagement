@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.sql;
 
+import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.NumberFormatService;
@@ -85,7 +86,7 @@ public class SQLMatter {
                 item.setActive(rs.getBoolean("col02"));
                 item.setPartyID(rs.getInt("col03"));
                 item.setMatterTypeID(rs.getInt("col04"));
-                item.setMatterTypeName(rs.getString("matterName"));
+                item.setMatterTypeName(rs.getInt("col04") == 0 ? Global.getLeadWording() : rs.getString("matterName"));
                 item.setOpenDate(rs.getDate("col05"));
                 item.setCloseDate(rs.getDate("col06"));
                 item.setNote(rs.getString("col07"));
@@ -139,7 +140,7 @@ public class SQLMatter {
                 item.setActive(rs.getBoolean("col02"));
                 item.setPartyID(rs.getInt("col03"));
                 item.setMatterTypeID(rs.getInt("col04"));
-                item.setMatterTypeName(rs.getString("matterName"));
+                item.setMatterTypeName(rs.getInt("col04") == 0 ? Global.getLeadWording() : rs.getString("matterName"));
                 item.setOpenDate(rs.getDate("col05"));
                 item.setCloseDate(rs.getDate("col06"));
                 item.setNote(rs.getString("col07"));
@@ -161,6 +162,25 @@ public class SQLMatter {
             DbUtils.closeQuietly(rs);
         }
         return item;
+    }
+    
+    public static void updateMatterTypeByID(int matterType, int matterID) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE table15 SET col04 = ? WHERE col01 = ?";
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, matterType);
+            ps.setInt(2, matterID);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
     }
     
     public static void updateMatterInformationByID(MatterModel item) {

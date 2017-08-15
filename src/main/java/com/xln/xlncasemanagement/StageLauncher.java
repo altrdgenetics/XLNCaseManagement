@@ -315,8 +315,9 @@ public class StageLauncher {
         }
     }
     
-    public void MaintenanceMatterTypeScene(Stage stagePassed) {
+    public MatterTypeModel MaintenanceMatterTypeScene(Stage stagePassed, boolean maintenanceModePassed) {
         Stage stage = new Stage();
+        MatterTypeModel matterType = null;  
         try { 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/MaintenanceMatterTypeScene.fxml"));
@@ -327,12 +328,15 @@ public class StageLauncher {
             stage.setScene(scene);
 
             MaintenanceMatterTypeSceneController controller = loader.getController();
-            controller.setActive(stage);
+            controller.setActive(stage, maintenanceModePassed);
 
             stage.showAndWait();
+            matterType = controller.getMatterType();
+            
         } catch (IOException ex) {
             Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return matterType; 
     }
     
     public void MaintenanceMatterTypeAddEditScene(Stage stagePassed, MatterTypeModel objectPassed) {
