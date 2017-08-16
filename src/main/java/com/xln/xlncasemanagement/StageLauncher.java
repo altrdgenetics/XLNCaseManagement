@@ -8,6 +8,7 @@ package com.xln.xlncasemanagement;
 import com.xln.xlncasemanagement.model.sql.*;
 import com.xln.xlncasemanagement.sceneController.*;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
@@ -799,6 +800,49 @@ public class StageLauncher {
         } catch (IOException ex) {
             Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void BillingScene(Stage stagePassed, boolean billing) {
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/BillingScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            BillingSceneController controller = loader.getController();
+            controller.setActive(stage, billing);
+
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public HashMap ReportParamTwoDatesScene(Stage stagePassed, HashMap hashMap) {
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/ReportParamTwoDatesScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            ReportParamTwoDatesSceneController controller = loader.getController();
+            controller.setActive(stage, hashMap);
+
+            stage.showAndWait();
+            hashMap = controller.getHash();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return hashMap;
     }
     
 }

@@ -6,15 +6,19 @@
 package com.xln.xlncasemanagement.report;
 
 import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.model.sql.MatterModel;
+import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.sql.ReportModel;
 import com.xln.xlncasemanagement.sql.DBConnection;
 import com.xln.xlncasemanagement.util.AlertDialog;
+import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import com.xln.xlncasemanagement.util.StringUtilities;
 import java.awt.Desktop;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.util.HashMap;
 import net.sf.jasperreports.engine.JRException;
@@ -30,14 +34,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class GenerateReport {
 
-    public static void generateDefaultInformation(ReportModel report, HashMap hash) {
-        hash.put("current user", StringUtilities.buildUsersName(Global.getCurrentUser()));
-        hash.put("mattertype", Global.getNewCaseType());
-        hash.put("leadwording", Global.getLeadWording());
-        generateReport(report, hash);
-    }
-
-    private static void generateReport(ReportModel report, HashMap hash) {
+    public static void generateReport(ReportModel report, HashMap hash) {
         long lStartTime = System.currentTimeMillis();
         Connection conn = null;
 
@@ -73,6 +70,57 @@ public class GenerateReport {
                 }
             } catch (JRException ex) {
                 errorGeneratingReport();
+            } finally {
+                DbUtils.closeQuietly(conn);
+            }
+        } else {
+            fileNotFound();
+        }
+    }
+    
+    public static void generateBill(PartyModel client, MatterModel matter, boolean bill, HashMap hash) {
+        long lStartTime = System.currentTimeMillis();
+        Connection conn = null;
+        InputStream is = null;
+        String fileName = 
+                (bill ? "Bill_" : "PreBill_") 
+                + StringUtilities.buildName(client.getFirstName(), "", client.getLastName()) 
+                + "_" + matter.getMatterTypeName() + "_";
+        
+        
+        is = GenerateReport.class.getResourceAsStream("/jasper/" + (bill ? "bill.jasper" : "prebill.jasper"));
+        
+        if (is != null) {
+            try {
+                if (fileName.length() > 50) {
+                    fileName = StringUtils.left(fileName.trim(), 50).trim() + "_" + System.currentTimeMillis();
+                } else {
+                    fileName = fileName + "_" + System.currentTimeMillis();
+                }
+
+                String pdfFileName = Global.getTempDirectory() + fileName + ".pdf";
+
+                conn = DBConnection.connectToDB();
+                JasperPrint jprint = (JasperPrint) JasperFillManager.fillReport(is, hash, conn);
+                try {
+                    JasperExportManager.exportReportToPdfFile(jprint, pdfFileName);
+                } catch (JRException e) {
+                    fileAlreadyOpenError();
+                }
+                File recentReport = new File(pdfFileName);
+                if (recentReport.exists()) {
+                    try {
+                        Desktop.getDesktop().open(recentReport);
+                    } catch (IOException ex) {
+                        errorGeneratingReport();
+                        DebugTools.Printout(ex.toString());
+                    }
+                    long lEndTime = System.currentTimeMillis();
+                    System.out.println("Report Generation Time: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
+                }
+            } catch (JRException ex) {
+                errorGeneratingReport();
+                DebugTools.Printout(ex.toString());
             } finally {
                 DbUtils.closeQuietly(conn);
             }

@@ -65,6 +65,9 @@ public class MainStageController implements Initializable {
     @FXML private MenuItem partyRolodexMenuItem;
     @FXML private SeparatorMenuItem adminSeperatorMenuItem;
     @FXML private Menu adminMenu;
+    @FXML private Menu billingMenu;
+    @FXML private MenuItem preBillMenuItem;
+    @FXML private MenuItem billMenuItem;
     @FXML private Menu reportMenu;
     @FXML private MenuItem runReportMenuItem;
     @FXML private MenuItem databaseMaintenanceMenuItem;
@@ -208,6 +211,14 @@ public class MainStageController implements Initializable {
     
     @FXML private void handleDatabaseMaintenanceMenuItem() {
         Global.getStageLauncher().MaintenanceScene(stage);
+    }
+    
+    @FXML private void handlePrebillMenuItem() {
+        Global.getStageLauncher().BillingScene(stage, false);
+    }
+    
+    @FXML private void handleBillMenuItem() {
+        Global.getStageLauncher().BillingScene(stage, true);
     }
     
     @FXML private void handleRunReportMenuItem() {

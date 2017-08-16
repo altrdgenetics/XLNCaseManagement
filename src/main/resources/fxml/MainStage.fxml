@@ -42,6 +42,12 @@
                   </Menu>
               </items>
             </Menu>
+            <Menu fx:id="billingMenu" mnemonicParsing="false" text="Billing">
+              <items>
+                <MenuItem fx:id="preBillMenuItem" mnemonicParsing="false" onAction="#handlePrebillMenuItem" text="Pre Bills" />
+                  <MenuItem fx:id="billMenuItem" mnemonicParsing="false" onAction="#handleBillMenuItem" text="Bills" />
+              </items>
+            </Menu>
                 <Menu fx:id="reportMenu" mnemonicParsing="false" text="Report">
                     <items>
                         <MenuItem fx:id="runReportMenuItem" mnemonicParsing="false" onAction="#handleRunReportMenuItem" text="Run Report" />
