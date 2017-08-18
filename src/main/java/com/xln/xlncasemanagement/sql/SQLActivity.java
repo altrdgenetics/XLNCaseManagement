@@ -254,4 +254,26 @@ public class SQLActivity {
         return value;
     }
         
+    public static void markMatterActivitesAsInvoiced(int matterID) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE table01 SET "
+                + "col12       = 1 " // Set Invoiced
+                + "WHERE col02 = 1 " // Active
+                + "AND col12   = 0 " // Not Invoiced
+                + "AND col05   = ?"; // MatterID
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, matterID);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLActivity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+    }
+    
 }

@@ -482,7 +482,7 @@ public class MainStageController implements Initializable {
         headerField3.setRight(headerField3Icon);
     }
     
-    private void onTabSelection() {
+    public void onTabSelection() {
         selectedTabTitle = mainTabPane.getSelectionModel().getSelectedItem();
 
         if (selectedTabTitle.equals(informationTab)) {
@@ -950,4 +950,6 @@ public class MainStageController implements Initializable {
         this.headerField5 = headerField5;
     }
 
+    
+    
 }

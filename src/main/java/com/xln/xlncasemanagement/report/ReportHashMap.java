@@ -51,8 +51,8 @@ public class ReportHashMap {
         JasperReport expensesReport = null;
         
         //Get Files
-        InputStream activityStream = ReportHashMap.class.getResourceAsStream("/jasper/Billing_Activities_Subreport.jrxml");
-        InputStream expenseStream = ReportHashMap.class.getResourceAsStream("/jasper/Billing_Expenses_Subreport.jrxml");
+        InputStream activityStream = ReportHashMap.class.getResourceAsStream("/jasper/Activities_Subreport.jrxml");
+        InputStream expenseStream = ReportHashMap.class.getResourceAsStream("/jasper/Expenses_Subreport.jrxml");
         
         //Convert Stream to JasperReport
         try {

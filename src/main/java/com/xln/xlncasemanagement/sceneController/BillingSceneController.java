@@ -10,6 +10,8 @@ import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.report.GenerateReport;
 import com.xln.xlncasemanagement.report.ReportHashMap;
+import com.xln.xlncasemanagement.sql.SQLActivity;
+import com.xln.xlncasemanagement.sql.SQLExpense;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.sql.SQLParty;
 import com.xln.xlncasemanagement.util.DebugTools;
@@ -153,16 +155,18 @@ public class BillingSceneController implements Initializable {
         GenerateReport.generateBill(selectedClient, selectedMatter, billingMode, hash);
         
         if (billingMode){
-            markEntriesAsInvoiced();
+            markEntriesAsInvoiced(selectedMatter.getId());
         }
     }
     
     @FXML private void closeButtonAction() {
+        Global.getMainStageController().onTabSelection();
         stage.close();
     }
     
-    private void markEntriesAsInvoiced() {
-        DebugTools.Printout("TODO: Mark items after Billed");
+    private void markEntriesAsInvoiced(int matterID) {
+        SQLActivity.markMatterActivitesAsInvoiced(matterID);
+        SQLExpense.markMatterExpensesAsInvoiced(matterID);
     }
     
 }
