@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-08-17T14:34:43 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Billing_Expenses_Subreport" pageWidth="612" pageHeight="792" whenNoDataType="BlankPage" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="09a00fde-9734-4afd-80d4-9f5f088d4385">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="193"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="800"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="XLNCaseManagement"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="matterid" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+	(SELECT CONCAT(table22.col03, ' ', table22.col05) FROM table22 WHERE table22.col01 = table13.col03) AS UsersName,
+	(SELECT table14.col03 FROM table14 WHERE table14.col01 = table13.col04) AS ExpenseType,
+	table13.col07 AS ExpenseDescription,
+	table13.col08 AS Cost,
+	DATE_FORMAT(table13.col06, '%c/%d/%Y') AS DateOccured
+
+FROM
+	table13
+
+WHERE
+	table13.col05 = 	  $P{matterid} ]]>
+	</queryString>
+	<field name="UsersName" class="java.lang.String"/>
+	<field name="ExpenseType" class="java.lang.String"/>
+	<field name="ExpenseDescription" class="java.lang.String"/>
+	<field name="Cost" class="java.lang.Double"/>
+	<field name="DateOccured" class="java.lang.String"/>
+	<variable name="Expenses_Subtotal" class="java.lang.Double" incrementType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$V{Expenses_Subtotal} + $F{Cost}]]></variableExpression>
+		<initialValueExpression><![CDATA[Double.valueOf(0)]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="25">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="30" y="0" width="170" height="20" uuid="083ccff9-71c0-462a-b26e-9cc8e726b5b5"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Expenses]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="276" height="20" uuid="a0757572-0dfb-4e4c-9034-b9c616e25ccf">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{DateOccured} + "  -  " + $F{ExpenseType} + ($F{ExpenseDescription} == null ? "" : " - " + $F{ExpenseDescription})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="110" height="20" uuid="53502175-05ce-4403-b577-abc55310f5c4">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{UsersName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="510" y="0" width="62" height="20" uuid="629716e3-1ef8-417c-9991-34445c106f58">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat("$ #,##0.00").format(Double.valueOf($F{Cost}))]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="25">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="410" y="0" width="100" height="20" uuid="92ab3ff5-c4bd-4c34-bada-d311bea3b4cc"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Expenses Subbbbb:   ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="510" y="0" width="62" height="20" uuid="3845888d-d86b-4ecd-9f9f-78402fb946ed">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat("$ #,##0.00").format(Double.valueOf($V{Expenses_Subtotal}))]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

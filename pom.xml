@@ -6,19 +6,19 @@
     <artifactId>XLNCaseManagement</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-
+    
     <name>XLNCaseManagement</name>
-
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mainClass>com.xln.xlncasemanagement.MainApp</mainClass>
     </properties>
-
+    
     <organization>
         <!-- Used as the 'Vendor' for JNLP generation -->
         <name>XLN Systems</name>
     </organization>
-
+    
     <dependencies>
         <dependency> <!-- Database Connector -->
             <groupId>org.mariadb.jdbc</groupId>
@@ -52,9 +52,8 @@
             <artifactId>controlsfx</artifactId>
             <version>8.40.13</version>
         </dependency>
-        <dependency> <!-- COM hook for Microsoft Word conversion to PDF (Manual Install) -->
-            <!--mvn install:install-file -Dfile='/[PATH_TO_JAR]/jacob.jar' -DgroupId='local.net.sf.jacob-project' -DartifactId='jacob' -Dversion='1.18' -Dpackaging='jar'-->
-            <groupId>local.net.sf.jacob-project</groupId>
+        <dependency> <!-- COM hook for Microsoft Word conversion to PDF -->
+            <groupId>com.hynnet</groupId>
             <artifactId>jacob</artifactId>
             <version>1.18</version>
         </dependency>
@@ -171,5 +170,5 @@
             </plugin>
         </plugins>
     </build>
-
+    
 </project>

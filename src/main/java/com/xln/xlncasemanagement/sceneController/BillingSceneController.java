@@ -148,13 +148,21 @@ public class BillingSceneController implements Initializable {
         HashMap hash = new HashMap();
         hash = ReportHashMap.generateDefaultInformation(hash);
         hash = ReportHashMap.matterID(hash, selectedMatter.getId());
+        hash = ReportHashMap.billingSubReports(hash);
         
         GenerateReport.generateBill(selectedClient, selectedMatter, billingMode, hash);
+        
+        if (billingMode){
+            markEntriesAsInvoiced();
+        }
     }
     
     @FXML private void closeButtonAction() {
         stage.close();
     }
     
+    private void markEntriesAsInvoiced() {
+        DebugTools.Printout("TODO: Mark items after Billed");
+    }
     
 }

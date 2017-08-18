@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -71,11 +73,17 @@ public class GenerateReport {
             } catch (JRException ex) {
                 errorGeneratingReport();
             } finally {
+                try {
+                    bis.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(GenerateReport.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 DbUtils.closeQuietly(conn);
             }
         } else {
             fileNotFound();
         }
+        
     }
     
     public static void generateBill(PartyModel client, MatterModel matter, boolean bill, HashMap hash) {
@@ -88,7 +96,7 @@ public class GenerateReport {
                 + "_" + matter.getMatterTypeName() + "_";
         
         
-        is = GenerateReport.class.getResourceAsStream("/jasper/" + (bill ? "bill.jasper" : "prebill.jasper"));
+        is = GenerateReport.class.getResourceAsStream("/jasper/" + (bill ? "Billing.jasper" : "PreBilling.jasper"));
         
         if (is != null) {
             try {
@@ -122,6 +130,11 @@ public class GenerateReport {
                 errorGeneratingReport();
                 DebugTools.Printout(ex.toString());
             } finally {
+                try {
+                    is.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(GenerateReport.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 DbUtils.closeQuietly(conn);
             }
         } else {

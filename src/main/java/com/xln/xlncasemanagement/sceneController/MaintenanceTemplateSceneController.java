@@ -11,7 +11,6 @@ import com.xln.xlncasemanagement.model.sql.TemplateModel;
 import com.xln.xlncasemanagement.model.table.MaintenanceTemplateTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
 import com.xln.xlncasemanagement.sql.SQLTemplate;
-import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
