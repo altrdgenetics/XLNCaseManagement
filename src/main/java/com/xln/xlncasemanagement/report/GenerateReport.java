@@ -6,12 +6,16 @@
 package com.xln.xlncasemanagement.report;
 
 import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.model.sql.ActivityModel;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.sql.ReportModel;
 import com.xln.xlncasemanagement.sql.DBConnection;
+import com.xln.xlncasemanagement.sql.SQLActivity;
+import com.xln.xlncasemanagement.sql.SQLActivityFile;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.DebugTools;
+import com.xln.xlncasemanagement.util.FileUtilities;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import com.xln.xlncasemanagement.util.StringUtilities;
 import java.awt.Desktop;
@@ -19,7 +23,9 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.sql.Connection;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -96,12 +102,14 @@ public class GenerateReport {
                 + "_" + matter.getMatterTypeName() + "_";
         
         
-        is = GenerateReport.class.getResourceAsStream("/jasper/" + (bill ? "Billing.jasper" : "PreBilling.jasper"));
+        is = GenerateReport.class.getResourceAsStream("/jasper/" + (bill ? "Bill.jasper" : "PreBill.jasper"));
         
         if (is != null) {
             try {
+                byte[] pdfFileStream = null;
+                
                 if (fileName.length() > 50) {
-                    fileName = StringUtils.left(fileName.trim(), 50).trim() + "_" + System.currentTimeMillis();
+                    fileName = StringUtils.left(fileName.trim(), 50).trim().replaceAll(" ", "_") + "_" + System.currentTimeMillis();
                 } else {
                     fileName = fileName + "_" + System.currentTimeMillis();
                 }
@@ -111,11 +119,15 @@ public class GenerateReport {
                 conn = DBConnection.connectToDB();
                 JasperPrint jprint = (JasperPrint) JasperFillManager.fillReport(is, hash, conn);
                 try {
-                    JasperExportManager.exportReportToPdfFile(jprint, pdfFileName);
+                    pdfFileStream = JasperExportManager.exportReportToPdf(jprint);
                 } catch (JRException e) {
                     fileAlreadyOpenError();
                 }
-                File recentReport = new File(pdfFileName);
+                if (bill && pdfFileStream != null){
+                    addBillingActivity(matter.getId(), pdfFileStream, fileName + ".pdf");
+                }
+                
+                File recentReport = FileUtilities.generateFileFromByte(pdfFileStream, pdfFileName);
                 if (recentReport.exists()) {
                     try {
                         Desktop.getDesktop().open(recentReport);
@@ -140,6 +152,25 @@ public class GenerateReport {
         } else {
             fileNotFound();
         }
+    }
+    
+    private static void addBillingActivity(int matterID, byte[] pdfFileStream, String fileName){
+        ActivityModel item = new ActivityModel();
+        item.setActive(true);
+        item.setUserID(Global.getCurrentUser().getId());
+        item.setActivityTypeID(0);
+        item.setMatterID(matterID);
+        item.setDateOccurred(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+        item.setDuration(BigDecimal.ZERO);
+        item.setRate(BigDecimal.ZERO);
+        item.setTotal(BigDecimal.ZERO);
+        item.setDescription("Bill Generated");        
+        item.setBillable(false);
+        item.setInvoiced(true);
+        
+        int activityID = SQLActivity.insertActivity(item);
+        
+        SQLActivityFile.insertActivityFile(activityID, pdfFileStream, fileName);
     }
     
     private static void fileAlreadyOpenError() {

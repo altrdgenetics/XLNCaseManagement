@@ -147,9 +147,20 @@ public class DetailedActivitySceneController implements Initializable {
     
     private void loadActivityInformation() {
         UserModel user = SQLUser.getUserByID(activityObject.getUserID());
-        ActivityTypeModel expenseType = SQLActivityType.geActivityTypeByID(activityObject.getActivityTypeID());
         
-        activityTypeComboBox.setValue(expenseType);
+        
+        if (activityObject.getActivityTypeID() == 0){
+            ActivityTypeModel sys = new ActivityTypeModel();
+            sys.setId(0);
+            sys.setActivityType("SYSTEM");
+            
+            activityTypeComboBox.getItems().addAll(sys);
+            activityTypeComboBox.setValue(sys);
+        } else {
+            ActivityTypeModel activityType = SQLActivityType.geActivityTypeByID(activityObject.getActivityTypeID());
+            activityTypeComboBox.setValue(activityType);
+        }
+        
         userComboBox.setValue(user);
         rateTextField.setText(NumberFormatService.formatMoney(activityObject.getRate()));
         occurredDatePicker.setValue(activityObject.getDateOccurred().toLocalDate());
@@ -235,7 +246,7 @@ public class DetailedActivitySceneController implements Initializable {
                         stage.close();
                     });
                 } else {
-                    activityObject = SQLActivity.geActivityByID(keyID);
+                    activityObject = SQLActivity.getActivityByID(keyID);
                     Platform.runLater(() -> {
                         AlertDialog.StaticAlert(4, "Save Error",
                                 "Unable To Insert File",

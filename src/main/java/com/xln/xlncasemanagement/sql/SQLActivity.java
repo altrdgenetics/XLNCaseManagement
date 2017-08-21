@@ -34,7 +34,7 @@ public class SQLActivity {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String sql = "SELECT table01.*, table11.col03 AS fileName, table02.col03 AS activityType, "
+        String sql = "SELECT table01.*, table11.col03 AS fileName, IFNULL(table02.col03, 'SYSTEM') AS activityType, "
                 + "table22.col03 AS firstName, table22.col04 AS middleName, table22.col05 AS lastName, "
                 + "table22.col08 AS userName "
                 + "FROM table01 "
@@ -106,7 +106,7 @@ public class SQLActivity {
         return list;
     }
     
-    public static ActivityModel geActivityByID(int id) {
+    public static ActivityModel getActivityByID(int id) {
         ActivityModel item = new ActivityModel();
         Connection conn = null;
         PreparedStatement ps = null;

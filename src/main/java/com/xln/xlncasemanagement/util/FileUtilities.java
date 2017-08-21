@@ -16,6 +16,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -211,6 +214,16 @@ public class FileUtilities {
             }
         }
         return tempFile;
+    }
+    
+    public static File generateFileFromByte(byte[] bFile, String fileName) {        
+        try {
+            Path path = Paths.get(fileName);
+            Files.write(path, bFile);
+        } catch (IOException ex) {
+            DebugTools.Printout(ex.getMessage());
+        }
+        return new File(fileName);
     }
     
     public static void generateTempLocation(){

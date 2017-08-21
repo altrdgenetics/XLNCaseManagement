@@ -62,6 +62,43 @@ public class SQLActivityFile {
         return false;
     }
     
+    public static boolean insertActivityFile(int activityID, byte[] fileInBytes, String fileName) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "INSERT INTO table11 ("
+                + "col02, " //activity ID
+                + "col03, " //File Name
+                + "col04, " //Byte Block
+                + "col05 " //SHA1 Checksum
+                + ") VALUES (";
+                for(int i=0; i<3; i++){
+                        sql += "?, ";   //01-03
+                    }
+                sql += "?)"; //04
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt   (1, activityID);
+            ps.setString(2, fileName);
+            ps.setBytes (3, fileInBytes);
+            ps.setString(4, FileUtilities.generateFileCheckSum(new ByteArrayInputStream(fileInBytes)));
+            
+            ps.executeUpdate();
+
+            ResultSet newRow = ps.getGeneratedKeys();
+            if (newRow.first()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+        }
+        return false;
+    }
+    
     public static boolean verifyFileChecksum(int id){
         Connection conn = null;
         PreparedStatement ps = null;
