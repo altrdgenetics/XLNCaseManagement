@@ -72,7 +72,7 @@
                     </GridPane.margin>
                 </ComboBox>
                 <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Description:" GridPane.rowIndex="2" />
-                <TextArea fx:id="descriptionTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.rowSpan="4" GridPane.vgrow="NEVER">
+                <TextArea fx:id="descriptionTextArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.rowSpan="4" GridPane.vgrow="NEVER">
                     <GridPane.margin>
                         <Insets left="5.0" right="10.0" top="5.0" />
                     </GridPane.margin>
