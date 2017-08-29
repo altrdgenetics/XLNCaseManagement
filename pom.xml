@@ -36,6 +36,11 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.6</version>
         </dependency>
+        <dependency> <!-- Internet Time -->
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.6</version>
+        </dependency>
         <dependency> <!-- JUnit For Code Testing -->
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

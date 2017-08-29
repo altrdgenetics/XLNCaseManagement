@@ -52,13 +52,13 @@ public class DBConnection {
      * 
      * @return
      */
-    public static Connection connectToDBforBackup() {
+    public static Connection connectToConfigDB() {
         Connection conn = null;
         int nbAttempts = 0;
         while (true) {
             try {
                 Class.forName(DBCInfo.getDBdriver());
-                conn = DriverManager.getConnection(DBCInfo.getDBurl(), DBCInfo.getDBusername(), DBCInfo.getDBpassword());
+                conn = DriverManager.getConnection(DBCInfo.getDBConfigUrl() + DBCInfo.getDBConfigName(), DBCInfo.getDBConfigUsername(), DBCInfo.getDBConfigPassword());
                 break;
             } catch (ClassNotFoundException | SQLException e) {
                 nbAttempts++;
@@ -76,4 +76,5 @@ public class DBConnection {
         }
         return conn;
     }
+    
 }
