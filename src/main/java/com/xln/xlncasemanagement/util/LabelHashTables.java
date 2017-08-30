@@ -15,10 +15,10 @@ public class LabelHashTables {
     
     public static void setGlobalLabels(String version) {
         switch (version) {
-            case "1":
+            case "Legal":
                 Legal();
                 break;
-            case "2":
+            case "Computer Repair":
                 ComputerRepair();
                 break;
             case "3":

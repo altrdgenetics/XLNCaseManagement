@@ -23,7 +23,7 @@ public class UserModel {
     private String emailAddress;
     private String username;
     private String password;
-    private String passwordSalt;
+    private long passwordSalt;
     private String passwordReset;
     private Timestamp lastLoginDateTime;
     private String lastLoginPCName;
@@ -105,11 +105,11 @@ public class UserModel {
         this.password = password;
     }
 
-    public String getPasswordSalt() {
+    public long getPasswordSalt() {
         return passwordSalt;
     }
 
-    public void setPasswordSalt(String passwordSalt) {
+    public void setPasswordSalt(long passwordSalt) {
         this.passwordSalt = passwordSalt;
     }
 

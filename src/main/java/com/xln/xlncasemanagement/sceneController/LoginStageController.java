@@ -6,6 +6,9 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.config.Password;
+import com.xln.xlncasemanagement.model.sql.UserModel;
+import com.xln.xlncasemanagement.sql.SQLUser;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -58,7 +61,7 @@ public class LoginStageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //setListeners();
+        setListeners();
     }    
     
     public void setActive(Stage stagePassed) {
@@ -76,8 +79,10 @@ public class LoginStageController implements Initializable {
     }
     
     @FXML private void loginButtonAction() {
-        Global.getStageLauncher().mainStage();
-        stage.close();
+        if (verifyUser()){
+            Global.getStageLauncher().mainStage();
+            stage.close();
+        }
     }
     
     @FXML private void closeButtonAction() {
@@ -90,4 +95,12 @@ public class LoginStageController implements Initializable {
                 UsernameTextField.textProperty().isEmpty(),
                 PasswordTextField.textProperty().isEmpty()));
     }
+    
+    private boolean verifyUser() {
+        return Password.validatePassword(
+                UsernameTextField.getText().trim(),
+                PasswordTextField.getText().trim()
+        );
+    }
+
 }

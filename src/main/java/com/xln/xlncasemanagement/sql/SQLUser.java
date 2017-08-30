@@ -62,7 +62,7 @@ public class SQLUser {
                 item.setEmailAddress(rs.getString("col07"));
                 item.setUsername(rs.getString("col08"));
                 item.setPassword(rs.getString("col09"));
-                item.setPasswordSalt(rs.getString("col10"));
+                item.setPasswordSalt(rs.getLong("col10"));
                 item.setPasswordReset(rs.getString("col11"));
                 item.setLastLoginDateTime(rs.getTimestamp("col12"));
                 item.setLastLoginPCName(rs.getString("col13"));
@@ -114,7 +114,7 @@ public class SQLUser {
                 item.setEmailAddress(rs.getString("col07"));
                 item.setUsername(rs.getString("col08"));
                 item.setPassword(rs.getString("col09"));
-                item.setPasswordSalt(rs.getString("col10"));
+                item.setPasswordSalt(rs.getLong("col10"));
                 item.setPasswordReset(rs.getString("col11"));
                 item.setLastLoginDateTime(rs.getTimestamp("col12"));
                 item.setLastLoginPCName(rs.getString("col13"));
@@ -157,7 +157,7 @@ public class SQLUser {
                 item.setEmailAddress(rs.getString("col07"));
                 item.setUsername(rs.getString("col08"));
                 item.setPassword(rs.getString("col09"));
-                item.setPasswordSalt(rs.getString("col10"));
+                item.setPasswordSalt(rs.getLong("col10"));
                 item.setPasswordReset(rs.getString("col11"));
                 item.setLastLoginDateTime(rs.getTimestamp("col12"));
                 item.setLastLoginPCName(rs.getString("col13"));
@@ -199,7 +199,7 @@ public class SQLUser {
                 item.setEmailAddress(rs.getString("col07"));
                 item.setUsername(rs.getString("col08"));
                 item.setPassword(rs.getString("col09"));
-                item.setPasswordSalt(rs.getString("col10"));
+                item.setPasswordSalt(rs.getLong("col10"));
                 item.setPasswordReset(rs.getString("col11"));
                 item.setLastLoginDateTime(rs.getTimestamp("col12"));
                 item.setLastLoginPCName(rs.getString("col13"));
@@ -218,7 +218,7 @@ public class SQLUser {
         }
         return item;
     }
-    
+        
     public static void updateUserByID(UserModel item) {
         Connection conn = null;
         PreparedStatement ps = null;

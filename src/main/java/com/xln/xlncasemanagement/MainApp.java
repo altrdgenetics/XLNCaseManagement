@@ -1,9 +1,7 @@
 package com.xln.xlncasemanagement;
 
 import com.xln.xlncasemanagement.config.ConfigFile;
-import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.sql.SQLCompany;
-import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.FileUtilities;
 import com.xln.xlncasemanagement.util.LabelHashTables;
 import javafx.application.Application;
@@ -24,13 +22,9 @@ public class MainApp extends Application {
         //Set Temp Folder
         FileUtilities.generateTempLocation();
 
-        //Remove Later
-        if (Global.isDebug()){
-            setSpoofData();
-        } else {
-            ConfigFile.readConfigFile();
-        }
-        
+        //Load DB Connection
+        ConfigFile.readConfigFile();
+                
         //Set company Information
         Global.setCompanyInformation(SQLCompany.getCompanyInformation());
         
@@ -38,18 +32,5 @@ public class MainApp extends Application {
             Global.setApplicationLogo(Global.getCompanyInformation().getLogo());
         }
     }
-        
-    /**
-     * Set pre-configured options for testing
-     */
-    private void setSpoofData() {
-        String version = "1";
-                
-        LabelHashTables.setGlobalLabels(version);
-        Global.setVersion(version);
-        
-        UserModel user = SQLUser.getUserByUserName("andrew.schmidt");
-        Global.setCurrentUser(user);
-    }
-    
+
 }

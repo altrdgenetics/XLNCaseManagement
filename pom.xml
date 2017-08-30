@@ -62,6 +62,11 @@
             <artifactId>jacob</artifactId>
             <version>1.18</version>
         </dependency>
+        <dependency> <!-- Password Generation -->
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.10</version>
+        </dependency>        
         <dependency><!-- Generating Reports -->
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
