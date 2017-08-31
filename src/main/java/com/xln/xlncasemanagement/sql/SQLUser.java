@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -63,7 +64,7 @@ public class SQLUser {
                 item.setUsername(rs.getString("col08"));
                 item.setPassword(rs.getString("col09"));
                 item.setPasswordSalt(rs.getLong("col10"));
-                item.setPasswordReset(rs.getString("col11"));
+                item.setPasswordReset(rs.getBoolean("col11"));
                 item.setLastLoginDateTime(rs.getTimestamp("col12"));
                 item.setLastLoginPCName(rs.getString("col13"));
                 item.setLastLoginIP(rs.getString("col14"));
@@ -115,7 +116,7 @@ public class SQLUser {
                 item.setUsername(rs.getString("col08"));
                 item.setPassword(rs.getString("col09"));
                 item.setPasswordSalt(rs.getLong("col10"));
-                item.setPasswordReset(rs.getString("col11"));
+                item.setPasswordReset(rs.getBoolean("col11"));
                 item.setLastLoginDateTime(rs.getTimestamp("col12"));
                 item.setLastLoginPCName(rs.getString("col13"));
                 item.setLastLoginIP(rs.getString("col14"));
@@ -158,7 +159,7 @@ public class SQLUser {
                 item.setUsername(rs.getString("col08"));
                 item.setPassword(rs.getString("col09"));
                 item.setPasswordSalt(rs.getLong("col10"));
-                item.setPasswordReset(rs.getString("col11"));
+                item.setPasswordReset(rs.getBoolean("col11"));
                 item.setLastLoginDateTime(rs.getTimestamp("col12"));
                 item.setLastLoginPCName(rs.getString("col13"));
                 item.setLastLoginIP(rs.getString("col14"));
@@ -200,7 +201,7 @@ public class SQLUser {
                 item.setUsername(rs.getString("col08"));
                 item.setPassword(rs.getString("col09"));
                 item.setPasswordSalt(rs.getLong("col10"));
-                item.setPasswordReset(rs.getString("col11"));
+                item.setPasswordReset(rs.getBoolean("col11"));
                 item.setLastLoginDateTime(rs.getTimestamp("col12"));
                 item.setLastLoginPCName(rs.getString("col13"));
                 item.setLastLoginIP(rs.getString("col14"));
@@ -254,6 +255,83 @@ public class SQLUser {
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(conn);
         }
+    }
+        
+    public static void updateUserPasswordByID(int id, String password, long passwordSalt) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE table22 SET "
+                + "col09 = ?, " //01 - password
+                + "col10 = ?, " //02 - salt     
+                + "col11 = ? "  //03 - password Reset 
+                + "WHERE col01 = ?"; //04 - User ID
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setString (1, password);
+            ps.setLong   (2, passwordSalt);
+            ps.setBoolean(3, true);
+            ps.setInt    (4, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+    }
+    
+    public static int insertUser(UserModel item) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "INSERT INTO table22 ("
+                + "col02, " // 01 - active
+                + "col03, " // 02 - firstname
+                + "col04, " // 03 - middleinitial
+                + "col05, " // 04 - lastname
+                + "col06, " // 05 - phone
+                + "col07, " // 06 - email
+                + "col08, " // 07 - username
+                + "col09, " // 08 - password
+                + "col10, " // 09 - passwordsalt
+                + "col11, " // 10 - passwordreset
+                + "col17, " // 11 - admin
+                + "col18 "  // 12 - default rate
+                + ") VALUES (";
+                for(int i=0; i<11; i++){
+                        sql += "?, ";   //01-11
+                    }
+                sql += "?)"; //12
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setBoolean   ( 1, true);
+            ps.setString    ( 2, item.getFirstName());
+            ps.setString    ( 3, item.getMiddleInitial());
+            ps.setString    ( 4, item.getLastName());
+            ps.setString    ( 5, item.getPhoneNumber());
+            ps.setString    ( 6, item.getEmailAddress());
+            ps.setString    ( 7, item.getUsername());
+            ps.setString    ( 8, item.getPassword());
+            ps.setLong      ( 9, item.getPasswordSalt());
+            ps.setBoolean   (10, item.isPasswordReset());
+            ps.setBoolean   (11, item.isAdminRights());
+            ps.setBigDecimal(12, item.getDefaultRate());
+            ps.executeUpdate();
+
+            ResultSet newRow = ps.getGeneratedKeys();
+            if (newRow.next()) {
+                return newRow.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+        }
+        return 0;
     }
     
 }

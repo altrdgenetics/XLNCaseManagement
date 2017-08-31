@@ -47,7 +47,8 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="60.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="88.0" minWidth="-Infinity" prefWidth="59.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="73.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
@@ -82,7 +83,7 @@
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="lastNameNameTextfield" promptText="Last Name" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1">
+            <TextField fx:id="lastNameNameTextfield" promptText="Last Name" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
@@ -117,6 +118,7 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </CheckBox>
+            <Button fx:id="ResetPasswordButton" mnemonicParsing="false" onAction="#onResetPasswordButtonAction" styleClass="info" text="Reset Password" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.halignment="RIGHT" />
          </children>
          <BorderPane.margin>
             <Insets left="15.0" right="15.0" />

@@ -24,7 +24,7 @@ public class UserModel {
     private String username;
     private String password;
     private long passwordSalt;
-    private String passwordReset;
+    private boolean passwordReset;
     private Timestamp lastLoginDateTime;
     private String lastLoginPCName;
     private String lastLoginIP;
@@ -113,11 +113,11 @@ public class UserModel {
         this.passwordSalt = passwordSalt;
     }
 
-    public String getPasswordReset() {
+    public boolean isPasswordReset() {
         return passwordReset;
     }
 
-    public void setPasswordReset(String passwordReset) {
+    public void setPasswordReset(boolean passwordReset) {
         this.passwordReset = passwordReset;
     }
 

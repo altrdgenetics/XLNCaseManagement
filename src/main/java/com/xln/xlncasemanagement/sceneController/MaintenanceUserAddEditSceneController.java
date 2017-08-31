@@ -5,8 +5,10 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
+import com.xln.xlncasemanagement.config.Password;
 import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.sql.SQLUser;
+import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -34,6 +36,7 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
     @FXML private Label headerLabel;
     @FXML private Button saveButton;
     @FXML private Button closeButton;
+    @FXML private Button ResetPasswordButton;
     @FXML private CheckBox loggedInCheckBox;
     @FXML private CheckBox adminRightsCheckBox;
     @FXML private TextField userNameTextfield;
@@ -63,6 +66,8 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
             title = "Edit User";
             buttonText = "Save";
             loadInformation();
+        } else {
+            ResetPasswordButton.setVisible(false);
         }
         stage.setTitle(title);
         headerLabel.setText(title);
@@ -108,8 +113,59 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
         stage.close();
     }
     
+    @FXML private void onResetPasswordButtonAction() {        
+        //Verify Reset
+        boolean approved = AlertDialog.StaticAlert(
+                1, 
+                "Reset Password", 
+                "Do You Wish To Reset This User's Password?", 
+                "This is not reversable"
+        );
+        
+        if (approved) {
+            //Reset
+            long passwordSalt = Password.generatePasswordSalt();
+            String tempPassword = Password.generateTempPassword();
+
+            SQLUser.updateUserPasswordByID(userObject.getId(), tempPassword, passwordSalt);
+
+            AlertDialog.StaticAlert(
+                    2,
+                    "New Password",
+                    "New Password: " + tempPassword,
+                    "This is a temporary password that has been randomly generated "
+                    + "and will require the user to reset on login."
+            );
+        }
+    }
+
     private void insertUser() {
-        //TODO
+        String tempPassword = Password.generateTempPassword();
+        long passwordSalt = Password.generatePasswordSalt();
+        
+        UserModel item = new UserModel();
+        item.setFirstName(firstNameTextfield.getText().trim().equals("") ? null : firstNameTextfield.getText().trim());
+        item.setMiddleInitial(middleInitialTextfield.getText().trim().equals("") ? null : middleInitialTextfield.getText().trim());
+        item.setLastName(lastNameNameTextfield.getText().trim().equals("") ? null : lastNameNameTextfield.getText().trim());
+        item.setPhoneNumber(phoneNumberTextfield.getText().trim().equals("") ? null : phoneNumberTextfield.getText().trim());
+        item.setEmailAddress(null);
+        item.setUsername(userNameTextfield.getText().trim().equals("") ? null : userNameTextfield.getText().trim());
+        item.setActiveLogin(loggedInCheckBox.isSelected());
+        item.setAdminRights(adminRightsCheckBox.isSelected());
+        item.setDefaultRate(defaultRateTextField.getText().trim().equals("") ? BigDecimal.ZERO : NumberFormatService.convertToBigDecimal(defaultRateTextField.getText().trim()));        
+        item.setPassword(tempPassword);
+        item.setPasswordSalt(passwordSalt);
+        
+        //TODO: insert USER
+        SQLUser.insertUser(item);
+        
+        AlertDialog.StaticAlert(
+                    2,
+                    "New Password",
+                    "New Password: " + tempPassword,
+                    "This is a temporary password that has been randomly generated "
+                    + "and will require the user to reset on login."
+            );
     }
     
     private void updateUser() {
@@ -127,4 +183,5 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
         
         SQLUser.updateUserByID(item);
     }
+        
 }
