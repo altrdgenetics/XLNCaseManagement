@@ -7,9 +7,10 @@ package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.config.Password;
-import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.sql.SQLUser;
+import com.xln.xlncasemanagement.util.AlertDialog;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -33,9 +34,8 @@ public class LoginStageController implements Initializable {
 
     Stage stage;
     private double X, Y;
-    private final int wrongUsername = 0;
-    private final int wrongPassword = 1;
-    private final int goodLogin = 2;
+    private int attempts = 0;
+    private ArrayList<String> userNames = new ArrayList();
         
     @FXML private Label HeaderLabel;
     @FXML private ImageView logoImage;
@@ -79,9 +79,19 @@ public class LoginStageController implements Initializable {
     }
     
     @FXML private void loginButtonAction() {
+        userNames.add(UsernameTextField.getText().trim());
         if (verifyUser()){
             Global.getStageLauncher().mainStage();
             stage.close();
+        } else if (attempts >= Global.getMAX_ALLOWED_LOGIN_ATTEMPTS()){
+            if (userNames.size() > 0){
+                SQLUser.lockUserAccounts(userNames.toArray(new String[userNames.size()]));
+            }
+            maxAllowedAttemptsMessage();
+            System.exit(0);
+        } else {
+            attempts++;
+            loginFailedMessage();
         }
     }
     
@@ -97,10 +107,50 @@ public class LoginStageController implements Initializable {
     }
     
     private boolean verifyUser() {
-        return Password.validatePassword(
+        int valid = Password.validatePassword(
                 UsernameTextField.getText().trim(),
-                PasswordTextField.getText().trim()
-        );
+                PasswordTextField.getText().trim());
+        
+        switch (valid) {
+            case 0:
+                // Valid Login
+                return true;
+            case 1:
+                // Failed Authentication
+                return false;
+            case 2:
+                // No User Found
+                return false;
+            case 3:
+                // Account Locked
+                accountLockedMessage();
+                return false;
+            default:
+                // Returned unknown Variable
+                return false;
+        }
     }
 
+    private void loginFailedMessage() {
+        String timesRemaining = String.valueOf(Global.getMAX_ALLOWED_LOGIN_ATTEMPTS() - attempts);
+        AlertDialog.StaticAlert(3, "Login Error",
+                    "Invalid Login",
+                    "The login credentials are incorrect, " + timesRemaining 
+                            + " attempts remaining before application exits.");
+    }
+    
+    private void maxAllowedAttemptsMessage() {
+        AlertDialog.StaticAlert(3, "Login Error",
+                    "Max Allowed Login Attempts Reached.",
+                    "The user account is now locked and will require admin "
+                            + "assistance in unlocking it.");
+    }
+    
+    private void accountLockedMessage() {
+        AlertDialog.StaticAlert(3, "Login Error",
+                    "This Account Is Locked.",
+                    "The user account is locked and will require admin "
+                            + "assistance in unlocking it.");
+    }
+    
 }

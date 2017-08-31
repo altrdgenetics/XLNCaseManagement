@@ -32,6 +32,7 @@ public class UserModel {
     private boolean activeLogin;
     private boolean adminRights;
     private BigDecimal defaultRate;
+    private boolean accountLocked;
 
     public int getId() {
         return id;
@@ -175,6 +176,14 @@ public class UserModel {
 
     public void setDefaultRate(BigDecimal defaultRate) {
         this.defaultRate = defaultRate;
+    }
+
+    public boolean isAccountLocked() {
+        return accountLocked;
+    }
+
+    public void setAccountLocked(boolean accountLocked) {
+        this.accountLocked = accountLocked;
     }
     
 }

@@ -72,6 +72,7 @@ public class SQLUser {
                 item.setActiveLogin(rs.getBoolean("col16"));
                 item.setAdminRights(rs.getBoolean("col17"));
                 item.setDefaultRate(rs.getBigDecimal("col18"));
+                item.setAccountLocked(rs.getBoolean("col19"));
                 
                 list.add(
                         new UserMaintanceTableModel(
@@ -124,6 +125,7 @@ public class SQLUser {
                 item.setActiveLogin(rs.getBoolean("col16"));
                 item.setAdminRights(rs.getBoolean("col17"));
                 item.setDefaultRate(rs.getBigDecimal("col18"));
+                item.setAccountLocked(rs.getBoolean("col19"));
                 list.add(item);
             }
         } catch (SQLException ex) {
@@ -167,6 +169,7 @@ public class SQLUser {
                 item.setActiveLogin(rs.getBoolean("col16"));
                 item.setAdminRights(rs.getBoolean("col17"));
                 item.setDefaultRate(rs.getBigDecimal("col18"));
+                item.setAccountLocked(rs.getBoolean("col19"));
             }
         } catch (SQLException ex) {
             DebugTools.Printout(ex.getMessage());
@@ -209,6 +212,7 @@ public class SQLUser {
                 item.setActiveLogin(rs.getBoolean("col16"));
                 item.setAdminRights(rs.getBoolean("col17"));
                 item.setDefaultRate(rs.getBigDecimal("col18"));
+                item.setAccountLocked(rs.getBoolean("col19"));
             }
         } catch (SQLException ex) {
             DebugTools.Printout(ex.getMessage());
@@ -264,7 +268,8 @@ public class SQLUser {
         String sql = "UPDATE table22 SET "
                 + "col09 = ?, " //01 - password
                 + "col10 = ?, " //02 - salt     
-                + "col11 = ? "  //03 - password Reset 
+                + "col11 = ?, " //03 - password Reset 
+                + "col19 = ? "  //04 - Account Lock
                 + "WHERE col01 = ?"; //04 - User ID
         try {
             conn = DBConnection.connectToDB();
@@ -272,7 +277,8 @@ public class SQLUser {
             ps.setString (1, password);
             ps.setLong   (2, passwordSalt);
             ps.setBoolean(3, true);
-            ps.setInt    (4, id);
+            ps.setBoolean(4, false);
+            ps.setInt    (5, id);
             ps.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -298,12 +304,13 @@ public class SQLUser {
                 + "col10, " // 09 - passwordsalt
                 + "col11, " // 10 - passwordreset
                 + "col17, " // 11 - admin
-                + "col18 "  // 12 - default rate
+                + "col18, " // 12 - default rate
+                + "col19 "  // 13 - Account Lock
                 + ") VALUES (";
-                for(int i=0; i<11; i++){
-                        sql += "?, ";   //01-11
+                for(int i=0; i<12; i++){
+                        sql += "?, ";   //01-12
                     }
-                sql += "?)"; //12
+                sql += "?)"; //13
         try {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -319,6 +326,7 @@ public class SQLUser {
             ps.setBoolean   (10, item.isPasswordReset());
             ps.setBoolean   (11, item.isAdminRights());
             ps.setBigDecimal(12, item.getDefaultRate());
+            ps.setBoolean   (13, false);
             ps.executeUpdate();
 
             ResultSet newRow = ps.getGeneratedKeys();
@@ -332,6 +340,41 @@ public class SQLUser {
             DbUtils.closeQuietly(ps);
         }
         return 0;
+    }
+    
+    public static void lockUserAccounts(String[] lockedUsersList) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE table22 SET "
+                + "col19 = ? " //04 - Account Lock
+                + "WHERE  ("; //04 - User ID
+
+            for (int i = 0; i < lockedUsersList.length; i++) {
+                if (i > 0) {
+                    sql += " OR ";
+                }
+                sql += " col08 = ?";
+            }
+            sql += ")";
+        
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setBoolean(1, true);
+            
+            for (int i = 1; i < (lockedUsersList.length + 1); i++) {
+                ps.setString(i, "%" + lockedUsersList[i].trim() + "%");
+            }
+            
+            
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
     }
     
 }
