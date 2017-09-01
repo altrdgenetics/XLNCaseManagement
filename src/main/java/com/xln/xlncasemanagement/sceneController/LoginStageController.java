@@ -80,6 +80,7 @@ public class LoginStageController implements Initializable {
     
     @FXML private void loginButtonAction() {
         userNames.add(UsernameTextField.getText().trim());
+        
         if (verifyUser()){
             Global.getStageLauncher().mainStage();
             stage.close();
@@ -91,6 +92,8 @@ public class LoginStageController implements Initializable {
             System.exit(0);
         } else {
             attempts++;
+            UsernameTextField.clear();
+            PasswordTextField.clear();
             loginFailedMessage();
         }
     }
