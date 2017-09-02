@@ -3,7 +3,6 @@ package com.xln.xlncasemanagement;
 import com.xln.xlncasemanagement.config.ConfigFile;
 import com.xln.xlncasemanagement.sql.SQLCompany;
 import com.xln.xlncasemanagement.util.FileUtilities;
-import com.xln.xlncasemanagement.util.LabelHashTables;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

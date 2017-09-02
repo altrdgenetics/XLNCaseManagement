@@ -5,6 +5,16 @@
  */
 package com.xln.xlncasemanagement.util;
 
+import com.xln.xlncasemanagement.config.ConfigFile;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.sql.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.net.ntp.NTPUDPClient;
+import org.apache.commons.net.ntp.TimeInfo;
+
 
 
 /**
@@ -13,5 +23,22 @@ package com.xln.xlncasemanagement.util;
  */
 public class WebLookup {
     
+    public static Date internetTime() {
+        Date date = new Date(System.currentTimeMillis());
+        
+        try {
+            String TIME_SERVER = "time-a.nist.gov";
+            NTPUDPClient timeClient = new NTPUDPClient();
+            InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
+            TimeInfo timeInfo = timeClient.getTime(inetAddress);
+            long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();
+            date = new Date(returnTime);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ConfigFile.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ConfigFile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return date;
+    }
     
 }

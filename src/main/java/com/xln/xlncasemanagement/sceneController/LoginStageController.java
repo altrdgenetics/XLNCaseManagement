@@ -9,6 +9,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.config.Password;
 import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.AlertDialog;
+import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -88,7 +89,7 @@ public class LoginStageController implements Initializable {
                 SQLUser.lockUserAccounts(userNames.toArray(new String[userNames.size()]));
             }
             maxAllowedAttemptsMessage();
-            System.exit(0);
+            closeButtonAction();
         } else {
             attempts++;
             loginFailedMessage();
@@ -114,19 +115,24 @@ public class LoginStageController implements Initializable {
         switch (valid) {
             case 0:
                 // Valid Login
+                DebugTools.Printout("Login Success");
                 return true;
             case 1:
                 // Failed Authentication
+                DebugTools.Printout("Login Failed: Failed Authentication");
                 return false;
             case 2:
                 // No User Found
+                DebugTools.Printout("Login Failed: No User Found");
                 return false;
             case 3:
                 // Account Locked
+                DebugTools.Printout("Login Failed: Account Locked");
                 accountLockedMessage();
                 return false;
             default:
                 // Returned unknown Variable
+                DebugTools.Printout("Login Failed: Unknown Reason");
                 return false;
         }
     }
@@ -134,23 +140,23 @@ public class LoginStageController implements Initializable {
     private void loginFailedMessage() {
         String timesRemaining = String.valueOf(Global.getMAX_ALLOWED_LOGIN_ATTEMPTS() - attempts);
         AlertDialog.StaticAlert(3, "Login Error",
-                    "Invalid Login",
-                    "The login credentials are incorrect, " + timesRemaining 
-                            + " attempts remaining before application exits.");
+                "Invalid Login",
+                "The login credentials are incorrect, " + timesRemaining
+                + " attempts remaining before application exits.");
     }
-    
+
     private void maxAllowedAttemptsMessage() {
         AlertDialog.StaticAlert(3, "Login Error",
-                    "Max Allowed Login Attempts Reached.",
-                    "The user account is now locked and will require admin "
-                            + "assistance in unlocking it.");
+                "Max Allowed Login Attempts Reached.",
+                "The user account is now locked and will require admin "
+                + "assistance in unlocking it.");
     }
-    
+
     private void accountLockedMessage() {
         AlertDialog.StaticAlert(3, "Login Error",
-                    "This Account Is Locked.",
-                    "The user account is locked and will require admin "
-                            + "assistance in unlocking it.");
+                "This Account Is Locked.",
+                "The user account is locked and will require admin "
+                + "assistance in unlocking it.");
     }
-    
+
 }
