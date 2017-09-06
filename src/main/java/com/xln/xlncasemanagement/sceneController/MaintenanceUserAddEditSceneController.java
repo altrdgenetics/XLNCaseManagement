@@ -127,7 +127,12 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
             long passwordSalt = Password.generatePasswordSalt();
             String tempPassword = Password.generateTempPassword();
 
-            SQLUser.updateUserPasswordByID(userObject.getId(), tempPassword, passwordSalt);
+            SQLUser.updateUserPasswordByID(
+                    userObject.getId(), 
+                    Password.hashPassword(passwordSalt, tempPassword), 
+                    passwordSalt,
+                    true
+            );
 
             AlertDialog.StaticAlert(
                     2,

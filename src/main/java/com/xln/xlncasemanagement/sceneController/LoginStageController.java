@@ -10,9 +10,13 @@ import com.xln.xlncasemanagement.config.Password;
 import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.DebugTools;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -83,8 +87,7 @@ public class LoginStageController implements Initializable {
         userNames.add(UsernameTextField.getText().trim());
         
         if (verifyUser()){
-            Global.getStageLauncher().mainStage();
-            stage.close();
+            successfulLogin();            
         } else if (attempts >= Global.getMAX_ALLOWED_LOGIN_ATTEMPTS()){
             if (userNames.size() > 0){
                 SQLUser.lockUserAccounts(userNames.toArray(new String[userNames.size()]));
@@ -103,6 +106,25 @@ public class LoginStageController implements Initializable {
         Platform.exit();
         System.exit(0);
     }
+    
+    private void successfulLogin(){
+        if (Global.getCurrentUser().isPasswordReset()){
+            Global.getStageLauncher().PasswordResetScene(stage);
+        }
+        
+        try {
+            SQLUser.updateUserLocationByID(
+                    Global.getCurrentUser().getId(), 
+                    InetAddress.getLocalHost().getHostName(), 
+                    InetAddress.getLocalHost().getHostAddress()
+            );
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(LoginStageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Global.getStageLauncher().mainStage();
+        stage.close();
+    }
+    
     
     private void setListeners() {
         LoginButton.disableProperty().bind(Bindings.or(

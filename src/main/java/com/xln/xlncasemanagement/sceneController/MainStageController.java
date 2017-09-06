@@ -11,6 +11,7 @@ import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.sql.SQLCaseParty;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.sql.SQLParty;
+import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.FileUtilities;
@@ -201,6 +202,7 @@ public class MainStageController implements Initializable {
     
     @FXML private void handleCloseMenuItem() { 
         FileUtilities.cleanTempLocation();
+        SQLUser.removeUserActiveLoginStatus(Global.getCurrentUser().getId());
         Platform.exit();
         System.exit(0);
     }

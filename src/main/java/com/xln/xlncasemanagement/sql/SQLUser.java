@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -261,7 +262,7 @@ public class SQLUser {
         }
     }
         
-    public static void updateUserPasswordByID(int id, String password, long passwordSalt) {
+    public static void updateUserPasswordByID(int id, String password, long passwordSalt, boolean passReset) {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -276,9 +277,55 @@ public class SQLUser {
             ps = conn.prepareStatement(sql);
             ps.setString (1, password);
             ps.setLong   (2, passwordSalt);
-            ps.setBoolean(3, true);
+            ps.setBoolean(3, passReset);
             ps.setBoolean(4, false);
             ps.setInt    (5, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+    }
+    
+    public static void removeUserActiveLoginStatus(int id) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE table22 SET col16 = ? WHERE col01 = ?";
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setBoolean(1, false);
+            ps.setInt    (2, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+    }
+    
+    public static void updateUserLocationByID(int id, String pcName, String pcIP) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE table22 SET "
+                + "col13 = ?, "  //01 - PC Name
+                + "col14 = ?, "  //02 - PC IP  
+                + "col12 = ?, "  //03 - Login Date/Time
+                + "col16 = ? "   //04 - Active Login
+                + "WHERE col01 = ?"; //05 - User ID
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setString   (1, pcName);
+            ps.setString   (2, pcIP);
+            ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+            ps.setBoolean  (4, true);
+            ps.setInt      (5, id);
             ps.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
