@@ -57,7 +57,7 @@ public class DBConnection {
         int nbAttempts = 0;
         while (true) {
             try {
-                Class.forName(DBCInfo.getDBdriver());
+                Class.forName(DBCInfo.getDBConfigDriver());
                 conn = DriverManager.getConnection(DBCInfo.getDBConfigUrl() + DBCInfo.getDBConfigName(), DBCInfo.getDBConfigUsername(), DBCInfo.getDBConfigPassword());
                 break;
             } catch (ClassNotFoundException | SQLException e) {
