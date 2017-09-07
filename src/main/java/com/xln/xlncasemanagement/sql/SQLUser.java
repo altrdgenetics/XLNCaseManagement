@@ -308,6 +308,25 @@ public class SQLUser {
         }
     }
     
+    public static void updateLastMatterID(int matterID, int userID) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE table22 SET col15 = ? WHERE col01 = ?";
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, matterID);
+            ps.setInt(2, userID);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+    }
+    
     public static void updateUserLocationByID(int id, String pcName, String pcIP) {
         Connection conn = null;
         PreparedStatement ps = null;

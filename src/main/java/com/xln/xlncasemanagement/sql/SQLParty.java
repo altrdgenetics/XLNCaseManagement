@@ -249,5 +249,45 @@ public class SQLParty {
         }
         return list;
     }
+    
+    public static PartyModel getClientByID(int id) {
+        PartyModel item = new PartyModel();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM table16 WHERE table16.col01 = ?";
+
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                
+                item.setId(rs.getInt("col01"));
+                item.setActive(rs.getBoolean("col02"));
+                item.setPrefix(rs.getString("col03"));
+                item.setFirstName(rs.getString("col04"));
+                item.setMiddleInitial(rs.getString("col05"));
+                item.setLastName(rs.getString("col06"));
+                item.setAddressOne(rs.getString("col07"));
+                item.setAddressTwo(rs.getString("col08"));
+                item.setAddressThree(rs.getString("col09"));
+                item.setCity(rs.getString("col10"));
+                item.setState(rs.getString("col11"));
+                item.setZip(rs.getString("col12"));
+                item.setPhoneOne(rs.getString("col13"));
+                item.setPhoneTwo(rs.getString("col14"));
+                item.setEmail(rs.getString("col15"));
+            }
+        } catch (SQLException ex) {
+            DebugTools.Printout(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return item;
+    }
         
 }

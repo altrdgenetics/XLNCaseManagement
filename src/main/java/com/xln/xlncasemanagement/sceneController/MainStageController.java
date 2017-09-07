@@ -187,6 +187,7 @@ public class MainStageController implements Initializable {
         
         headerLogo.setImage(Global.getApplicationLogo());
         loadClientComboBox();
+        loadPreviousMatter();
     }
 
     private void setVersionInformation() {
@@ -194,6 +195,18 @@ public class MainStageController implements Initializable {
         hideHeaderControls();
         setButtonLabels();
         hideButtons();
+    }
+    
+    private void loadPreviousMatter() {
+        if (Global.getCurrentUser().getLastMatterID() > 0){
+            MatterModel previousMatter = SQLMatter.getMatterByID(Global.getCurrentUser().getLastMatterID());
+            PartyModel previousClient = SQLParty.getClientByID(previousMatter.getPartyID());
+            
+            clientField.getSelectionModel().select(previousClient);
+            handleClientSelection();
+            headerField1.getSelectionModel().select(previousMatter);
+            handleHeaderField1Selection();
+        }
     }
     
     @FXML private void handlePreferencesMenuItem() {
@@ -254,9 +267,16 @@ public class MainStageController implements Initializable {
     @FXML private void handleHeaderField1Selection(){
         Global.setCurrentMatter((MatterModel) headerField1.getValue());
         disableTabsAndButtons(false);
+        updateLastMatter();
         loadHeader();
         updateClientPhoneEmail();
         onTabSelection();
+    }
+    
+    private void updateLastMatter() {
+        if (Global.getCurrentMatter() != null) {
+            SQLUser.updateLastMatterID(Global.getCurrentMatter().getId(), Global.getCurrentUser().getId());
+        }
     }
     
     private void updateClientPhoneEmail(){
@@ -952,6 +972,4 @@ public class MainStageController implements Initializable {
         this.headerField5 = headerField5;
     }
 
-    
-    
 }
