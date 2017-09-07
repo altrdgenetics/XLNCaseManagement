@@ -114,7 +114,7 @@
                         </Label>
                         <ComboBox fx:id="clientField" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleClientSelection" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
                         <TextField fx:id="phoneField" editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
-                        <TextField fx:id="emailField" editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+                        <TextField fx:id="emailField" editable="false" onMouseClicked="#onEmailFieldClick" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
                         <CustomTextField fx:id="headerField2" editable="false" onMouseClicked="#onHeaderField2Action" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER" />
                         <CustomTextField fx:id="headerField3" editable="false" onMouseClicked="#onHeaderField3Action" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER" />
                         <TextField fx:id="headerField4" editable="false" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />

@@ -23,6 +23,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -178,7 +180,7 @@ public class MainStageController implements Initializable {
         setVersionInformation();
         stage.setTitle("Case Management");
         stage.setOnCloseRequest((WindowEvent t) -> {
-            handleCloseMenuItem();
+            exitApplication(t);
         });
         
         if (!Global.getCurrentUser().isAdminRights()){
@@ -233,19 +235,7 @@ public class MainStageController implements Initializable {
     }
 
     @FXML private void handleCloseMenuItem() { 
-        boolean approved = AlertDialog.StaticAlert(
-                1,
-                "Close",
-                "Are You Sure You Want To Exit?",
-                ""
-        );
-
-        if (approved) {
-            FileUtilities.cleanTempLocation();
-            SQLUser.removeUserActiveLoginStatus(Global.getCurrentUser().getId());
-            Platform.exit();
-            System.exit(0);
-        }
+        exitApplication(null);
     }
     
     @FXML private void handlePartyRolodexMenuItem(){
@@ -348,6 +338,19 @@ public class MainStageController implements Initializable {
         buttonBar.getChildren().remove(buttonThree);
         buttonBar.getChildren().remove(buttonSix);
         buttonBar.getChildren().remove(buttonSeven);
+    }
+    
+    @FXML private void onEmailFieldClick(MouseEvent event) {
+        if (event.getClickCount() >= 2) {
+            DebugTools.Printout("Clicked to Launch Email");
+            if (!emailField.getText().equals("")){
+                try {
+                    Desktop.getDesktop().mail(new URI("mailto:" + emailField.getText().replace(" ", "")));
+                } catch (URISyntaxException | IOException ex) {
+                    Logger.getLogger(MainStageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
     
     @FXML
@@ -649,6 +652,26 @@ public class MainStageController implements Initializable {
             buttonFourLabel += "Note";
         }
         buttonFour.setText(buttonFourLabel);
+    }
+    
+    private void exitApplication(WindowEvent t){
+        boolean approved = AlertDialog.StaticAlert(
+                1,
+                "Close",
+                "Are You Sure You Want To Exit?",
+                ""
+        );
+
+        if (approved) {
+            FileUtilities.cleanTempLocation();
+            SQLUser.removeUserActiveLoginStatus(Global.getCurrentUser().getId());
+            Platform.exit();
+            System.exit(0);
+        } else {
+            if (t != null){
+                t.consume();
+            }
+        }
     }
     
     public void loadClientComboBox(){
