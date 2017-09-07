@@ -28,6 +28,7 @@ import javafx.stage.Stage;
 public class PasswordResetSceneController implements Initializable {
 
     Stage stage;
+    boolean preferences;
     
     @FXML PasswordField CurrentPasswordField;
     @FXML PasswordField NewPasswordField;
@@ -53,12 +54,17 @@ public class PasswordResetSceneController implements Initializable {
         );
     }
     
-    public void setActive(Stage stagePassed){
+    public void setActive(Stage stagePassed, boolean preferencesPassed){
         stage = stagePassed;
+        preferences = preferencesPassed;
+        
+        if (preferences){
+            ExitButton.setText("Cancel");
+        }
     }
     
     @FXML private void onUpdateButtonAction() {
-        if (CurrentPasswordField.getText().equals(NewPasswordField.getText())) {
+        if (!CurrentPasswordField.getText().equals(NewPasswordField.getText())) {
             if (verifyExistingPassword()) {
                 if (verifyPasswordMatch()) {
                     if (verifyPasswordRequirement()) {
@@ -80,10 +86,14 @@ public class PasswordResetSceneController implements Initializable {
     }
     
     @FXML private void onExitButtonAction() {
-        FileUtilities.cleanTempLocation();
-        SQLUser.removeUserActiveLoginStatus(Global.getCurrentUser().getId());
-        Platform.exit();
-        System.exit(0);
+        if (preferences) {
+            stage.close();
+        } else {
+            FileUtilities.cleanTempLocation();
+            SQLUser.removeUserActiveLoginStatus(Global.getCurrentUser().getId());
+            Platform.exit();
+            System.exit(0);
+        }
     }
     
     private boolean verifyExistingPassword() {

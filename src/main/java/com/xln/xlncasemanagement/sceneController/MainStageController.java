@@ -211,7 +211,7 @@ public class MainStageController implements Initializable {
     }
     
     @FXML private void handlePreferencesMenuItem() {
-        //TODO
+        Global.getStageLauncher().UserPreferenceScene(stage);
     }
     
     @FXML private void handleLogOffMenuItem() {

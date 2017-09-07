@@ -109,7 +109,7 @@ public class LoginStageController implements Initializable {
     
     private void successfulLogin(){
         if (Global.getCurrentUser().isPasswordReset()){
-            Global.getStageLauncher().PasswordResetScene(stage);
+            Global.getStageLauncher().PasswordResetScene(stage, false);
         }
         
         try {

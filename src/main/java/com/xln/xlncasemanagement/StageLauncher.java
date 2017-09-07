@@ -845,7 +845,7 @@ public class StageLauncher {
         return hashMap;
     }
     
-    public void PasswordResetScene(Stage stagePassed) {
+    public void PasswordResetScene(Stage stagePassed, boolean preferencesPassed) {
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -857,6 +857,26 @@ public class StageLauncher {
             stage.setScene(scene);
 
             PasswordResetSceneController controller = loader.getController();
+            controller.setActive(stage, preferencesPassed);
+
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void UserPreferenceScene(Stage stagePassed) {
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/UserPreferenceScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            UserPreferenceSceneController controller = loader.getController();
             controller.setActive(stage);
 
             stage.showAndWait();
