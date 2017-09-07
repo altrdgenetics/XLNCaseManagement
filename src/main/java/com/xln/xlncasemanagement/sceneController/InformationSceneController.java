@@ -265,9 +265,9 @@ public class InformationSceneController implements Initializable {
             }
         });
  
-        TotalHoursTextField.setText(billables.get("totalActivityHour").toString());
-        BilledHoursTextField.setText(billables.get("billedActivityHour").toString());
-        UnBilledHoursTextField.setText(billables.get("unBilledActivityHour").toString());
+        TotalHoursTextField.setText(billables.get("totalActivityHour").toString() + "   (" + billables.get("totalActivityAmount").toString() + ")");
+        BilledHoursTextField.setText(billables.get("billedActivityHour").toString() + "   (" + billables.get("billedActivityAmount").toString() + ")");
+        UnBilledHoursTextField.setText(billables.get("unBilledActivityHour").toString() + "   (" + billables.get("unbilledActivityAmount").toString() + ")");
         TotalExpensesTextField.setText(billables.get("totalExpenseAmount").toString());
         BilledExpensesTextField.setText(billables.get("billedExpenseAmount").toString());
         UnBilledExpensesTextField.setText(billables.get("unBilledExpenseAmount").toString());

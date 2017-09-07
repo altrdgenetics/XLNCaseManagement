@@ -261,6 +261,7 @@ public class SQLMatter {
                 + "IFNULL(SUM(IF(table01.col12 = 0, table01.col07, 0)), 0) as unBilledActivityHour "
                 + "FROM table01 "
                 + "WHERE table01.col02 = 1 "
+                + "AND table01.col11 = 1 "
                 + "AND table01.col05 = ? "
                 + ") AS activity "
                 + "INNER JOIN "

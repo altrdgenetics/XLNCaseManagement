@@ -117,7 +117,7 @@
                         <Insets left="5.0" right="15.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField fx:id="EmailAddressTextField" promptText="Email Address" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9">
+                <TextField fx:id="EmailAddressTextField" onMouseClicked="#onEmailFieldClick" promptText="Email Address" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9">
                     <GridPane.margin>
                         <Insets left="5.0" right="15.0" />
                     </GridPane.margin>

@@ -12,9 +12,16 @@ import com.xln.xlncasemanagement.sql.SQLCaseParty;
 import com.xln.xlncasemanagement.sql.SQLParty;
 import com.xln.xlncasemanagement.sql.SQLPartyNamePrefix;
 import com.xln.xlncasemanagement.sql.SQLPartyRelationType;
+import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.NumberFormatService;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,6 +29,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -116,6 +124,19 @@ public class DetailedPartySceneController implements Initializable {
     
     @FXML private void closeButtonAction(){
         stage.close();
+    }
+    
+    @FXML private void onEmailFieldClick(MouseEvent event) {
+        if (event.getClickCount() >= 2) {
+            DebugTools.Printout("Clicked to Launch Email");
+            if (!EmailAddressTextField.getText().equals("")){
+                try {
+                    Desktop.getDesktop().mail(new URI("mailto:" + EmailAddressTextField.getText().replace(" ", "")));
+                } catch (URISyntaxException | IOException ex) {
+                    Logger.getLogger(MainStageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
     
     private void loadCaseRelationComboBox() {

@@ -86,7 +86,7 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Total Hours:" GridPane.columnIndex="2" GridPane.hgrow="NEVER">
+            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Total Billable Hours:" GridPane.columnIndex="2" GridPane.hgrow="NEVER">
                <padding>
                   <Insets right="5.0" />
                </padding>
@@ -94,7 +94,7 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Billed Hours:" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="1">
+            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Invoiced Hours:" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="1">
                <padding>
                   <Insets right="5.0" />
                </padding>
@@ -102,7 +102,7 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Un-Billed Hours:" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="2">
+            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Non-Invoiced Hours:" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="2">
                <padding>
                   <Insets right="5.0" />
                </padding>
@@ -118,7 +118,7 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Billed Expenses:" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
+            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Invoiced Expenses:" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
                <padding>
                   <Insets right="5.0" />
                </padding>
@@ -126,7 +126,7 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Un-Billed Expenses:" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="5">
+            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Non-Invoiced Expenses:" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="5">
                <padding>
                   <Insets right="5.0" />
                </padding>
