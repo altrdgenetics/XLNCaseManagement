@@ -26,6 +26,7 @@ public class Global {
     
     
     private static Parent root;    
+    private static Stage loginStage;
     private static Stage mainStage;
     private static MainStageController mainStageController;
     private static Stage incomingDocketingStage;
@@ -106,6 +107,14 @@ public class Global {
 
     public static void setRoot(Parent root) {
         Global.root = root;
+    }
+
+    public static Stage getLoginStage() {
+        return loginStage;
+    }
+
+    public static void setLoginStage(Stage loginStage) {
+        Global.loginStage = loginStage;
     }
 
     public static Stage getMainStage() {

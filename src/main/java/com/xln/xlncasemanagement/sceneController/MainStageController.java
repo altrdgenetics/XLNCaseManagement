@@ -61,6 +61,7 @@ public class MainStageController implements Initializable {
     @FXML private MenuBar menuBar;
     @FXML private Menu fileMenu;
     @FXML private MenuItem preferencesMenuItem;
+    @FXML private MenuItem logOffMenuItem;
     @FXML private MenuItem closeMenuItem;
     @FXML private Menu editMenu;
     @FXML private MenuItem partyRolodexMenuItem;
@@ -213,11 +214,38 @@ public class MainStageController implements Initializable {
         //TODO
     }
     
+    @FXML private void handleLogOffMenuItem() {
+        boolean approved = AlertDialog.StaticAlert(
+                1,
+                "Log Off",
+                "Are You Sure You Want To Log Off?",
+                ""
+        );
+
+        if (approved) {
+            SQLUser.removeUserActiveLoginStatus(Global.getCurrentUser().getId());
+            Global.setCurrentUser(null);
+            Global.setCurrentMatter(null);
+            Global.setCurrentUser(null);
+            Global.getLoginStage().show();
+            stage.close();
+        }
+    }
+
     @FXML private void handleCloseMenuItem() { 
-        FileUtilities.cleanTempLocation();
-        SQLUser.removeUserActiveLoginStatus(Global.getCurrentUser().getId());
-        Platform.exit();
-        System.exit(0);
+        boolean approved = AlertDialog.StaticAlert(
+                1,
+                "Close",
+                "Are You Sure You Want To Exit?",
+                ""
+        );
+
+        if (approved) {
+            FileUtilities.cleanTempLocation();
+            SQLUser.removeUserActiveLoginStatus(Global.getCurrentUser().getId());
+            Platform.exit();
+            System.exit(0);
+        }
     }
     
     @FXML private void handlePartyRolodexMenuItem(){

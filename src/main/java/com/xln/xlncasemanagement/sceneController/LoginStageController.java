@@ -121,8 +121,10 @@ public class LoginStageController implements Initializable {
         } catch (UnknownHostException ex) {
             Logger.getLogger(LoginStageController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        UsernameTextField.clear();
+        PasswordTextField.clear();
         Global.getStageLauncher().mainStage();
-        stage.close();
+        Global.getLoginStage().hide();
     }
     
     

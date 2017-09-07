@@ -14,7 +14,8 @@ public class MainApp extends Application {
         setApplicationDefaults();
         
         Global.setStageLauncher(new StageLauncher());
-        Global.getStageLauncher().loginScene(stage);
+        Global.setLoginStage(stage);
+        Global.getStageLauncher().loginScene();
     }
 
     private void setApplicationDefaults(){

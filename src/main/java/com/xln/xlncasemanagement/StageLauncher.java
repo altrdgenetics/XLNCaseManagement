@@ -26,15 +26,15 @@ import javafx.stage.StageStyle;
  */
 public class StageLauncher {
 
-    public void loginScene(Stage stage) {
+    public void loginScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoginStage.fxml"));
             Global.setRoot((Parent) loader.load());
 
-            stage.initStyle(StageStyle.TRANSPARENT);
-            stage.getIcons().add(Global.getApplicationLogo());
+            Global.getLoginStage().initStyle(StageStyle.TRANSPARENT);
+            Global.getLoginStage().getIcons().add(Global.getApplicationLogo());
             Scene scene = new Scene(Global.getRoot());
-            stage.setScene(scene);
+            Global.getLoginStage().setScene(scene);
             scene.setFill(Color.TRANSPARENT);
             Global.getRoot().setStyle(
                       "-fx-border-insets: 10;"
@@ -46,8 +46,8 @@ public class StageLauncher {
             );
 
             LoginStageController controller = loader.getController();
-            controller.setActive(stage);
-            stage.show();
+            controller.setActive(Global.getLoginStage());
+            Global.getLoginStage().show();
             
         } catch (IOException ex) {
             Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
