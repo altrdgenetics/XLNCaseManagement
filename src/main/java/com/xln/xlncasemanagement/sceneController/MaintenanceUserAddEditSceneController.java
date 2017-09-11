@@ -158,7 +158,7 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
         item.setActiveLogin(loggedInCheckBox.isSelected());
         item.setAdminRights(adminRightsCheckBox.isSelected());
         item.setDefaultRate(defaultRateTextField.getText().trim().equals("") ? BigDecimal.ZERO : NumberFormatService.convertToBigDecimal(defaultRateTextField.getText().trim()));        
-        item.setPassword(tempPassword);
+        item.setPassword(Password.hashPassword(passwordSalt, tempPassword));
         item.setPasswordSalt(passwordSalt);
         
         //TODO: insert USER
