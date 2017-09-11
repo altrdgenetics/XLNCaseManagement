@@ -164,6 +164,11 @@ public class LoginStageController implements Initializable {
                 DebugTools.Printout("Login Failed: Account Locked");
                 accountLockedMessage();
                 return false;
+            case 4:
+                // Account Locked
+                DebugTools.Printout("Login Failed: Account Logged In");
+                accountLoggedInAlreadyMessage();
+                return false;
             default:
                 // Returned unknown Variable
                 DebugTools.Printout("Login Failed: Unknown Reason");
@@ -177,6 +182,13 @@ public class LoginStageController implements Initializable {
                 "Invalid Login",
                 "The login credentials are incorrect, " + timesRemaining
                 + " attempts remaining before application exits.");
+    }
+    
+    private void accountLoggedInAlreadyMessage() {
+        AlertDialog.StaticAlert(3, "Login Error",
+                "Invalid Login",
+                "The login credentials are currently in use elsewhere. "
+                + "Please exit from that location to continue.");
     }
 
     private void maxAllowedAttemptsMessage() {
