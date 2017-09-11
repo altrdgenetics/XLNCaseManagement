@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-08-18T10:55:12 -->
+<!-- 2017-09-07T15:44:25 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Billing_Activities_Subreport" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="09a00fde-9734-4afd-80d4-9f5f088d4385">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -24,7 +24,8 @@
 	table01.col07 AS Duration,
 	table01.col08 AS Rate,
 	(CASE WHEN table01.col11 = 0 THEN table01.col09 = 0 ELSE table01.col09 END) AS Total,
-	DATE_FORMAT(table01.col06, '%c/%d/%Y') AS DateOccured
+	DATE_FORMAT(table01.col06, '%c/%d/%Y') AS DateOccured,
+	table01.col11 AS Billable
 
 FROM
 	table01
@@ -42,6 +43,7 @@ ORDER BY
 	<field name="Rate" class="java.lang.Double"/>
 	<field name="Total" class="java.lang.Double"/>
 	<field name="DateOccured" class="java.lang.String"/>
+	<field name="Billable" class="java.lang.Boolean"/>
 	<variable name="Activities_Subtotal" class="java.lang.Double" incrementType="Report" calculation="Sum">
 		<variableExpression><![CDATA[$V{Activities_Subtotal} + $F{Total}]]></variableExpression>
 		<initialValueExpression><![CDATA[Double.valueOf(0)]]></initialValueExpression>
@@ -69,7 +71,7 @@ ORDER BY
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{DateOccured} + "  -  " + $F{ActivityType} + ($F{ActivityDescription} == null ? "" : " - " + $F{ActivityDescription})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DateOccured} + "  -  " + ($F{Billable}.toString().equals("false") ? "(Non-Billable)  " : "") + $F{ActivityType} + ($F{ActivityDescription} == null ? "" : " - " + $F{ActivityDescription})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="276" y="0" width="110" height="20" uuid="53502175-05ce-4403-b577-abc55310f5c4">

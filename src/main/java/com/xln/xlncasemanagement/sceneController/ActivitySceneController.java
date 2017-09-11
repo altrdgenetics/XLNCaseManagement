@@ -231,6 +231,7 @@ public class ActivitySceneController implements Initializable {
                 loadTable(list);
             }
             setSortedColumn();
+            activityTable.refresh();
         });
         activityTable.refresh();
     }
