@@ -225,6 +225,29 @@ public class SQLUser {
         return item;
     }
         
+    public static int getCountOfCurrentLoggedInUsers() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT COUNT(*) AS activeUsers FROM table22 WHERE table22.col16 = 1";
+
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                return rs.getInt("activeUsers");
+            }
+        } catch (SQLException ex) {
+            DebugTools.Printout(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return 0;
+    }
+    
     public static void updateUserByID(UserModel item) {
         Connection conn = null;
         PreparedStatement ps = null;

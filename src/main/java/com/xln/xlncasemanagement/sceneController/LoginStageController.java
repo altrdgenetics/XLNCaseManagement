@@ -87,7 +87,11 @@ public class LoginStageController implements Initializable {
         userNames.add(UsernameTextField.getText().trim());
         
         if (verifyUser()){
-            successfulLogin();            
+            if (concurrentUsersLimitReached()){
+                maxAllowedConnectionsMessage();
+            } else {
+                successfulLogin();
+            }
         } else if (attempts >= Global.getMAX_ALLOWED_LOGIN_ATTEMPTS()){
             if (userNames.size() > 0){
                 SQLUser.lockUserAccounts(userNames.toArray(new String[userNames.size()]));
@@ -107,11 +111,14 @@ public class LoginStageController implements Initializable {
         System.exit(0);
     }
     
+    private boolean concurrentUsersLimitReached(){
+        return SQLUser.getCountOfCurrentLoggedInUsers() >= Global.getMAX_ALLOWED_CONNECTIONS();
+    }
+    
     private void successfulLogin(){
         if (Global.getCurrentUser().isPasswordReset()){
             Global.getStageLauncher().PasswordResetScene(stage, false);
         }
-        
         try {
             SQLUser.updateUserLocationByID(
                     Global.getCurrentUser().getId(), 
@@ -184,6 +191,14 @@ public class LoginStageController implements Initializable {
                 "This Account Is Locked.",
                 "The user account is locked and will require admin "
                 + "assistance in unlocking it.");
+    }
+
+    private void maxAllowedConnectionsMessage() {
+        AlertDialog.StaticAlert(3, "Login Error",
+                "Max Allowed Login Connections Reached.",
+                "The maxmimum amount of concurrent user account is reached, "
+                + "reduce the number of connected users or contact support "
+                + "to increase the number of concurrent users allowed.");
     }
 
 }

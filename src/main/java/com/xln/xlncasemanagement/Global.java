@@ -39,6 +39,7 @@ public class Global {
     private static MatterModel currentMatter; 
     private static final int GLOBAL_BOOKMARKLIMIT = 10;
     private static final int MAX_ALLOWED_LOGIN_ATTEMPTS = 6;
+    private static int MAX_ALLOWED_CONNECTIONS = 0;
     private static String JACOBDLL_PATH = "";
     private static final String tempDirectory = 
             System.getProperty("java.io.tmpdir") + "XLNCase" + File.separator;
@@ -209,6 +210,14 @@ public class Global {
         return MAX_ALLOWED_LOGIN_ATTEMPTS;
     }
 
+    public static int getMAX_ALLOWED_CONNECTIONS() {
+        return MAX_ALLOWED_CONNECTIONS;
+    }
+
+    public static void setMAX_ALLOWED_CONNECTIONS(int MAX_ALLOWED_CONNECTIONS) {
+        Global.MAX_ALLOWED_CONNECTIONS = MAX_ALLOWED_CONNECTIONS;
+    }
+    
     public static String getJACOBDLL_PATH() {
         return JACOBDLL_PATH;
     }
