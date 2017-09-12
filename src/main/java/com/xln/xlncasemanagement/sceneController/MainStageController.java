@@ -259,7 +259,7 @@ public class MainStageController implements Initializable {
     }
         
     @FXML private void handleAboutMenuItem() {
-        //TODO
+        Global.getStageLauncher().AboutScene(stage);
     }
         
     @FXML private void handleClientSelection(){

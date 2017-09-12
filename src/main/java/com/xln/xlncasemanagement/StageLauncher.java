@@ -885,4 +885,24 @@ public class StageLauncher {
         }
     }
     
+    public void AboutScene(Stage stagePassed) {
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/AboutScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            AboutSceneController controller = loader.getController();
+            controller.setActive(stage);
+
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }
