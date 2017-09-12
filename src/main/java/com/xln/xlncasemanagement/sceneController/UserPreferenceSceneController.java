@@ -6,7 +6,6 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
-import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.math.BigDecimal;
