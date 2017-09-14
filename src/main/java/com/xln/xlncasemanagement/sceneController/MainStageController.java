@@ -447,7 +447,7 @@ public class MainStageController implements Initializable {
     }
     
     @FXML private void buttonFourAction(){    
-        SQLAudit.insertAudit("Button Update/Add Pressed On " + selectedTabTitle);
+        SQLAudit.insertAudit("Button Update/Add Pressed On " + selectedTabTitle.getText());
         
         if (selectedTabTitle.equals(informationTab)){
             informationSceneController.mainPanelButtonFourAction();
@@ -480,7 +480,7 @@ public class MainStageController implements Initializable {
     }
     
     @FXML private void buttonDeleteAction(){
-        SQLAudit.insertAudit("Button Delete Pressed On " + selectedTabTitle);
+        SQLAudit.insertAudit("Button Delete Pressed On " + selectedTabTitle.getText());
         
         if (selectedTabTitle.equals(informationTab)){
             informationSceneController.mainPanelButtonDeleteAction();
@@ -557,7 +557,7 @@ public class MainStageController implements Initializable {
     public void onTabSelection() {
         selectedTabTitle = mainTabPane.getSelectionModel().getSelectedItem();
 
-        SQLAudit.insertAudit("Selected " + selectedTabTitle + " Tab");
+        SQLAudit.insertAudit("Selected " + selectedTabTitle.getText() + " Tab");
         
         if (selectedTabTitle.equals(informationTab)) {
             DebugTools.Printout("Selected Information Tab");
