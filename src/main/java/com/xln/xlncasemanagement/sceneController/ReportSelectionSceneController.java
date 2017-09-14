@@ -5,9 +5,11 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
+import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ReportModel;
 import com.xln.xlncasemanagement.report.GenerateReport;
 import com.xln.xlncasemanagement.report.ReportHashMap;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLReport;
 import java.net.URL;
 import java.util.HashMap;
@@ -104,6 +106,8 @@ public class ReportSelectionSceneController implements Initializable {
     private void runReport(){
         ReportModel selection = (ReportModel) reportComboBox.getValue(); 
         ReportModel reportSelected = SQLReport.getReportByID(selection.getId());
+        
+        SQLAudit.insertAudit("Ran Report ID: " + reportSelected.getId());
         
         //Generate Information
         HashMap hash = new HashMap();

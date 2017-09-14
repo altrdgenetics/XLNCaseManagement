@@ -10,6 +10,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.table.CasePartyTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLCaseParty;
 import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
@@ -112,6 +113,8 @@ public class CasePartySceneController implements Initializable {
 
         if (row != null) {
             PartyModel party = (PartyModel) row.getObject().getValue();
+            
+            SQLAudit.insertAudit("Deleted Case Party ID: " + party.getId());
             
             SQLActiveStatus.setActive("table04", party.getId(), false);
             search();

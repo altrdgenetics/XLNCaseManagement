@@ -7,6 +7,7 @@ package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.model.sql.ActivityTypeModel;
 import com.xln.xlncasemanagement.sql.SQLActivityType;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -80,23 +81,28 @@ public class MaintenanceActivityTypeAddEditSceneController implements Initializa
     @FXML
     private void saveButtonAction() {
         if ("Save".equals(saveButton.getText().trim())){
-            updateCompany();
+            updateActivityType();
         } else if ("Add".equals(saveButton.getText().trim())) {
-            insertCompany();
+            insertActivityType();
         }
         stage.close();
     }
     
-    private void insertCompany() {
+    private void insertActivityType() {
         activityTypeObject = new ActivityTypeModel();
         activityTypeObject.setActive(true);
         activityTypeObject.setActivityType(activityTypeTextField.getText().trim());
         int id = SQLActivityType.insertActivityType(activityTypeObject);
+        
+        SQLAudit.insertAudit("Added Activity Type ID: " + id);
+        
         System.out.println("New Activity Type ID: " + id);
     }
     
-    private void updateCompany() {
+    private void updateActivityType() {
         activityTypeObject.setActivityType(activityTypeTextField.getText().trim());
         SQLActivityType.updateActivityTypeByID(activityTypeObject);
+        
+        SQLAudit.insertAudit("Updated Activity Type ID: " + activityTypeObject.getId());
     }
 }

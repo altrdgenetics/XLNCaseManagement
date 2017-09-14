@@ -10,6 +10,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyRelationTypeModel;
 import com.xln.xlncasemanagement.model.table.MaintenancePartyRelationTypeTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLPartyRelationType;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -87,6 +88,9 @@ public class MaintenancePartyRelationTypeSceneController implements Initializabl
         if (row != null) {
             PartyRelationTypeModel item = (PartyRelationTypeModel) row.getObject().getValue();
             SQLActiveStatus.setActive("table17", item.getId(), row.getChecked());
+            SQLAudit.insertAudit("Changed Active Flag " + row.getChecked() 
+                    + "For Party Relation Type ID: " + item.getId());
+            
             searchTable.getSelectionModel().clearSelection();
         }
     }

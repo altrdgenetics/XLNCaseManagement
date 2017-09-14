@@ -10,6 +10,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.model.table.UserMaintanceTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import java.net.URL;
@@ -121,6 +122,8 @@ public class MaintenanceUserSceneController implements Initializable {
             UserMaintanceTableModel row = searchTable.getSelectionModel().getSelectedItem();
             UserModel item = (UserModel) row.getObject().getValue();
             SQLActiveStatus.setActive("table22", item.getId(), false);
+            SQLAudit.insertAudit("Removed User ID: " + item.getId());
+            
             search();
         }
     }

@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.util.DebugTools;
 import java.net.URL;
@@ -81,5 +82,7 @@ public class NotesSceneController implements Initializable {
                 ? null : notesArea.getText().trim());
         
         SQLMatter.updateMatterNoteByID(Global.getCurrentMatter());
+        
+        SQLAudit.insertAudit("Updated Note For " + Global.getNewCaseType() + " ID: " + Global.getCurrentMatter().getId());
     }
 }

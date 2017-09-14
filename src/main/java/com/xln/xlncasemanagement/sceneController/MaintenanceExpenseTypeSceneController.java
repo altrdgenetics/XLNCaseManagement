@@ -10,6 +10,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ExpenseTypeModel;
 import com.xln.xlncasemanagement.model.table.MaintenanceExpenseTypeTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLExpenseType;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -87,6 +88,9 @@ public class MaintenanceExpenseTypeSceneController implements Initializable {
         if (row != null) {
             ExpenseTypeModel item = (ExpenseTypeModel) row.getObject().getValue();
             SQLActiveStatus.setActive("table14", item.getId(), row.getChecked());
+            SQLAudit.insertAudit("Changed Active Flag " + row.getChecked() 
+                    + "For Expense Type ID: " + item.getId());
+            
             searchTable.getSelectionModel().clearSelection();
         }
     }

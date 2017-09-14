@@ -8,6 +8,7 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLCaseParty;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.sql.SQLParty;
@@ -225,6 +226,8 @@ public class MainStageController implements Initializable {
         );
 
         if (approved) {
+            SQLAudit.insertAudit("Logged Off User: " + Global.getCurrentUser().getUsername());
+            
             SQLUser.removeUserActiveLoginStatus(Global.getCurrentUser().getId());
             Global.setCurrentUser(null);
             Global.setCurrentMatter(null);
@@ -264,26 +267,32 @@ public class MainStageController implements Initializable {
         
     @FXML private void handleClientSelection(){
         Global.setCurrentClient((PartyModel) clientField.getValue());
-        
+
         Global.setCurrentMatter(null);
         clearHeaderLabels();
-        
-        if (Global.getCurrentClient() != null){
-        String phone = NumberFormatService.convertStringToPhoneNumber(Global.getCurrentClient().getPhoneOne());
-        if (Global.getCurrentClient().getPhoneTwo() != null && !phone.trim().equals("")){
-            phone += ", ";
+
+        if (Global.getCurrentClient() != null) {
+            SQLAudit.insertAudit("Selected Client: " + Global.getCurrentClient().getId());
+            
+            String phone = NumberFormatService.convertStringToPhoneNumber(Global.getCurrentClient().getPhoneOne());
+            if (Global.getCurrentClient().getPhoneTwo() != null && !phone.trim().equals("")) {
+                phone += ", ";
+            }
+            phone += NumberFormatService.convertStringToPhoneNumber(Global.getCurrentClient().getPhoneTwo());
+
+            phoneField.setText(phone);
+            emailField.setText(Global.getCurrentClient().getEmail());
         }
-        phone += NumberFormatService.convertStringToPhoneNumber(Global.getCurrentClient().getPhoneTwo());
-                
-        phoneField.setText(phone);
-        emailField.setText(Global.getCurrentClient().getEmail());
-        }
-                
+
         loadMatterComboBox();
     }
     
     @FXML private void handleHeaderField1Selection(){
         Global.setCurrentMatter((MatterModel) headerField1.getValue());
+        if (Global.getCurrentMatter() != null){
+            SQLAudit.insertAudit("Selected Matter: " + Global.getCurrentMatter().getId());
+        }
+        
         disableTabsAndButtons(false);
         updateLastMatter();
         loadHeader();
@@ -345,6 +354,8 @@ public class MainStageController implements Initializable {
             DebugTools.Printout("Clicked to Launch Email");
             if (!emailField.getText().equals("")){
                 try {
+                    SQLAudit.insertAudit("Opened Email Application for: " + emailField.getText());
+                    
                     Desktop.getDesktop().mail(new URI("mailto:" + emailField.getText().replace(" ", "")));
                 } catch (URISyntaxException | IOException ex) {
                     Logger.getLogger(MainStageController.class.getName()).log(Level.SEVERE, null, ex);
@@ -364,6 +375,8 @@ public class MainStageController implements Initializable {
                             "There is no website for " + Global.getHeaderLabel2().replace(":", ""));
                 } else {
                     try {
+                        SQLAudit.insertAudit("Opened Website for: " + Global.getCurrentMatter().getMakeWebsite());
+                        
                         Desktop dt = Desktop.getDesktop();
                         URI uri = new URI(Global.getCurrentMatter().getMakeWebsite());
                         dt.browse(uri.resolve(uri));
@@ -389,6 +402,8 @@ public class MainStageController implements Initializable {
                             + Global.getHeaderLabel3().replace(":", ""));
                 } else {
                     try {
+                        SQLAudit.insertAudit("Opened Website for: " + Global.getCurrentMatter().getModelWebsite());
+                        
                         Desktop dt = Desktop.getDesktop();
                         URI uri = new URI(Global.getCurrentMatter().getModelWebsite());
                         dt.browse(uri.resolve(uri));
@@ -431,7 +446,9 @@ public class MainStageController implements Initializable {
         }
     }
     
-    @FXML private void buttonFourAction(){        
+    @FXML private void buttonFourAction(){    
+        SQLAudit.insertAudit("Button Update/Add Pressed On " + selectedTabTitle);
+        
         if (selectedTabTitle.equals(informationTab)){
             informationSceneController.mainPanelButtonFourAction();
             disableTabsInUpdateMode(informationSceneController.isUpdateMode());
@@ -463,6 +480,8 @@ public class MainStageController implements Initializable {
     }
     
     @FXML private void buttonDeleteAction(){
+        SQLAudit.insertAudit("Button Delete Pressed On " + selectedTabTitle);
+        
         if (selectedTabTitle.equals(informationTab)){
             informationSceneController.mainPanelButtonDeleteAction();
             disableTabsInUpdateMode(informationSceneController.isUpdateMode());
@@ -538,6 +557,8 @@ public class MainStageController implements Initializable {
     public void onTabSelection() {
         selectedTabTitle = mainTabPane.getSelectionModel().getSelectedItem();
 
+        SQLAudit.insertAudit("Selected " + selectedTabTitle + " Tab");
+        
         if (selectedTabTitle.equals(informationTab)) {
             DebugTools.Printout("Selected Information Tab");
             informationSceneController.setActive();
@@ -663,6 +684,7 @@ public class MainStageController implements Initializable {
         );
 
         if (approved) {
+            SQLAudit.insertAudit("Exited The Application");
             FileUtilities.cleanTempLocation();
             SQLUser.removeUserActiveLoginStatus(Global.getCurrentUser().getId());
             Platform.exit();

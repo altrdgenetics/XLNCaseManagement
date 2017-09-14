@@ -9,6 +9,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ExpenseModel;
 import com.xln.xlncasemanagement.model.sql.ExpenseTypeModel;
 import com.xln.xlncasemanagement.model.sql.UserModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLExpense;
 import com.xln.xlncasemanagement.sql.SQLExpenseFile;
 import com.xln.xlncasemanagement.sql.SQLExpenseType;
@@ -187,6 +188,10 @@ public class DetailedExpenseSceneController implements Initializable {
                     keyID = insert();
                 }
 
+                SQLAudit.insertAudit(
+                        ("Add".equals(saveButton.getText().trim()) ? "Added" : "Saved") 
+                                + "Expense ID: " + keyID);
+                
                 if (imageSelection != null && keyID > 0) {
                     long lStartTime = System.currentTimeMillis(); 
                     success = SQLExpenseFile.insertExpenseFile(keyID, imageSelection);

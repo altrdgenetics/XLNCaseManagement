@@ -9,6 +9,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.model.sql.MatterTypeModel;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLCaseParty;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.sql.SQLMatterType;
@@ -84,6 +85,9 @@ public class NewMatterCaseTypeSelectionSceneController implements Initializable 
     
     @FXML private void handleCreateCaseButton(){
         int newKeyID = insertMatter();
+        
+        SQLAudit.insertAudit("Added " + Global.getNewCaseType() + " ID: " + newKeyID);
+        
         insertPartyAsClient(newKeyID);
         
         refreshMainWindow(newKeyID);

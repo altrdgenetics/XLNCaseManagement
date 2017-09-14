@@ -10,6 +10,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.TemplateModel;
 import com.xln.xlncasemanagement.model.table.MaintenanceTemplateTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLTemplate;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -90,6 +91,9 @@ public class MaintenanceTemplateSceneController implements Initializable {
         if (row != null) {
             TemplateModel item = (TemplateModel) row.getObject().getValue();
             SQLActiveStatus.setActive("table10", item.getId(), row.getChecked());
+            SQLAudit.insertAudit("Changed Active Flag " + row.getChecked() 
+                    + "For Template ID: " + item.getId());
+            
             searchTable.getSelectionModel().clearSelection();
         }
     }

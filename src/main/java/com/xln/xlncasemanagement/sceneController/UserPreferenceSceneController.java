@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.math.BigDecimal;
@@ -98,6 +99,8 @@ public class UserPreferenceSceneController implements Initializable {
         Global.getCurrentUser().setDefaultRate(defaultRateTextField.getText().trim().equals("") ? BigDecimal.ZERO : NumberFormatService.convertToBigDecimal(defaultRateTextField.getText().trim()));
         
         SQLUser.updateUserByID(Global.getCurrentUser());
+        
+        SQLAudit.insertAudit("Updated User ID: " + Global.getCurrentUser().getId());
     }
     
 }

@@ -10,6 +10,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyNamePrefixModel;
 import com.xln.xlncasemanagement.model.table.MaintenancePartyNamePrefixTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLPartyNamePrefix;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -87,6 +88,9 @@ public class MaintenancePartyNamePrefixSceneController implements Initializable 
         if (row != null) {
             PartyNamePrefixModel item = (PartyNamePrefixModel) row.getObject().getValue();
             SQLActiveStatus.setActive("table18", item.getId(), row.getChecked());
+            SQLAudit.insertAudit("Changed Active Flag " + row.getChecked() 
+                    + "For Party Name Prefix ID: " + item.getId());
+            
             searchTable.getSelectionModel().clearSelection();
         }
     }

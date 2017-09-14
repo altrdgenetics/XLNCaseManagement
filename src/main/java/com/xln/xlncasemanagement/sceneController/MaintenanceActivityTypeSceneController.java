@@ -11,6 +11,7 @@ import com.xln.xlncasemanagement.model.sql.ActivityTypeModel;
 import com.xln.xlncasemanagement.model.table.MaintenanceActivityTypeTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
 import com.xln.xlncasemanagement.sql.SQLActivityType;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -87,6 +88,9 @@ public class MaintenanceActivityTypeSceneController implements Initializable {
         if (row != null) {
             ActivityTypeModel item = (ActivityTypeModel) row.getObject().getValue();
             SQLActiveStatus.setActive("table02", item.getId(), row.getChecked());
+            
+            SQLAudit.insertAudit("Changed Active Flag " + row.getChecked() 
+                    + "For Activity Type ID: " + item.getId());
             searchTable.getSelectionModel().clearSelection();
         }
     }

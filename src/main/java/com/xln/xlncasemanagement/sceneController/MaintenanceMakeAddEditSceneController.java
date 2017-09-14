@@ -7,6 +7,7 @@ package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MakeModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLMake;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -100,11 +101,13 @@ public class MaintenanceMakeAddEditSceneController implements Initializable {
         makeObject.setWebsite(websiteTextField.getText().trim().equals("") ? null : websiteTextField.getText().trim());
         int id = SQLMake.insertMake(makeObject);
         System.out.println("New " + Global.getHeaderLabel2().replace(":", "") + " ID: " + id);
+        SQLAudit.insertAudit("Added " + Global.getHeaderLabel2().replace(":", "") + " ID: " + id);
     }
     
     private void updateMake() {
         makeObject.setName(makeTextField.getText().trim());
         makeObject.setWebsite(websiteTextField.getText().trim().equals("") ? null : websiteTextField.getText().trim());
         SQLMake.updateMakeByID(makeObject);
+        SQLAudit.insertAudit("Updated " + Global.getHeaderLabel2().replace(":", "") + " ID: " + makeObject.getId());
     }
 }

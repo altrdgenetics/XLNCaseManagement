@@ -8,6 +8,7 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.bookmarkProcessing.GenerateDocument;
 import com.xln.xlncasemanagement.model.sql.TemplateModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLTemplate;
 import java.awt.Desktop;
 import java.io.File;
@@ -86,6 +87,9 @@ public class LetterSelectionSceneController implements Initializable {
     @FXML private void selectButtonAction(){
         TemplateModel selectedItem = (TemplateModel) letterComboBox.getValue();
         TemplateModel template = SQLTemplate.getTemplateByID(selectedItem.getId());
+        
+        SQLAudit.insertAudit("Generated Template ID: " + selectedItem.getId() 
+                + " for " + Global.getCurrentMatter().getId());
 
         new Thread() {
             @Override

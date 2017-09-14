@@ -7,6 +7,7 @@ package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MatterTypeModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLMatterType;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -98,10 +99,12 @@ public class MaintenanceMatterTypeAddEditSceneController implements Initializabl
         matterTypeObject.setMatterType(matterTypetextField.getText().trim());
         int id = SQLMatterType.insertMatterType(matterTypeObject);
         System.out.println("New " + Global.getNewCaseType() + " Type ID: " + id);
+        SQLAudit.insertAudit("Added " + Global.getNewCaseType().replace(":", "") + " ID: " + id);
     }
     
     private void updateCompany() {
         matterTypeObject.setMatterType(matterTypetextField.getText().trim());
         SQLMatterType.updateMatterTypeByID(matterTypeObject);
+        SQLAudit.insertAudit("Updated " + Global.getNewCaseType().replace(":", "") + " ID: " + matterTypeObject.getId());
     }
 }

@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.model.sql.PartyNamePrefixModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLPartyNamePrefix;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -92,11 +93,13 @@ public class MaintenancePartyNamePrefixAddEditSceneController implements Initial
         partyNamePrefixObject.setActive(true);
         partyNamePrefixObject.setPrefix(partyNamePrefixtextField.getText().trim());
         int id = SQLPartyNamePrefix.insertPartyNamePrefix(partyNamePrefixObject);
-        System.out.println("New Part Name Prefix ID: " + id);
+        System.out.println("New Party Name Prefix ID: " + id);
+        SQLAudit.insertAudit("Added Party Name Prefix ID: " + id);
     }
     
     private void updatePrefix() {
         partyNamePrefixObject.setPrefix(partyNamePrefixtextField.getText().trim());
         SQLPartyNamePrefix.updatePartyNamePrefixByID(partyNamePrefixObject);
+        SQLAudit.insertAudit("Updated Party Name Prefix ID: " + partyNamePrefixObject.getId());
     }
 }

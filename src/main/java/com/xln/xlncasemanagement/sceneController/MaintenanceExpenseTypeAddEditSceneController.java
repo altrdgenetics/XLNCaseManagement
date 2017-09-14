@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.model.sql.ExpenseTypeModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLExpenseType;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -92,11 +93,14 @@ public class MaintenanceExpenseTypeAddEditSceneController implements Initializab
         expenseTypeObject.setActive(true);
         expenseTypeObject.setExpenseType(expenseTypetextField.getText().trim());
         int id = SQLExpenseType.insertExpenseType(expenseTypeObject);
+        
+        SQLAudit.insertAudit("Added Expense Type ID: " + id);
         System.out.println("New Expense Type ID: " + id);
     }
     
     private void updateCompany() {
         expenseTypeObject.setExpenseType(expenseTypetextField.getText().trim());
         SQLExpenseType.updateExpenseTypeByID(expenseTypeObject);
+        SQLAudit.insertAudit("Updated Expense Type ID: " + expenseTypeObject.getId());
     }
 }

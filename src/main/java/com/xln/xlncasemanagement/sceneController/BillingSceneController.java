@@ -11,6 +11,7 @@ import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.report.GenerateReport;
 import com.xln.xlncasemanagement.report.ReportHashMap;
 import com.xln.xlncasemanagement.sql.SQLActivity;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLExpense;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.sql.SQLParty;
@@ -144,7 +145,9 @@ public class BillingSceneController implements Initializable {
         MatterModel selectedMatter = (MatterModel) MatterComboBox.getValue();
         PartyModel selectedClient = (PartyModel) ClientComboBox.getValue();
         
-                
+        SQLAudit.insertAudit("Generating " + (billingMode ? "Bill" : "Pre-Bill")
+                + " For MatterID: " + selectedMatter.getId());        
+        
         //Generate Information
         HashMap hash = new HashMap();
         hash = ReportHashMap.generateDefaultInformation(hash);

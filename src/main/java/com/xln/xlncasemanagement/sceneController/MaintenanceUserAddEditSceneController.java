@@ -7,6 +7,7 @@ package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.config.Password;
 import com.xln.xlncasemanagement.model.sql.UserModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.NumberFormatService;
@@ -161,8 +162,10 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
         item.setPassword(Password.hashPassword(passwordSalt, tempPassword));
         item.setPasswordSalt(passwordSalt);
         
-        //TODO: insert USER
-        SQLUser.insertUser(item);
+        ///Insert USER
+        int userID = SQLUser.insertUser(item);
+        
+        SQLAudit.insertAudit("Added User ID: " + userID);
         
         AlertDialog.StaticAlert(
                     2,
@@ -187,6 +190,8 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
         item.setId(userObject.getId());
         
         SQLUser.updateUserByID(item);
+        
+        SQLAudit.insertAudit("Updated User ID: " + item.getId());
     }
         
 }

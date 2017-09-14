@@ -8,6 +8,7 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.sql.PartyRelationTypeModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLCaseParty;
 import com.xln.xlncasemanagement.sql.SQLParty;
 import com.xln.xlncasemanagement.sql.SQLPartyNamePrefix;
@@ -206,6 +207,9 @@ public class DetailedPartySceneController implements Initializable {
         } else {
             item.setActive(true);
         }
+        
+        SQLAudit.insertAudit((partyItem != null ? "Added Party" 
+                : "Updated Party ID: " + partyItem.getId()));
         
         //Case Party OR Party Table logic.
         if (maintenanceMode) {

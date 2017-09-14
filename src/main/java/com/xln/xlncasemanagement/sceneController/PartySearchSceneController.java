@@ -9,6 +9,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.table.PartyTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLParty;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -108,6 +109,10 @@ public class PartySearchSceneController implements Initializable {
                 
             PartyModel item = (PartyModel) row.getObject().getValue();
             SQLActiveStatus.setActive(table, item.getId(), row.getChecked());
+            
+            SQLAudit.insertAudit("Changed Active Flag " + row.getChecked() + "For " 
+                    + (maintenanceMode ? "Party" : "Case Party") + " ID: " + item.getId());
+            
             searchTable.getSelectionModel().clearSelection();
         }
     }

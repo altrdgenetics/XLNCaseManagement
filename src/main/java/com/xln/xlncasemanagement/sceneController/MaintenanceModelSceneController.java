@@ -10,6 +10,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ModelModel;
 import com.xln.xlncasemanagement.model.table.MaintenanceModelTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLModel;
 import com.xln.xlncasemanagement.util.TableObjects;
 import java.net.URL;
@@ -146,6 +147,9 @@ public class MaintenanceModelSceneController implements Initializable {
         if (row != null) {
             ModelModel item = (ModelModel) row.getObject().getValue();
             SQLActiveStatus.setActive("table25", item.getId(), row.getChecked());
+            
+            SQLAudit.insertAudit("Changed Active Flag " + row.getChecked() 
+                    + "For " + Global.getHeaderLabel3().replace(":", "") + " ID: " + item.getId());
             searchTable.getSelectionModel().clearSelection();
         }
     }

@@ -11,6 +11,7 @@ import com.xln.xlncasemanagement.model.sql.MakeModel;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.model.sql.MatterTypeModel;
 import com.xln.xlncasemanagement.model.sql.ModelModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.NumberFormatService;
@@ -181,6 +182,8 @@ public class InformationSceneController implements Initializable {
             loadInformation();
             OpenDateDatePicker.requestFocus();
         } else {
+            SQLAudit.insertAudit("Updated Information for MatterID ID: " + Global.getCurrentMatter().getId());
+            
             saveInformation();
             
             MatterModel matterID = SQLMatter.getMatterByID(Global.getCurrentMatter().getId());

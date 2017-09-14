@@ -10,6 +10,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ExpenseModel;
 import com.xln.xlncasemanagement.model.table.ExpensesTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLExpense;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.TableObjects;
@@ -248,6 +249,8 @@ public class ExpensesSceneController implements Initializable {
         if (row != null) {
             ExpenseModel item = (ExpenseModel) row.getObject().getValue();
             
+            SQLAudit.insertAudit("Deleted Activity ID: " + item.getId());
+            
             SQLActiveStatus.setActive("table13", item.getId(), false);
             setActive();
         }
@@ -259,6 +262,9 @@ public class ExpensesSceneController implements Initializable {
             if (row != null) {
                 DebugTools.Printout("Clicked Icon Twice");
                 ExpenseModel item = (ExpenseModel) row.getObject().getValue();
+                
+                SQLAudit.insertAudit("Opened File For Activity ID: " + item.getId());
+                
                 Global.getStageLauncher().retrieveFileLoadingScene(Global.getMainStage(), "Expense", item.getId());
             }
             expensesTable.getSelectionModel().clearSelection(cellIndex);

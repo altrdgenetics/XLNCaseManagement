@@ -12,6 +12,7 @@ import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.sql.SQLActivity;
 import com.xln.xlncasemanagement.sql.SQLActivityFile;
 import com.xln.xlncasemanagement.sql.SQLActivityType;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.DebugTools;
@@ -234,6 +235,10 @@ public class DetailedActivitySceneController implements Initializable {
                     keyID = insert();
                 }
 
+                SQLAudit.insertAudit(
+                        ("Add".equals(saveButton.getText().trim()) ? "Added" : "Saved") 
+                                + "Activity ID: " + keyID);
+                
                 if (imageSelection != null && keyID > 0) {
                     long lStartTime = System.currentTimeMillis();  
                     success = SQLActivityFile.insertActivityFile(keyID, imageSelection);

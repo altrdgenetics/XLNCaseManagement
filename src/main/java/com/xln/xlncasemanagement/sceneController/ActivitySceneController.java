@@ -10,6 +10,7 @@ import com.xln.xlncasemanagement.model.sql.ActivityModel;
 import com.xln.xlncasemanagement.model.table.ActivityTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
 import com.xln.xlncasemanagement.sql.SQLActivity;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.TableObjects;
 import java.net.URL;
@@ -259,9 +260,11 @@ public class ActivitySceneController implements Initializable {
         ActivityTableModel row = activityTable.getSelectionModel().getSelectedItem();
 
         if (row != null) {
-            ActivityModel party = (ActivityModel) row.getObject().getValue();
+            ActivityModel act = (ActivityModel) row.getObject().getValue();
             
-            SQLActiveStatus.setActive("table01", party.getId(), false);
+            SQLAudit.insertAudit("Deleted Activity ID: " + act.getId());
+            
+            SQLActiveStatus.setActive("table01", act.getId(), false);
             search();
         }
     }
@@ -272,6 +275,8 @@ public class ActivitySceneController implements Initializable {
             if (row != null) {
                 DebugTools.Printout("Clicked Icon Twice");
                 ActivityModel item = (ActivityModel) row.getObject().getValue();
+                SQLAudit.insertAudit("Opened File For Activity ID: " + item.getId());
+                
                 Global.getStageLauncher().retrieveFileLoadingScene(Global.getMainStage(), "Activity", item.getId());
                 activityTable.getSelectionModel().clearSelection(cellIndex);
             }

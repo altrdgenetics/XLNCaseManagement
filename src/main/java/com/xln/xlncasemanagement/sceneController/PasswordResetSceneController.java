@@ -8,6 +8,7 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.config.Password;
 import static com.xln.xlncasemanagement.config.Password.hashPassword;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.FileUtilities;
@@ -70,6 +71,8 @@ public class PasswordResetSceneController implements Initializable {
                     if (verifyPasswordRequirement()) {
                         updatePassword();
                         passwordUpdated();
+                        SQLAudit.insertAudit("Changed Password For User ID: " + Global.getCurrentUser().getId());
+                        
                         stage.close();
                     } else {
                         failedRequirementsMessage();

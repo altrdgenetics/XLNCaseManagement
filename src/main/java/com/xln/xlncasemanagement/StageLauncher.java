@@ -7,6 +7,7 @@ package com.xln.xlncasemanagement;
 
 import com.xln.xlncasemanagement.model.sql.*;
 import com.xln.xlncasemanagement.sceneController.*;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -77,6 +78,8 @@ public class StageLauncher {
     }
  
     public void docketingIncomingScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened Incoming Docket Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -96,6 +99,8 @@ public class StageLauncher {
     }
     
     public void docketingOutgoingScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened Outgoing Docket Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -115,6 +120,9 @@ public class StageLauncher {
     }
     
     public void detailedPartyAddEditScene(Stage stagePassed, boolean maintenanceMode, PartyModel itemPassed) {
+        SQLAudit.insertAudit("Opened Detailed Party Window" 
+                + (itemPassed == null ? "" : " | ID: " + itemPassed.getPartyID()));
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -137,6 +145,9 @@ public class StageLauncher {
     }
     
     public void detailedExpenseAddEditScene(Stage stagePassed, ExpenseModel itemPassed) {
+        SQLAudit.insertAudit("Opened Detailed Expense Window" 
+                + (itemPassed == null ? "" : " | ID: " + itemPassed.getId()));
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -157,6 +168,9 @@ public class StageLauncher {
     }
     
     public void detailedActivityAddEditScene(Stage stagePassed, ActivityModel itemPassed) {
+        SQLAudit.insertAudit("Opened Detailed Activity Window" 
+                + (itemPassed == null ? "" : " | ID: " + itemPassed.getId()));
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -177,6 +191,8 @@ public class StageLauncher {
     }
     
     public void partySearchScene(Stage stagePassed, boolean maintenanceMode, boolean newMatter) {
+        SQLAudit.insertAudit("Opened Party Search Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -197,6 +213,8 @@ public class StageLauncher {
     }
     
     public void MaintenanceScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened Maintenance Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -217,6 +235,8 @@ public class StageLauncher {
     }
     
     public void MaintenanceCompanyScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened Maintenance Company Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -237,6 +257,8 @@ public class StageLauncher {
     }
     
     public void MaintenanceActivityTypeScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened Maintenance Activity Type Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -257,6 +279,9 @@ public class StageLauncher {
     }
     
     public void MaintenanceActivityTypeAddEditScene(Stage stagePassed, ActivityTypeModel objectPassed) {
+        SQLAudit.insertAudit("Opened Maintenance Activity Type " + (objectPassed == null ? "Add" : "Edit") + " Window"
+            + (objectPassed == null ? "" : " | ID : " + objectPassed.getId()));
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -277,6 +302,8 @@ public class StageLauncher {
     }
     
     public void MaintenanceExpenseTypeScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened Maintenance Expense Type Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -297,6 +324,9 @@ public class StageLauncher {
     }
     
     public void MaintenanceExpenseTypeAddEditScene(Stage stagePassed, ExpenseTypeModel objectPassed) {
+        SQLAudit.insertAudit("Opened Maintenance Expense Type " + (objectPassed == null ? "Add" : "Edit") + " Window"
+            + (objectPassed == null ? "" : " | ID : " + objectPassed.getId()));
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -317,6 +347,8 @@ public class StageLauncher {
     }
     
     public MatterTypeModel MaintenanceMatterTypeScene(Stage stagePassed, boolean maintenanceModePassed) {
+        SQLAudit.insertAudit("Opened " + (maintenanceModePassed ? "Maintenance" : "Search") + " Matter Type Window");
+        
         Stage stage = new Stage();
         MatterTypeModel matterType = null;  
         try { 
@@ -341,6 +373,9 @@ public class StageLauncher {
     }
     
     public void MaintenanceMatterTypeAddEditScene(Stage stagePassed, MatterTypeModel objectPassed) {
+        SQLAudit.insertAudit("Opened Maintenance Matter Type " + (objectPassed == null ? "Add" : "Edit") + " Window"
+            + (objectPassed == null ? "" : " | ID : " + objectPassed.getId()));
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -361,6 +396,8 @@ public class StageLauncher {
     }
     
     public void MaintenancePartyNamePrefixScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened Maintenance Name Prefix Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -381,6 +418,9 @@ public class StageLauncher {
     }
     
     public void MaintenancePartyNamePrefixAddEditScene(Stage stagePassed, PartyNamePrefixModel objectPassed) {
+        SQLAudit.insertAudit("Opened Maintenance Name Prefix " + (objectPassed == null ? "Add" : "Edit") + " Window"
+            + (objectPassed == null ? "" : " | ID : " + objectPassed.getId()));
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -401,6 +441,8 @@ public class StageLauncher {
     }
     
     public void MaintenancePartyRelationTypeScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened Maintenance Party Relation Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -421,6 +463,9 @@ public class StageLauncher {
     }
     
     public void MaintenancePartyRelationTypeAddEditScene(Stage stagePassed, PartyRelationTypeModel objectPassed) {
+        SQLAudit.insertAudit("Opened Party Relation " + (objectPassed == null ? "Add" : "Edit") + " Window"
+            + (objectPassed == null ? "" : " | ID : " + objectPassed.getId()));
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -441,6 +486,9 @@ public class StageLauncher {
     }
     
     public void NewMatterCaseTypeSelectionScene(Stage stagePassed, PartyModel objectPassed) {
+        SQLAudit.insertAudit("Opened New Matter Window "
+            + (objectPassed == null ? "" : " For Party ID : " + objectPassed.getId()));
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -461,6 +509,9 @@ public class StageLauncher {
     }
     
     public void CaseRelationSelectionScene(Stage stagePassed, PartyModel objectPassed) {
+        SQLAudit.insertAudit("Opened Case Relation Selection Window "
+            + (objectPassed == null ? "" : " For Party ID : " + objectPassed.getId()));
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -481,6 +532,8 @@ public class StageLauncher {
     }
     
     public void MaintenanceUserScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened Maintenance User Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -501,6 +554,9 @@ public class StageLauncher {
     }
     
     public void MaintenanceUserAddEditScene(Stage stagePassed, UserModel objectPassed) {
+        SQLAudit.insertAudit("Opened User Maintenance " + (objectPassed == null ? "Add" : "Edit") + " Window"
+            + (objectPassed == null ? "" : " | ID : " + objectPassed.getId()));
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -521,6 +577,8 @@ public class StageLauncher {
     }
     
     public void ReportScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened Report Selection Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -541,6 +599,8 @@ public class StageLauncher {
     }
     
     public void retrieveFileLoadingScene(Stage stagePassed, String type, int id) {
+        SQLAudit.insertAudit("Opened Retrieving File Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -595,6 +655,9 @@ public class StageLauncher {
     }
     
     public MakeModel MaintenanceMakeScene(Stage stagePassed, boolean maintenaceModePassed) {
+        SQLAudit.insertAudit("Opened " + (maintenaceModePassed ? "Search " :"Maintenance ") 
+                + Global.getHeaderLabel2().replace(":", "") + " Window");
+        
         MakeModel make = null;        
         Stage stage = new Stage();
         try { 
@@ -619,6 +682,10 @@ public class StageLauncher {
     }
     
     public void MaintenanceMakeAddEditScene(Stage stagePassed, MakeModel objectPassed) {
+        SQLAudit.insertAudit("Opened " + Global.getHeaderLabel2().replace(":", "") + " Maintenance " 
+                + (objectPassed == null ? "Add" : "Edit") + " Window"
+            + (objectPassed == null ? "" : " | ID : " + objectPassed.getId()));
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -639,6 +706,9 @@ public class StageLauncher {
     }
     
     public ModelModel MaintenanceModelScene(Stage stagePassed, boolean maintenaceModePassed, int makePassed) {
+        SQLAudit.insertAudit("Opened " + (maintenaceModePassed ? "Search " :"Maintenance ") 
+                + Global.getHeaderLabel3().replace(":", "") + " Window");
+        
         ModelModel model = null;
         Stage stage = new Stage();
         try { 
@@ -663,6 +733,10 @@ public class StageLauncher {
     }
     
     public void MaintenanceModelAddEditScene(Stage stagePassed, ModelModel objectPassed) {
+        SQLAudit.insertAudit("Opened " + Global.getHeaderLabel3().replace(":", "") + " Maintenance " 
+                + (objectPassed == null ? "Add" : "Edit") + " Window"
+            + (objectPassed == null ? "" : " | ID : " + objectPassed.getId()));
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -683,6 +757,8 @@ public class StageLauncher {
     }
     
     public void LetterSelectionScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened Letter Selection Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -703,6 +779,8 @@ public class StageLauncher {
     }
     
     public void MaintenanceTemplateScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened Template Maintenance Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -723,6 +801,9 @@ public class StageLauncher {
     }
     
     public void MaintenanceTemplateAddEditScene(Stage stagePassed, TemplateModel objectPassed) {
+        SQLAudit.insertAudit("Opened Template Maintenance " + (objectPassed == null ? "Add" : "Edit") + " Window"
+            + (objectPassed == null ? "" : " | ID : " + objectPassed.getId()));
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -743,6 +824,8 @@ public class StageLauncher {
     }
     
     public void MaintenanceReportScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened Report Maintenance Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -763,6 +846,9 @@ public class StageLauncher {
     }
     
     public void MaintenanceReportAddEditScene(Stage stagePassed, ReportModel objectPassed) {
+        SQLAudit.insertAudit("Opened Report Maintenance " + (objectPassed == null ? "Add" : "Edit") + " Window"
+            + (objectPassed == null ? "" : " | ID : " + objectPassed.getId()));
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -783,6 +869,8 @@ public class StageLauncher {
     }
     
     public void ReportParameterScene(Stage stagePassed, int reportID) {
+        SQLAudit.insertAudit("Opened Report Parameter Maintenance Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -803,6 +891,8 @@ public class StageLauncher {
     }
     
     public void BillingScene(Stage stagePassed, boolean billing) {
+        SQLAudit.insertAudit("Opened " + (billing ? "Billing" : "Pre-Billing") + " Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -823,6 +913,7 @@ public class StageLauncher {
     }
     
     public HashMap ReportParamTwoDatesScene(Stage stagePassed, HashMap hashMap) {
+        SQLAudit.insertAudit("Opened Report Parameter Two Dates Window");
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -846,6 +937,8 @@ public class StageLauncher {
     }
     
     public void PasswordResetScene(Stage stagePassed, boolean preferencesPassed) {
+        SQLAudit.insertAudit("Opened Password Reset Window From " 
+                + (preferencesPassed ? "Preferences" : "Maintenance"));
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -866,6 +959,8 @@ public class StageLauncher {
     }
     
     public void UserPreferenceScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened User Preference Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();
@@ -886,6 +981,8 @@ public class StageLauncher {
     }
     
     public void AboutScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened About Window");
+        
         Stage stage = new Stage();
         try { 
             FXMLLoader loader = new FXMLLoader();

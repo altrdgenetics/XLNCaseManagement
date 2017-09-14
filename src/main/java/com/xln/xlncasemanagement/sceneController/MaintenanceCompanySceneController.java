@@ -7,6 +7,7 @@ package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.CompanyModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLCompany;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.NumberFormatService;
@@ -87,6 +88,7 @@ public class MaintenanceCompanySceneController implements Initializable {
         if (SQLCompany.updateCompanyInformation(item)){
             //Update Global Data if Successfully inserted.
             Global.setCompanyInformation(SQLCompany.getCompanyInformation());
+            SQLAudit.insertAudit("Updated Company Information");
             stage.close();
         } else {
             //Show Dialog if Save to Database Fails

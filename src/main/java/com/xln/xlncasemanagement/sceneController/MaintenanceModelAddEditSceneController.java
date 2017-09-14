@@ -8,6 +8,7 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MakeModel;
 import com.xln.xlncasemanagement.model.sql.ModelModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLMake;
 import com.xln.xlncasemanagement.sql.SQLModel;
 import java.net.URL;
@@ -139,6 +140,7 @@ public class MaintenanceModelAddEditSceneController implements Initializable {
         modelObject.setWebsite(WebsiteTextField.getText().trim().equals("") ? null : WebsiteTextField.getText().trim());
         int id = SQLModel.insertModel(modelObject);
         System.out.println("New " + Global.getHeaderLabel3().replace(":", "") + " ID: " + id);
+        SQLAudit.insertAudit("Added " + Global.getHeaderLabel3().replace(":", "") + " ID: " + id);
     }
     
     private void updateModel() {
@@ -148,5 +150,6 @@ public class MaintenanceModelAddEditSceneController implements Initializable {
         modelObject.setName(ModelTextField.getText().trim());
         modelObject.setWebsite(WebsiteTextField.getText().trim().equals("") ? null : WebsiteTextField.getText().trim());
         SQLModel.updateModelByID(modelObject);
+        SQLAudit.insertAudit("Updated " + Global.getHeaderLabel3().replace(":", "") + " ID: " + modelObject.getId());
     }
 }

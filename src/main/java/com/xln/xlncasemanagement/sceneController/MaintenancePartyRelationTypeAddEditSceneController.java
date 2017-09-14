@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.model.sql.PartyRelationTypeModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLPartyRelationType;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -93,10 +94,12 @@ public class MaintenancePartyRelationTypeAddEditSceneController implements Initi
         partyRelationTypeObject.setPartyRelationType(partyRelationTypetextField.getText().trim());
         int id = SQLPartyRelationType.insertPartyRelationType(partyRelationTypeObject);
         System.out.println("New Party Relation Type ID: " + id);
+        SQLAudit.insertAudit("Added Party Relation Type ID: " + id);
     }
     
     private void updateCompany() {
         partyRelationTypeObject.setPartyRelationType(partyRelationTypetextField.getText().trim());
         SQLPartyRelationType.updatePartyRelationTypeByID(partyRelationTypeObject);
+        SQLAudit.insertAudit("Updated Party Relation Type ID: " + partyRelationTypeObject.getId());
     }
 }

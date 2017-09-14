@@ -8,6 +8,7 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ReportModel;
 import com.xln.xlncasemanagement.model.table.MaintenanceReportParametersTableModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLReport;
 import com.xln.xlncasemanagement.sql.SQLReportParameter;
 import com.xln.xlncasemanagement.sql.SQLTemplate;
@@ -147,9 +148,12 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
                     updateReport();
                     keyID = reportObject.getId();
                 } else if ("Add".equals(saveButton.getText().trim())) {
-                    keyID = insertReport();
+                    keyID = insertReport();                    
                 }
 
+                SQLAudit.insertAudit(("Save".equals(saveButton.getText().trim()) 
+                        ? "Updated" : "Added") + " Report ID: " + keyID);
+                
                 if (fileSelection != null && keyID > 0) {
                     long lStartTime = System.currentTimeMillis(); 
                     success = SQLReport.insertReportFile(keyID, fileSelection);
@@ -269,6 +273,7 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
                 int parameterID = Integer.valueOf(row.getId().getValue());
                 SQLReportParameter.deleteReportParameter(parameterID);
                 loadParameterTable();
+                SQLAudit.insertAudit("Removed Report Parameter ID: " + parameterID + " For Report ID: " + reportObject.getId());
             }
         }
     }

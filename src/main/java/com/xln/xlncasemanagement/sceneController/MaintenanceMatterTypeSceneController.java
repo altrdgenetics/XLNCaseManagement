@@ -10,6 +10,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MatterTypeModel;
 import com.xln.xlncasemanagement.model.table.MaintenanceMatterTypeTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLMatterType;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -109,6 +110,9 @@ public class MaintenanceMatterTypeSceneController implements Initializable {
         if (row != null) {
             MatterTypeModel item = (MatterTypeModel) row.getObject().getValue();
             SQLActiveStatus.setActive("table23", item.getId(), row.getChecked());
+            SQLAudit.insertAudit("Changed Active Flag " + row.getChecked() 
+                    + "For " + Global.getNewCaseType().replace(":", "") + " ID: " + item.getId());
+            
             searchTable.getSelectionModel().clearSelection();
         }
     }

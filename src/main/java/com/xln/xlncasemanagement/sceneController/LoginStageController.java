@@ -7,6 +7,7 @@ package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.config.Password;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLUser;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.DebugTools;
@@ -120,11 +121,19 @@ public class LoginStageController implements Initializable {
             Global.getStageLauncher().PasswordResetScene(stage, false);
         }
         try {
+            Global.getCurrentUser().setLastLoginIP(InetAddress.getLocalHost().getHostAddress());
+            Global.getCurrentUser().setLastLoginPCName(InetAddress.getLocalHost().getHostName());
+            
             SQLUser.updateUserLocationByID(
                     Global.getCurrentUser().getId(), 
-                    InetAddress.getLocalHost().getHostName(), 
-                    InetAddress.getLocalHost().getHostAddress()
+                    Global.getCurrentUser().getLastLoginPCName(), 
+                    Global.getCurrentUser().getLastLoginIP()
             );
+
+            SQLAudit.insertAudit("Logged In User " + Global.getCurrentUser().getUsername()
+                    + " From " + Global.getCurrentUser().getLastLoginPCName()
+                    + " (" + Global.getCurrentUser().getLastLoginIP() + ")");
+
         } catch (UnknownHostException ex) {
             Logger.getLogger(LoginStageController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.model.sql.ReportParameterModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLReportParameter;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import java.net.URL;
@@ -92,6 +93,9 @@ public class MaintenanceReportParametersSceneController implements Initializable
         item.setReportID(reportID);
         item.setReportParameter(reportComboBox.getValue().toString());
         SQLReportParameter.insertReportParameter(item);
+        
+        SQLAudit.insertAudit("Added Report Parameter: " 
+                + reportComboBox.getValue().toString() + " To Report ID: " + reportID);
     }
 
 }

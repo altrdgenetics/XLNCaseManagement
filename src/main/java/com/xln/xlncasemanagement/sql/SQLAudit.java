@@ -20,16 +20,16 @@ import org.apache.commons.dbutils.DbUtils;
  */
 public class SQLAudit {
     
-    public static int insertActivityType(String action) {
+    public static int insertAudit(String action) {
         Connection conn = null;
         PreparedStatement ps = null;
 
         String sql = "INSERT INTO table03 ("
-                + "col02, " //01
-                + "col03, " //02
-                + "col04, " //03
-                + "col05, " //04
-                + "col06 "  //05
+                + "col02, " //01 - datetime
+                + "col03, " //02 - user
+                + "col04, " //03 - computer name
+                + "col05, " //04 - ipaddress
+                + "col06 "  //05 - action
                 + ") VALUES (";
                 for(int i=0; i<4; i++){
                         sql += "?, ";   //01-04

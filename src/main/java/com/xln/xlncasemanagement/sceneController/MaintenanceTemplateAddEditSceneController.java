@@ -6,6 +6,7 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.model.sql.TemplateModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLTemplate;
 import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.DebugTools;
@@ -112,6 +113,9 @@ public class MaintenanceTemplateAddEditSceneController implements Initializable 
                     keyID = insertTemplate();
                 }
 
+                SQLAudit.insertAudit(("Save".equals(saveButton.getText().trim()) 
+                        ? "Updated" : "Added") + " Template ID: " + keyID);
+                
                 if (fileSelection != null && keyID > 0) {
                     long lStartTime = System.currentTimeMillis(); 
                     success = SQLTemplate.insertTemplateFile(keyID, fileSelection);

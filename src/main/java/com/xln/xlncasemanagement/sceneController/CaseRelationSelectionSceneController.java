@@ -8,6 +8,7 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
 import com.xln.xlncasemanagement.model.sql.PartyRelationTypeModel;
+import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLCaseParty;
 import com.xln.xlncasemanagement.sql.SQLPartyRelationType;
 import java.net.URL;
@@ -90,6 +91,7 @@ public class CaseRelationSelectionSceneController implements Initializable {
         party.setRelationID(relation.getId());
         party.setPartyID(party.getId());
         
+        SQLAudit.insertAudit("Added PartyID: " + party.getPartyID() + " To MatterID: "  + Global.getCurrentMatter().getId());
         SQLCaseParty.insertCaseParty(party);
     }
     
