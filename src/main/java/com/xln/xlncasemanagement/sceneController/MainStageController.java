@@ -335,16 +335,14 @@ public class MainStageController implements Initializable {
     }
     
     private void hideButtons(){
-        if (Global.getButtonLabel2().equals("")){
+        if (Global.getButtonLabel2().equals("") || Global.isLiteVersion()){
             buttonBar.getChildren().remove(buttonTwo);
         }
-        if (Global.getButtonLabel3().equals("")){
+        if (Global.getButtonLabel3().equals("") || Global.isLiteVersion()){
             buttonBar.getChildren().remove(buttonThree);
         }
         
         //currently not used
-        buttonBar.getChildren().remove(buttonTwo);
-        buttonBar.getChildren().remove(buttonThree);
         buttonBar.getChildren().remove(buttonSix);
         buttonBar.getChildren().remove(buttonSeven);
     }

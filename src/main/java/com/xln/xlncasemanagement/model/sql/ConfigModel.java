@@ -20,6 +20,7 @@ public class ConfigModel {
     private String dbusername;
     private String dbpassword;
     private String applicationtype;
+    private boolean liteVersion;
     private Date contractenddate;
 
     public int getMaxusers() {
@@ -76,6 +77,14 @@ public class ConfigModel {
 
     public void setApplicationtype(String applicationtype) {
         this.applicationtype = applicationtype;
+    }
+
+    public boolean isLiteVersion() {
+        return liteVersion;
+    }
+
+    public void setLiteVersion(boolean liteVersion) {
+        this.liteVersion = liteVersion;
     }
 
     public Date getContractenddate() {
