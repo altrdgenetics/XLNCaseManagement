@@ -27,6 +27,7 @@ public class ReportHashMap {
         hash.put("current user", StringUtilities.buildUsersName(Global.getCurrentUser()));
         hash.put("mattertype", Global.getNewCaseType());
         hash.put("leadwording", Global.getLeadWording());
+        hash.put("limitwording", Global.getInformationLabel1().replaceAll(":", "").trim());
         return hash;
     }
     
