@@ -64,7 +64,7 @@ public class DBConnection {
                 nbAttempts++;
                 if (nbAttempts > 0) {
                     DebugTools.Printout(StringUtilities.currentTime()
-                            + " - Unable to connect to server. Trying again shortly.");
+                            + " - Unable to connect to config server. Trying again shortly.");
                 }
                 try {
                     DebugTools.Printout("Sleeping for: " + 3000 * nbAttempts + "ms");
