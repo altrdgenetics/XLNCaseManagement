@@ -42,8 +42,8 @@ public class ReportHashMap {
     }
     
     public static HashMap startDateEndDate(HashMap hash, Date startDate, Date endDate) {
-        hash.put("startDate", startDate);
-        hash.put("endDate", endDate);
+        hash.put("begin date", startDate);
+        hash.put("end date", endDate);
         return hash;
     }
     

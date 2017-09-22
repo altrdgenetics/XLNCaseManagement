@@ -11,8 +11,10 @@ import com.xln.xlncasemanagement.report.GenerateReport;
 import com.xln.xlncasemanagement.report.ReportHashMap;
 import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLReport;
+import com.xln.xlncasemanagement.sql.SQLReportParameter;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -83,18 +85,38 @@ public class ReportSelectionSceneController implements Initializable {
         stage.close();
     }
     
-    @FXML private void handleRunReportButton(){
+    @FXML private void handleRunReportButton() {
+        Platform.runLater(() -> {
+            setPanelDisabled(true);
+        });
+        ReportModel selection = (ReportModel) reportComboBox.getValue(); 
+        final ReportModel reportSelected = SQLReport.getReportByID(selection.getId());
+        
+        
+        
+        //Generate Information
+        HashMap hash = new HashMap();
+        hash = ReportHashMap.generateDefaultInformation(hash);
+        
+        //Generate Paramter Information
+        List<String> parametersList = SQLReportParameter.getParameterListByReport(reportSelected.getId());
+        
+        for (String param : parametersList){
+            hash = parameterSelection(hash, param);
+        }
+        
+        final HashMap completeHash = hash;
+        
         new Thread() {
             @Override
             public void run() {
-                Platform.runLater(() -> {
-                    setPanelDisabled(true);
-                });
-                runReport();
+                SQLAudit.insertAudit("Ran Report ID: " + reportSelected.getId());
+                //Run Report
+                GenerateReport.generateReport(reportSelected, completeHash);
                 setPanelDisabled(false);
             }
         }.start();
-    }    
+    }
         
     @FXML private void comboBoxAction() {
         ReportModel selectedItem = (ReportModel) reportComboBox.getValue();
@@ -103,20 +125,22 @@ public class ReportSelectionSceneController implements Initializable {
         }
     }
     
-    private void runReport(){
-        ReportModel selection = (ReportModel) reportComboBox.getValue(); 
-        ReportModel reportSelected = SQLReport.getReportByID(selection.getId());
+    public static HashMap parameterSelection(HashMap hash, String parameterRequested){
         
-        SQLAudit.insertAudit("Ran Report ID: " + reportSelected.getId());
+        switch (parameterRequested) {
+            case "Start / End Dates": //Start Date / End Date
+                Global.getStageLauncher().ReportParamTwoDatesScene(null, hash);
+                break;
+            case "Client": // ClientID
+                break;
+            case "Matter": // MatterID
+                break;
+            default:
+                break;
+        }
+        return hash;
+    }
         
-        //Generate Information
-        HashMap hash = new HashMap();
-        hash = ReportHashMap.generateDefaultInformation(hash);
-        
-        //Run Report
-        GenerateReport.generateReport(reportSelected, hash);
-    }    
-    
     private void setPanelDisabled(boolean disabled) {
         progressBar.setVisible(disabled);
         reportComboBox.setDisable(disabled);        
