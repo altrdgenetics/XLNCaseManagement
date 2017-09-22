@@ -252,6 +252,7 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
         if (reportObject == null){
             int id = insertReport();
             reportObject = SQLReport.getReportByID(id);
+            saveButton.setText("Save");
         }
         
         Global.getStageLauncher().ReportParameterScene(stage, reportObject.getId());
