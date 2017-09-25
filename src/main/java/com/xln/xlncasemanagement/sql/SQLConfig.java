@@ -31,6 +31,7 @@ public class SQLConfig {
                 + "dbname, "
                 + "dbusername, "
                 + "dbpassword, "
+                + "liteversion, "
                 + "applicationtype, "
                 + "contractenddate "
                 + "FROM company WHERE companykey = ?";
@@ -48,6 +49,7 @@ public class SQLConfig {
                 item.setDbusername(rs.getString("dbusername"));
                 item.setDbpassword(rs.getString("dbpassword"));
                 item.setApplicationtype(rs.getString("applicationtype"));
+                item.setLiteVersion(rs.getBoolean("liteversion"));
                 item.setContractenddate(rs.getDate("contractenddate"));
             }
         } catch (SQLException ex) {

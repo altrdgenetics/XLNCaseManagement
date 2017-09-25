@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
+import com.xln.xlncasemanagement.report.ReportHashMap;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -52,7 +53,12 @@ public class ReportParamTwoDatesSceneController implements Initializable {
     }
     
     @FXML private void selectButtonAction() {
+        hash = ReportHashMap.startDateEndDate(hash, 
+                java.sql.Date.valueOf(StartDateDatePicker.getValue()), 
+                java.sql.Date.valueOf(EndDateDatePicker.getValue())
+        );
         
+        stage.close();
     }
 
     public HashMap getHash() {

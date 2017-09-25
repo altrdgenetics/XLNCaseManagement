@@ -46,6 +46,7 @@ public class Global {
         
     //Config File
     private static String version = "";
+    private static boolean liteVersion = true;
     private static String companyID = "";
             
     //list of all states
@@ -96,8 +97,14 @@ public class Global {
         Global.version = version;
     }
 
-    
-    
+    public static boolean isLiteVersion() {
+        return liteVersion;
+    }
+
+    public static void setLiteVersion(boolean liteVersion) {
+        Global.liteVersion = liteVersion;
+    }
+
     public static boolean isDebug() {
         return debug;
     }

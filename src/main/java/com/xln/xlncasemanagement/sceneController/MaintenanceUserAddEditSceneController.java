@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
+import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.config.Password;
 import com.xln.xlncasemanagement.model.sql.UserModel;
 import com.xln.xlncasemanagement.sql.SQLAudit;
@@ -22,6 +23,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -34,6 +38,9 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
     Stage stage;
     UserModel userObject;
     
+    @FXML private BorderPane MainBorederPane;
+    @FXML private VBox MainVBox;
+    @FXML private GridPane SettingsGridPane;
     @FXML private Label headerLabel;
     @FXML private Button saveButton;
     @FXML private Button closeButton;
@@ -47,6 +54,9 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
     @FXML private TextField phoneNumberTextfield;
     @FXML private TextField defaultRateTextField;
         
+    //Email Settings Objects
+    @FXML private VBox EmailSettingsVBox;
+        
     /**
      * Initializes the controller class.
      * @param url
@@ -55,6 +65,11 @@ public class MaintenanceUserAddEditSceneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setListeners();
+        if (Global.isLiteVersion()){
+            MainVBox.getChildren().remove(EmailSettingsVBox);
+            MainBorederPane.setPrefHeight(275);
+            MainBorederPane.setMaxHeight(275);
+        }
     }    
     
     public void setActive(Stage stagePassed, UserModel userObjectPassed){

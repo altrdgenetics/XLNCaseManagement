@@ -67,8 +67,8 @@ public class LabelHashTables {
         
         //Type for the New Button
         Global.setButtonLabel1("New " + Global.getNewCaseType());
-        Global.setButtonLabel2("");
-        Global.setButtonLabel3("");
+        Global.setButtonLabel2("Incoming");
+        Global.setButtonLabel3("Outgoing");
         
         //Header Labels
         Global.setHeaderLabel1(Global.getNewCaseType() + ":");
@@ -95,8 +95,8 @@ public class LabelHashTables {
         
         //Type for the New Button
         Global.setButtonLabel1("New " + Global.getNewCaseType());
-        Global.setButtonLabel2("");
-        Global.setButtonLabel3("");
+        Global.setButtonLabel2("Incoming");
+        Global.setButtonLabel3("Outgoing");
         
         //Header Labels
         Global.setHeaderLabel1(Global.getNewCaseType() + ":");
