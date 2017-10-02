@@ -25,6 +25,16 @@
             <artifactId>mariadb-java-client</artifactId>
             <version>2.1.0</version>
         </dependency>
+        <dependency> <!-- Sending/Recieving Emails -->
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.5.6</version>
+        </dependency>
+        <dependency> <!-- parsing Emails -->
+            <groupId>net.htmlparser.jericho</groupId>
+            <artifactId>jericho-html</artifactId>
+            <version>3.3</version>
+        </dependency>
         <dependency> <!-- closing DB connections safely easily -->
             <groupId>commons-dbutils</groupId>
             <artifactId>commons-dbutils</artifactId>

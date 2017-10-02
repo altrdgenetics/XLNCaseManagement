@@ -33,6 +33,18 @@ public class UserModel {
     private boolean adminRights;
     private BigDecimal defaultRate;
     private boolean accountLocked;
+    private String emailUsername;
+    private String emailPassword;
+    private long emailPasswordSalt;
+    private String incomingURL;
+    private String incomingProtocol;
+    private String incomingPort;
+    private String incomingFolder;
+    private String outgoingURL;
+    private String outgoingProtocol;
+    private String outgoingPort;
+    private String outgoingFolder;
+    
 
     public int getId() {
         return id;
@@ -185,5 +197,97 @@ public class UserModel {
     public void setAccountLocked(boolean accountLocked) {
         this.accountLocked = accountLocked;
     }
+
+    public String getEmailUsername() {
+        return emailUsername;
+    }
+
+    public void setEmailUsername(String emailUsername) {
+        this.emailUsername = emailUsername;
+    }
+
+    public String getEmailPassword() {
+        return emailPassword;
+    }
+
+    public void setEmailPassword(String emailPassword) {
+        this.emailPassword = emailPassword;
+    }
+
+    public long getEmailPasswordSalt() {
+        return emailPasswordSalt;
+    }
+
+    public void setEmailPasswordSalt(long emailPasswordSalt) {
+        this.emailPasswordSalt = emailPasswordSalt;
+    }
+
+    
+
+    public String getIncomingURL() {
+        return incomingURL;
+    }
+
+    public void setIncomingURL(String incomingURL) {
+        this.incomingURL = incomingURL;
+    }
+
+    public String getIncomingProtocol() {
+        return incomingProtocol;
+    }
+
+    public void setIncomingProtocol(String incomingProtocol) {
+        this.incomingProtocol = incomingProtocol;
+    }
+
+    public String getIncomingPort() {
+        return incomingPort;
+    }
+
+    public void setIncomingPort(String incomingPort) {
+        this.incomingPort = incomingPort;
+    }
+
+    public String getIncomingFolder() {
+        return incomingFolder;
+    }
+
+    public void setIncomingFolder(String incomingFolder) {
+        this.incomingFolder = incomingFolder;
+    }
+
+    public String getOutgoingURL() {
+        return outgoingURL;
+    }
+
+    public void setOutgoingURL(String outgoingURL) {
+        this.outgoingURL = outgoingURL;
+    }
+
+    public String getOutgoingProtocol() {
+        return outgoingProtocol;
+    }
+
+    public void setOutgoingProtocol(String outgoingProtocol) {
+        this.outgoingProtocol = outgoingProtocol;
+    }
+
+    public String getOutgoingPort() {
+        return outgoingPort;
+    }
+
+    public void setOutgoingPort(String outgoingPort) {
+        this.outgoingPort = outgoingPort;
+    }
+
+    public String getOutgoingFolder() {
+        return outgoingFolder;
+    }
+
+    public void setOutgoingFolder(String outgoingFolder) {
+        this.outgoingFolder = outgoingFolder;
+    }
+    
+    
     
 }
