@@ -24,18 +24,20 @@ public class NumberFormatService {
     public static String convertStringToPhoneNumber(String number) {
         String formattedNumber = "";
 
-        if (number == null) {
-            formattedNumber = "";
-        } else if (number.length() >= 10) {
-            formattedNumber += "(" + number.substring(0, 3) + ") ";
-            formattedNumber += number.substring(3, 6) + "-";
-            formattedNumber += number.substring(6, 10);
+        if (number != null) {
+            number = number.replaceAll("[^0-9]", "");
+            
+            if (number.length() >= 10) {
+                formattedNumber += "(" + number.substring(0, 3) + ") ";
+                formattedNumber += number.substring(3, 6) + "-";
+                formattedNumber += number.substring(6, 10);
 
-            if (number.length() > 10) {
-                formattedNumber += " x" + number.substring(10);
+                if (number.length() > 10) {
+                    formattedNumber += " x" + number.substring(10);
+                }
+            } else {
+                formattedNumber = number;
             }
-        } else {
-            formattedNumber = number;
         }
         return formattedNumber.trim();
     }

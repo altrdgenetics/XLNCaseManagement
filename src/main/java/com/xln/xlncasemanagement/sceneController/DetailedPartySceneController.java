@@ -208,7 +208,7 @@ public class DetailedPartySceneController implements Initializable {
             item.setActive(true);
         }
         
-        SQLAudit.insertAudit((partyItem != null ? "Added Party" 
+        SQLAudit.insertAudit((partyItem == null ? "Added Party" 
                 : "Updated Party ID: " + partyItem.getId()));
         
         //Case Party OR Party Table logic.
