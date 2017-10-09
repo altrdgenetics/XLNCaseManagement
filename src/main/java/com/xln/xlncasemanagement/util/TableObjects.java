@@ -6,7 +6,6 @@
 package com.xln.xlncasemanagement.util;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -16,12 +15,6 @@ import javafx.scene.layout.HBox;
  * @author User
  */
 public class TableObjects {
-    
-    public static Button viewButton() {
-        Button viewButton = new Button();
-        viewButton.setText("View");
-        return viewButton;
-    }
 
     public static HBox fileIcon(String file) {
         HBox box = new HBox();
@@ -35,7 +28,7 @@ public class TableObjects {
         return box;
     }
     
-    private static String fileIconType(String file) {
+    protected static String fileIconType(String file) {
         String icon = "unknown";
         
         if (file == null){
@@ -95,17 +88,19 @@ public class TableObjects {
         ImageView imageview = new ImageView();
         imageview.setFitHeight(20);
         imageview.setFitWidth(20);
-        imageview.setImage(new Image(TableObjects.class.getResourceAsStream("/fileIcon/" + websiteColumn(file) + ".png")));
+        imageview.setImage(new Image(TableObjects.class.getResourceAsStream("/fileIcon/" + websiteColumnIcon(file) + ".png")));
         box.setAlignment(Pos.CENTER);
         box.getChildren().addAll(imageview);
         return box;
     }
     
-    private static String websiteColumn(String file) {
+    protected static String websiteColumnIcon(String linkString) {
         String icon = "none";
         
-        if (file != null){
-            icon = "link";
+        if (linkString != null){
+            if (!linkString.trim().equals("")){
+                icon = "link";
+            }
         }
         return icon;
     }

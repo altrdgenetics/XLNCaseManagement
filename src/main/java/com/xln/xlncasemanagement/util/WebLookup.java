@@ -15,8 +15,6 @@ import java.util.logging.Logger;
 import org.apache.commons.net.ntp.NTPUDPClient;
 import org.apache.commons.net.ntp.TimeInfo;
 
-
-
 /**
  *
  * @author User

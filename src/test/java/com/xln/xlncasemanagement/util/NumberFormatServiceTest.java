@@ -7,7 +7,8 @@ package com.xln.xlncasemanagement.util;
 
 
 import java.math.BigDecimal;
-import junitparams.*;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
