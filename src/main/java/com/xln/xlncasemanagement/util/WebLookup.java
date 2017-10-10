@@ -5,7 +5,6 @@
  */
 package com.xln.xlncasemanagement.util;
 
-import com.xln.xlncasemanagement.config.ConfigFile;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -32,9 +31,9 @@ public class WebLookup {
             long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();
             date = new Date(returnTime);
         } catch (UnknownHostException ex) {
-            Logger.getLogger(ConfigFile.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WebLookup.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(ConfigFile.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WebLookup.class.getName()).log(Level.SEVERE, null, ex);
         }
         return date;
     }
