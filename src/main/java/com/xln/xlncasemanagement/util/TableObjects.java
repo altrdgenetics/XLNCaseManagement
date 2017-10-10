@@ -33,6 +33,8 @@ public class TableObjects {
         
         if (file == null){
             icon = "none";
+        } else if (file.trim().equals("")){
+            icon = "none";
         } else if (file.toLowerCase().endsWith(".apk")) {
             icon = "apk";
         } else if (file.toLowerCase().endsWith(".mp3") || 

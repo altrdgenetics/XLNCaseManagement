@@ -32,12 +32,11 @@ public class TableObjectsTest extends TableObjects {
     
     private Object[] parametersForTestFileIconType() {
         return new Object[]{
-            new Object[]{"3256987412", "(325) 698-7412"},
-            new Object[]{"(325) 698-7412", "(325) 698-7412"},
-            new Object[]{"325698741", "325698741"},
-            new Object[]{null, ""},
-            new Object[]{"", ""},
-            new Object[]{"32569874134", "(325) 698-7413 x4"}
+            new Object[]{"movie.avi", "video"},
+            new Object[]{"test.apk", "apk"},
+            new Object[]{"nothing.piz", "unknown"},
+            new Object[]{null, "none"},
+            new Object[]{"", "none"}
         };
     }
 
