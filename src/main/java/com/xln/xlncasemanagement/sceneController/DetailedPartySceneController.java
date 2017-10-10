@@ -21,8 +21,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -129,12 +127,12 @@ public class DetailedPartySceneController implements Initializable {
     
     @FXML private void onEmailFieldClick(MouseEvent event) {
         if (event.getClickCount() >= 2) {
-            DebugTools.Printout("Clicked to Launch Email");
+            DebugTools.HandleInfoPrintout("Clicked to Launch Email");
             if (!EmailAddressTextField.getText().equals("")){
                 try {
                     Desktop.getDesktop().mail(new URI("mailto:" + EmailAddressTextField.getText().replace(" ", "")));
                 } catch (URISyntaxException | IOException ex) {
-                    Logger.getLogger(MainStageController.class.getName()).log(Level.SEVERE, null, ex);
+                    DebugTools.HandleException(ex);
                 }
             }
         }

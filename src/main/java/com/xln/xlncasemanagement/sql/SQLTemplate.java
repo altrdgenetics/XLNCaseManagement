@@ -19,8 +19,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.dbutils.DbUtils;
@@ -162,7 +160,7 @@ public class SQLTemplate {
                 list.add(item);
             }
         } catch (SQLException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
@@ -193,7 +191,7 @@ public class SQLTemplate {
                 item.setFileBlobHash(rs.getString("col07"));
             }
         } catch (SQLException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
@@ -247,7 +245,7 @@ public class SQLTemplate {
                 return FileUtilities.compareCheckSum(rs.getBytes("col06"), rs.getString("col07"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SQLExpense.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
@@ -278,7 +276,7 @@ public class SQLTemplate {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SQLActivity.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);

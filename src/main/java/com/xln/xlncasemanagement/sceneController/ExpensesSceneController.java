@@ -198,10 +198,10 @@ public class ExpensesSceneController implements Initializable {
 
             if (row != null) {
                 if (event.getClickCount() == 1) {
-                    DebugTools.Printout("Expense Table Single Click");
+                    DebugTools.HandleInfoPrintout("Expense Table Single Click");
                     Global.getMainStageController().getButtonDelete().setDisable(false);
                 } else if (event.getClickCount() >= 2) {
-                    DebugTools.Printout("Expense Table Double Click");
+                    DebugTools.HandleInfoPrintout("Expense Table Double Click");
                     Global.getStageLauncher().detailedExpenseAddEditScene(Global.getMainStage(), (ExpenseModel) row.getObject().getValue());
                     setActive();
                 }
@@ -260,7 +260,7 @@ public class ExpensesSceneController implements Initializable {
         if (cellIndex > -1 && cellIndex < expensesTable.getItems().size() && event.getClickCount() >= 2) {
             ExpensesTableModel row = expensesTable.getItems().get(cellIndex);
             if (row != null) {
-                DebugTools.Printout("Clicked Icon Twice");
+                DebugTools.HandleInfoPrintout("Clicked Icon Twice");
                 ExpenseModel item = (ExpenseModel) row.getObject().getValue();
                 
                 SQLAudit.insertAudit("Opened File For Activity ID: " + item.getId());

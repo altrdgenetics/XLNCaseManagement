@@ -120,7 +120,7 @@ public class MaintenanceTemplateAddEditSceneController implements Initializable 
                     long lStartTime = System.currentTimeMillis(); 
                     success = SQLTemplate.insertTemplateFile(keyID, fileSelection);
                     long lEndTime = System.currentTimeMillis();
-                    DebugTools.Printout("Saved File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
+                    DebugTools.HandleInfoPrintout("Saved File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
                 }
 
                 if (success) {
@@ -170,7 +170,7 @@ public class MaintenanceTemplateAddEditSceneController implements Initializable 
         }
         
         long lEndTime = System.currentTimeMillis();
-        DebugTools.Printout("Opened File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
+        DebugTools.HandleInfoPrintout("Opened File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
     }
     
     private File fileChooser(){

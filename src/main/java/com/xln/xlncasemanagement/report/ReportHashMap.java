@@ -6,13 +6,12 @@
 package com.xln.xlncasemanagement.report;
 
 import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.StringUtilities;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
@@ -62,7 +61,7 @@ public class ReportHashMap {
             activityStream.close();
             expenseStream.close();
         } catch (JRException | IOException ex) {
-            Logger.getLogger(ReportHashMap.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }        
         
         //Place SubReport into HashMap

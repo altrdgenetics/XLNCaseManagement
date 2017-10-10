@@ -16,8 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
@@ -70,7 +68,7 @@ public class LoadingFileSceneController implements Initializable {
             try {
                 Desktop.getDesktop().open(selectedFile);
             } catch (IOException ex) {
-                Logger.getLogger(ExpensesSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                DebugTools.HandleException(ex);
             }
         } else {
             AlertDialog.StaticAlert(4, "Save Error",
@@ -79,7 +77,7 @@ public class LoadingFileSceneController implements Initializable {
         }
         
         long lEndTime = System.currentTimeMillis();
-        DebugTools.Printout("Opened File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
+        DebugTools.HandleInfoPrintout("Opened File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
     }
 
 

@@ -16,8 +16,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.dbutils.DbUtils;
@@ -134,7 +132,7 @@ public class SQLActivity {
                 item.setFileName(rs.getString("col13"));
             }
         } catch (SQLException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
@@ -171,7 +169,7 @@ public class SQLActivity {
             ps.setInt       (9, item.getId());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(SQLActivity.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(conn);
@@ -245,7 +243,7 @@ public class SQLActivity {
                 value = rs.getBigDecimal("col08");
             }
         } catch (SQLException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
@@ -269,7 +267,7 @@ public class SQLActivity {
             ps.setInt(1, matterID);
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(SQLActivity.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(conn);

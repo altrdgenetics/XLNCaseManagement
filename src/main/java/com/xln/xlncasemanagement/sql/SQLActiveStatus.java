@@ -9,8 +9,6 @@ import com.xln.xlncasemanagement.util.DebugTools;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.dbutils.DbUtils;
 
 /**
@@ -32,10 +30,10 @@ public class SQLActiveStatus {
             ps.setInt(2, id);
             ps.executeUpdate();       
         } catch (SQLException ex) {
-            Logger.getLogger(SQLCompany.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
             return false;
         } finally {
-            DebugTools.Printout("Updated " + table + ": " + id + " active status to " + active);
+            DebugTools.HandleInfoPrintout("Updated " + table + ": " + id + " active status to " + active);
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
         }

@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.net.ntp.NTPUDPClient;
 import org.apache.commons.net.ntp.TimeInfo;
 
@@ -31,9 +29,9 @@ public class WebLookup {
             long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();
             date = new Date(returnTime);
         } catch (UnknownHostException ex) {
-            Logger.getLogger(WebLookup.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         } catch (IOException ex) {
-            Logger.getLogger(WebLookup.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
         return date;
     }

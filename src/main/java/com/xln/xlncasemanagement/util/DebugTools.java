@@ -13,10 +13,16 @@ import com.xln.xlncasemanagement.Global;
  */
 public class DebugTools {
     
-    public static void Printout(String text){
+    public static void HandleException(Exception ex){
+        if (Global.isDebug()){
+            System.out.println(ex.getMessage());
+        }
+    }   
+    
+    public static void HandleInfoPrintout(String text){
         if (Global.isDebug()){
             System.out.println(text);
         }
-    }   
+    }
     
 }

@@ -16,8 +16,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.dbutils.DbUtils;
@@ -127,7 +125,7 @@ public class SQLExpense {
                 item.setInvoiced(rs.getBoolean("col09"));
             }
         } catch (SQLException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
@@ -158,7 +156,7 @@ public class SQLExpense {
             ps.setInt   (6, item.getId());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(SQLExpense.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(conn);
@@ -224,7 +222,7 @@ public class SQLExpense {
             ps.setInt(1, matterID);
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(SQLActivity.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(conn);

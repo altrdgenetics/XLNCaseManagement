@@ -27,8 +27,6 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -82,7 +80,7 @@ public class GenerateReport {
                 try {
                     bis.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(GenerateReport.class.getName()).log(Level.SEVERE, null, ex);
+                    DebugTools.HandleException(ex);
                 }
                 DbUtils.closeQuietly(conn);
             }
@@ -133,19 +131,19 @@ public class GenerateReport {
                         Desktop.getDesktop().open(recentReport);
                     } catch (IOException ex) {
                         errorGeneratingReport();
-                        DebugTools.Printout(ex.toString());
+                        DebugTools.HandleException(ex);
                     }
                     long lEndTime = System.currentTimeMillis();
                     System.out.println("Report Generation Time: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
                 }
             } catch (JRException ex) {
                 errorGeneratingReport();
-                DebugTools.Printout(ex.toString());
+                DebugTools.HandleException(ex);
             } finally {
                 try {
                     is.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(GenerateReport.class.getName()).log(Level.SEVERE, null, ex);
+                    DebugTools.HandleException(ex);
                 }
                 DbUtils.closeQuietly(conn);
             }

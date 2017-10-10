@@ -53,7 +53,7 @@ public class SQLMatter {
                 return newRow.getInt(1);
             }
         } catch (SQLException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
@@ -101,7 +101,7 @@ public class SQLMatter {
                 list.add(item);
             }
         } catch (SQLException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
@@ -155,7 +155,7 @@ public class SQLMatter {
                 item.setBudget(rs.getBigDecimal("col12"));
             }
         } catch (SQLException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
@@ -312,7 +312,7 @@ public class SQLMatter {
                 hm.put("totalUnBilledAmount", "");
             }
         } catch (SQLException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);

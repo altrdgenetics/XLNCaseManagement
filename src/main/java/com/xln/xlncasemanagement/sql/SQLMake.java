@@ -159,7 +159,7 @@ public class SQLMake {
                 list.add(item);
             }
         } catch (SQLException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
@@ -187,7 +187,7 @@ public class SQLMake {
                 item.setWebsite(rs.getString("col04"));
             }
         } catch (SQLException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);

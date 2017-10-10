@@ -298,7 +298,7 @@ public class SQLCaseParty {
                 Global.getMainStageController().getPhoneField().setText(phone);
             }
         } catch (SQLException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);

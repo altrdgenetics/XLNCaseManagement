@@ -8,10 +8,9 @@ package com.xln.xlncasemanagement;
 import com.xln.xlncasemanagement.model.sql.*;
 import com.xln.xlncasemanagement.sceneController.*;
 import com.xln.xlncasemanagement.sql.SQLAudit;
+import com.xln.xlncasemanagement.util.DebugTools;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Parent;
@@ -51,7 +50,7 @@ public class StageLauncher {
             Global.getLoginStage().show();
             
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -73,7 +72,7 @@ public class StageLauncher {
             stage.show();
 
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
  
@@ -94,7 +93,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -115,7 +114,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -140,7 +139,7 @@ public class StageLauncher {
             stage.sizeToScene();
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -163,7 +162,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -186,7 +185,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -208,7 +207,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -230,7 +229,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -252,7 +251,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -274,7 +273,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -297,7 +296,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -319,7 +318,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -342,7 +341,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -367,7 +366,7 @@ public class StageLauncher {
             matterType = controller.getMatterType();
             
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
         return matterType; 
     }
@@ -391,7 +390,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -413,7 +412,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -436,7 +435,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -458,7 +457,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -481,7 +480,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -504,7 +503,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -527,7 +526,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -549,7 +548,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -572,7 +571,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -594,7 +593,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -650,7 +649,7 @@ public class StageLauncher {
             LoadingFileSceneController controller = loader.getController();
             controller.getFile(stage, type, id);
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -676,7 +675,7 @@ public class StageLauncher {
             make = controller.getSelectedMake();
             
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
         return make;        
     }
@@ -701,7 +700,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -727,7 +726,7 @@ public class StageLauncher {
             model = controller.getSelectedModel();
             
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
         return model;
     }
@@ -752,7 +751,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -774,7 +773,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -796,7 +795,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -819,7 +818,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -841,7 +840,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -864,7 +863,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -886,7 +885,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -908,7 +907,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -931,7 +930,7 @@ public class StageLauncher {
             hashMap = controller.getHash();
             
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
         return hashMap;
     }
@@ -954,7 +953,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -976,7 +975,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     
@@ -998,7 +997,7 @@ public class StageLauncher {
 
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(StageLauncher.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     

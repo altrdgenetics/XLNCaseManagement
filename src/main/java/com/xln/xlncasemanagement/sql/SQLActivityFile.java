@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.sql;
 
+import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.FileUtilities;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -14,8 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.dbutils.DbUtils;
 
 /**
@@ -114,7 +113,7 @@ public class SQLActivityFile {
                 return FileUtilities.compareCheckSum(rs.getBytes("col04"), rs.getString("col05"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SQLActivityFile.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
@@ -145,7 +144,7 @@ public class SQLActivityFile {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SQLActivityFile.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
