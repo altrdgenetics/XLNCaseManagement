@@ -158,7 +158,7 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
                     long lStartTime = System.currentTimeMillis(); 
                     success = SQLReport.insertReportFile(keyID, fileSelection);
                     long lEndTime = System.currentTimeMillis();
-                    DebugTools.Printout("Saved File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
+                    DebugTools.HandleInfoPrintout("Saved File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
                 }
 
                 if (success) {
@@ -208,7 +208,7 @@ public class MaintenanceReportAddEditSceneController implements Initializable {
         }
         
         long lEndTime = System.currentTimeMillis();
-        DebugTools.Printout("Opened File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
+        DebugTools.HandleInfoPrintout("Opened File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
     }
     
     private File fileChooser(){

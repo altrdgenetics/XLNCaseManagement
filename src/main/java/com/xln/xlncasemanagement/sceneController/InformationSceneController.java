@@ -101,7 +101,7 @@ public class InformationSceneController implements Initializable {
     @FXML
     private void onMatterTypeButtonAction() {
         if (updateMode) {
-            DebugTools.Printout("Searching Matter Type");
+            DebugTools.HandleInfoPrintout("Searching Matter Type");
             MatterTypeModel matterType = Global.getStageLauncher().MaintenanceMatterTypeScene(Global.getMainStage(), false);
 
             if (matterType != null) {
@@ -109,17 +109,17 @@ public class InformationSceneController implements Initializable {
                 matterTypeButton.setText(matterType.getMatterType());
                 
                 
-                DebugTools.Printout("Need To Update Matter Type In Header");
+                DebugTools.HandleInfoPrintout("Need To Update Matter Type In Header");
             }
         } else {
-            DebugTools.Printout("Searching Disabled");
+            DebugTools.HandleInfoPrintout("Searching Disabled");
         }
     }
     
     @FXML
     private void onLabel3ButtonAction() {
         if (updateMode) {
-            DebugTools.Printout("Searching Make");
+            DebugTools.HandleInfoPrintout("Searching Make");
             MakeModel make = Global.getStageLauncher().MaintenanceMakeScene(Global.getMainStage(), false);
 
             if (make != null) {
@@ -141,13 +141,13 @@ public class InformationSceneController implements Initializable {
             }
             
         } else {
-            DebugTools.Printout("Searching Disabled");
+            DebugTools.HandleInfoPrintout("Searching Disabled");
         }
     }
     
     @FXML private void onLabel4ButtonAction() {
         if (updateMode){
-            DebugTools.Printout("Searching Model");
+            DebugTools.HandleInfoPrintout("Searching Model");
             ModelModel model = Global.getStageLauncher().MaintenanceModelScene(Global.getMainStage(), false, makeID);
 
             if (model != null) {
@@ -157,7 +157,7 @@ public class InformationSceneController implements Initializable {
             }
             
         } else {
-            DebugTools.Printout("Searching Disabled");
+            DebugTools.HandleInfoPrintout("Searching Disabled");
         }
     }
     
@@ -192,13 +192,13 @@ public class InformationSceneController implements Initializable {
             Global.getMainStageController().getHeaderField1().getSelectionModel().select(matterID);
             
             loadInformation(); //Reload After Save
-            DebugTools.Printout("Saved Information");
+            DebugTools.HandleInfoPrintout("Saved Information");
         }
     }
         
     public void mainPanelButtonDeleteAction() {
         updateMode = !updateMode;
-        DebugTools.Printout("Reverted Information (Cancel Button Action)");
+        DebugTools.HandleInfoPrintout("Reverted Information (Cancel Button Action)");
         setEditableStatus(false);
     }
     

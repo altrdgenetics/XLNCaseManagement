@@ -33,11 +33,11 @@ public class DBConnection {
             } catch (ClassNotFoundException | SQLException e) {
                 nbAttempts++;
                 if (nbAttempts > 0) {
-                    DebugTools.Printout(StringUtilities.currentTime()
+                    DebugTools.HandleInfoPrintout(StringUtilities.currentTime()
                             + " - Unable to connect to server. Trying again shortly.");
                 }
                 try {
-                    DebugTools.Printout("Sleeping for: " + 3000 * nbAttempts + "ms");
+                    DebugTools.HandleInfoPrintout("Sleeping for: " + 3000 * nbAttempts + "ms");
                     Thread.sleep(3000 * nbAttempts);
                 } catch (InterruptedException exi) {
                     System.err.println(exi.getMessage());
@@ -63,11 +63,11 @@ public class DBConnection {
             } catch (ClassNotFoundException | SQLException e) {
                 nbAttempts++;
                 if (nbAttempts > 0) {
-                    DebugTools.Printout(StringUtilities.currentTime()
+                    DebugTools.HandleInfoPrintout(StringUtilities.currentTime()
                             + " - Unable to connect to config server. Trying again shortly.");
                 }
                 try {
-                    DebugTools.Printout("Sleeping for: " + 3000 * nbAttempts + "ms");
+                    DebugTools.HandleInfoPrintout("Sleeping for: " + 3000 * nbAttempts + "ms");
                     Thread.sleep(3000 * nbAttempts);
                 } catch (InterruptedException exi) {
                     System.err.println(exi.getMessage());

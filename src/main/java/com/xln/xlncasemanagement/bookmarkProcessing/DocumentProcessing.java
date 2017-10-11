@@ -79,10 +79,10 @@ public class DocumentProcessing {
 
             //MATTER INFORMATION
             ProcessBookmark.process("MATTERTYPE" + (i == 0 ? "" : i), matter.getMatterTypeName() == null ? "" : matter.getMatterTypeName(), Document);
-            ProcessBookmark.process("OPENDATESHORT" + (i == 0 ? "" : i), Global.getMmddyyyy().format(matter.getOpenDate()), Document);
-            ProcessBookmark.process("OPENDATELONG" + (i == 0 ? "" : i), Global.getMMMMMdyyyy().format(matter.getOpenDate()), Document);
-            ProcessBookmark.process("CLOSEDDATESHORT" + (i == 0 ? "" : i), Global.getMmddyyyy().format(matter.getCloseDate()), Document);
-            ProcessBookmark.process("CLOSEDDATELONG" + (i == 0 ? "" : i), Global.getMMMMMdyyyy().format(matter.getCloseDate()), Document);
+            ProcessBookmark.process("OPENDATESHORT" + (i == 0 ? "" : i), matter.getOpenDate() == null ? "" : Global.getMmddyyyy().format(matter.getOpenDate()), Document);
+            ProcessBookmark.process("OPENDATELONG" + (i == 0 ? "" : i), matter.getOpenDate() == null ? "" : Global.getMMMMMdyyyy().format(matter.getOpenDate()), Document);
+            ProcessBookmark.process("CLOSEDDATESHORT" + (i == 0 ? "" : i), matter.getCloseDate() == null ? "" : Global.getMmddyyyy().format(matter.getCloseDate()), Document);
+            ProcessBookmark.process("CLOSEDDATELONG" + (i == 0 ? "" : i), matter.getCloseDate() == null ? "" : Global.getMMMMMdyyyy().format(matter.getCloseDate()), Document);
             ProcessBookmark.process("TOTALHOURS" + (i == 0 ? "" : i), billables.get("totalActivityHour").toString(), Document);
             ProcessBookmark.process("BILLEDHOURS" + (i == 0 ? "" : i), billables.get("billedActivityHour").toString(), Document);
             ProcessBookmark.process("UNBILLEDHOURS" + (i == 0 ? "" : i), billables.get("unBilledActivityHour").toString(), Document);

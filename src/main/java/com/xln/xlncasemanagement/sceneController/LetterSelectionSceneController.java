@@ -10,13 +10,12 @@ import com.xln.xlncasemanagement.bookmarkProcessing.GenerateDocument;
 import com.xln.xlncasemanagement.model.sql.TemplateModel;
 import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLTemplate;
+import com.xln.xlncasemanagement.util.DebugTools;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -112,7 +111,7 @@ public class LetterSelectionSceneController implements Initializable {
         try {
             Desktop.getDesktop().open(new File(Global.getTempDirectory() + File.separator + saveDocName));
         } catch (IOException ex) {
-            Logger.getLogger(LetterSelectionSceneController.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
     }
     

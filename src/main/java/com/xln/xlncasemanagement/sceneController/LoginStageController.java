@@ -16,8 +16,6 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -135,7 +133,7 @@ public class LoginStageController implements Initializable {
                     + " (" + Global.getCurrentUser().getLastLoginIP() + ")");
 
         } catch (UnknownHostException ex) {
-            Logger.getLogger(LoginStageController.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
         UsernameTextField.clear();
         PasswordTextField.clear();
@@ -158,29 +156,29 @@ public class LoginStageController implements Initializable {
         switch (valid) {
             case 0:
                 // Valid Login
-                DebugTools.Printout("Login Success");
+                DebugTools.HandleInfoPrintout("Login Success");
                 return true;
             case 1:
                 // Failed Authentication
-                DebugTools.Printout("Login Failed: Failed Authentication");
+                DebugTools.HandleInfoPrintout("Login Failed: Failed Authentication");
                 return false;
             case 2:
                 // No User Found
-                DebugTools.Printout("Login Failed: No User Found");
+                DebugTools.HandleInfoPrintout("Login Failed: No User Found");
                 return false;
             case 3:
                 // Account Locked
-                DebugTools.Printout("Login Failed: Account Locked");
+                DebugTools.HandleInfoPrintout("Login Failed: Account Locked");
                 accountLockedMessage();
                 return false;
             case 4:
                 // Account Locked
-                DebugTools.Printout("Login Failed: Account Logged In");
+                DebugTools.HandleInfoPrintout("Login Failed: Account Logged In");
                 accountLoggedInAlreadyMessage();
                 return false;
             default:
                 // Returned unknown Variable
-                DebugTools.Printout("Login Failed: Unknown Reason");
+                DebugTools.HandleInfoPrintout("Login Failed: Unknown Reason");
                 return false;
         }
     }

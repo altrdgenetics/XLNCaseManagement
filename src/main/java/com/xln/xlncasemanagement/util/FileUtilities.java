@@ -22,8 +22,6 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
@@ -44,9 +42,9 @@ public class FileUtilities {
                 return s.toByteArray();
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileUtilities.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         } catch (IOException ex) {
-            Logger.getLogger(FileUtilities.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
         return null;
     }
@@ -63,13 +61,13 @@ public class FileUtilities {
             fileInputStream.read(bytesArray);
 
         } catch (IOException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         } finally {
             if (fileInputStream != null) {
                 try {
                     fileInputStream.close();
                 } catch (IOException ex) {
-                    DebugTools.Printout(ex.getMessage());
+                    DebugTools.HandleException(ex);
                 }
             }
         }
@@ -97,7 +95,7 @@ public class FileUtilities {
             }
             return sb.toString();
         } catch (NoSuchAlgorithmException | IOException ex) {
-            Logger.getLogger(FileUtilities.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
         return "";
     }
@@ -122,7 +120,7 @@ public class FileUtilities {
             }
             return sb.toString();
         } catch (NoSuchAlgorithmException | IOException ex) {
-            Logger.getLogger(FileUtilities.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         }
         return "";
     }
@@ -157,13 +155,13 @@ public class FileUtilities {
             }
                         
         } catch (IOException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         } finally {
             if (is != null) {
                 try {
                     is.close();
                 } catch (IOException ex) {
-                    DebugTools.Printout(ex.getMessage());
+                    DebugTools.HandleException(ex);
                 }
             }
             if (outputStream != null) {
@@ -171,7 +169,7 @@ public class FileUtilities {
                     // outputStream.flush();
                     outputStream.close();
                 } catch (IOException ex) {
-                    DebugTools.Printout(ex.getMessage());
+                    DebugTools.HandleException(ex);
                 }
             }
         }
@@ -195,13 +193,13 @@ public class FileUtilities {
             }
                         
         } catch (IOException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         } finally {
             if (is != null) {
                 try {
                     is.close();
                 } catch (IOException ex) {
-                    DebugTools.Printout(ex.getMessage());
+                    DebugTools.HandleException(ex);
                 }
             }
             if (outputStream != null) {
@@ -209,7 +207,7 @@ public class FileUtilities {
                     outputStream.flush();
                     outputStream.close();
                 } catch (IOException ex) {
-                    DebugTools.Printout(ex.getMessage());
+                    DebugTools.HandleException(ex);
                 }
             }
         }
@@ -221,7 +219,7 @@ public class FileUtilities {
             Path path = Paths.get(fileName);
             Files.write(path, bFile);
         } catch (IOException ex) {
-            DebugTools.Printout(ex.getMessage());
+            DebugTools.HandleException(ex);
         }
         return new File(fileName);
     }

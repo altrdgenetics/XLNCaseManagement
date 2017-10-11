@@ -24,8 +24,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -349,14 +347,14 @@ public class MainStageController implements Initializable {
     
     @FXML private void onEmailFieldClick(MouseEvent event) {
         if (event.getClickCount() >= 2) {
-            DebugTools.Printout("Clicked to Launch Email");
+            DebugTools.HandleInfoPrintout("Clicked to Launch Email");
             if (!emailField.getText().equals("")){
                 try {
                     SQLAudit.insertAudit("Opened Email Application for: " + emailField.getText());
                     
                     Desktop.getDesktop().mail(new URI("mailto:" + emailField.getText().replace(" ", "")));
                 } catch (URISyntaxException | IOException ex) {
-                    Logger.getLogger(MainStageController.class.getName()).log(Level.SEVERE, null, ex);
+                    DebugTools.HandleException(ex);
                 }
             }
         }
@@ -558,23 +556,23 @@ public class MainStageController implements Initializable {
         SQLAudit.insertAudit("Selected " + selectedTabTitle.getText() + " Tab");
         
         if (selectedTabTitle.equals(informationTab)) {
-            DebugTools.Printout("Selected Information Tab");
+            DebugTools.HandleInfoPrintout("Selected Information Tab");
             informationSceneController.setActive();
             setInformationTabButtons();
         } else if (selectedTabTitle.equals(partyTab)) {
-            DebugTools.Printout("Selected Party Tab");
+            DebugTools.HandleInfoPrintout("Selected Party Tab");
             casePartySceneController.setActive();
             setPartyTabButtons();
         } else if (selectedTabTitle.equals(activityTab)) {
-            DebugTools.Printout("Selected Activity Tab");
+            DebugTools.HandleInfoPrintout("Selected Activity Tab");
             activitySceneController.setActive();
             setActivityTabButtons();
         } else if (selectedTabTitle.equals(expenseTab)) {
-            DebugTools.Printout("Selected Expense Tab");
+            DebugTools.HandleInfoPrintout("Selected Expense Tab");
             expensesSceneController.setActive();
             setExpenseTabButtons();
         } else if (selectedTabTitle.equals(noteTab)) {
-            DebugTools.Printout("Selected Note Tab");
+            DebugTools.HandleInfoPrintout("Selected Note Tab");
             notesSceneController.setActive();
             setNoteTabButtons();
         }

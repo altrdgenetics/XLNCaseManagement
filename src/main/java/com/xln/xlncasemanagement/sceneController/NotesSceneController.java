@@ -50,13 +50,13 @@ public class NotesSceneController implements Initializable {
             notesArea.requestFocus();
         } else {
             saveInformation();
-            DebugTools.Printout("Saved Information");
+            DebugTools.HandleInfoPrintout("Saved Information");
         }
     }
 
     public void mainPanelButtonDeleteAction() {
         updateMode = !updateMode;
-        DebugTools.Printout("Reverted Information (Cancel Button Action)");
+        DebugTools.HandleInfoPrintout("Reverted Information (Cancel Button Action)");
         notesArea.setEditable(false);
     }
     

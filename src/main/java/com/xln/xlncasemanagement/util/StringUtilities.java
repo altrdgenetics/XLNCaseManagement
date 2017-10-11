@@ -174,19 +174,19 @@ public class StringUtilities {
             addressLine += item.getAddressOne().equals("") ? "" : (item.getAddressOne());
         }
         if (item.getAddressTwo() != null) {
-            addressLine += item.getAddressTwo().equals("") ? "" : (", " + item.getAddressTwo());
+            addressLine += item.getAddressTwo().equals("") ? "" : (addressLine.trim().equals("") ? item.getAddressTwo() : ", " + item.getAddressTwo());
         }
         if (item.getAddressThree() != null) {
-            addressLine += item.getAddressThree().equals("") ? "" : (", " + item.getAddressThree());
+            addressLine += item.getAddressThree().equals("") ? "" : (addressLine.trim().equals("") ? item.getAddressThree() : ", " + item.getAddressThree());
         }
         if (item.getCity() != null) {
-            addressLine += item.getCity().equals("") ? "" : (", " + item.getCity());
+            addressLine += item.getCity().equals("") ? "" : (addressLine.trim().equals("") ? item.getCity() : ", " + item.getCity());
         }
         if (item.getState() != null) {
-            addressLine += item.getState().equals("") ? "" : (", " + item.getState());
+            addressLine += item.getState().equals("") ? "" : (addressLine.trim().equals("") ? item.getState() : ", " + item.getState());
         }
         if (item.getZip() != null) {
-            addressLine += item.getZip().equals("") ? "" : (" " + item.getZip());
+            addressLine += item.getZip().equals("") ? "" : (addressLine.trim().equals("") ? item.getZip() : " " + item.getZip());
         }
 
         return addressLine.trim();
@@ -194,8 +194,13 @@ public class StringUtilities {
     
     public static String buildAddressBlockWithLineBreaks(CompanyModel item) {
         String addressBlock = "";
-
-        addressBlock += item.getName();
+        
+        if (item.getName()!= null) {
+            if (!item.getName().equals("")) {
+                addressBlock += item.getName();
+            }
+        }
+                
         if (item.getAddressOne()!= null) {
             if (!item.getAddressOne().equals("")) {
                 addressBlock += System.lineSeparator() + item.getAddressOne();
@@ -211,9 +216,18 @@ public class StringUtilities {
                 addressBlock += System.lineSeparator() + item.getAddressThree();
             }
         }
-        addressBlock += System.lineSeparator() + (item.getCity() == null ? "" : item.getCity())
-                + ", " + (item.getState() == null ? "" : item.getState())
-                + " " + (item.getZip() == null ? "" : item.getZip());
+        String cityStateZip = "";
+        
+        if (item.getCity() != null) {
+            cityStateZip += item.getCity().equals("") ? "" : (cityStateZip.trim().equals("") ? item.getCity() : ", " + item.getCity());
+        }
+        if (item.getState() != null) {
+            cityStateZip += item.getState().equals("") ? "" : (cityStateZip.trim().equals("") ? item.getState() : ", " + item.getState());
+        }
+        if (item.getZip() != null) {
+            cityStateZip += item.getZip().equals("") ? "" : (cityStateZip.trim().equals("") ? item.getZip() : " " + item.getZip());
+        }        
+        addressBlock += cityStateZip.trim().equals("") ? "" : System.lineSeparator() + cityStateZip;
 
         return addressBlock.trim();
     }
@@ -237,10 +251,20 @@ public class StringUtilities {
                 addressBlock += System.lineSeparator() + item.getAddressThree();
             }
         }
-        addressBlock += System.lineSeparator() + (item.getCity() == null ? "" : item.getCity())
-                + ", " + (item.getState() == null ? "" : item.getState())
-                + " " + (item.getZip() == null ? "" : item.getZip());
-
+        
+        String cityStateZip = "";
+        
+        if (item.getCity() != null) {
+            cityStateZip += item.getCity().equals("") ? "" : (cityStateZip.trim().equals("") ? item.getCity() : ", " + item.getCity());
+        }
+        if (item.getState() != null) {
+            cityStateZip += item.getState().equals("") ? "" : (cityStateZip.trim().equals("") ? item.getState() : ", " + item.getState());
+        }
+        if (item.getZip() != null) {
+            cityStateZip += item.getZip().equals("") ? "" : (cityStateZip.trim().equals("") ? item.getZip() : " " + item.getZip());
+        }        
+        addressBlock += cityStateZip.trim().equals("") ? "" : System.lineSeparator() + cityStateZip;
+        
         return addressBlock.trim();
     }
 }

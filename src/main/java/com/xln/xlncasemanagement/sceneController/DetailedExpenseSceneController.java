@@ -196,7 +196,7 @@ public class DetailedExpenseSceneController implements Initializable {
                     long lStartTime = System.currentTimeMillis(); 
                     success = SQLExpenseFile.insertExpenseFile(keyID, imageSelection);
                     long lEndTime = System.currentTimeMillis();
-                    DebugTools.Printout("Saved File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
+                    DebugTools.HandleInfoPrintout("Saved File In: " + NumberFormatService.convertLongToTime(lEndTime - lStartTime));
                 }
 
                 if (success) {

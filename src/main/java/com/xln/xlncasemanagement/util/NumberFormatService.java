@@ -24,18 +24,20 @@ public class NumberFormatService {
     public static String convertStringToPhoneNumber(String number) {
         String formattedNumber = "";
 
-        if (number == null) {
-            formattedNumber = "";
-        } else if (number.length() >= 10) {
-            formattedNumber += "(" + number.substring(0, 3) + ") ";
-            formattedNumber += number.substring(3, 6) + "-";
-            formattedNumber += number.substring(6, 10);
+        if (number != null) {
+            number = number.replaceAll("[^0-9]", "");
+            
+            if (number.length() >= 10) {
+                formattedNumber += "(" + number.substring(0, 3) + ") ";
+                formattedNumber += number.substring(3, 6) + "-";
+                formattedNumber += number.substring(6, 10);
 
-            if (number.length() > 10) {
-                formattedNumber += " x" + number.substring(10);
+                if (number.length() > 10) {
+                    formattedNumber += " x" + number.substring(10);
+                }
+            } else {
+                formattedNumber = number;
             }
-        } else {
-            formattedNumber = number;
         }
         return formattedNumber.trim();
     }
@@ -90,8 +92,12 @@ public class NumberFormatService {
                 TimeUnit.MILLISECONDS.toSeconds(millis)
                 - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
         if (TimeUnit.MILLISECONDS.toHours(millis) == 0) {
-            String[] split = duration.split("hr");
-            duration = split[1].trim();
+            String[] hrSplit = duration.split("hr");
+            duration = hrSplit[1].trim();
+            if (TimeUnit.MILLISECONDS.toMinutes(millis) == 0) {
+                String[] minSplit = duration.split("min");
+                duration = minSplit[1].trim();
+            }
         }
         return duration.trim();
     }

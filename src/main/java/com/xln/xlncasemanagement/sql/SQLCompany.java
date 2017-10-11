@@ -15,8 +15,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.image.Image;
 import org.apache.commons.dbutils.DbUtils;
 
@@ -62,7 +60,7 @@ public class SQLCompany {
                 item.setLogoSH1(rs.getString("col14"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SQLCompany.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
@@ -106,7 +104,7 @@ public class SQLCompany {
             ps.setInt(12, item.getId());
             ps.executeUpdate();       
         } catch (SQLException ex) {
-            Logger.getLogger(SQLCompany.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
             return false;
         } finally {
             DbUtils.closeQuietly(conn);
@@ -133,12 +131,12 @@ public class SQLCompany {
             ps.executeUpdate();       
             
             if (verifyImageChecksum()) { 
-                DebugTools.Printout("Image Inserted Successfully");
+                DebugTools.HandleInfoPrintout("Image Inserted Successfully");
                 return true;
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(SQLCompany.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
             return false;
         } finally {
             DbUtils.closeQuietly(conn);
@@ -162,7 +160,7 @@ public class SQLCompany {
                 return FileUtilities.compareCheckSum(rs.getBytes("col13"), rs.getString("col14"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SQLCompany.class.getName()).log(Level.SEVERE, null, ex);
+            DebugTools.HandleException(ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);

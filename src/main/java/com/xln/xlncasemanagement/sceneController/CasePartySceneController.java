@@ -68,10 +68,10 @@ public class CasePartySceneController implements Initializable {
 
         if (row != null) {
             if (event.getClickCount() == 1) {
-                DebugTools.Printout("Party Table Single Click");
+                DebugTools.HandleInfoPrintout("Party Table Single Click");
                 Global.getMainStageController().getButtonDelete().setDisable(false);                
             } else if (event.getClickCount() >= 2) {
-                DebugTools.Printout("Party Table Double Click");
+                DebugTools.HandleInfoPrintout("Party Table Double Click");
                 Global.getStageLauncher().detailedPartyAddEditScene(Global.getMainStage(), false, (PartyModel) row.getObject().getValue());
                 
                 if (row.getRelation().get().equals("Client")){
