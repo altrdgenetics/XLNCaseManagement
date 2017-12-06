@@ -21,8 +21,8 @@ public class LabelHashTables {
             case "Computer Repair":
                 ComputerRepair();
                 break;
-            case "3":
-                ComputerRepair();
+            case "Marketing Firm":
+                MarketingFirm();
                 break;
             default:
                 break;
