@@ -404,6 +404,12 @@ VBox > .split-menu-button.last > .arrow-button {
 	-fx-padding: -1;
 	-fx-border-width: 1;
 }
+
+.combo-box:focused, .choice-box:focused, .color-picker:focused, .date-picker:focused {
+    -fx-border-color: #66afe9;
+    -fx-effect: dropshadow(gaussian, #66afe9, 10, 0, 0, 0);
+}
+
 .combo-box, .choice-box, .color-picker, .date-picker {
 	-fx-border-radius: 4;
 	-fx-background-radius: 4;

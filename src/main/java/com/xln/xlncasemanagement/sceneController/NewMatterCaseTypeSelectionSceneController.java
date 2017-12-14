@@ -6,15 +6,19 @@
 package com.xln.xlncasemanagement.sceneController;
 
 import com.xln.xlncasemanagement.Global;
+import com.xln.xlncasemanagement.model.sql.ActivityModel;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.model.sql.MatterTypeModel;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
+import com.xln.xlncasemanagement.sql.SQLActivity;
 import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLCaseParty;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.sql.SQLMatterType;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -88,6 +92,8 @@ public class NewMatterCaseTypeSelectionSceneController implements Initializable 
         
         SQLAudit.insertAudit("Added " + Global.getNewCaseType() + " ID: " + newKeyID);
         
+        insertStartActivity(newKeyID);
+        
         insertPartyAsClient(newKeyID);
         
         refreshMainWindow(newKeyID);
@@ -105,6 +111,26 @@ public class NewMatterCaseTypeSelectionSceneController implements Initializable 
         item.setCloseDate(null);
         
         return SQLMatter.insertNewMatter(item);
+    }
+    
+    private int insertStartActivity(int newKeyID){
+        ActivityModel item = new ActivityModel();
+        
+        Date currentDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        
+        item.setActive(true);
+        item.setUserID(Global.getCurrentUser().getId());
+        item.setActivityTypeID(0);
+        item.setMatterID(newKeyID);
+        item.setDateOccurred(currentDate);
+        item.setDuration(BigDecimal.ZERO);
+        item.setRate(BigDecimal.ZERO);
+        item.setTotal(item.getDuration().multiply(item.getRate()));
+        item.setDescription(Global.getNewCaseType() + " Opened On " + Global.getMmddyyyy().format(currentDate));        
+        item.setBillable(false);
+        item.setInvoiced(true);
+        
+        return SQLActivity.insertActivity(item);
     }
     
     private void insertPartyAsClient(int newKeyID){

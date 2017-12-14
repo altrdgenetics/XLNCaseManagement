@@ -67,6 +67,21 @@
                         <Insets right="5.0" />
                     </padding>
                 </Label>
+                <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Email:" GridPane.rowIndex="9">
+                    <padding>
+                        <Insets right="5.0" />
+                    </padding>
+                </Label>
+                <ComboBox fx:id="CaseRelationCombobox" prefHeight="25.0" prefWidth="620.0" promptText="Case Relation" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets left="5.0" right="15.0" />
+                    </GridPane.margin>
+                </ComboBox>
+                <ComboBox fx:id="PrefixCombobox" prefWidth="150.0" promptText="Prefix" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets left="5.0" right="5.0" />
+                    </GridPane.margin>
+                </ComboBox>
                 <TextField fx:id="FirstNameTextField" promptText="First" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
@@ -102,6 +117,11 @@
                         <Insets left="5.0" right="5.0" />
                     </GridPane.margin>
                 </TextField>
+                <ComboBox fx:id="StateComboBox" prefWidth="150.0" promptText="State" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
+                    <GridPane.margin>
+                        <Insets left="5.0" right="5.0" />
+                    </GridPane.margin>
+                </ComboBox>
                 <TextField fx:id="ZipCodeTextField" promptText="Zipcode" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
                     <GridPane.margin>
                         <Insets left="5.0" right="15.0" />
@@ -122,26 +142,6 @@
                         <Insets left="5.0" right="15.0" />
                     </GridPane.margin>
                 </TextField>
-                <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Email:" GridPane.rowIndex="9">
-                    <padding>
-                        <Insets right="5.0" />
-                    </padding>
-                </Label>
-                <ComboBox fx:id="CaseRelationCombobox" prefHeight="25.0" prefWidth="620.0" promptText="Case Relation" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
-                    <GridPane.margin>
-                        <Insets left="5.0" right="15.0" />
-                    </GridPane.margin>
-                </ComboBox>
-                <ComboBox fx:id="PrefixCombobox" prefWidth="150.0" promptText="Prefix" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                    <GridPane.margin>
-                        <Insets left="5.0" right="5.0" />
-                    </GridPane.margin>
-                </ComboBox>
-                <ComboBox fx:id="StateComboBox" prefWidth="150.0" promptText="State" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
-                    <GridPane.margin>
-                        <Insets left="5.0" right="5.0" />
-                    </GridPane.margin>
-                </ComboBox>
             </children>
         </GridPane>
     </center>
