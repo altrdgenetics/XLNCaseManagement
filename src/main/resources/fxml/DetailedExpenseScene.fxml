@@ -54,36 +54,36 @@
             </rowConstraints>
             <children>
                 <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Expense Date:" />
-                <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="User:" GridPane.columnIndex="3" />
                 <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Expense Type:" GridPane.rowIndex="1" />
+                <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Description:" GridPane.rowIndex="2" />
+                <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="User:" GridPane.columnIndex="3" />
+                <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Cost:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                 <DatePicker fx:id="expenseDateDatePicker" GridPane.columnIndex="1" GridPane.columnSpan="2">
                     <GridPane.margin>
                         <Insets left="5.0" />
                     </GridPane.margin>
                 </DatePicker>
-                <ComboBox fx:id="userComboBox" maxWidth="1.7976931348623157E308" prefWidth="171.0" GridPane.columnIndex="4" GridPane.columnSpan="2">
-                    <GridPane.margin>
-                        <Insets left="5.0" right="10.0" />
-                    </GridPane.margin>
-                </ComboBox>
                 <ComboBox fx:id="expenseTypeComboBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets left="5.0" />
                     </GridPane.margin>
                 </ComboBox>
-                <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Description:" GridPane.rowIndex="2" />
+                <ComboBox fx:id="userComboBox" maxWidth="1.7976931348623157E308" prefWidth="171.0" GridPane.columnIndex="4" GridPane.columnSpan="2">
+                    <GridPane.margin>
+                        <Insets left="5.0" right="10.0" />
+                    </GridPane.margin>
+                </ComboBox>
+                <TextField fx:id="costTextField" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets left="5.0" right="10.0" />
+                    </GridPane.margin>
+                </TextField>
                 <TextArea fx:id="descriptionTextArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.rowSpan="4" GridPane.vgrow="NEVER">
                     <GridPane.margin>
                         <Insets left="5.0" right="10.0" top="5.0" />
                     </GridPane.margin>
                 </TextArea>
                 <Button fx:id="receiptButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleFileButtonAction" prefHeight="32.0" prefWidth="222.0" text="Add Receipt" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.rowSpan="2" GridPane.valignment="CENTER" />
-                <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Cost:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                <TextField fx:id="costTextField" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                    <GridPane.margin>
-                        <Insets left="5.0" right="10.0" />
-                    </GridPane.margin>
-                </TextField>
             </children>
         </GridPane>
     </center>

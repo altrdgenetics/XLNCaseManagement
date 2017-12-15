@@ -105,6 +105,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </Label>
+            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Hour(s)" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <ComboBox fx:id="activityTypeComboBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets right="10.0" />
@@ -116,15 +117,13 @@
                </GridPane.margin>
             </ComboBox>
             <TextField fx:id="rateTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Hour(s)" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <CheckBox fx:id="billableCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" selected="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <DatePicker fx:id="occurredDatePicker" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
             <TextField fx:id="durationTextField" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
             </TextField>
-            <DatePicker fx:id="occurredDatePicker" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-            <Button fx:id="fileButton" mnemonicParsing="false" onAction="#handleFileButtonAction" prefHeight="32.0" prefWidth="151.0" text="Add File" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <CheckBox fx:id="billableCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" selected="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.rowSpan="5">
                <children>
                   <Label text="Description:" />
@@ -138,6 +137,7 @@
                   <Insets top="5.0" />
                </GridPane.margin>
             </VBox>
+            <Button fx:id="fileButton" mnemonicParsing="false" onAction="#handleFileButtonAction" prefHeight="32.0" prefWidth="151.0" text="Add File" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
          </children>
       </GridPane>
    </center>
