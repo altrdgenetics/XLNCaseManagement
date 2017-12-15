@@ -113,12 +113,13 @@
                      </padding>
                         </Label>
                         <ComboBox fx:id="clientField" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleClientSelection" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
-                        <TextField fx:id="phoneField" editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
-                        <TextField fx:id="emailField" editable="false" onMouseClicked="#onEmailFieldClick" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
-                        <CustomTextField fx:id="headerField2" editable="false" onMouseClicked="#onHeaderField2Action" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER" />
-                        <CustomTextField fx:id="headerField3" editable="false" onMouseClicked="#onHeaderField3Action" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER" />
-                        <TextField fx:id="headerField4" editable="false" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
-                        <TextField fx:id="headerField5" editable="false" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="headerField1" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleHeaderField1Selection" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                        <TextField fx:id="phoneField" editable="false" focusTraversable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+                        <TextField fx:id="emailField" editable="false" focusTraversable="false" onMouseClicked="#onEmailFieldClick" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+                        <CustomTextField fx:id="headerField2" editable="false" focusTraversable="false" onMouseClicked="#onHeaderField2Action" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER" />
+                        <CustomTextField fx:id="headerField3" editable="false" focusTraversable="false" onMouseClicked="#onHeaderField3Action" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER" />
+                        <TextField fx:id="headerField4" editable="false" focusTraversable="false" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+                        <TextField fx:id="headerField5" editable="false" focusTraversable="false" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
                         <Label fx:id="headerLabel2" alignment="CENTER_RIGHT" prefHeight="132.0" prefWidth="196.0" text="&lt;&lt;Label 2&gt;&gt;" GridPane.columnIndex="2">
                             <GridPane.margin>
                                 <Insets left="10.0" />
@@ -151,7 +152,6 @@
                         <Insets right="10.0" />
                      </padding>
                         </Label>
-                  <ComboBox fx:id="headerField1" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleHeaderField1Selection" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
                   <ImageView fx:id="headerLogo" disable="true" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../image/xlnlogo.png" />

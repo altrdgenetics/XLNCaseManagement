@@ -30,6 +30,14 @@
             <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
+            <Label fx:id="matterTypeLabel" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="&lt;&lt;MATTER TYPE&gt;&gt;">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets right="5.0" />
+               </padding>
+            </Label>
             <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Open Date:" GridPane.hgrow="NEVER" GridPane.rowIndex="1">
                <padding>
                   <Insets right="5.0" />
@@ -134,6 +142,27 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
+            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Total Cost:" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets right="5.0" />
+               </padding>
+            </Label>
+            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Balance:" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="7">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets right="5.0" />
+               </padding>
+            </Label>
+            <Button fx:id="matterTypeButton" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onMatterTypeButtonAction" styleClass="info" text="&lt;&lt;MATTER TYPE BUTTON&gt;&gt;" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </Button>
             <DatePicker fx:id="OpenDateDatePicker" editable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="334.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
@@ -149,6 +178,26 @@
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </DatePicker>
+            <TextField fx:id="Label2TextField" editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets bottom="5.0" right="10.0" top="5.0" />
+               </GridPane.margin>
+            </TextField>
+            <Button fx:id="Label3Button" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLabel3ButtonAction" styleClass="info" text="&lt;&lt;LABEL 3 BUTTON&gt;&gt;" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="Label4Button" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLabel4ButtonAction" styleClass="info" text="&lt;&lt;LABEL 4 BUTTON&gt;&gt;" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </Button>
+            <TextField fx:id="Label5TextField" editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
+               <GridPane.margin>
+                  <Insets bottom="5.0" right="10.0" top="5.0" />
+               </GridPane.margin>
+            </TextField>
             <TextField fx:id="TotalHoursTextField" editable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
@@ -179,32 +228,6 @@
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="Label5TextField" editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
-               <GridPane.margin>
-                  <Insets bottom="5.0" right="10.0" top="5.0" />
-               </GridPane.margin>
-            </TextField>
-            <TextField fx:id="Label2TextField" editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
-               <GridPane.margin>
-                  <Insets bottom="5.0" right="10.0" top="5.0" />
-               </GridPane.margin>
-            </TextField>
-            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Total Cost:" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="6">
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-               <padding>
-                  <Insets right="5.0" />
-               </padding>
-            </Label>
-            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Balance:" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="7">
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-               <padding>
-                  <Insets right="5.0" />
-               </padding>
-            </Label>
             <TextField fx:id="TotalCostTextField" editable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="5.0" />
@@ -215,29 +238,6 @@
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </GridPane.margin>
             </TextField>
-            <Button fx:id="Label3Button" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLabel3ButtonAction" styleClass="info" text="&lt;&lt;LABEL 3 BUTTON&gt;&gt;" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
-               <GridPane.margin>
-                  <Insets right="10.0" />
-               </GridPane.margin>
-            </Button>
-            <Button fx:id="Label4Button" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLabel4ButtonAction" styleClass="info" text="&lt;&lt;LABEL 4 BUTTON&gt;&gt;" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
-               <GridPane.margin>
-                  <Insets right="10.0" />
-               </GridPane.margin>
-            </Button>
-            <Button fx:id="matterTypeButton" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onMatterTypeButtonAction" styleClass="info" text="&lt;&lt;MATTER TYPE BUTTON&gt;&gt;" GridPane.columnIndex="1">
-               <GridPane.margin>
-                  <Insets right="10.0" />
-               </GridPane.margin>
-            </Button>
-            <Label fx:id="matterTypeLabel" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="&lt;&lt;MATTER TYPE&gt;&gt;">
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-               <padding>
-                  <Insets right="5.0" />
-               </padding>
-            </Label>
          </children>
          <opaqueInsets>
             <Insets />
