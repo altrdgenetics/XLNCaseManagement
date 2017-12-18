@@ -47,5 +47,4 @@ public class AlertDialog {
         return result.get() == ButtonType.OK;
     }
     
-    
 }

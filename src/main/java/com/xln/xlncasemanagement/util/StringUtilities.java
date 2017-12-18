@@ -104,7 +104,6 @@ public class StringUtilities {
     
     public static String buildUserNameWithUserName(UserModel item) {
         String fullName = "";
-
         if (item.getFirstName() != null) {
             fullName = fullName.trim() + (item.getFirstName().equals("") ? "" : " " + item.getFirstName().trim());
         }
@@ -117,13 +116,11 @@ public class StringUtilities {
         if (item.getUsername() != null) {
             fullName = fullName.trim() + (item.getUsername().equals("") ? "" : " (" +item.getUsername().trim() + ")");
         }
-
         return fullName.trim();
     }
     
     public static String buildUsersName(UserModel item) {
         String fullName = "";
-
         if (item.getFirstName() != null) {
             fullName = fullName.trim() + (item.getFirstName().equals("") ? "" : " " + item.getFirstName().trim());
         }
@@ -133,13 +130,11 @@ public class StringUtilities {
         if (item.getLastName() != null) {
             fullName = fullName.trim() + (item.getLastName().equals("") ? "" : " " + item.getLastName().trim());
         }
-
         return fullName.trim();
     }
 
     public static String buildName(String first, String middle, String last) {
         String fullName = "";
-
         if (first != null) {
             fullName = fullName.trim() + (first.equals("") ? "" : " " + first.trim());
         }
@@ -149,13 +144,11 @@ public class StringUtilities {
         if (last != null) {
             fullName = fullName.trim() + (last.equals("") ? "" : " " + last.trim());
         }
-
         return fullName.trim();
     }
     
     public static String buildTableAddressBlock(PartyModel item) {
         String addressLine = "";
-
         if (item.getAddressOne() != null) {
             addressLine += item.getAddressOne().equals("") ? "" : (item.getAddressOne());
         }
@@ -174,13 +167,11 @@ public class StringUtilities {
         if (item.getZip() != null) {
             addressLine += item.getZip().equals("") ? "" : (addressLine.trim().equals("") ? item.getZip() : " " + item.getZip());
         }
-
         return addressLine.trim();
     }
     
     public static String buildAddressBlockWithLineBreaks(CompanyModel item) {
         String addressBlock = "";
-        
         if (item.getName()!= null) {
             if (!item.getName().equals("")) {
                 addressBlock += item.getName();

@@ -87,7 +87,6 @@ public class GenerateReport {
         } else {
             fileNotFound();
         }
-        
     }
     
     public static void generateBill(PartyModel client, MatterModel matter, boolean bill, HashMap hash) {
