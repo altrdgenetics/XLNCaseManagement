@@ -93,11 +93,9 @@ public class GenerateReport {
         long lStartTime = System.currentTimeMillis();
         Connection conn = null;
         InputStream is = null;
-        String fileName = 
-                (bill ? "Bill_" : "PreBill_") 
+        String fileName = StringUtils.left(((bill ? "Bill_" : "PreBill_") 
                 + StringUtilities.buildName(client.getFirstName(), "", client.getLastName()) 
-                + "_" + matter.getMatterTypeName() + "_";
-        
+                + "_" + matter.getMatterTypeName().trim()).trim(), 30).trim().replaceAll(" ", "_") + "_" + System.currentTimeMillis();
         
         is = GenerateReport.class.getResourceAsStream("/jasper/" + (bill ? "Bill.jasper" : "PreBill.jasper"));
         
@@ -105,12 +103,6 @@ public class GenerateReport {
             try {
                 byte[] pdfFileStream = null;
                 
-                if (fileName.length() > 50) {
-                    fileName = StringUtils.left(fileName.trim(), 50).trim().replaceAll(" ", "_") + "_" + System.currentTimeMillis();
-                } else {
-                    fileName = fileName + "_" + System.currentTimeMillis();
-                }
-
                 String pdfFileName = Global.getTempDirectory() + fileName + ".pdf";
 
                 conn = DBConnection.connectToDB();
