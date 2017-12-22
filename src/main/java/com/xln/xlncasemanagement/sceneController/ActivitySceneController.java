@@ -11,6 +11,7 @@ import com.xln.xlncasemanagement.model.table.ActivityTableModel;
 import com.xln.xlncasemanagement.sql.SQLActiveStatus;
 import com.xln.xlncasemanagement.sql.SQLActivity;
 import com.xln.xlncasemanagement.sql.SQLAudit;
+import com.xln.xlncasemanagement.util.AlertDialog;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.TableObjects;
 import java.net.URL;
@@ -211,7 +212,7 @@ public class ActivitySceneController implements Initializable {
 
             if (row != null) {
                 if (event.getClickCount() == 1) {
-                    DebugTools.HandleInfoPrintout("Expense Table Single Click");
+                    DebugTools.HandleInfoPrintout("Activity Table Single Click");
                     Global.getMainStageController().getButtonDelete().setDisable(false);
                 } else if (event.getClickCount() >= 2) {
                     DebugTools.HandleInfoPrintout("Activity Table Double Click");
@@ -262,10 +263,16 @@ public class ActivitySceneController implements Initializable {
         if (row != null) {
             ActivityModel act = (ActivityModel) row.getObject().getValue();
             
-            SQLAudit.insertAudit("Deleted Activity ID: " + act.getId());
-            
-            SQLActiveStatus.setActive("table01", act.getId(), false);
-            search();
+            if (!act.isInvoiced()){
+                SQLAudit.insertAudit("Deleted Activity ID: " + act.getId());
+
+                SQLActiveStatus.setActive("table01", act.getId(), false);
+                search();
+            } else {
+                AlertDialog.StaticAlert(2, "Removal Error",
+                    "Unable To Remove Entry",
+                    "The entry has been invoiced and is unable to be removed.");
+            }
         }
     }
 
