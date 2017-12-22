@@ -193,8 +193,7 @@ public class SQLMatter {
                 + "col08 = ?, " //03 - Warranty
                 + "col09 = ?, " //04 - Make
                 + "col10 = ?, " //05 - Model
-                + "col11 = ?, " //06 - Serial
-                + "col12 = ? "  //07 - Budget / Trust
+                + "col11 = ? "  //06 - Serial
                 + "WHERE col01 = ?"; //08
         try {
             conn = DBConnection.connectToDB();
@@ -205,8 +204,26 @@ public class SQLMatter {
             ps.setInt       (4, item.getMake());
             ps.setInt       (5, item.getModel());
             ps.setString    (6, item.getSerial());
-            ps.setBigDecimal(7, item.getBudget());
-            ps.setInt       (8, item.getId());
+            ps.setInt       (7, item.getId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+    }
+    
+    public static void updateMatterPaymentByID(MatterModel item) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE table15 SET col12 = ? WHERE col01 = ?";
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+            ps.setBigDecimal(1, item.getBudget());
+            ps.setInt       (2, item.getId());
             ps.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

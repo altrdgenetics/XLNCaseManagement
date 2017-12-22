@@ -20,6 +20,7 @@ import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.io.File;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -130,6 +131,8 @@ public class DetailedExpenseSceneController implements Initializable {
         loadExpenseTypeComboBox();
         if (expenseObject != null){
             loadExpenseInformation();
+        } else {
+            expenseDateDatePicker.setValue(LocalDate.now());
         }
     }
     

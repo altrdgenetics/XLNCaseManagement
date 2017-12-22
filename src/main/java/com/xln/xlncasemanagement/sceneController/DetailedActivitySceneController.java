@@ -20,6 +20,7 @@ import com.xln.xlncasemanagement.util.NumberFormatService;
 import java.io.File;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -133,6 +134,8 @@ public class DetailedActivitySceneController implements Initializable {
         loadActivityTypeComboBox();
         if (activityObject != null){
             loadActivityInformation();
+        } else {
+            occurredDatePicker.setValue(LocalDate.now());
         }
     }
     

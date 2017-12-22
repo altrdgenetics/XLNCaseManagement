@@ -47,6 +47,7 @@ public class InformationSceneController implements Initializable {
     @FXML DatePicker WarrantyDateDatePicker;
     @FXML Label Label2;
     @FXML TextField Label2TextField;
+    @FXML Button Label2Button;
     @FXML Label Label3;
     @FXML Button Label3Button;
     @FXML Label Label4;
@@ -114,6 +115,12 @@ public class InformationSceneController implements Initializable {
         } else {
             DebugTools.HandleInfoPrintout("Searching Disabled");
         }
+    }
+    
+    @FXML
+    private void onLabel2ButtonAction() {
+        Global.getStageLauncher().PaymentScene(Global.getMainStage());
+        loadInformation();
     }
     
     @FXML
@@ -207,7 +214,8 @@ public class InformationSceneController implements Initializable {
         OpenDateDatePicker.setEditable(editable);
         ClosedDateDatePicker.setEditable(editable);
         WarrantyDateDatePicker.setEditable(editable);
-        Label2TextField.setEditable(editable);
+        //Label2TextField.setEditable(editable); //Always Disabled
+        Label2Button.setDisable(!editable);
         Label3Button.setDisable(!editable);
         //Label4Button.setDisable(!editable); //bound already
         Label5TextField.setEditable(editable);
@@ -308,8 +316,6 @@ public class InformationSceneController implements Initializable {
                 ? null : java.sql.Date.valueOf(ClosedDateDatePicker.getValue()));
         Global.getCurrentMatter().setWarranty(WarrantyDateDatePicker.getValue() == null 
                 ? null : java.sql.Date.valueOf(WarrantyDateDatePicker.getValue()));
-        Global.getCurrentMatter().setBudget(Label2TextField.getText().trim().equals("")
-                ? BigDecimal.ZERO : NumberFormatService.convertToBigDecimal(Label2TextField.getText().trim()));
         Global.getCurrentMatter().setMake(makeID);
         Global.getCurrentMatter().setModel(modelID);
         Global.getCurrentMatter().setSerial(Label5TextField.getText().trim().equals("") 

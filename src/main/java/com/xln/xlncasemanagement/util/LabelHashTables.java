@@ -51,7 +51,7 @@ public class LabelHashTables {
         
         //Information Labels
         Global.setInformationLabel1("Statue of Limitations:");
-        Global.setInformationLabel2("Trust Fund:");
+        Global.setInformationLabel2("Amount Recieved:");
         Global.setInformationLabel3(Global.getHeaderLabel2());
         Global.setInformationLabel4(Global.getHeaderLabel3());
         Global.setInformationLabel5(Global.getHeaderLabel4());
@@ -79,7 +79,7 @@ public class LabelHashTables {
         
         //Information Labels
         Global.setInformationLabel1("Warranty:");
-        Global.setInformationLabel2("Estimate:");
+        Global.setInformationLabel2("Amount Recieved:");
         Global.setInformationLabel3(Global.getHeaderLabel2());
         Global.setInformationLabel4(Global.getHeaderLabel3());
         Global.setInformationLabel5(Global.getHeaderLabel4());
@@ -107,7 +107,7 @@ public class LabelHashTables {
         
         //Information Labels
         Global.setInformationLabel1("Due Date:");
-        Global.setInformationLabel2("Budget:");
+        Global.setInformationLabel2("Amount Recieved:");
         Global.setInformationLabel3(Global.getHeaderLabel2());
         Global.setInformationLabel4(Global.getHeaderLabel3());
         Global.setInformationLabel5(Global.getHeaderLabel4());
