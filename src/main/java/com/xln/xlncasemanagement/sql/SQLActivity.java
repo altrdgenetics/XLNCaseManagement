@@ -231,8 +231,11 @@ public class SQLActivity {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "SELECT col08 FROM table01 WHERE col03 = ? AND col05 = ? AND col08 != 0.00 ORDER BY col06 DESC LIMIT 1";
-
+        String sql = "SELECT col08 FROM table01 WHERE "
+                + "col03 = ? AND "
+                + "col05 = ? AND "
+                + "col08 != 0.00 "
+                + "ORDER BY col06 DESC LIMIT 1";
         try {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql);
