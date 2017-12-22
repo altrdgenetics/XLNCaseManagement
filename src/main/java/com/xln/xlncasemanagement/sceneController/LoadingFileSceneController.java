@@ -69,9 +69,12 @@ public class LoadingFileSceneController implements Initializable {
                 Desktop.getDesktop().open(selectedFile);
             } catch (IOException ex) {
                 DebugTools.HandleException(ex);
+                AlertDialog.StaticAlert(4, "Load Error",
+                    "Unable To Load File",
+                    "The file was not able to be opened. Please verify default application and try again later.");
             }
         } else {
-            AlertDialog.StaticAlert(4, "Save Error",
+            AlertDialog.StaticAlert(4, "Load Error",
                     "Unable To Retrieve File",
                     "The file was not able to be opened. Please try again later.");
         }

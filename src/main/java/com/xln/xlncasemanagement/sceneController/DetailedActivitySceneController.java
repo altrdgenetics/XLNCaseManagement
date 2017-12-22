@@ -201,10 +201,10 @@ public class DetailedActivitySceneController implements Initializable {
             BigDecimal defaultRate = user.getDefaultRate();
             BigDecimal previousMatterRate = SQLActivity.getLastRate(user.getId(), Global.getCurrentMatter().getId());
             
-            if (previousMatterRate != BigDecimal.ZERO){
-                rateTextField.setText(NumberFormatService.formatMoney(previousMatterRate));
-            } else {
+            if (previousMatterRate.compareTo(BigDecimal.ZERO) == 0){
                 rateTextField.setText(NumberFormatService.formatMoney(defaultRate));
+            } else {
+                rateTextField.setText(NumberFormatService.formatMoney(previousMatterRate));
             }
         }
     }
