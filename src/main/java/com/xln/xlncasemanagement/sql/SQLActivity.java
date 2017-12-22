@@ -43,8 +43,8 @@ public class SQLActivity {
         if (param.length > 0) {
             for (String param1 : param) {
                 sql += " AND CONCAT("          
-                        + "IFNULL(table01.col08,''), " // description
-                        + "IFNULL(table02.col03,''), " // activity type
+                        + "IFNULL(table01.col10,''), " // description
+                        + "IFNULL(table02.col03,'SYSTEM'), " // activity type
                         + "IFNULL(table22.col03,''), " // first name
                         + "IFNULL(table22.col05,''), " // last name
                         + "IFNULL(table22.col08,'') "  // username
