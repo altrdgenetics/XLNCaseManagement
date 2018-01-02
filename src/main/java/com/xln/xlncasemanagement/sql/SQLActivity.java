@@ -51,7 +51,7 @@ public class SQLActivity {
                         + ") LIKE ? ";
             }
         }
-        sql += " AND table01.col05 = ? ORDER BY table01.col06 DESC";
+        sql += " AND table01.col05 = ? ORDER BY table01.col06 DESC, table01.col01 DESC";
         
         try {
             conn = DBConnection.connectToDB();
