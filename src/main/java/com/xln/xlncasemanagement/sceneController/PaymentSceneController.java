@@ -127,8 +127,10 @@ public class PaymentSceneController implements Initializable {
     }
     
     private void insertPayment(){
-        BigDecimal newTotal = NumberFormatService.convertToBigDecimal(
-                costTextField.getText()).add(Global.getCurrentMatter().getBudget());
+        BigDecimal newTotal = 
+                NumberFormatService.convertToBigDecimal(costTextField.getText()).add(
+                        (Global.getCurrentMatter().getBudget() == null ? BigDecimal.ZERO : Global.getCurrentMatter().getBudget())
+        );
         
         Global.getCurrentMatter().setBudget(newTotal);
         SQLMatter.updateMatterPaymentByID(Global.getCurrentMatter());

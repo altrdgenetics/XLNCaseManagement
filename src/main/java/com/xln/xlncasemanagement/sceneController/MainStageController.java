@@ -442,7 +442,7 @@ public class MainStageController implements Initializable {
         }
     }
     
-    @FXML private void buttonFourAction(){    
+    @FXML public void buttonFourAction(){    
         SQLAudit.insertAudit("Button Update/Add Pressed On " + selectedTabTitle.getText());
         
         if (selectedTabTitle.equals(informationTab)){

@@ -9,6 +9,7 @@ import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.NumberFormatService;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,19 +34,22 @@ public class SQLMatter {
                 + "col02, "
                 + "col03, "
                 + "col04, "
-                + "col05 "
+                + "col05, "
+                + "col12 "
                 + ") VALUES ("
                 + "?, " //1
                 + "?, " //2
                 + "?, " //3   
-                + "?)"; //4
+                + "?, " //4   
+                + "?)"; //5
         try {
             conn = DBConnection.connectToDB();
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setBoolean(1, item.isActive());
-            ps.setInt    (2, item.getPartyID());
-            ps.setInt    (3, item.getMatterTypeID());
-            ps.setDate   (4, item.getOpenDate());
+            ps.setBoolean   (1, item.isActive());
+            ps.setInt       (2, item.getPartyID());
+            ps.setInt       (3, item.getMatterTypeID());
+            ps.setDate      (4, item.getOpenDate());
+            ps.setBigDecimal(5, BigDecimal.ZERO);
             ps.executeUpdate();
 
             ResultSet newRow = ps.getGeneratedKeys();

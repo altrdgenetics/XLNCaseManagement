@@ -99,6 +99,7 @@ public class ExpensesSceneController implements Initializable {
 
     private void initializeUserColumn() {
         userColumn.setCellValueFactory(cellData -> cellData.getValue().getUser());
+        userColumn.setStyle("-fx-alignment: CENTER;");
         userColumn.setCellFactory((TableColumn<ExpensesTableModel, String> param) -> {
             TableCell<ExpensesTableModel, String> cell = new TableCell<ExpensesTableModel, String>() {
                 @Override

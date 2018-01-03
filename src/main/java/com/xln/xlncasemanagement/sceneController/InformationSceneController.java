@@ -120,7 +120,7 @@ public class InformationSceneController implements Initializable {
     @FXML
     private void onLabel2ButtonAction() {
         Global.getStageLauncher().PaymentScene(Global.getMainStage());
-        loadInformation();
+        Global.getMainStageController().buttonFourAction();
     }
     
     @FXML
