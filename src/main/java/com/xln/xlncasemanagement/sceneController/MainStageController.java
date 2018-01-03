@@ -576,6 +576,8 @@ public class MainStageController implements Initializable {
             notesSceneController.setActive();
             setNoteTabButtons();
         }
+        
+        mainTabPane.requestFocus();
     }
 
     private void setInformationTabButtons(){

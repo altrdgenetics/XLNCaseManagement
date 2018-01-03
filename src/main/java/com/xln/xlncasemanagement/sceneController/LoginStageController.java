@@ -102,6 +102,7 @@ public class LoginStageController implements Initializable {
             UsernameTextField.clear();
             PasswordTextField.clear();
             loginFailedMessage();
+            UsernameTextField.requestFocus();
         }
     }
     
@@ -140,8 +141,7 @@ public class LoginStageController implements Initializable {
         Global.getStageLauncher().mainStage();
         Global.getLoginStage().hide();
     }
-    
-    
+        
     private void setListeners() {
         LoginButton.disableProperty().bind(Bindings.or(
                 UsernameTextField.textProperty().isEmpty(),
