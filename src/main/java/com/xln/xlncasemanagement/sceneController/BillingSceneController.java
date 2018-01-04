@@ -19,11 +19,13 @@ import com.xln.xlncasemanagement.util.StringUtilities;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -43,6 +45,7 @@ public class BillingSceneController implements Initializable {
     @FXML private Label MatterLabel;
     @FXML private Button CloseButton;
     @FXML private Button RunButton;
+    @FXML ProgressBar progressBar;
     
     /**
      * Initializes the controller class.
@@ -79,13 +82,6 @@ public class BillingSceneController implements Initializable {
         };
         MatterComboBox.setConverter(converter2);
         
-        
-        
-        RunButton.disableProperty().bind(
-                (ClientComboBox.valueProperty().isNull())
-                        .or(MatterComboBox.valueProperty().isNull())
-        );
-        
         MatterComboBox.disableProperty().bind(
                 (ClientComboBox.valueProperty().isNull())
                 .or(ClientComboBox.disabledProperty())
@@ -104,7 +100,6 @@ public class BillingSceneController implements Initializable {
             HeaderLabel.setText("Pre-Billing Selection");
         }
         loadInformation();
-        
     }
     
     private void loadInformation(){
@@ -119,7 +114,6 @@ public class BillingSceneController implements Initializable {
                 MatterComboBox.getSelectionModel().select(Global.getCurrentMatter());
             }
         }
-        
     }
     
     @FXML private void handleClientSelection(){
@@ -141,24 +135,35 @@ public class BillingSceneController implements Initializable {
         MatterComboBox.getSelectionModel().selectFirst();
     }
     
-    @FXML private void runButtonAction() {
+    @FXML
+    private void runButtonAction() {
+        Platform.runLater(() -> {
+            setPanelDisabled(true);
+        });
+
         MatterModel selectedMatter = (MatterModel) MatterComboBox.getValue();
         PartyModel selectedClient = (PartyModel) ClientComboBox.getValue();
-        
-        SQLAudit.insertAudit("Generating " + (billingMode ? "Bill" : "Pre-Bill")
-                + " For MatterID: " + selectedMatter.getId());        
-        
-        //Generate Information
-        HashMap hash = new HashMap();
-        hash = ReportHashMap.generateDefaultInformation(hash);
-        hash = ReportHashMap.matterID(hash, selectedMatter.getId());
-        hash = ReportHashMap.billingSubReports(hash);
-        
-        GenerateReport.generateBill(selectedClient, selectedMatter, billingMode, hash);
-        
-        if (billingMode){
-            markEntriesAsInvoiced(selectedMatter.getId());
-        }
+
+        new Thread() {
+            @Override
+            public void run() {
+                SQLAudit.insertAudit("Generating " + (billingMode ? "Bill" : "Pre-Bill")
+                        + " For MatterID: " + selectedMatter.getId());
+
+                //Generate Information
+                HashMap hash = new HashMap();
+                hash = ReportHashMap.generateDefaultInformation(hash);
+                hash = ReportHashMap.matterID(hash, selectedMatter.getId());
+                hash = ReportHashMap.billingSubReports(hash);
+
+                GenerateReport.generateBill(selectedClient, selectedMatter, billingMode, hash);
+
+                if (billingMode) {
+                    markEntriesAsInvoiced(selectedMatter.getId());
+                }
+                setPanelDisabled(false);
+            }
+        }.start();
     }
     
     @FXML private void closeButtonAction() {
@@ -169,6 +174,13 @@ public class BillingSceneController implements Initializable {
     private void markEntriesAsInvoiced(int matterID) {
         SQLActivity.markMatterActivitesAsInvoiced(matterID);
         SQLExpense.markMatterExpensesAsInvoiced(matterID);
+    }
+    
+    private void setPanelDisabled(boolean disabled) {
+        progressBar.setVisible(disabled);
+        ClientComboBox.setDisable(disabled);        
+        CloseButton.setDisable(disabled);
+        RunButton.setDisable(disabled);
     }
     
 }
