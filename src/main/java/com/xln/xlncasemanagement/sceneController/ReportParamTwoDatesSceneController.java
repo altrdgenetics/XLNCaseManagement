@@ -49,6 +49,7 @@ public class ReportParamTwoDatesSceneController implements Initializable {
     }
     
     @FXML private void cancelButtonAction() {
+        hash = null;
         stage.close();
     }
     

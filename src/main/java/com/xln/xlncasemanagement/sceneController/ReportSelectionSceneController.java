@@ -34,7 +34,7 @@ import javafx.util.StringConverter;
  */
 public class ReportSelectionSceneController implements Initializable {
 
-    Stage stage;
+    static Stage stage;
     
     @FXML Label headerLabel;
     @FXML Label comboBoxLabel;
@@ -51,7 +51,10 @@ public class ReportSelectionSceneController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        runReportButton.disableProperty().bind(reportComboBox.valueProperty().isNull());
+        runReportButton.disableProperty().bind(
+                (reportComboBox.valueProperty().isNull())
+                .or(reportComboBox.disabledProperty())
+        );
         
         //Setup ComboBox
         StringConverter<ReportModel> converter = new StringConverter<ReportModel>() {
@@ -103,6 +106,11 @@ public class ReportSelectionSceneController implements Initializable {
         
         for (String param : parametersList){
             hash = parameterSelection(hash, param);
+            
+            //Check if cancelled out of dialog
+            if (hash == null){
+                break;
+            }
         }
         
         final HashMap completeHash = hash;
@@ -110,9 +118,12 @@ public class ReportSelectionSceneController implements Initializable {
         new Thread() {
             @Override
             public void run() {
-                SQLAudit.insertAudit("Ran Report ID: " + reportSelected.getId());
-                //Run Report
-                GenerateReport.generateReport(reportSelected, completeHash);
+                if (completeHash != null) {
+                    SQLAudit.insertAudit("Ran Report ID: " + reportSelected.getId());
+
+                    //Run Report
+                    GenerateReport.generateReport(reportSelected, completeHash);
+                }
                 setPanelDisabled(false);
             }
         }.start();
@@ -129,7 +140,7 @@ public class ReportSelectionSceneController implements Initializable {
         
         switch (parameterRequested) {
             case "Start / End Dates": //Start Date / End Date
-                Global.getStageLauncher().ReportParamTwoDatesScene(null, hash);
+                hash = Global.getStageLauncher().ReportParamTwoDatesScene(stage, hash);
                 break;
             case "Client": // ClientID
                 break;
