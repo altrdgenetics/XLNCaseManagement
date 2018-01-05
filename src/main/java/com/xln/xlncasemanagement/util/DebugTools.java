@@ -15,7 +15,7 @@ public class DebugTools {
     
     public static void HandleException(Exception ex){
         if (Global.isDebug()){
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }   
     

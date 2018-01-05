@@ -935,6 +935,54 @@ public class StageLauncher {
         return hashMap;
     }
     
+    public HashMap ReportParamClientScene(Stage stagePassed, HashMap hashMap) {
+        SQLAudit.insertAudit("Opened Report Parameter Client Window");
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/ReportParamClientScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            ReportParamClientSceneController controller = loader.getController();
+            controller.setActive(stage, hashMap);
+
+            stage.showAndWait();
+            hashMap = controller.getHash();
+            
+        } catch (IOException ex) {
+            DebugTools.HandleException(ex);
+        }
+        return hashMap;
+    }
+    
+    public HashMap ReportParamMatterScene(Stage stagePassed, HashMap hashMap) {
+        SQLAudit.insertAudit("Opened Report Parameter Matter Window");
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/ReportParamMatterScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            ReportParamMatterSceneController controller = loader.getController();
+            controller.setActive(stage, hashMap);
+
+            stage.showAndWait();
+            hashMap = controller.getHash();
+            
+        } catch (IOException ex) {
+            DebugTools.HandleException(ex);
+        }
+        return hashMap;
+    }
+    
     public void PasswordResetScene(Stage stagePassed, boolean preferencesPassed) {
         SQLAudit.insertAudit("Opened Password Reset Window From " 
                 + (preferencesPassed ? "Preferences" : "Maintenance"));

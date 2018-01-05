@@ -138,18 +138,15 @@ public class ReportSelectionSceneController implements Initializable {
     
     public static HashMap parameterSelection(HashMap hash, String parameterRequested){
         
-        switch (parameterRequested) {
-            case "Start / End Dates": //Start Date / End Date
-                hash = Global.getStageLauncher().ReportParamTwoDatesScene(stage, hash);
-                break;
-            case "Client": // ClientID
-                break;
-            case "Matter": // MatterID
-                break;
-            default:
-                break;
+        if (parameterRequested.equals("Start / End Dates")){
+            return Global.getStageLauncher().ReportParamTwoDatesScene(stage, hash);
+        } else if (parameterRequested.equals("Client")){
+            return Global.getStageLauncher().ReportParamClientScene(stage, hash);
+        } else if (parameterRequested.equals(Global.getNewCaseType())) {
+            return Global.getStageLauncher().ReportParamMatterScene(stage, hash);
+        } else {
+            return hash;
         }
-        return hash;
     }
         
     private void setPanelDisabled(boolean disabled) {

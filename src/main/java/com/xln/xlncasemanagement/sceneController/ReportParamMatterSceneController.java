@@ -8,24 +8,18 @@ package com.xln.xlncasemanagement.sceneController;
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.MatterModel;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
-import com.xln.xlncasemanagement.report.GenerateReport;
 import com.xln.xlncasemanagement.report.ReportHashMap;
-import com.xln.xlncasemanagement.sql.SQLActivity;
-import com.xln.xlncasemanagement.sql.SQLAudit;
-import com.xln.xlncasemanagement.sql.SQLExpense;
 import com.xln.xlncasemanagement.sql.SQLMatter;
 import com.xln.xlncasemanagement.sql.SQLParty;
 import com.xln.xlncasemanagement.util.StringUtilities;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -34,10 +28,10 @@ import javafx.util.StringConverter;
  *
  * @author User
  */
-public class BillingSceneController implements Initializable {
+public class ReportParamMatterSceneController implements Initializable {
 
     Stage stage;
-    boolean billingMode;
+    public HashMap hash;
     
     @FXML private Label HeaderLabel;
     @FXML private ComboBox ClientComboBox;
@@ -45,7 +39,6 @@ public class BillingSceneController implements Initializable {
     @FXML private Label MatterLabel;
     @FXML private Button CloseButton;
     @FXML private Button RunButton;
-    @FXML ProgressBar progressBar;
     
     /**
      * Initializes the controller class.
@@ -88,17 +81,13 @@ public class BillingSceneController implements Initializable {
         );
     }    
     
-    public void setActive(Stage stagePassed, boolean billingModePassed){
+    public void setActive(Stage stagePassed, HashMap hashPassed){
         stage = stagePassed;
-        billingMode = billingModePassed;
+        hash = hashPassed;
         
         MatterLabel.setText(Global.getNewCaseType() + ":");
+        HeaderLabel.setText(Global.getNewCaseType() + " Selection");
         
-        if (billingMode){
-            HeaderLabel.setText("Billing Selection");
-        } else {
-            HeaderLabel.setText("Pre-Billing Selection");
-        }
         loadInformation();
     }
     
@@ -137,50 +126,26 @@ public class BillingSceneController implements Initializable {
     
     @FXML
     private void runButtonAction() {
-        Platform.runLater(() -> {
-            setPanelDisabled(true);
-        });
-
-        MatterModel selectedMatter = (MatterModel) MatterComboBox.getValue();
         PartyModel selectedClient = (PartyModel) ClientComboBox.getValue();
-
-        new Thread() {
-            @Override
-            public void run() {
-                SQLAudit.insertAudit("Generating " + (billingMode ? "Bill" : "Pre-Bill")
-                        + " For MatterID: " + selectedMatter.getId());
-
-                //Generate Information
-                HashMap hash = new HashMap();
-                hash = ReportHashMap.generateDefaultInformation(hash);
-                hash = ReportHashMap.matterID(hash, selectedMatter.getId());
-                hash = ReportHashMap.billingSubReports(hash);
-
-                GenerateReport.generateBill(selectedClient, selectedMatter, billingMode, hash);
-
-                if (billingMode) {
-                    markEntriesAsInvoiced(selectedMatter.getId());
-                }
-                setPanelDisabled(false);
-            }
-        }.start();
-    }
-    
-    @FXML private void closeButtonAction() {
-        Global.getMainStageController().onTabSelection();
+        MatterModel selectedMatter = (MatterModel) MatterComboBox.getValue();
+                
+        hash = ReportHashMap.clientID(hash, selectedClient.getId());
+        hash = ReportHashMap.matterID(hash, selectedMatter.getId());
+                
         stage.close();
     }
     
-    private void markEntriesAsInvoiced(int matterID) {
-        SQLActivity.markMatterActivitesAsInvoiced(matterID);
-        SQLExpense.markMatterExpensesAsInvoiced(matterID);
+    @FXML private void closeButtonAction() {
+        hash = null;
+        stage.close();
     }
     
-    private void setPanelDisabled(boolean disabled) {
-        progressBar.setVisible(disabled);
-        ClientComboBox.setDisable(disabled);        
-        CloseButton.setDisable(disabled);
-        RunButton.setDisable(disabled);
+    public HashMap getHash() {
+        return hash;
+    }
+
+    public void setHash(HashMap hash) {
+        this.hash = hash;
     }
     
 }

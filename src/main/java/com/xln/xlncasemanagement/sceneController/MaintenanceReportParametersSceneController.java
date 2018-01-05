@@ -5,6 +5,7 @@
  */
 package com.xln.xlncasemanagement.sceneController;
 
+import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.ReportParameterModel;
 import com.xln.xlncasemanagement.sql.SQLAudit;
 import com.xln.xlncasemanagement.sql.SQLReportParameter;
@@ -62,7 +63,9 @@ public class MaintenanceReportParametersSceneController implements Initializable
 
     private void loadComboBox() {
         ObservableList<String> options = FXCollections.observableArrayList(
-                "Start / End Dates"
+                "Start / End Dates",
+                "Client",
+                Global.getNewCaseType()
         );
         
         //Set Items In Combobox
