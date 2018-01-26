@@ -49,6 +49,10 @@ public class MaintenanceSceneController implements Initializable {
     public void setActive(Stage stagePassed) {
         stage = stagePassed;
         
+        if (Global.isIsAppleComputer()){
+            TemplateButton.setVisible(false);
+        }
+        
         //Set Button Labels
         MakeButton.setText(Global.getHeaderLabel2().replace(":", ""));
         ModelButton.setText(Global.getHeaderLabel3().replace(":", ""));

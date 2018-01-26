@@ -19,6 +19,9 @@ public class MainApp extends Application {
     }
 
     private void setApplicationDefaults(){
+        //Set boolean for Apple Computers
+        Global.setIsAppleComputer(System.getProperty("os.name").equalsIgnoreCase("Mac OS X"));
+        
         //Set Temp Folder
         FileUtilities.generateTempLocation();
 

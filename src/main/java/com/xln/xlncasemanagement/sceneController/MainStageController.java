@@ -182,6 +182,10 @@ public class MainStageController implements Initializable {
             exitApplication(t);
         });
         
+        if (Global.isIsAppleComputer()){
+            buttonFive.setVisible(false);
+        }
+        
         if (!Global.getCurrentUser().isAdminRights()){
             editMenu.getItems().remove(adminSeperatorMenuItem);
             editMenu.getItems().remove(adminMenu);

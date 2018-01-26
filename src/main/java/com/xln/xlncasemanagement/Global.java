@@ -43,6 +43,7 @@ public class Global {
     private static String JACOBDLL_PATH = "";
     private static final String tempDirectory = 
             System.getProperty("java.io.tmpdir") + "XLNCase" + File.separator;
+    private static boolean isAppleComputer;    
         
     //Config File
     private static String version = "";
@@ -213,6 +214,14 @@ public class Global {
         return tempDirectory;
     }
 
+    public static boolean isIsAppleComputer() {
+        return isAppleComputer;
+    }
+
+    public static void setIsAppleComputer(boolean isAppleComputer) {
+        Global.isAppleComputer = isAppleComputer;
+    }
+    
     public static int getMAX_ALLOWED_LOGIN_ATTEMPTS() {
         return MAX_ALLOWED_LOGIN_ATTEMPTS;
     }
