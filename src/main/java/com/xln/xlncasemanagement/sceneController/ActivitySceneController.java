@@ -162,12 +162,11 @@ public class ActivitySceneController implements Initializable {
         // SETTING THE CELL FACTORY FOR THE RATINGS COLUMN         
         fileColumn.setCellFactory((TableColumn<ActivityTableModel, String> param) -> {
             TableCell<ActivityTableModel, String> cell = new TableCell<ActivityTableModel, String>() {
+
                 @Override
                 public void updateItem(String item, boolean empty) {
-                    if (item != null) {
-                        //Insert Icon for File
-                        setGraphic(TableObjects.fileIcon(item));
-                    }
+                    //Insert Icon for File
+                    setGraphic(TableObjects.fileIcon(item));
                 }
             };
 
@@ -282,10 +281,13 @@ public class ActivitySceneController implements Initializable {
             if (row != null) {
                 DebugTools.HandleInfoPrintout("Clicked Icon Twice");
                 ActivityModel item = (ActivityModel) row.getObject().getValue();
-                SQLAudit.insertAudit("Opened File For Activity ID: " + item.getId());
                 
-                Global.getStageLauncher().retrieveFileLoadingScene(Global.getMainStage(), "Activity", item.getId());
-                activityTable.getSelectionModel().clearSelection(cellIndex);
+                if (item.getFileName() != null){
+                    SQLAudit.insertAudit("Opened File For Activity ID: " + item.getId());
+                
+                    Global.getStageLauncher().retrieveFileLoadingScene(Global.getMainStage(), "Activity", item.getId());
+                    activityTable.getSelectionModel().clearSelection(cellIndex);
+                }
             }
         }
     }
