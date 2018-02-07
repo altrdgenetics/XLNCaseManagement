@@ -215,7 +215,8 @@ public class SQLParty {
         String sql = "SELECT DISTINCT table15.col03 AS link, table16.* "
                 + "FROM table16 "
                 + "LEFT JOIN table15 ON table16.col01 = table15.col03 "
-                + "WHERE table15.col02 = 1";
+                + "WHERE table15.col02 = 1 "
+                + "ORDER BY table16.col06 ASC";
 
         try {
             conn = DBConnection.connectToDB();
