@@ -142,7 +142,7 @@ public class MainStageController implements Initializable {
         StringConverter<PartyModel> converter = new StringConverter<PartyModel>() {
             @Override
             public String toString(PartyModel object) {
-                return StringUtilities.buildPartyName(object);
+                return StringUtilities.buildPartyNameNoPrefix(object);
             }
 
             @Override

@@ -91,6 +91,21 @@ public class StringUtilities {
         return fullName.trim();
     }
     
+    public static String buildPartyNameNoPrefix(PartyModel item) {
+        String fullName = "";
+        
+        if (item.getFirstName() != null) {
+            fullName = fullName.trim() + (item.getFirstName().equals("") ? "" : " " + item.getFirstName().trim());
+        }
+        if (item.getMiddleInitial() != null) {
+            fullName = fullName.trim() + (item.getMiddleInitial().equals("") ? "" : " " + (item.getMiddleInitial().trim().length() == 1 ? item.getMiddleInitial().trim() + "." : item.getMiddleInitial().trim()));
+        }
+        if (item.getLastName() != null) {
+            fullName = fullName.trim() + (item.getLastName().equals("") ? "" : " " + item.getLastName().trim());
+        }
+        return fullName.trim();
+    }
+    
     public static String buildAddresseeName(PartyModel item) {
         String fullName = "";
         if (item.getPrefix() != null) {
