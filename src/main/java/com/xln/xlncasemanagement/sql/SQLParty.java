@@ -7,6 +7,7 @@ package com.xln.xlncasemanagement.sql;
 
 import com.xln.xlncasemanagement.Global;
 import com.xln.xlncasemanagement.model.sql.PartyModel;
+import com.xln.xlncasemanagement.model.table.ClientTableModel;
 import com.xln.xlncasemanagement.model.table.PartyTableModel;
 import com.xln.xlncasemanagement.util.DebugTools;
 import com.xln.xlncasemanagement.util.NumberFormatService;
@@ -247,6 +248,82 @@ public class SQLParty {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(rs);
+        }
+        return list;
+    }
+    
+    public static ObservableList<ClientTableModel> searchActiveClients(String[] param) {
+        ObservableList<ClientTableModel> list = FXCollections.observableArrayList();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT DISTINCT table15.col03 AS link, table16.* "
+                + "FROM table16 "
+                + "LEFT JOIN table15 ON table16.col01 = table15.col03 "
+                + "WHERE table15.col02 = 1 ";
+        if (param.length > 0) {
+                sql += " AND";
+            for (int i = 0; i < param.length; i++) {
+                if (i > 0) {
+                    sql += " AND";
+                }
+                sql += " CONCAT("          
+                        + "IFNULL(table16.col04,''), "
+                        + "IFNULL(table16.col06,''), "
+                        + "IFNULL(table16.col07,''), "
+                        + "IFNULL(table16.col08,''), "
+                        + "IFNULL(table16.col09,''), "
+                        + "IFNULL(table16.col10,''), "
+                        + "IFNULL(table16.col12,''), "
+                        + "IFNULL(table16.col13,'') "
+                        + ") LIKE ? ";
+            }
+        }
+        
+        sql += "ORDER BY table16.col06 ASC";
+        
+        try {
+            conn = DBConnection.connectToDB();
+            ps = conn.prepareStatement(sql);
+
+            for (int i = 0; i < param.length; i++) {
+                ps.setString((i + 1), "%" + param[i].trim() + "%");
+            }
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                PartyModel item = new PartyModel();
+                item.setId(rs.getInt("col01"));
+                item.setActive(rs.getBoolean("col02"));
+                item.setPrefix(rs.getString("col03"));
+                item.setFirstName(rs.getString("col04"));
+                item.setMiddleInitial(rs.getString("col05"));
+                item.setLastName(rs.getString("col06"));
+                item.setAddressOne(rs.getString("col07"));
+                item.setAddressTwo(rs.getString("col08"));
+                item.setAddressThree(rs.getString("col09"));
+                item.setCity(rs.getString("col10"));
+                item.setState(rs.getString("col11"));
+                item.setZip(rs.getString("col12"));
+                item.setPhoneOne(rs.getString("col13"));
+                item.setPhoneTwo(rs.getString("col14"));
+                item.setEmail(rs.getString("col15"));
+
+                list.add(
+                        new ClientTableModel(
+                                item,
+                                StringUtilities.buildPartyName(item),
+                                StringUtilities.buildTableAddressBlock(item),
+                                NumberFormatService.convertStringToPhoneNumber(rs.getString("col13"))
+                        ));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
         return list;
     }

@@ -39,6 +39,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -265,6 +266,16 @@ public class MainStageController implements Initializable {
         
     @FXML private void handleAboutMenuItem() {
         Global.getStageLauncher().AboutScene(stage);
+    }
+        
+    @FXML private void clientFieldClickListener(MouseEvent event) {
+        if (event.getButton().equals(MouseButton.SECONDARY)) {
+            PartyModel selectedClient = Global.getStageLauncher().ClientSearchScene(stage);
+            
+            if (selectedClient != null){
+                clientField.setValue(selectedClient);
+            }
+        }
     }
         
     @FXML private void handleClientSelection(){

@@ -211,6 +211,32 @@ public class StageLauncher {
         }
     }
     
+    public PartyModel ClientSearchScene(Stage stagePassed) {
+        SQLAudit.insertAudit("Opened Client Search Window");
+        PartyModel party = new PartyModel();
+        Stage stage = new Stage();
+        try { 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/ClientSearchScene.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.getIcons().add(Global.getApplicationLogo());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(stagePassed);
+            stage.setScene(scene);
+
+            ClientSearchSceneController controller = loader.getController();
+            controller.setActive(stage);
+
+            stage.showAndWait();
+            
+            party = controller.getParty();
+            
+        } catch (IOException ex) {
+            DebugTools.HandleException(ex);
+        }
+        return party;
+    }
+    
     public void MaintenanceScene(Stage stagePassed) {
         SQLAudit.insertAudit("Opened Maintenance Window");
         

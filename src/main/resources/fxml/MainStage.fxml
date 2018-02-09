@@ -112,8 +112,8 @@
                         <Insets right="10.0" />
                      </padding>
                         </Label>
-                        <ComboBox fx:id="clientField" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleClientSelection" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
-                  <ComboBox fx:id="headerField1" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleHeaderField1Selection" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="clientField" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleClientSelection" onMouseClicked="#clientFieldClickListener" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+                        <ComboBox fx:id="headerField1" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleHeaderField1Selection" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
                         <TextField fx:id="phoneField" editable="false" focusTraversable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
                         <TextField fx:id="emailField" editable="false" focusTraversable="false" onMouseClicked="#onEmailFieldClick" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
                         <CustomTextField fx:id="headerField2" editable="false" focusTraversable="false" onMouseClicked="#onHeaderField2Action" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER" />
