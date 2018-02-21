@@ -22,6 +22,7 @@ public class ConfigModel {
     private String applicationtype;
     private boolean liteVersion;
     private Date contractenddate;
+    private boolean useSSL;
 
     public int getMaxusers() {
         return maxusers;
@@ -95,4 +96,12 @@ public class ConfigModel {
         this.contractenddate = contractenddate;
     }
 
+    public boolean isUseSSL() {
+        return useSSL;
+    }
+
+    public void setUseSSL(boolean useSSL) {
+        this.useSSL = useSSL;
+    }
+    
 }

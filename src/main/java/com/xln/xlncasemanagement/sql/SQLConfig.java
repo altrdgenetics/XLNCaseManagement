@@ -33,7 +33,8 @@ public class SQLConfig {
                 + "dbpassword, "
                 + "liteversion, "
                 + "applicationtype, "
-                + "contractenddate "
+                + "contractenddate,"
+                + "usessl "
                 + "FROM company WHERE companykey = ?";
 
         try {
@@ -51,6 +52,7 @@ public class SQLConfig {
                 item.setApplicationtype(rs.getString("applicationtype"));
                 item.setLiteVersion(rs.getBoolean("liteversion"));
                 item.setContractenddate(rs.getDate("contractenddate"));
+                item.setUseSSL(rs.getBoolean("usessl"));
             }
         } catch (SQLException ex) {
             DebugTools.HandleException(ex);

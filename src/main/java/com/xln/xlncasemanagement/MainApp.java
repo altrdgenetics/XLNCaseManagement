@@ -24,7 +24,7 @@ public class MainApp extends Application {
         
         //Set Temp Folder
         FileUtilities.generateTempLocation();
-
+        
         //Load DB Connection
         ConfigFile.readConfigFile();
                 
@@ -34,6 +34,6 @@ public class MainApp extends Application {
         if (Global.getCompanyInformation().getLogo() != null){
             Global.setApplicationLogo(Global.getCompanyInformation().getLogo());
         }
-    }
+    }    
 
 }
