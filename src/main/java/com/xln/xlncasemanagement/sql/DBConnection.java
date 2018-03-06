@@ -28,7 +28,7 @@ public class DBConnection {
         while (true) {
             try {
                 Class.forName(DBCInfo.getDBdriver());
-                conn = DriverManager.getConnection(DBCInfo.getDBurl() + DBCInfo.getDBname(), DBCInfo.getDBusername(), DBCInfo.getDBpassword());
+                conn = DriverManager.getConnection(DBCInfo.getDBurl() + DBCInfo.getDBname(), DBCInfo.getDBProperties());
                 break;
             } catch (ClassNotFoundException | SQLException e) {
                 nbAttempts++;
@@ -58,7 +58,7 @@ public class DBConnection {
         while (true) {
             try {
                 Class.forName(DBCInfo.getDBConfigDriver());
-                conn = DriverManager.getConnection(DBCInfo.getDBConfigUrl() + DBCInfo.getDBConfigName(), DBCInfo.getDBConfigUsername(), DBCInfo.getDBConfigPassword());
+                conn = DriverManager.getConnection(DBCInfo.getDBConfigUrl() + DBCInfo.getDBConfigName(), DBCInfo.getConfigProperties());
                 break;
             } catch (ClassNotFoundException | SQLException e) {
                 nbAttempts++;

@@ -34,7 +34,8 @@ public class SQLConfig {
                 + "liteversion, "
                 + "applicationtype, "
                 + "contractenddate,"
-                + "usessl "
+                + "usessl, "
+                + "certificate "
                 + "FROM company WHERE companykey = ?";
 
         try {
@@ -53,6 +54,7 @@ public class SQLConfig {
                 item.setLiteVersion(rs.getBoolean("liteversion"));
                 item.setContractenddate(rs.getDate("contractenddate"));
                 item.setUseSSL(rs.getBoolean("usessl"));
+                item.setServerCertificate(rs.getString("certificate"));
             }
         } catch (SQLException ex) {
             DebugTools.HandleException(ex);

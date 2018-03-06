@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="MainBorederPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="275.0" minWidth="-Infinity" prefHeight="641.0" prefWidth="602.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xln.xlncasemanagement.sceneController.MaintenanceUserAddEditSceneController">
+<BorderPane fx:id="MainBorederPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="275.0" minWidth="-Infinity" prefHeight="641.0" prefWidth="602.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xln.xlncasemanagement.sceneController.MaintenanceUserAddEditSceneController">
     <stylesheets>
         <URL value="@/styles/Styles.css" />
     </stylesheets>

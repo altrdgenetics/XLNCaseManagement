@@ -23,6 +23,7 @@ public class ConfigModel {
     private boolean liteVersion;
     private Date contractenddate;
     private boolean useSSL;
+    private String serverCertificate;
 
     public int getMaxusers() {
         return maxusers;
@@ -102,6 +103,14 @@ public class ConfigModel {
 
     public void setUseSSL(boolean useSSL) {
         this.useSSL = useSSL;
+    }
+
+    public String getServerCertificate() {
+        return serverCertificate;
+    }
+
+    public void setServerCertificate(String serverCertificate) {
+        this.serverCertificate = serverCertificate;
     }
     
 }
